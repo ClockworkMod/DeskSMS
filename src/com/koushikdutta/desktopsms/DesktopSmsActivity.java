@@ -45,6 +45,9 @@ public class DesktopSmsActivity extends Activity implements ActivityResultDelega
         setContentView(R.layout.main);
         
         final Settings settings = Settings.getInstance(this);
+        String registrationId = settings.getString("registration_id");
+        if (Helper.isJavaScriptNullOrEmpty(registrationId))
+            settings.setString("account", null);
 
         final TextView forwarded = (TextView)findViewById(R.id.forwarded);
         final TextView proxied = (TextView)findViewById(R.id.proxied);
