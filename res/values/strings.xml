@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DesktopSMS</string>
+    
+    <string name="description">DesktopSMS forwards your SMS to your Google Talk and/or Gmail. And reply back to respond via text!</string>
+    
+    <string name="signin_success">You have successfully signed in!</string>
+    <string name="signin_failure">Login failed. Please check your password. If the error persists, please send a log to the developer.</string>
+    
+    <string name="login_with_google">Login with Google Account</string>
+    <string name="requesting_permissions">Desktop SMS will now ask you for permission to use your Google Account authentication for the purposes of push notifications and registration with our server. Desktop SMS will not have access to your passwords or personal data.</string>
+    <string name="permission_request">Permissions Request</string>
+    
+    <string name="send_xmpp">Connect to Google Talk</string>
+    <string name="send_email">Connect to Gmail</string>
+    
+    <string name="setting_up_push">Setting up push notifications...</string>
+    <string name="retrieving_authentication">Retrieving Google authentication tokens...</string>
+    <string name="registering_with_server">Registering with push server...</string>
+    
+    <string name="current_account">Current Account: %s</string>
+    
+    <string name="forwarded">%s SMS sent to your Desktop</string>
+    <string name="proxied">%s SMS sent by your Desktop</string>
+    
+    <string name="not_logged_in">Please log in with your Google Account to use DesktopSMS.</string>
+    
+    <string name="test_message">Send Test Message</string>
+    <string name="test_message_info">Press OK to send a SMS to yourself. You should see the SMS arrive in your Messaging application as usual. You should also receive an email and optionally a Google Talk message as well!</string>
+    <string name="test_message_content">This is a test message from DesktopSMS!</string>
+    
+    <string name="number_retrieval_error">Unable to retrieve your phone number. Please use your Messaging application to manually send yourself a text message to test Desktop SMS.</string>
+</resources>
