@@ -45,8 +45,9 @@ public class TickleServiceHelper {
     private final static String REGISTER_URL = BASE_URL + "/register";
     private static final String AUTH_URL = BASE_URL + "/_ah/login";
 
-    private static void registerWebConnect(final Context context, final String registration) throws Exception {
+    private static void registerWebConnect(final Context context) throws Exception {
         Settings settings = Settings.getInstance(context);
+        final String registration = settings.getString("registration_id");
         final String authToken = settings.getString("web_connect_auth_token");
         if (authToken == null)
             return;
@@ -109,8 +110,6 @@ public class TickleServiceHelper {
     }
 
     public static void login(final Activity context, final ActivityResultDelegate delegate, final Callback<Boolean> callback) {
-        Settings settings = Settings.getInstance(context);
-        final String registration = settings.getString("registration_id");
         final String[] accounts = getGoogleAccounts(context);
         AlertDialog.Builder builder = new Builder(context);
         builder.setItems(accounts, new OnClickListener() {
@@ -139,7 +138,7 @@ public class TickleServiceHelper {
                                     new Thread() {
                                         public void run() {
                                             try {
-                                                registerWebConnect(context, registration);
+                                                registerWebConnect(context);
                                                 context.runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {

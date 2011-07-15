@@ -34,6 +34,7 @@ public class DesktopSmsActivity extends Activity implements ActivityResultDelega
     boolean mDestroyed = false;
     
     protected void onDestroy() {
+        super.onDestroy();
         mDestroyed = true;
     }
     
