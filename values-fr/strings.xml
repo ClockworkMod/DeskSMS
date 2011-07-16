@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DesktopSMS</string>
+    
+    <string name="description">DesktopSMS transmet vos SMS vers Google Talk et/ou Gmail. Et retourne vos réponses par SMS!</string>
+    
+    <string name="signin_success">Vous vous êtes correctement connecté!</string>
+    <string name="signin_failure">Échec de connexion. Merci de vérifier votre connexion internet et d\'essayer à nouveau. Se Connecter avec une adresse Google Apps peut ne pas fonctionner. Si le problème persiste, envoyé le journal d\'erreur au développeur.</string>
+    
+    <string name="login_with_google">Se connecter avec votre compte Google</string>
+    <string name="requesting_permissions">Desktop SMS vous demandera la permission pour utiliser votre compte Google afin de pousser les notifications et enregistrements via notre serveur. Desktop SMS n\'aura pas accès à vos mots de passe ni à vos données personnelles.</string>
+    <string name="permission_request">Demande de permission</string>
+    
+    <string name="send_xmpp">Se connecter à Google Talk</string>
+    <string name="send_email">Se connecter à Gmail</string>
+    
+    <string name="setting_up_push">Paramétrage des notifications...</string>
+    <string name="retrieving_authentication">Récupération des jetons Google...</string>
+    <string name="registering_with_server">Enregistrement avec le serveur...</string>
+    
+    <string name="current_account">Compte actuel : %s</string>
+    
+    <string name="forwarded">%s SMS envoyés vers votre bureau</string>
+    <string name="proxied">%s SMS envoyés par votre bureau</string>
+    
+    <string name="not_logged_in">Connectez-vous avec votre compte Google pour utiliser DesktopSMS.</string>
+    
+    <string name="test_message">Envoyer un message d\'essai.</string>
+    <string name="test_message_info">Appuyez sur OK pour vous envoyer un SMS. Vous devriez voir ce SMS sur votre application de messagerie instantanée habituelle. Vous devriez aussi recevoir un mail et optionnellement un message GTalk!</string>
+    <string name="test_message_content">Ceci est un message d\'essai depuis DesktopSMS!</string>
+    
+    <string name="number_retrieval_error">Impossible de récuperer votre numéro de téléphone. Utilisez votre application de messagerie pour vous envoyer un message manuellement pour tester DesktopSMS.</string>
+</resources>
