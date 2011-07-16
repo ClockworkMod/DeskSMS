@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.koushikdutta.desktopsms" android:versionCode="1001"
-	android:versionName="1.0.0.1">
+	package="com.koushikdutta.desktopsms" android:versionCode="1002"
+	android:versionName="1.0.0.2">
 
 
 
@@ -14,8 +14,8 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-        <receiver android:name=".SmsReceiver"> 
-            <intent-filter> 
+        <receiver android:name=".SmsReceiver" android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter android:priority="2147483647"> 
                 <action android:name=
                     "android.provider.Telephony.SMS_RECEIVED" /> 
             </intent-filter> 
@@ -32,12 +32,15 @@
                 <category android:name="com.koushikdutta.desktopsms" />
             </intent-filter>
         </receiver>
+        <service android:name=".SmsService" />
 	</application>
 
 	<!-- SMS related -->
 	<uses-permission android:name="android.permission.SEND_SMS" />
 	<uses-permission android:name="android.permission.RECEIVE_SMS" />
-	
+	<uses-permission android:name="android.permission.READ_SMS" />
+	<uses-permission android:name="android.permission.WRITE_SMS" />
+
 	<!-- Contacts -->
 	<uses-permission android:name="android.permission.READ_CONTACTS" />
 

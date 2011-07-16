@@ -5,7 +5,7 @@
     <string name="description">DesktopSMS forwards your SMS to your Google Talk and/or Gmail. And reply back to respond via text!</string>
     
     <string name="signin_success">You have successfully signed in!</string>
-    <string name="signin_failure">Login failed. Please check your password. If the error persists, please send a log to the developer.</string>
+    <string name="signin_failure">Login failed. Please verify your internet connection and try again. Logging in with a Google Apps email address may not work. If the error persists, please send a log to the developer.</string>
     
     <string name="login_with_google">Login with Google Account</string>
     <string name="requesting_permissions">Desktop SMS will now ask you for permission to use your Google Account authentication for the purposes of push notifications and registration with our server. Desktop SMS will not have access to your passwords or personal data.</string>

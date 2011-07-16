@@ -216,7 +216,7 @@ public class TickleServiceHelper {
                         delegate.setOnActivityResultCallback(new Callback<Tuple<Integer, Intent>>() {
                             public void onCallback(Tuple<Integer, Intent> result) {
                                 if (result.First == 242424)
-                                    tryAuth(context, accountName, callback, null);
+                                    tryAuth(context, accountName, callback, delegate);
                             }
                         });
                         context.startActivityForResult(authIntent, 242424);

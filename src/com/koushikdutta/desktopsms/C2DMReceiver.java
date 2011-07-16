@@ -1,8 +1,10 @@
 package com.koushikdutta.desktopsms;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.telephony.SmsManager;
 import android.util.Log;
 
@@ -30,6 +32,11 @@ public class C2DMReceiver extends BroadcastReceiver {
             sm.sendTextMessage(number, null, message, null, null);
             proxied++;
             settings.setInt("proxied", proxied);
+            
+            ContentValues values = new ContentValues();
+            values.put("address", number);
+            values.put("body", message);
+            context.getContentResolver().insert(Uri.parse("content://sms/sent"), values);
         }
         catch (Exception ex) {
             ex.printStackTrace();
