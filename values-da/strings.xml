@@ -20,8 +20,8 @@
     
     <string name="current_account">Nuværende Konto: %s</string>
     
-    <string name="forwarded">%s SMS'er sendt til din Computer</string>
-    <string name="proxied">%s SMS'er sendt af din Computer</string>
+    <string name="forwarded">%s SMS\'er sendt til din Computer</string>
+    <string name="proxied">%s SMS\'er sendt af din Computer</string>
     
     <string name="not_logged_in">Log ind med din Google Konto for at bruge DesktopSMS.</string>
     
