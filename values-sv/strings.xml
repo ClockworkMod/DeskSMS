@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DesktopSMS</string>
+    
+    <string name="description">DesktopSMS vidarebefordrar dina SMS till ditt Google Talk- och/eller Gmail-konto. Och svarar tillbaka via SMS!</string>
+
+    
+    <string name="signin_success">Du har loggat in!</string>
+    <string name="signin_failure">Inloggningen misslyckades. Kontrollera din internet uppkoppling och försök igen. Att logga in med en Google Apps email kanske inte fungerar. Var god kontakta utvecklaren om detta fel upprepar sig</string>
+    
+    <string name="login_with_google">Logga in med ett Google konto</string>
+    <string name="requesting_permissions">Desktop SMS kommer nu fråga efter din tillåtelse att använda ditt Google konto för att kunna använda push notifications och för att registrera med vår server. Desktop SMS kommer ej få tillgång till ditt lösenord eller personliga data.</string>
+    <string name="permission_request">Behörighetsförfrågan</string>
+    
+    <string name="send_xmpp">Anslut till Google Talk</string>
+    <string name="send_email">Anslut till Gmail</string>
+    
+    <string name="setting_up_push">Ställer in push notifications...</string>
+    <string name="retrieving_authentication">Hämtar Google autentiseringsnyckel...</string>
+    <string name="registering_with_server">Registerar med push server...</string>
+    
+    <string name="current_account">Nuvarande Konto: %s</string>
+    
+    <string name="forwarded">%s SMS har skickats till din Dator</string>
+    <string name="proxied">%s SMS har skickats från din Dator</string>
+    
+    <string name="not_logged_in">Var god logga in med ditt Google konto för att använda DesktopSMS.</string>
+    
+    <string name="test_message">Skicka testmeddelande</string>
+    <string name="test_message_info">Tryck OK för att skicka ett SMS till dig själv. Du borde nu se SMSet i din vanliga SMS applikation, precis som vanligt. Du borde också få ett mail och ett meddelande på Google Talk, det sista är dock frivilligt.</string>
+    <string name="test_message_content">Detta är ett testmeddelande från DesktopSMS!</string>
+    
+    <string name="number_retrieval_error">Unable to retrieve your phone number. Please use your Messaging application to manually send yourself a text message to test Desktop SMS.</string>
+</resources>
