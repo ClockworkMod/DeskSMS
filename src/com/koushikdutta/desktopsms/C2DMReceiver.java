@@ -1,6 +1,10 @@
 package com.koushikdutta.desktopsms;
 
+import java.util.ArrayList;
+
 import android.content.BroadcastReceiver;
+import android.content.ContentProviderClient;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +23,40 @@ public class C2DMReceiver extends BroadcastReceiver {
             handleMessage(context, intent);
          }
      }
+    
+    void sendUsingContentProvider(Context context, String number, String message) throws Exception {
+        ContentResolver r = context.getContentResolver();
+        //ContentProviderClient client = r.acquireContentProviderClient(Uri.parse("content://sms/queued"));
+        ContentValues sv = new ContentValues();
+        sv.put("address", number);
+        sv.put("date", System.currentTimeMillis());
+        sv.put("read", 1);
+        sv.put("body", message);
+        String n = null;
+        sv.put("subject", n);
+        //sv.put("status", 32);
+        Uri u = r.insert(Uri.parse("content://sms/queued"), sv);
+        if (u == null) {
+            throw new Exception();
+        }
+        Intent bcast = new Intent("com.android.mms.transaction.SEND_MESSAGE");
+        bcast.setClassName("com.android.mms", "com.android.mms.transaction.SmsReceiverService");
+        context.startService(bcast);
+    }
+    
+    void sendUsingSmsManager(Context context, String number, String message) {
+        SmsManager sm = SmsManager.getDefault();
+        ArrayList<String> messages = sm.divideMessage(message);
+        int messageCount = messages.size();
+        if (messageCount == 0)
+            return;
+
+        sm.sendMultipartTextMessage(number, null, messages, null, null);
+        ContentValues values = new ContentValues();
+        values.put("address", number);
+        values.put("body", message);
+        context.getContentResolver().insert(Uri.parse("content://sms/sent"), values);
+    }
 
     private void handleMessage(Context context, Intent intent) {
         Log.i(LOGTAG, "Tickle received!");
@@ -28,15 +66,13 @@ public class C2DMReceiver extends BroadcastReceiver {
         try {
             String number = intent.getStringExtra("to");
             String message = intent.getStringExtra("message");
-            SmsManager sm = SmsManager.getDefault();
-            sm.sendTextMessage(number, null, message, null, null);
+            //sm.sendTextMessage(number, null, message, null, null);
+
+            //sendUsingContentProvider(context, number, message);
+            sendUsingSmsManager(context, number, message);
+
             proxied++;
             settings.setInt("proxied", proxied);
-            
-            ContentValues values = new ContentValues();
-            values.put("address", number);
-            values.put("body", message);
-            context.getContentResolver().insert(Uri.parse("content://sms/sent"), values);
         }
         catch (Exception ex) {
             ex.printStackTrace();

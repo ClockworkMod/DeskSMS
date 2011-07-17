@@ -44,13 +44,12 @@ public class TickleServiceHelper {
     private final static String BASE_URL = "https://desksms.appspot.com";
     private final static String REGISTER_URL = BASE_URL + "/register";
     private static final String AUTH_URL = BASE_URL + "/_ah/login";
-
-    private static void registerWebConnect(final Context context) throws Exception {
+    
+    static String getCookie(final Context context) throws Exception {
         Settings settings = Settings.getInstance(context);
-        final String registration = settings.getString("registration_id");
         final String authToken = settings.getString("web_connect_auth_token");
         if (authToken == null)
-            return;
+            return null;
         Log.i(LOGTAG, authToken);
         Log.i(LOGTAG, "getting cookie");
         // Get ACSID cookie
@@ -78,9 +77,18 @@ public class TickleServiceHelper {
                 ascidCookie = pairs[0];
             }
         }
+        settings.setString("Cookie", ascidCookie);
+        return ascidCookie;
+    }
+
+    private static void registerWebConnect(final Context context) throws Exception {
+        String ascidCookie = getCookie(context);
+        Settings settings = Settings.getInstance(context);
+        final String registration = settings.getString("registration_id");
+        DefaultHttpClient client = new DefaultHttpClient();
 
         // Make POST request
-        uri = new URI(REGISTER_URL);
+        URI uri = new URI(REGISTER_URL);
         HttpPost post = new HttpPost(uri);
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("applicationId", "DesktopSms"));
@@ -88,10 +96,9 @@ public class TickleServiceHelper {
         params.add(new BasicNameValuePair("registration_id", registration));
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
         post.setEntity(entity);
-        post.setHeader("Cookie", ascidCookie);
-        settings.setString("Cookie", ascidCookie);
         post.setHeader("X-Same-Domain", "1"); // XSRF
-        res = client.execute(post);
+        post.setHeader("Cookie", ascidCookie);
+        HttpResponse res = client.execute(post);
         Log.i(LOGTAG, "Status code from register: " + res.getStatusLine().getStatusCode());
     }
 
@@ -197,7 +204,7 @@ public class TickleServiceHelper {
         context.startService(registrationIntent);
     }
     
-    private static final String AUTH_TOKEN_TYPE = "ah";
+    static final String AUTH_TOKEN_TYPE = "ah";
     private static void tryAuth(final Activity context, final String accountName, final Callback<Bundle> callback, final ActivityResultDelegate delegate) {
         AccountManager accountManager = AccountManager.get(context);
         Account account = new Account(accountName, "com.google");
