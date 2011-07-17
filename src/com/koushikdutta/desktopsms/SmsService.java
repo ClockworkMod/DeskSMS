@@ -18,6 +18,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,16 +37,16 @@ public class SmsService extends Service {
     private static final String MESSAGE_URL = "https://desksms.appspot.com/message";
     private static final String LOGTAG = SmsReceiver.class.getSimpleName();
 
-    private void sendMessage(final String account, final String ascidCookie, final String number, final String message) {
+    private void sendMessage(final int versionCode, final String account, final String ascidCookie, final String number, final String message) {
         new Thread() {
             @Override
             public void run() {
-                sendMessageInternal(account, ascidCookie, number, message, 0);
+                sendMessageInternal(versionCode, account, ascidCookie, number, message, 0);
             }
         }.start();
     }
     
-    private void sendMessageInternal(final String account, final String ascidCookie, final String number, final String message, int attempt) {
+    private void sendMessageInternal(final int versionCode, final String account, final String ascidCookie, final String number, final String message, int attempt) {
         try {
             URI uri = new URI(String.format("%s/%s/%s", MESSAGE_URL, account, number));
             ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -63,6 +64,7 @@ public class SmsService extends Service {
                 c.close();
             }
             HttpPost post = new HttpPost(uri);
+            params.add(new BasicNameValuePair("version_code", String.valueOf(versionCode)));
             params.add(new BasicNameValuePair("number", number));
             params.add(new BasicNameValuePair("message", message));
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
@@ -103,7 +105,7 @@ public class SmsService extends Service {
                     String newCookie = TickleServiceHelper.getCookie(this);
                     if (newCookie == null)
                         return;
-                    sendMessageInternal(account, newCookie, number, message, attempt + 1);
+                    sendMessageInternal(versionCode, account, newCookie, number, message, attempt + 1);
                 }
                 break;
             }
@@ -121,6 +123,14 @@ public class SmsService extends Service {
     }
 
     void sendPendingMessages() {
+        int versionCode = 0;
+        try {
+            PackageInfo pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            versionCode = pinfo.versionCode;
+        }
+        catch (Exception ex) {
+        }
+
         Settings settings = Settings.getInstance(SmsService.this);
         int forwarded = settings.getInt("forwarded", 0);
         String ascidCookie = settings.getString("Cookie");
@@ -132,7 +142,7 @@ public class SmsService extends Service {
             if (sms.firstReceived + 45000 > System.currentTimeMillis() && sms.count < sms.length)
                 continue;
             mPendingMessages.remove(number);
-            sendMessage(account, ascidCookie, number, sms.message);
+            sendMessage(versionCode, account, ascidCookie, number, sms.message);
             forwarded++;
         }
         settings.setInt("forwarded", forwarded);
@@ -143,6 +153,14 @@ public class SmsService extends Service {
     
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        int versionCode = 0;
+        try {
+            PackageInfo pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            versionCode = pinfo.versionCode;
+        }
+        catch (Exception ex) {
+        }
+
         try {
             Log.i(LOGTAG, "SMS Received");
             final Bundle bundle = intent.getExtras();
@@ -179,7 +197,7 @@ public class SmsService extends Service {
                             }
                         }
                         else {
-                            sendMessage(account, ascidCookie, number, message);
+                            sendMessage(versionCode, account, ascidCookie, number, message);
                         }
                     }
                     catch (Exception ex) {

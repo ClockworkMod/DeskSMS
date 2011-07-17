@@ -30,7 +30,10 @@ public final class R {
         public static final int current_account=0x7f04000c;
         public static final int description=0x7f040001;
         public static final int forwarded=0x7f04000d;
+        public static final int gosms=0x7f040016;
+        public static final int handcent=0x7f040015;
         public static final int login_with_google=0x7f040004;
+        public static final int msg_app_detected=0x7f040014;
         public static final int not_logged_in=0x7f04000f;
         public static final int number_retrieval_error=0x7f040013;
         public static final int permission_request=0x7f040006;

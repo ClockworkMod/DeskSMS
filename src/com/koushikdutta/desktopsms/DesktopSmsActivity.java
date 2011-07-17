@@ -12,6 +12,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,6 +37,15 @@ public class DesktopSmsActivity extends Activity implements ActivityResultDelega
     protected void onDestroy() {
         super.onDestroy();
         mDestroyed = true;
+    }
+    
+    boolean appExists(String pkg) {
+        try {
+            return getPackageManager().getPackageInfo(pkg, 0) != null;
+        }
+        catch (Exception ex) {
+        }
+        return false;
     }
     
     /** Called when the activity is first created. */
@@ -136,21 +146,46 @@ public class DesktopSmsActivity extends Activity implements ActivityResultDelega
                     Helper.showAlertDialog(DesktopSmsActivity.this, R.string.number_retrieval_error);
                     return;
                 }
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(DesktopSmsActivity.this);
-                builder.setTitle(R.string.test_message);
-                builder.setMessage(R.string.test_message_info);
-                builder.setNegativeButton(android.R.string.cancel, null);
-                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                
+                boolean handcent = appExists("com.handcent.nextsms");
+                boolean gosms = appExists("com.jb.gosms");
+                
+                final Runnable pre = new Runnable() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void run() {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(DesktopSmsActivity.this);
+                        builder.setTitle(R.string.test_message);
+                        builder.setMessage(R.string.test_message_info);
+                        builder.setNegativeButton(android.R.string.cancel, null);
+                        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        String message = getString(R.string.test_message_content);
-                        SmsManager sm = SmsManager.getDefault();
-                        sm.sendTextMessage(number, null, message, null, null);
+                                String message = getString(R.string.test_message_content);
+                                SmsManager sm = SmsManager.getDefault();
+                                sm.sendTextMessage(number, null, message, null, null);
+                            }
+                        });
+                        builder.setCancelable(true);
+                        builder.create().show();
                     }
-                });
-                builder.create().show();
+                };
+                
+                if (handcent || gosms) {
+                    AlertDialog.Builder builder = new Builder(DesktopSmsActivity.this);
+                    builder.setMessage(getString(R.string.msg_app_detected, getString(handcent ? R.string.handcent : R.string.gosms)));
+                    builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            pre.run();
+                        }
+                    });
+                    builder.setCancelable(true);
+                    builder.create().show();
+                }
+                else {
+                    pre.run();
+                }
             }
         });
         
