@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DesktopSMS</string>
+    <string name="app_name">DeskSMS</string>
     
-    <string name="description">DesktopSMS stuurt je SMS door naar je Google Talk en/of Gmail. Via deze service kun je die berichten ook weer beantwoorden.</string>
+    <string name="description">DeskSMS stuurt je SMS door naar je Google Talk en/of Gmail. Via deze service kun je die berichten ook weer beantwoorden.</string>
     
     <string name="signin_success">Je bent succesvol ingelogd!</string>
     <string name="signin_failure">Inloggen is niet gelukt. Controleer je internetverbinding en probeer het nog een keer. Inloggen met je gegevens van Google Apps kan mogelijk niet werken. Wanneer je deze foutmelding blijft krijgen, verstuur dan de log naar de ontwikkelaar.</string>
@@ -23,11 +23,11 @@
     <string name="forwarded">%s SMS verzonden naar Desktop</string>
     <string name="proxied">%s SMS verzonden door Desktop</string>
     
-    <string name="not_logged_in">Log in met je Google Account om gebruik te maken van DesktopSMS.</string>
+    <string name="not_logged_in">Log in met je Google Account om gebruik te maken van DeskSMS.</string>
     
     <string name="test_message">Verzend testbericht</string>
     <string name="test_message_info">Druk op OK om een SMS naar je zelf te sturen. Als het goed is ontvang je dat bericht op de manier zoals je dat gewend bent. Echter zal je nu ook een email moeten ontvangen en optioneel ook via Google Talk!</string>
-    <string name="test_message_content">Dit bericht is verstuurd door DesktopSMS!</string>
+    <string name="test_message_content">Dit bericht is verstuurd door DeskSMS!</string>
     
     <string name="number_retrieval_error">Het is niet gelukt om je nummer te achterhalen. Gebruik je eigen sms applicatie om handmatig aan tekst bericht te maken om Desktop SMS te testen.</string>
 </resources>

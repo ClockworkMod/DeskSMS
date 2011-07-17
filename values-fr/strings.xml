@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DesktopSMS</string>
+    <string name="app_name">DeskSMS</string>
     
-    <string name="description">DesktopSMS transmet vos SMS vers Google Talk et/ou Gmail. Et retourne vos réponses par SMS!</string>
+    <string name="description">DeskSMS transmet vos SMS vers Google Talk et/ou Gmail. Et retourne vos réponses par SMS!</string>
     
     <string name="signin_success">Vous vous êtes correctement connecté!</string>
     <string name="signin_failure">Échec de connexion. Merci de vérifier votre connexion internet et d\'essayer à nouveau. Se Connecter avec une adresse Google Apps peut ne pas fonctionner. Si le problème persiste, envoyé le journal d\'erreur au développeur.</string>
@@ -23,11 +23,11 @@
     <string name="forwarded">%s SMS envoyés vers votre bureau</string>
     <string name="proxied">%s SMS envoyés par votre bureau</string>
     
-    <string name="not_logged_in">Connectez-vous avec votre compte Google pour utiliser DesktopSMS.</string>
+    <string name="not_logged_in">Connectez-vous avec votre compte Google pour utiliser DeskSMS.</string>
     
     <string name="test_message">Envoyer un message d\'essai.</string>
     <string name="test_message_info">Appuyez sur OK pour vous envoyer un SMS. Vous devriez voir ce SMS sur votre application de messagerie instantanée habituelle. Vous devriez aussi recevoir un mail et optionnellement un message GTalk!</string>
-    <string name="test_message_content">Ceci est un message d\'essai depuis DesktopSMS!</string>
+    <string name="test_message_content">Ceci est un message d\'essai depuis DeskSMS!</string>
     
-    <string name="number_retrieval_error">Impossible de récuperer votre numéro de téléphone. Utilisez votre application de messagerie pour vous envoyer un message manuellement pour tester DesktopSMS.</string>
+    <string name="number_retrieval_error">Impossible de récuperer votre numéro de téléphone. Utilisez votre application de messagerie pour vous envoyer un message manuellement pour tester DeskSMS.</string>
 </resources>
