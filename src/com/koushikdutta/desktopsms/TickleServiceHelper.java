@@ -185,21 +185,23 @@ public class TickleServiceHelper {
         builder.create().show();
     }
 
-    static private void registerForPush(final Context context, final Callback<Void> callback) {
+    static void registerForPush(final Context context, final Callback<Void> callback) {
         Intent registrationIntent = new Intent("com.google.android.c2dm.intent.REGISTER");
         registrationIntent.putExtra("app", PendingIntent.getBroadcast(context, 0, new Intent(), 0));
         registrationIntent.putExtra("sender", "koushd@gmail.com");
         
-        BroadcastReceiver receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                context.unregisterReceiver(this);
-                callback.onCallback(null);
-            }
-        };
+        if (callback != null) {
+            BroadcastReceiver receiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    context.unregisterReceiver(this);
+                    callback.onCallback(null);
+                }
+            };
         
-        IntentFilter filter = new IntentFilter(C2DMReceiver.ACTION_REGISTRATION_RECEIVED);
-        context.registerReceiver(receiver, filter);
+            IntentFilter filter = new IntentFilter(C2DMReceiver.ACTION_REGISTRATION_RECEIVED);
+            context.registerReceiver(receiver, filter);
+        }
         
         context.startService(registrationIntent);
     }

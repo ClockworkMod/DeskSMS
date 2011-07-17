@@ -33,6 +33,12 @@ public final class R {
         public static final int gosms=0x7f040016;
         public static final int handcent=0x7f040015;
         public static final int login_with_google=0x7f040004;
+        /**  Missed call at 12:30PM 
+         */
+        public static final int missed_call_at=0x7f040018;
+        /**  Missed call from Koushik Dutta 
+         */
+        public static final int missed_call_from=0x7f040017;
         public static final int msg_app_detected=0x7f040014;
         public static final int not_logged_in=0x7f04000f;
         public static final int number_retrieval_error=0x7f040013;
@@ -46,6 +52,7 @@ public final class R {
         public static final int setting_up_push=0x7f040009;
         public static final int signin_failure=0x7f040003;
         public static final int signin_success=0x7f040002;
+        public static final int sms_received=0x7f040019;
         public static final int test_message=0x7f040010;
         public static final int test_message_content=0x7f040012;
         public static final int test_message_info=0x7f040011;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.koushikdutta.desktopsms" android:versionCode="1003"
-	android:versionName="1.0.0.3">
+	package="com.koushikdutta.desktopsms" android:versionCode="1005"
+	android:versionName="1.0.0.5">
 
 	<uses-sdk android:minSdkVersion="8" />
 
@@ -19,7 +19,7 @@
 				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
 			</intent-filter>
 		</receiver>
-		<receiver android:name=".PhoneStateChangeReceiver">
+		<receiver android:name=".PhoneStateChangedReceiver">
 			<intent-filter>
 				<action android:name="android.intent.action.PHONE_STATE" />
 			</intent-filter>
@@ -37,7 +37,13 @@
 				<category android:name="com.koushikdutta.desktopsms" />
 			</intent-filter>
 		</receiver>
+		<receiver android:name=".DateChangedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DATE_CHANGED" />
+            </intent-filter>
+		</receiver>
 		<service android:name=".SmsService" />
+		<service android:name=".PhoneStateChangedService" />
 	</application>
 
 	<!-- SMS related -->
