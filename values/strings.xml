@@ -2,33 +2,32 @@
 <resources>
     <string name="app_name">DesktopSMS</string>
     
-    <string name="description">DesktopSMS stuurt je SMS door naar je Google Talk en/of Gmail. Via deze service kun je die berichten ook weer beantwoorden.</string>
+    <string name="description">DesktopSMS forwards your SMS to your Google Talk and/or Gmail. And reply back to respond via text!</string>
     
-    <string name="signin_success">Je bent succesvol ingelogd!</string>
-    <string name="signin_failure">Inloggen is niet gelukt. Controleer je internetverbinding en probeer het nog een keer. Inloggen met je gegevens van Google Apps kan mogelijk niet werken. Wanneer je deze foutmelding blijft krijgen, verstuur dan de log naar de ontwikkelaar.</string>
+    <string name="signin_success">You have successfully signed in!</string>
+    <string name="signin_failure">Login failed. Please verify your internet connection and try again. Logging in with a Google Apps email address may not work. If the error persists, please send a log to the developer.</string>
     
-    <string name="login_with_google">Login met je Google Account</string>
-    <string name="requesting_permissions">Desktop SMS zal je nu vragen om toestemming voor het gebruik van je Google Account. Dit is om notificaties aan jou te geven en je aan te melden op onze server. Desktop SMS heeft geen toegang tot je wachtwoord of persoonlijke gegevens.</string>
-    <string name="permission_request">Vraag om toegang</string>
+    <string name="login_with_google">Login with Google Account</string>
+    <string name="requesting_permissions">Desktop SMS will now ask you for permission to use your Google Account authentication for the purposes of push notifications and registration with our server. Desktop SMS will not have access to your passwords or personal data.</string>
+    <string name="permission_request">Permissions Request</string>
     
-    <string name="send_xmpp">Maak verbinding met Google Talk</string>
-    <string name="send_email">Maak verbinding met Gmail</string>
+    <string name="send_xmpp">Connect to Google Talk</string>
+    <string name="send_email">Connect to Gmail</string>
     
-    <string name="setting_up_push">Instellen van notificaties...</string>
-    <string name="retrieving_authentication">Toegang tot Google aan het vekrijgen...</string>
-    <string name="registering_with_server">Aanmelden op de server...</string>
+    <string name="setting_up_push">Setting up push notifications...</string>
+    <string name="retrieving_authentication">Retrieving Google authentication tokens...</string>
+    <string name="registering_with_server">Registering with push server...</string>
     
-    <string name="current_account">Huidig acccount: %s</string>
+    <string name="current_account">Current Account: %s</string>
     
-    <string name="forwarded">%s SMS verzonden naar Desktop</string>
-    <string name="proxied">%s SMS verzonden door Desktop</string>
+    <string name="forwarded">%s SMS sent to your Desktop</string>
+    <string name="proxied">%s SMS sent by your Desktop</string>
     
-    <string name="not_logged_in">Log in met je Google Account om gebruik te maken van DesktopSMS.</string>
+    <string name="not_logged_in">Please log in with your Google Account to use DesktopSMS.</string>
     
-    <string name="test_message">Verzend testbericht</string>
-    <string name="test_message_info">Druk op OK om een SMS naar je zelf te sturen. Als het goed is ontvang je dat bericht op de manier zoals je dat gewend bent. Echter zal je nu ook een email moeten ontvangen en optioneel ook via Google Talk!</string>
-    <string name="test_message_content">Dit bericht is verstuurd door DesktopSMS!</string>
+    <string name="test_message">Send Test Message</string>
+    <string name="test_message_info">Press OK to send a SMS to yourself. You should see the SMS arrive in your Messaging application as usual. You should also receive an email and optionally a Google Talk message as well!</string>
+    <string name="test_message_content">This is a test message from DesktopSMS!</string>
     
-    <string name="number_retrieval_error">Het is niet gelukt om je nummer te achterhalen. Gebruik je eigen sms applicatie om handmatig aan tekst bericht te maken om Desktop SMS te testen.</string>
+    <string name="number_retrieval_error">Unable to retrieve your phone number. Please use your Messaging application to manually send yourself a text message to test Desktop SMS.</string>
 </resources>
-
