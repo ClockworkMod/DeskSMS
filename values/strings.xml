@@ -30,4 +30,8 @@
     <string name="test_message_content">This is a test message from DesktopSMS!</string>
     
     <string name="number_retrieval_error">Unable to retrieve your phone number. Please use your Messaging application to manually send yourself a text message to test Desktop SMS.</string>
+    
+    <string name="msg_app_detected">The application %s was found installed. If you do not receive a text message, please verify that that it has not disabled SMS notifications in the application\'s settings.</string>
+    <string name="handcent">Handcent</string>
+    <string name="gosms">GoSMS</string>
 </resources>
