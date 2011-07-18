@@ -8,7 +8,7 @@
     <string name="signin_failure">Login failed. Please verify your internet connection and try again. Logging in with a Google Apps email address may not work. If the error persists, please send a log to the developer.</string>
     
     <string name="login_with_google">Login with Google Account</string>
-    <string name="requesting_permissions">Desktop SMS will now ask you for permission to use your Google Account authentication for the purposes of push notifications and registration with our server. Desktop SMS will not have access to your passwords or personal data.</string>
+    <string name="requesting_permissions">DeskSMS will now ask you for permission to use your Google Account authentication for the purposes of push notifications and registration with our server. DeskSMS will not have access to your passwords or personal data.</string>
     <string name="permission_request">Permissions Request</string>
     
     <string name="send_xmpp">Connect to Google Talk</string>
@@ -29,7 +29,7 @@
     <string name="test_message_info">Press OK to send a SMS to yourself. You should see the SMS arrive in your Messaging application as usual. You should also receive an email and optionally a Google Talk message as well!</string>
     <string name="test_message_content">This is a test message from DeskSMS!</string>
     
-    <string name="number_retrieval_error">Unable to retrieve your phone number. Please use your Messaging application to manually send yourself a text message to test Desktop SMS.</string>
+    <string name="number_retrieval_error">Unable to retrieve your phone number. Please use your Messaging application to manually send yourself a text message to test DeskSMS.</string>
     
     <string name="msg_app_detected">The application %s was found installed. If you do not receive a text message, please verify that that it has not disabled SMS notifications in the application\'s settings.</string>
     <string name="handcent">Handcent</string>
@@ -40,4 +40,11 @@
     <!-- Missed call at 12:30PM -->
     <string name="missed_call_at">Missed call at %s.</string>
     <string name="sms_received">SMS Received from %s</string>
+    
+    <string name="account">Account</string>
+    <string name="notifications">Notifications</string>
+    <string name="google_talk">Google Talk</string>
+    <string name="gmail">Gmail</string>
+    
+    <string name="troubleshooting">Troubleshooting</string>
 </resources>

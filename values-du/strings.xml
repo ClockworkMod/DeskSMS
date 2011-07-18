@@ -8,7 +8,7 @@
     <string name="signin_failure">Inloggen is niet gelukt. Controleer je internetverbinding en probeer het nog een keer. Inloggen met je gegevens van Google Apps kan mogelijk niet werken. Wanneer je deze foutmelding blijft krijgen, verstuur dan de log naar de ontwikkelaar.</string>
     
     <string name="login_with_google">Login met je Google Account</string>
-    <string name="requesting_permissions">Desktop SMS zal je nu vragen om toestemming voor het gebruik van je Google Account. Dit is om notificaties aan jou te geven en je aan te melden op onze server. Desktop SMS heeft geen toegang tot je wachtwoord of persoonlijke gegevens.</string>
+    <string name="requesting_permissions">DeskSMS zal je nu vragen om toestemming voor het gebruik van je Google Account. Dit is om notificaties aan jou te geven en je aan te melden op onze server. DeskSMS heeft geen toegang tot je wachtwoord of persoonlijke gegevens.</string>
     <string name="permission_request">Vraag om toegang</string>
     
     <string name="send_xmpp">Maak verbinding met Google Talk</string>
@@ -29,6 +29,6 @@
     <string name="test_message_info">Druk op OK om een SMS naar je zelf te sturen. Als het goed is ontvang je dat bericht op de manier zoals je dat gewend bent. Echter zal je nu ook een email moeten ontvangen en optioneel ook via Google Talk!</string>
     <string name="test_message_content">Dit bericht is verstuurd door DeskSMS!</string>
     
-    <string name="number_retrieval_error">Het is niet gelukt om je nummer te achterhalen. Gebruik je eigen sms applicatie om handmatig aan tekst bericht te maken om Desktop SMS te testen.</string>
+    <string name="number_retrieval_error">Het is niet gelukt om je nummer te achterhalen. Gebruik je eigen sms applicatie om handmatig aan tekst bericht te maken om DeskSMS te testen.</string>
 </resources>
 

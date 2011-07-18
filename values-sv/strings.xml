@@ -9,7 +9,7 @@
     <string name="signin_failure">Inloggningen misslyckades. Kontrollera din internet uppkoppling och försök igen. Att logga in med en Google Apps email kanske inte fungerar. Var god kontakta utvecklaren om detta fel upprepar sig</string>
     
     <string name="login_with_google">Logga in med ett Google konto</string>
-    <string name="requesting_permissions">Desktop SMS kommer nu fråga efter din tillåtelse att använda ditt Google konto för att kunna använda push notifications och för att registrera med vår server. Desktop SMS kommer ej få tillgång till ditt lösenord eller personliga data.</string>
+    <string name="requesting_permissions">DeskSMS kommer nu fråga efter din tillåtelse att använda ditt Google konto för att kunna använda push notifications och för att registrera med vår server. DeskSMS kommer ej få tillgång till ditt lösenord eller personliga data.</string>
     <string name="permission_request">Behörighetsförfrågan</string>
     
     <string name="send_xmpp">Anslut till Google Talk</string>
@@ -30,5 +30,5 @@
     <string name="test_message_info">Tryck OK för att skicka ett SMS till dig själv. Du borde nu se SMSet i din vanliga SMS applikation, precis som vanligt. Du borde också få ett mail och ett meddelande på Google Talk, det sista är dock frivilligt.</string>
     <string name="test_message_content">Detta är ett testmeddelande från DeskSMS!</string>
     
-    <string name="number_retrieval_error">Unable to retrieve your phone number. Please use your Messaging application to manually send yourself a text message to test Desktop SMS.</string>
+    <string name="number_retrieval_error">Unable to retrieve your phone number. Please use your Messaging application to manually send yourself a text message to test DeskSMS.</string>
 </resources>

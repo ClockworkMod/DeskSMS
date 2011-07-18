@@ -8,7 +8,7 @@
     <string name="signin_failure">Échec de connexion. Merci de vérifier votre connexion internet et d\'essayer à nouveau. Se Connecter avec une adresse Google Apps peut ne pas fonctionner. Si le problème persiste, envoyé le journal d\'erreur au développeur.</string>
     
     <string name="login_with_google">Se connecter avec votre compte Google</string>
-    <string name="requesting_permissions">Desktop SMS vous demandera la permission pour utiliser votre compte Google afin de pousser les notifications et enregistrements via notre serveur. Desktop SMS n\'aura pas accès à vos mots de passe ni à vos données personnelles.</string>
+    <string name="requesting_permissions">DeskSMS vous demandera la permission pour utiliser votre compte Google afin de pousser les notifications et enregistrements via notre serveur. DeskSMS n\'aura pas accès à vos mots de passe ni à vos données personnelles.</string>
     <string name="permission_request">Demande de permission</string>
     
     <string name="send_xmpp">Se connecter à Google Talk</string>
