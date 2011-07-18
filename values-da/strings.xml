@@ -8,7 +8,7 @@
     <string name="signin_failure">Log ind fejlede. Tjek venligst din internet forbindelse og prøv igen. Hvis du logger ind med en Google Apps konto, så er der stor sandsynlighed for, at det ikke vil virke. Hvis fejlen bliver ved, send venligst en log til udvikleren.</string>
     
     <string name="login_with_google">Login med din Google Konto</string>
-    <string name="requesting_permissions">Desktop SMS vil nu spørge om adgang til at bruge din Google Konto autentificering for at kunne sende push beskeder og registrere med vores server. Desktop SMS vil ikke få adgang til dine kodeord eller personlige data.</string>
+    <string name="requesting_permissions">DeskSMS vil nu spørge om adgang til at bruge din Google Konto autentificering for at kunne sende push beskeder og registrere med vores server. DeskSMS vil ikke få adgang til dine kodeord eller personlige data.</string>
     <string name="permission_request">Adgangs anmodning</string>
     
     <string name="send_xmpp">Forbind til Google Talk</string>
@@ -29,5 +29,15 @@
     <string name="test_message_info">Tryk OK for at sende en SMS til dig selv. Du burde modtage en SMS besked i din SMS App som sædvanlig. Du burde også modtage en email og en Google Talk besked hvis dette er valgt!</string>
     <string name="test_message_content">Dette er en test besked fra DeskSMS!</string>
     
-    <string name="number_retrieval_error">Dit telefon nr. blev ikke fundet. Brug venligst din SMS app til manuelt at sende en SMS besked til dig selv for at teste Desktop SMS.</string>
+    <string name="number_retrieval_error">Dit telefon nr. blev ikke fundet. Brug venligst din SMS app til manuelt at sende en SMS besked til dig selv for at teste DeskSMS.</string>
+    
+    <string name="msg_app_detected">%s blev fundet installeret. Hvis du ikke modtager en besked, så tjek om SMS notificeringer er slået til i programmets indstillinger.</string>
+    <string name="handcent">Handcent</string>
+    <string name="gosms">GoSMS</string>
+	
+    <!-- Missed call from Koushik Dutta -->
+    <string name="missed_call_from">Mistet opkald fra %s.</string>
+    <!-- Missed call at 12:30PM -->
+    <string name="missed_call_at">Mistet opkald kl. %s.</string>
+    <string name="sms_received">SMS Modtaget fra %s</string>
 </resources>
