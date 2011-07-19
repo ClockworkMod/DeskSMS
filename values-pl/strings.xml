@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DesktopSMS</string>
+    
+    <string name="description">DesktopSMS przesyła Twoje SMSy na Twoje konto Gmail i/lub Google Talk. Jeśli odpowiesz, nadawca dostanie SMSa z Twojego numeru!</string>
+    
+    <string name="signin_success">Logowanie powiodło się!</string>
+    <string name="signin_failure">Logowanie nie powiodło się. Sprawdź połączenie z internetem i spróbuj ponownie. Logowanie przy pomocy adresu Google Apps może nie działać prawidłowo. W razie wystąpienia błędów, prosimy o przesłanie logów.</string>
+    
+    <string name="login_with_google">Logowanie przy pomocy konta Google.</string>
+    <string name="requesting_permissions">Desktop SMS poprosi teraz o zgodę na autoryzację przy pomocy konta Google w celu uruchomienia powiadomień i rejestracji na naszym serwerze. Desktop SMS nie będzie miał dostępu od Twoich haseł ani osobistych danych.</string>
+    <string name="permission_request">Żądanie dostępu</string>
+    
+    <string name="send_xmpp">Połącz z Google Talk</string>
+    <string name="send_email">Połącz z Gmail</string>
+    
+    <string name="setting_up_push">Konfiguracja powiadomień...</string>
+    <string name="retrieving_authentication">Pobieranie tokena uwierzytelniania Google...</string>
+    <string name="registering_with_server">Rejestracja na serwerze...</string>
+    
+    <string name="current_account">Aktualne konto: %s</string>
+    
+    <string name="forwarded">%s SMS wysłany do Twojego Desktop</string>
+    <string name="proxied">%s SMS wysłany przez Twój Desktop</string>
+    
+    <string name="not_logged_in">Zaloguj się przy pomocy konta Google żeby skorzystać z DesktopSMS.</string>
+    
+    <string name="test_message">Wyślij wiadomość testową</string>
+    <string name="test_message_info">Wciśnij OK żeby wysłać do siebie SMS. Powinna pojawić się nowa wiadomość. Powinien również pojawić się nowy email, oraz opcjonalnie wiadomość Google Talk!</string>
+    <string name="test_message_content">To jest wiadomość tekstowa z DesktopSMS!</string>
+    
+    <string name="number_retrieval_error">Uzyskanie Twojego numeru telefonu nie było możliwe. Spróbuj samodzielnie wysłać do siebie wiadomość SMS.</string>
+
+    <string name="msg_app_detected">Wykryto aplikację %s. Jeśli nie otrzymałeś wiadomości sprawdź w ustawianiach aplikacji czy powiadomienia nie są wyłączone</string>
+    <string name="handcent">Handcent</string>
+    <string name="gosms">GoSMS</string>
+</resources>
