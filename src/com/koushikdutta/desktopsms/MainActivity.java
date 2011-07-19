@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.SmsManager;
@@ -66,7 +68,9 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        
+        startService(new Intent(this, SyncService.class));
+        
         String account = mSettings.getString("account");
         if (mSettings.getLong("last_missed_call", 0) == 0) {
             mSettings.setLong("last_missed_call", System.currentTimeMillis());
