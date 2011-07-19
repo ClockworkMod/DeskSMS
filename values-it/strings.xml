@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DeskSMS</string>
+    
+    <string name="description">DeskSMS inoltra i sui SMS al suo account Google Talk e/o Gmail. E rispondere tramite SMS!</string>
+    
+    <string name="signin_success">Ha accesso con successo!</string>
+    <string name="signin_failure">Accesso fallito. Si prega di verificare la connessione a Internet e riprovare. Accesso con un indirizzo di Google Apps potrebbe non funzionare. Se l’errore persiste, si prega di inviare un registro allo sviluppatore.</string>
+    
+    <string name="login_with_google">Accede al suo account Google</string>
+    <string name="requesting_permissions">Ora DeskSMS le chiederà l’autorizzazione di utilizzare l’autenticazione del suo Account Google per le notifiche push e la registrazione con il nostro server. Desktop SMS non avrà accesso ai suoi password o dati personali.</string>
+    <string name="permission_request">Richiesta di autorizzazione</string>
+    
+    <string name="send_xmpp">Collegare a Google Talk</string>
+    <string name="send_email">Collegare a Gmail</string>
+    
+    <string name="setting_up_push">Impostare le notifiche push...</string>
+    <string name="retrieving_authentication">Recuperare i token di autenticazione Google...</string>
+    <string name="registering_with_server">Registrare col server push...</string>
+    
+    <string name="current_account">Account Attuale: %s</string>
+    
+    <string name="forwarded">%s SMS inviato/i al suo computer</string>
+    <string name="proxied">%s SMS inviato/i dal suo computer</string>
+    
+    <string name="not_logged_in">Per cortesia accede col suo Account Google per utilizzare DeskSMS.</string>
+    
+    <string name="test_message">Invia SMS</string>
+    <string name="test_message_info">Prema OK per inviarsi un SMS. Il SMS dovrebbe arrivare nel suo applicazione messaggi come al solito. Dovrebbe anche ricevere una email e facoltativamente un SMS Google Talk!</string>
+    <string name="test_message_content">Questo è un SMS da DeskSMS!</string>
+    
+    <string name="number_retrieval_error">Impossibile recuperare il suo numero di telefono. Per cortesia utilizzi l’applicazione messaggi per inviarsi manualmente un SMS per provare Desktop SMS.</string>
+    
+    <string name="msg_app_detected">L’applicazione %s è stata trovata installata. Se non receve un SMS, per cortesia verifica che non ha disattivato le notifiche SMS nelle impostazioni dell’applicazione.</string>
+    <string name="handcent">Handcent</string>
+    <string name="gosms">GoSMS</string>
+    
+    <!-- Missed call from Koushik Dutta -->
+    <string name="missed_call_from">Chiamata persa da %s.</string>
+    <!-- Missed call at 12:30PM -->
+    <string name="missed_call_at">Chiamata persa a %s.</string>
+    <string name="sms_received">SMS ricevuto da %s</string>
+    
+    <string name="account">Account</string>
+    <string name="notifications">Notifiche</string>
+    <string name="google_talk">Google Talk</string>
+    <string name="gmail">Gmail</string>
+    
+    <string name="troubleshooting">Troubleshooting</string>
+</resources>
