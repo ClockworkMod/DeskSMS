@@ -68,6 +68,9 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         super.onCreate(savedInstanceState);
 
         String account = mSettings.getString("account");
+        if (mSettings.getLong("last_missed_call", 0) == 0) {
+            mSettings.setLong("last_missed_call", System.currentTimeMillis());
+        }
         
         if (Helper.isJavaScriptNullOrEmpty(account)) {
             doLogin();

@@ -22,12 +22,14 @@ public class WidgetProvider extends AppWidgetProvider {
             boolean val = settings.getBoolean("forward_email", true);
             settings.setBoolean("forward_email", !val);
             AppWidgetManager.getInstance(context).updateAppWidget(new ComponentName(context, WidgetProvider.class), getRemoteViews(context));
+            ServiceHelper.updateSettings(context);
         }
         else if (TOGGLE_XMPP.equals(intent.getAction())) {
             Settings settings = Settings.getInstance(context);
             boolean val = settings.getBoolean("forward_xmpp", true);
             settings.setBoolean("forward_xmpp", !val);
             AppWidgetManager.getInstance(context).updateAppWidget(new ComponentName(context, WidgetProvider.class), getRemoteViews(context));
+            ServiceHelper.updateSettings(context);
         }
         else if (UPDATE.equals(intent.getAction())) {
             AppWidgetManager.getInstance(context).updateAppWidget(new ComponentName(context, WidgetProvider.class), getRemoteViews(context));

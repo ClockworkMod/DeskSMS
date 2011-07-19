@@ -74,9 +74,11 @@ public final class R {
         public static final int handcent=0x7f050015;
         public static final int login_with_google=0x7f050004;
         /**  Missed call at 12:30PM 
+ Missed call at 12:30PM 
          */
         public static final int missed_call_at=0x7f050018;
         /**  Missed call from Koushik Dutta 
+ Missed call from Koushik Dutta 
          */
         public static final int missed_call_from=0x7f050017;
         public static final int msg_app_detected=0x7f050014;
