@@ -45,6 +45,17 @@
 		<service android:name=".SmsService" />
 		<service android:name=".PhoneStateChangedService" />
 		<service android:name=".SyncService" />
+		
+        <receiver android:name=".WidgetProvider"
+                android:label="@string/widget_name">
+            <intent-filter>
+                <action android:name="com.koushikdutta.desktopsms.TOGGLE_EMAIL" />
+                <action android:name="com.koushikdutta.desktopsms.TOGGLE_XMPP" />
+                <action android:name="com.koushikdutta.desktopsms.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/appwidget_info" />
+        </receiver>
 	</application>
 
 	<!-- SMS related -->

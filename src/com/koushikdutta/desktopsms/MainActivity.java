@@ -1,34 +1,18 @@
 package com.koushikdutta.desktopsms;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.util.ArrayList;
-
-import org.apache.http.HttpMessage;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends ActivityBase implements ActivityResultDelegate {
-    private static final String SETTINGS_URL = "https://desksms.appspot.com/settings";
     private static final String LOGTAG = MainActivity.class.getSimpleName();
     private Handler mHandler = new Handler();
 
@@ -53,11 +37,17 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                 TickleServiceHelper.login(MainActivity.this, MainActivity.this, new Callback<Boolean>() {
                     @Override
                     public void onCallback(Boolean result) {
+                        String account = mSettings.getString("account");
+                        if (Helper.isJavaScriptNullOrEmpty(account)) {
+                            finish();
+                            return;
+                        }
+                        
                         if (!result)
                             return;
 
                         ListItem acc = findItem(R.string.account);
-                        acc.setSummary(mSettings.getString("account"));
+                        acc.setSummary(account);
                         ListItem gmail = findItem(R.string.gmail);
                         ListItem gtalk = findItem(R.string.google_talk);
                         gmail.setEnabled(true);
@@ -69,21 +59,8 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                 });
             }
         });
+        builder.setCancelable(false);
         builder.create().show();
-    }
-    
-    private void addAuthentication(HttpMessage message) {
-        String ascidCookie = mSettings.getString("Cookie");
-        message.setHeader("Cookie", ascidCookie);
-        message.setHeader("X-Same-Domain", "1"); // XSRF
-    }
-    
-    private HttpPost getAuthenticatedPost(URI uri, ArrayList<NameValuePair> params) throws UnsupportedEncodingException {
-        HttpPost post = new HttpPost(uri);
-        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
-        post.setEntity(entity);
-        addAuthentication(post);
-        return post;
     }
 
     @Override
@@ -96,32 +73,22 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             doLogin();
         }
         
-        new Thread() {
-            public void run() {
-                try {
-                    HttpGet get = new HttpGet(new URI(SETTINGS_URL));
-                    addAuthentication(get);
-                    DefaultHttpClient client = new DefaultHttpClient();
-                    HttpResponse res = client.execute(get);
-                    JSONObject s = new JSONObject(StreamUtility.readToEnd(res.getEntity().getContent()));
-                    final boolean forward_xmpp = s.optBoolean("forward_xmpp", true);
-                    final boolean forward_email = s.optBoolean("forward_email", true);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ListItem gmail = findItem(R.string.gmail);
-                            ListItem gtalk = findItem(R.string.google_talk);
-                            gmail.setIsChecked(forward_email);
-                            gtalk.setIsChecked(forward_xmpp);
-                        }
-                    });
-                    Log.i(LOGTAG, "Status code from register: " + res.getStatusLine().getStatusCode());
-                }
-                catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            };
-        }.start();
+        ServiceHelper.getSettings(this, new Callback<JSONObject>() {
+            @Override
+            public void onCallback(JSONObject result) {
+                final boolean forward_xmpp = result.optBoolean("forward_xmpp", true);
+                final boolean forward_email = result.optBoolean("forward_email", true);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ListItem gmail = findItem(R.string.gmail);
+                        ListItem gtalk = findItem(R.string.google_talk);
+                        gmail.setIsChecked(forward_email);
+                        gtalk.setIsChecked(forward_xmpp);
+                    }
+                });
+            }
+        });
 
         addItem(R.string.account, new ListItem(this, getString(R.string.account), account) {
             @Override
@@ -134,27 +101,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         final Runnable updateSettings = new Runnable() {
             @Override
             public void run() {
-                ListItem sendXmpp = findItem(R.string.google_talk);
-                ListItem sendEmail = findItem(R.string.gmail);
-                final boolean xmpp = sendXmpp.getIsChecked();
-                final boolean mail = sendEmail.getIsChecked();
-                new Thread() {
-                    public void run() {
-                        try {
-                            ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-                            params.add(new BasicNameValuePair("forward_xmpp", String.valueOf(xmpp)));
-                            params.add(new BasicNameValuePair("forward_email", String.valueOf(mail)));
-
-                            HttpPost post = getAuthenticatedPost(new URI(SETTINGS_URL), params);
-                            DefaultHttpClient client = new DefaultHttpClient();
-                            HttpResponse res = client.execute(post);
-                            Log.i(LOGTAG, "Status code from register: " + res.getStatusLine().getStatusCode());
-                        }
-                        catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    };
-                }.start();
+                ServiceHelper.updateSettings(MainActivity.this);
             }
         };
 
@@ -242,9 +189,9 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         });
     }
 
-    Callback<Tuple<Integer, Intent>> mActivityResultCallback;
+    Callback<Tuple<Integer, Tuple<Integer, Intent>>> mActivityResultCallback;
 
-    public void setOnActivityResultCallback(Callback<Tuple<Integer, Intent>> callback) {
+    public void setOnActivityResultCallback(Callback<Tuple<Integer, Tuple<Integer, Intent>>> callback) {
         mActivityResultCallback = callback;
     }
 
@@ -252,6 +199,6 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (mActivityResultCallback != null)
-            mActivityResultCallback.onCallback(new Tuple<Integer, Intent>(requestCode, data));
+            mActivityResultCallback.onCallback(new Tuple<Integer, Tuple<Integer, Intent>>(requestCode, new Tuple<Integer, Intent>(resultCode, data)));
     }
 }

@@ -11,6 +11,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
 
@@ -86,6 +87,17 @@ public class C2DMReceiver extends BroadcastReceiver {
                 PendingIntent pi = PendingIntent.getActivity(context, 0, i, 0);
                 n.setLatestEventInfo(context, title, text, pi);
                 nm.notify(1, n);
+            }
+            else if ("settings".equals(type)) {
+                Bundle extras = intent.getExtras();
+                for (String key: extras.keySet()) {
+                    if ("type".equals(key))
+                        continue;
+                    String value = extras.getString(key);
+                    settings.setString(key, value);
+                }
+                Intent i = new Intent(WidgetProvider.UPDATE);
+                context.sendBroadcast(i);
             }
             else {
                 String number = intent.getStringExtra("to");

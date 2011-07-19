@@ -32,6 +32,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 public class TickleServiceHelper {
@@ -117,8 +118,11 @@ public class TickleServiceHelper {
     }
 
     public static void login(final Activity context, final ActivityResultDelegate delegate, final Callback<Boolean> callback) {
+        final Handler handler = new Handler();
         final String[] accounts = getGoogleAccounts(context);
         AlertDialog.Builder builder = new Builder(context);
+        builder.setCancelable(false);
+        builder.setTitle(R.string.accounts);
         builder.setItems(accounts, new OnClickListener() {
             public void onClick(DialogInterface dialog, final int which) {
                 final String accountName = accounts[which];
@@ -170,8 +174,8 @@ public class TickleServiceHelper {
                                     }.start();
                                 }
                                 catch (Exception e) {
-                                    dlg.dismiss();
                                     e.printStackTrace();
+                                    dlg.dismiss();
                                     Helper.showAlertDialog(context, R.string.signin_failure);
                                     callback.onCallback(false);
                                 }
@@ -222,12 +226,20 @@ public class TickleServiceHelper {
                         if (delegate == null)
                             throw new Exception();
                         Intent authIntent = (Intent) bundle.get(AccountManager.KEY_INTENT);
-                        delegate.setOnActivityResultCallback(new Callback<Tuple<Integer, Intent>>() {
-                            public void onCallback(Tuple<Integer, Intent> result) {
-                                if (result.First == 242424)
-                                    tryAuth(context, accountName, callback, delegate);
+                        delegate.setOnActivityResultCallback(new Callback<Tuple<Integer, Tuple<Integer, Intent>>>() {
+                            public void onCallback(Tuple<Integer, Tuple<Integer, Intent>> result) {
+                                if (result.First != 242424)
+                                    return;
+                                if (result.Second.First == Activity.RESULT_OK)
+                                    tryAuth(context, accountName, callback, null);
+                                else
+                                    callback.onCallback(null);
                             }
                         });
+                        // for some reason it sets the intent flag with FLAG_ACTIVITY_NEW_TASK
+                        // This ends up sending an immediatae Activity.RESULT_CANCELLED event to
+                        // the calling activity.
+                        authIntent.setFlags(0);
                         context.startActivityForResult(authIntent, 242424);
                     }
                     else {

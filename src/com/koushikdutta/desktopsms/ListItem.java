@@ -77,6 +77,7 @@ public class ListItem {
         TextView title = (TextView)convertView.findViewById(R.id.title);
         TextView summary = (TextView)convertView.findViewById(R.id.summary);
         CheckBox cb = (CheckBox)convertView.findViewById(R.id.checkbox);
+        cb.setOnCheckedChangeListener(null);
         cb.setChecked(checked);
         cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
@@ -85,6 +86,7 @@ public class ListItem {
             }
         });
         cb.setVisibility(CheckboxVisible ? View.VISIBLE : View.GONE);
+        cb.setChecked(checked);
         
         title.setEnabled(Enabled);
         summary.setEnabled(Enabled);
