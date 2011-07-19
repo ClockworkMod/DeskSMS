@@ -47,4 +47,8 @@
     <string name="gmail">Gmail</string>
     
     <string name="troubleshooting">Troubleshooting</string>
+
+    <string name="accounts">Accounts</string>
+    
+    <string name="widget_name">DeskSMS Widget</string>
 </resources>
