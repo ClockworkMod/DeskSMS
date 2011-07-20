@@ -38,10 +38,7 @@ public class ServiceHelper {
         return post;
     }
     
-    static void updateSettings(final Context context) {
-        Settings settings = Settings.getInstance(context);
-        final boolean xmpp = settings.getBoolean("forward_xmpp", true);
-        final boolean mail = settings.getBoolean("forward_email", true);
+    static void updateSettings(final Context context, final boolean xmpp, final boolean mail, final Callback<Boolean> callback) {
         new Thread() {
             public void run() {
                 try {
@@ -53,11 +50,20 @@ public class ServiceHelper {
                     DefaultHttpClient client = new DefaultHttpClient();
                     HttpResponse res = client.execute(post);
                     Log.i(LOGTAG, "Status code from register: " + res.getStatusLine().getStatusCode());
-                    Intent i = new Intent(WidgetProvider.UPDATE);
-                    context.sendBroadcast(i);
+                    Settings settings = Settings.getInstance(context);
+                    settings.setBoolean("forward_xmpp", xmpp);
+                    settings.setBoolean("forward_email", mail);
+                    if (callback != null)
+                        callback.onCallback(true);
                 }
                 catch (Exception ex) {
-                    ex.printStackTrace();
+                    //ex.printStackTrace();
+                    if (callback != null)
+                        callback.onCallback(false);
+                }
+                finally {
+                    Intent i = new Intent(WidgetProvider.UPDATE);
+                    context.sendBroadcast(i);
                 }
             };
         }.start();        

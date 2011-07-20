@@ -17,22 +17,19 @@ public class WidgetProvider extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         
+        Settings settings = Settings.getInstance(context);
+        boolean xmpp = settings.getBoolean("forward_xmpp", true);
+        boolean email = settings.getBoolean("forward_email", true);
         if (TOGGLE_EMAIL.equals(intent.getAction())) {
-            Settings settings = Settings.getInstance(context);
-            boolean val = settings.getBoolean("forward_email", true);
-            settings.setBoolean("forward_email", !val);
-            AppWidgetManager.getInstance(context).updateAppWidget(new ComponentName(context, WidgetProvider.class), getRemoteViews(context));
-            ServiceHelper.updateSettings(context);
+            AppWidgetManager.getInstance(context).updateAppWidget(new ComponentName(context, WidgetProvider.class), getRemoteViews(context, xmpp, !email));
+            ServiceHelper.updateSettings(context, xmpp, !email, null);
         }
         else if (TOGGLE_XMPP.equals(intent.getAction())) {
-            Settings settings = Settings.getInstance(context);
-            boolean val = settings.getBoolean("forward_xmpp", true);
-            settings.setBoolean("forward_xmpp", !val);
-            AppWidgetManager.getInstance(context).updateAppWidget(new ComponentName(context, WidgetProvider.class), getRemoteViews(context));
-            ServiceHelper.updateSettings(context);
+            AppWidgetManager.getInstance(context).updateAppWidget(new ComponentName(context, WidgetProvider.class), getRemoteViews(context, !xmpp, email));
+            ServiceHelper.updateSettings(context, !xmpp, email, null);
         }
         else if (UPDATE.equals(intent.getAction())) {
-            AppWidgetManager.getInstance(context).updateAppWidget(new ComponentName(context, WidgetProvider.class), getRemoteViews(context));
+            AppWidgetManager.getInstance(context).updateAppWidget(new ComponentName(context, WidgetProvider.class), getRemoteViews(context, xmpp, email));
         }
     }
     
@@ -40,16 +37,18 @@ public class WidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         
+        Settings settings = Settings.getInstance(context);
+        boolean xmpp = settings.getBoolean("forward_xmpp", true);
+        boolean email = settings.getBoolean("forward_email", true);
         for (int appWidgetId: appWidgetIds) {
-            appWidgetManager.updateAppWidget(appWidgetId, getRemoteViews(context));
+            appWidgetManager.updateAppWidget(appWidgetId, getRemoteViews(context, xmpp, email));
         }
     }
     
-    public RemoteViews getRemoteViews(Context context) {
+    public RemoteViews getRemoteViews(Context context, boolean forward_xmpp, boolean forward_email) {
+        System.out.println(forward_xmpp);
+        System.out.println(forward_email);
         RemoteViews rvs = new RemoteViews(context.getPackageName(), R.layout.widget);
-        Settings settings = Settings.getInstance(context);
-        boolean forward_email = settings.getBoolean("forward_email", true);
-        boolean forward_xmpp = settings.getBoolean("forward_xmpp", true);
         rvs.setImageViewResource(R.id.email_ind, forward_email ? R.drawable.appwidget_settings_ind_mid_l : R.drawable.appwidget_settings_ind_mid_red_l);
         rvs.setImageViewResource(R.id.xmpp_ind, forward_xmpp ? R.drawable.appwidget_settings_ind_mid_r : R.drawable.appwidget_settings_ind_mid_red_r);
 

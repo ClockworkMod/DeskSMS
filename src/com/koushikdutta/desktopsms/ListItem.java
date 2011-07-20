@@ -3,6 +3,7 @@ package com.koushikdutta.desktopsms;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -79,10 +80,12 @@ public class ListItem {
         CheckBox cb = (CheckBox)convertView.findViewById(R.id.checkbox);
         cb.setOnCheckedChangeListener(null);
         cb.setChecked(checked);
+        final View cv = convertView;
         cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 checked = isChecked;
+                ListItem.this.onClick(cv);
             }
         });
         cb.setVisibility(CheckboxVisible ? View.VISIBLE : View.GONE);
@@ -114,11 +117,14 @@ public class ListItem {
         return convertView;
     }
     
-    public void onClick(View view) {
+    void onClickInternal(View view) {
         if (CheckboxVisible) {
             CheckBox cb = (CheckBox)view.findViewById(R.id.checkbox);
             cb.setChecked(!cb.isChecked());
         }
+    }
+    
+    public void onClick(View view) {
     }
     
     public boolean onLongClick() {

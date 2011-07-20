@@ -122,6 +122,7 @@ public class ActivityBase extends Activity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int arg2, long arg3) {
                 ListItem li = (ListItem)mAdapter.getItem(arg2);
+                li.onClickInternal(view);
                 li.onClick(view);
             }
         });

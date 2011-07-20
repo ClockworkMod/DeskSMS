@@ -3,11 +3,10 @@ package com.koushikdutta.desktopsms;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.SmsManager;
@@ -108,7 +107,28 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         final Runnable updateSettings = new Runnable() {
             @Override
             public void run() {
-                ServiceHelper.updateSettings(MainActivity.this);
+                final ListItem gmail = findItem(R.string.gmail);
+                final ListItem gtalk = findItem(R.string.google_talk);
+                final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+                dialog.setMessage(getString(R.string.updating_settings));
+                dialog.show();
+                dialog.setCancelable(false);
+                ServiceHelper.updateSettings(MainActivity.this, gtalk.getIsChecked(), gmail.getIsChecked(), new Callback<Boolean>() {
+                    @Override
+                    public void onCallback(final Boolean result) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                                if (!result) {
+                                    Helper.showAlertDialog(MainActivity.this, R.string.updating_settings_error);
+                                    gmail.setIsChecked(mSettings.getBoolean("forward_email", true));
+                                    gtalk.setIsChecked(mSettings.getBoolean("forward_xmpp", true));
+                                }
+                            }
+                        });
+                    }
+                });
             }
         };
 
@@ -121,8 +141,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                mSettings.setBoolean("forward_email", getIsChecked());
-                mHandler.postDelayed(updateSettings, 2000);
+                updateSettings.run();
             }
         });
 
@@ -135,8 +154,20 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                mSettings.setBoolean("forward_xmpp", getIsChecked());
-                mHandler.postDelayed(updateSettings, 2000);
+                updateSettings.run();
+            }
+        });
+        
+        addItem(R.string.notifications, new ListItem(this, R.string.disable_notifications, R.string.disable_notifications_summary) {
+            {
+                CheckboxVisible = true;
+                setIsChecked(mSettings.getBoolean("disable_notifications", false));
+            }
+            
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                mSettings.setBoolean("disable_notifications", getIsChecked());
             }
         });
 

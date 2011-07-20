@@ -15,7 +15,9 @@
 			</intent-filter>
 		</activity>
 		<receiver android:name=".SmsReceiver" android:permission="android.permission.BROADCAST_SMS">
-			<intent-filter android:priority="2147483647">
+			<!-- 2147483646 = Integer.MaxValue - 1 -->
+			<!-- This is so we can allow GoSMS and Handcent (2147483647) to receive notifications, but to disable then in the stock messaging app, etc. -->
+			<intent-filter android:priority="2147483646">
 				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
 			</intent-filter>
 		</receiver>

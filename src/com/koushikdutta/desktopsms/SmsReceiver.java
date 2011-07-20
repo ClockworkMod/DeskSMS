@@ -11,6 +11,10 @@ public class SmsReceiver extends BroadcastReceiver {
         Intent i = new Intent(context, SmsService.class);
         i.putExtras(intent);
         context.startService(i);
+    
+        boolean disable = Settings.getInstance(context).getBoolean("disable_notifications", false);
+        if (disable)
+            setResultData(null);
     }
 
 }

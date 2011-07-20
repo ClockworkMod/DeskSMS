@@ -67,6 +67,8 @@ public final class R {
         public static final int app_name=0x7f050000;
         public static final int current_account=0x7f05000c;
         public static final int description=0x7f050001;
+        public static final int disable_notifications=0x7f050023;
+        public static final int disable_notifications_summary=0x7f050024;
         public static final int forwarded=0x7f05000d;
         public static final int gmail=0x7f05001d;
         public static final int google_talk=0x7f05001c;
@@ -75,9 +77,11 @@ public final class R {
         public static final int login_with_google=0x7f050004;
         /**  Missed call at 12:30PM 
  Missed call at 12:30PM 
+ Missed call at 12:30PM 
          */
         public static final int missed_call_at=0x7f050018;
         /**  Missed call from Koushik Dutta 
+ Missed call from Koushik Dutta 
  Missed call from Koushik Dutta 
          */
         public static final int missed_call_from=0x7f050017;
@@ -100,6 +104,8 @@ public final class R {
         public static final int test_message_content=0x7f050012;
         public static final int test_message_info=0x7f050011;
         public static final int troubleshooting=0x7f05001e;
+        public static final int updating_settings=0x7f050021;
+        public static final int updating_settings_error=0x7f050022;
         public static final int widget_name=0x7f050020;
     }
     public static final class xml {
