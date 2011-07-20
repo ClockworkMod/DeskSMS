@@ -4,19 +4,19 @@
     
     <string name="description">DeskSMS inoltra i sui SMS al suo account Google Talk e/o Gmail. E rispondere tramite SMS!</string>
     
-    <string name="signin_success">Ha accesso con successo!</string>
+    <string name="signin_success">Ha effettuato l'accesso con successo!</string>
     <string name="signin_failure">Accesso fallito. Si prega di verificare la connessione a Internet e riprovare. Accesso con un indirizzo di Google Apps potrebbe non funzionare. Se l’errore persiste, si prega di inviare un registro allo sviluppatore.</string>
     
-    <string name="login_with_google">Accede al suo account Google</string>
-    <string name="requesting_permissions">Ora DeskSMS le chiederà l’autorizzazione di utilizzare l’autenticazione del suo Account Google per le notifiche push e la registrazione con il nostro server. Desktop SMS non avrà accesso ai suoi password o dati personali.</string>
+    <string name="login_with_google">Acceda con il suo account Google</string>
+    <string name="requesting_permissions">Ora DeskSMS le chiederà l’autorizzazione per utilizzare l’autenticazione del suo Account Google per le notifiche push e la registrazione con il nostro server. Desktop SMS non avrà accesso alla sua password o ai dati personali.</string>
     <string name="permission_request">Richiesta di autorizzazione</string>
     
     <string name="send_xmpp">Collegare a Google Talk</string>
     <string name="send_email">Collegare a Gmail</string>
     
     <string name="setting_up_push">Impostare le notifiche push...</string>
-    <string name="retrieving_authentication">Recuperare i token di autenticazione Google...</string>
-    <string name="registering_with_server">Registrare col server push...</string>
+    <string name="retrieving_authentication">Recupero dei token di autenticazione Google...</string>
+    <string name="registering_with_server">Registrazione al server push...</string>
     
     <string name="current_account">Account Attuale: %s</string>
     
@@ -38,7 +38,7 @@
     <!-- Missed call from Koushik Dutta -->
     <string name="missed_call_from">Chiamata persa da %s.</string>
     <!-- Missed call at 12:30PM -->
-    <string name="missed_call_at">Chiamata persa a %s.</string>
+    <string name="missed_call_at">Chiamata persa alle %s.</string>
     <string name="sms_received">SMS ricevuto da %s</string>
     
     <string name="account">Account</string>
