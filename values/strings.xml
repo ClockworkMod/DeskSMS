@@ -51,4 +51,9 @@
     <string name="accounts">Accounts</string>
     
     <string name="widget_name">DeskSMS Widget</string>
+    
+    <string name="updating_settings">Updating server settings...</string>
+    <string name="updating_settings_error">There was an error communicating with the server. Please check your connection.</string>
+    <string name="disable_notifications">Disable SMS Notifications</string>
+    <string name="disable_notifications_summary">Disable SMS Notification to other applications. Do not use the notification disabler in GoSMS or Handcent; enable this instead.</string>
 </resources>
