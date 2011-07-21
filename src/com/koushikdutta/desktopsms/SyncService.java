@@ -141,6 +141,7 @@ public class SyncService extends Service {
                 long latestSms = lastSmsSync;
                 int dateColumn = c.getColumnIndex("date");
                 int addressColumn = c.getColumnIndex("address");
+                int typeColumn = c.getColumnIndex("type");
                 while (c.moveToNext()) {
                     try {
                         JSONObject sms = new JSONObject();
@@ -151,13 +152,16 @@ public class SyncService extends Service {
                                 continue;
                             tuple.Second.get(c, sms, tuple.First, i);
                         }
-                        String number = c.getString(addressColumn);
-                        String displayName = getDisplayName(number);
-                        if (displayName != null)
-                            sms.put("name", displayName);
-                        else
-                            displayName = number;
-                        sms.put("subject", getString(R.string.sms_received, displayName));
+                        // only incoming SMS needs to be marked up with the display name and subject
+                        if (c.getInt(typeColumn) == 1) {
+                            String number = c.getString(addressColumn);
+                            String displayName = getDisplayName(number);
+                            if (displayName != null)
+                                sms.put("name", displayName);
+                            else
+                                displayName = number;
+                            sms.put("subject", getString(R.string.sms_received, displayName));
+                        }
                         smsArray.put(sms);
                         long date = c.getLong(dateColumn);
                         latestSms = Math.max(date, latestSms);

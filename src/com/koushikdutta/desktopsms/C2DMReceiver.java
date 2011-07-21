@@ -2,6 +2,13 @@ package com.koushikdutta.desktopsms;
 
 import java.util.ArrayList;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,7 +18,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.SmsManager;
 import android.util.Log;
 
@@ -60,8 +69,57 @@ public class C2DMReceiver extends BroadcastReceiver {
         values.put("body", message);
         context.getContentResolver().insert(Uri.parse("content://sms/sent"), values);
     }
+    
+    private void sendOutbox(final Context context, String outboxData) {
+        Settings settings = Settings.getInstance(context);
+        final long lastOutboxSync = settings.getLong("last_outbox_sync", 0);
+        long maxOutboxSync = lastOutboxSync;
+        final String account = settings.getString("account");
+        try {
+            // the outbox MUST come in order, from the oldest to the newest.
+            // TODO: this should be sorted just to sanity check I guess.
+            JSONArray outbox = new JSONArray(outboxData);
+            for (int i = 0; i < outbox.length(); i++) {
+                try {
+                    JSONObject sms = outbox.getJSONObject(i);
+                    String number = sms.getString("number");
+                    String message = sms.getString("message");
+                    // make sure that any messages we get are new messages
+                    long date = sms.getLong("date");
+                    if (date <= lastOutboxSync)
+                        continue;
+                    maxOutboxSync = Math.max(maxOutboxSync, date);
+                    sendUsingSmsManager(context, number, message);
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            settings.setLong("last_outbox_sync", maxOutboxSync);
+            
+            final long max = maxOutboxSync;
+            new Thread() {
+                public void run() {
+                    AndroidHttpClient client = AndroidHttpClient.newInstance(context.getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
+                    try {
+                        HttpDelete delete = new HttpDelete(String.format(ServiceHelper.OUTBOX_URL, account) + "?max_date=" + max);
+                        client.execute(delete);
+                    }
+                    catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    finally {
+                        client.close();
+                    }
+                }
+            };//.start();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
-    private void handleMessage(Context context, Intent intent) {
+    private void handleMessage(final Context context, Intent intent) {
         Log.i(LOGTAG, "Tickle received!");
 
         Settings settings = Settings.getInstance(context);
@@ -99,7 +157,7 @@ public class C2DMReceiver extends BroadcastReceiver {
                 Intent i = new Intent(WidgetProvider.UPDATE);
                 context.sendBroadcast(i);
             }
-            else {
+            else if (type == null || "message".equals("type")) {
                 String number = intent.getStringExtra("to");
                 String message = intent.getStringExtra("message");
                 //sm.sendTextMessage(number, null, message, null, null);
@@ -109,6 +167,40 @@ public class C2DMReceiver extends BroadcastReceiver {
 
                 proxied++;
                 settings.setInt("proxied", proxied);
+            }
+            else if ("outbox".equals(type)) {
+                final long lastOutboxSync = settings.getLong("last_outbox_sync", 0);
+                String data = intent.getStringExtra("outbox");
+                final String account = settings.getString("account");
+                final Handler handler = new Handler();
+                if (data == null) {
+                    new Thread() {
+                        public void run() {
+                            AndroidHttpClient client = AndroidHttpClient.newInstance(context.getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
+                            try {
+                                HttpGet get = new HttpGet(String.format(ServiceHelper.OUTBOX_URL, account) + "?min_date=%s" + lastOutboxSync);
+                                ServiceHelper.addAuthentication(context, get);
+                                HttpResponse res = client.execute(get);
+                                final String data = StreamUtility.readToEnd(res.getEntity().getContent());
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        sendOutbox(context, data);
+                                    }
+                                });
+                            }
+                            catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                            finally {
+                                client.close();
+                            }
+                        }
+                    }.start();
+                }
+                else {
+                    sendOutbox(context, data);
+                }
             }
         }
         catch (Exception ex) {
