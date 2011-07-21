@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DeskSMS</string>
+    <string name="app_name">DesktopSMS</string>
     
-    <string name="description">DeskSMS leitet Ihre SMS auf Ihr Google Talk und / oder Google-Konto weiter und antworten Sie zurück via Text!</string>
+    <string name="description">DesktopSMS leitet Ihre SMS auf Ihr Google Talk und / oder Google-Konto weiter und antworten Sie zurück via Text!</string>
     
     <string name="signin_success">Anmeldung erfolgreich!</string>
     <string name="signin_failure">Anmeldung fehlgeschlagen. Bitte überprüfen Sie Ihre Internet Verbindung und versuchen Sie es erneut. Anmelde mit einem Google Apps-Konto könnte derzeitig nicht funktionieren. Tritt dieser Fehler weiterhin auf, bitte senden Sie einen Protokoll an den Developer.</string>
     
     <string name="login_with_google">Melden Sie sich an mit Ihrem Google-Konto</string>
-    <string name="requesting_permissions">DeskSMS wird für die Bestimmung von Push-Benachrichtigung und Registrierung an unserem Sever Zugriff auf Ihr Google-Konto anfordern. DeskSMS wird keinen Zugriff auf Ihre Passwörter und persönliche Daten haben.</string>
+    <string name="requesting_permissions">DesktopSMS wird für die Bestimmung von Push-Benachrichtigung und Registrierung an unserem Sever Zugriff auf Ihr Google-Konto anfordern. DesktopSMS wird keinen Zugriff auf Ihre Passwörter und persönliche Daten haben.</string>
     <string name="permission_request">Zulassungsanfrage</string>
     
     <string name="send_xmpp">Verbindung mit Google Talk</string>
@@ -23,11 +23,28 @@
     <string name="forwarded">%s SMS wurde/n an Ihrem Desktop gesendet</string>
     <string name="proxied">%s SMS wurde/n von Ihrem Desktop gesendet</string>
     
-    <string name="not_logged_in">Bitte melden Sie sich mit Ihrem Google-Konto an um DeskSMS benutzen zu können.</string>
+    <string name="not_logged_in">Bitte melden Sie sich mit Ihrem Google-Konto an um DesktopSMS benutzen zu können.</string>
     
     <string name="test_message">Testnachricht senden</string>
     <string name="test_message_info">Drücken Sie auf OK um eine Nachricht an sich selbst zu senden. Sie werden die SMS wie gewohnt in Ihre Nachrichtenanwendung finden. Zudem sollten Sie auch eine E-mail und wahlweise eine Google Talk Nachricht ebenfalls erhalten!</string>
-    <string name="test_message_content">Dies ist eine Testnachricht von DeskSMS!</string>
+    <string name="test_message_content">Dies ist eine Testnachricht von DesktopSMS!</string>
     
-    <string name="number_retrieval_error">Keine Feststellung Ihrer Telefonnummer möglich. Nutzen Sie bitte Ihre Nachrichtenanwendung und senden Sie sich selbst manuell eine Nachricht zu, um DeskSMS zu testen.</string>
+    <string name="number_retrieval_error">Keine Feststellung Ihrer Telefonnummer möglich. Nutzen Sie bitte Ihre Nachrichtenanwendung und senden Sie sich selbst manuell eine Nachricht zu, um DesktopSMS zu testen.</string>
+
+<string name="msg_app_detected">Die Anwendung %s wurde installiert gefunden. Falls Sie keine Nachricht erhalten, überprüfen Sie bitte, dass es die Empfangsbenachrichtigung in den Einstellungen der Anwendung nicht deaktiviert hat.</string>
+    <string name="handcent">Handcent</string>
+    <string name="gosms">GoSMS</string>
+    
+    <!-- Missed call from Koushik Dutta -->
+    <string name="missed_call_from">Entgangener Anruf von %s.</string>
+    <!-- Missed call at 12:30PM -->
+    <string name="missed_call_at">Entgangener Anruf um %s.</string>
+    <string name="sms_received">Neue Nachricht von %s erhalten</string>
+
+<string name="account">Konto</string>
+    <string name="notifications">Benachrichtigungen</string>
+    <string name="google_talk">Google Talk</string>
+    <string name="gmail">Google Mail</string>
+    
+    <string name="troubleshooting">Störungssuche</string>
 </resources>
