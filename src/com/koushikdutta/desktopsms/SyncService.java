@@ -8,6 +8,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,8 +36,8 @@ public class SyncService extends Service {
         void get(Cursor c, JSONObject j, String name, int index) throws JSONException;
     }
     
-    private static final int INCOMING_SMS = 1;
-    private static final int OUTGOING_SMS = 1;
+    public static final int INCOMING_SMS = 1;
+    public static final int OUTGOING_SMS = 2;
     
     static class TypeMapper extends Hashtable<Integer, String> {
         {
@@ -194,7 +195,8 @@ public class SyncService extends Service {
                 StringEntity entity = new StringEntity(envelope.toString());
                 HttpPost post = ServiceHelper.getAuthenticatedPost(this, String.format(ServiceHelper.SMS_URL, account));
                 post.setEntity(entity);
-                AndroidHttpClient client = AndroidHttpClient.newInstance(getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
+                //AndroidHttpClient client = AndroidHttpClient.newInstance(getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
+                DefaultHttpClient client = new DefaultHttpClient();
                 try {
                     HttpResponse res = ServiceHelper.retryExecute(this, account, client, post);
                     if (res == null)
@@ -204,7 +206,7 @@ public class SyncService extends Service {
                     settings.setLong("last_sms_sync", latestSms);
                 }
                 finally {
-                    client.close();
+                    //client.close();
                 }
                 break;
             }

@@ -47,6 +47,7 @@ public class C2DMReceiver extends BroadcastReceiver {
         sv.put("date", System.currentTimeMillis());
         sv.put("read", 1);
         sv.put("body", message);
+        sv.put("type", SyncService.OUTGOING_SMS);
         String n = null;
         sv.put("subject", n);
         //sv.put("status", 32);

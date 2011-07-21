@@ -31,13 +31,14 @@ import android.util.Log;
 public class ServiceHelper {
     private static String LOGTAG = ServiceHelper.class.getSimpleName();
     public static final String BASE_URL = "https://desksms.appspot.com";
-    public static final String SETTINGS_URL = BASE_URL + "/settings";
     public static final String MESSAGE_URL = BASE_URL + "/message";
     public final static String REGISTER_URL = BASE_URL + "/register";
     public static final String AUTH_URL = BASE_URL + "/_ah/login";
     public static final String API_URL = BASE_URL + "/api/v1";
-    public static final String SMS_URL = API_URL + "/user/%s/sms";
-    public static final String OUTBOX_URL = API_URL + "/user/%s/outbox";
+    public static final String USER_URL = API_URL + "/user/%s";
+    public static final String SETTINGS_URL = USER_URL + "/settings";
+    public static final String SMS_URL = USER_URL + "/sms";
+    public static final String OUTBOX_URL = USER_URL + "/outbox";
     
     static HttpResponse retryExecute(Context context, String account, HttpClient client, HttpUriRequest req) throws Exception {
         addAuthentication(context, req);
@@ -103,15 +104,16 @@ public class ServiceHelper {
         new Thread() {
             public void run() {
                 try {
+                    final Settings settings = Settings.getInstance(context);
+                    final String account = settings.getString("account");
                     ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
                     params.add(new BasicNameValuePair("forward_xmpp", String.valueOf(xmpp)));
                     params.add(new BasicNameValuePair("forward_email", String.valueOf(mail)));
 
-                    HttpPost post = ServiceHelper.getAuthenticatedPost(context, SETTINGS_URL, params);
+                    HttpPost post = ServiceHelper.getAuthenticatedPost(context, String.format(SETTINGS_URL, account), params);
                     DefaultHttpClient client = new DefaultHttpClient();
                     HttpResponse res = client.execute(post);
-                    Log.i(LOGTAG, "Status code from register: " + res.getStatusLine().getStatusCode());
-                    Settings settings = Settings.getInstance(context);
+                    Log.i(LOGTAG, "Status code from settings: " + res.getStatusLine().getStatusCode());
                     settings.setBoolean("forward_xmpp", xmpp);
                     settings.setBoolean("forward_email", mail);
                     if (callback != null)
@@ -135,13 +137,14 @@ public class ServiceHelper {
             @Override
             public void run() {
                 try {
-                    HttpGet get = new HttpGet(new URI(SETTINGS_URL));
+                    final Settings settings = Settings.getInstance(context);
+                    final String account = settings.getString("account");
+                    HttpGet get = new HttpGet(new URI(String.format(SETTINGS_URL, account)));
                     ServiceHelper.addAuthentication(context, get);
                     DefaultHttpClient client = new DefaultHttpClient();
                     HttpResponse res = client.execute(get);
                     final JSONObject s = new JSONObject(StreamUtility.readToEnd(res.getEntity().getContent()));
                     Iterator<String> keys = s.keys();
-                    Settings settings = Settings.getInstance(context);
                     while (keys.hasNext()) {
                         String key = keys.next();
                         String value = s.optString(key, null);

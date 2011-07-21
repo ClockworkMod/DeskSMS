@@ -43,7 +43,7 @@ public class Settings
 		cv.put("key", name);
 		cv.put("value", value);
 		mDatabase.delete("settings", "key='" + name + "'", null);
-		mDatabase.insert("settings", null, cv);
+		mDatabase.replace("settings", null, cv);
 	}
 	
 	public String getString(String name)
