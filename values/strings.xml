@@ -56,4 +56,7 @@
     <string name="updating_settings_error">There was an error communicating with the server. Please check your connection.</string>
     <string name="disable_notifications">Disable SMS Notifications</string>
     <string name="disable_notifications_summary">Disable SMS Notification to other applications. Do not use the notification disabler in GoSMS or Handcent; enable this instead.</string>
+    
+    <string name="sync_sms">Sync SMS</string>
+    <string name="sync_sms_summary">Sync your SMS history to the DeskSMS server. This will enable you to use the DeskSMS web interface and view your message history online.</string>
 </resources>
