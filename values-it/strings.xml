@@ -4,7 +4,7 @@
     
     <string name="description">DeskSMS inoltra i sui SMS al suo account Google Talk e/o Gmail. E rispondere tramite SMS!</string>
     
-    <string name="signin_success">Ha effettuato l'accesso con successo!</string>
+    <string name="signin_success">Ha effettuato l\'accesso con successo!</string>
     <string name="signin_failure">Accesso fallito. Si prega di verificare la connessione a Internet e riprovare. Accesso con un indirizzo di Google Apps potrebbe non funzionare. Se l’errore persiste, si prega di inviare un registro allo sviluppatore.</string>
     
     <string name="login_with_google">Acceda con il suo account Google</string>
