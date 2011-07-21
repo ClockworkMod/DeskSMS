@@ -56,6 +56,10 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
 
                         ListItem testMessage = findItem(R.string.test_message);
                         testMessage.setEnabled(true);
+
+                        mSettings.setLong("last_sms_sync", 0);
+                        if (mSettings.getBoolean("sync_sms", false))
+                            startService(new Intent(MainActivity.this, SyncService.class));
                     }
                 });
             }
@@ -67,8 +71,6 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        startService(new Intent(this, SyncService.class));
         
         String account = mSettings.getString("account");
         if (mSettings.getLong("last_missed_call", 0) == 0) {
@@ -101,6 +103,24 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             public void onClick(View view) {
                 super.onClick(view);
                 doLogin();
+            }
+        });
+        
+        addItem(R.string.account, new ListItem(this, R.string.sync_sms, R.string.sync_sms_summary) {
+            {
+                CheckboxVisible = true;
+                Settings settings = Settings.getInstance(MainActivity.this);
+                setIsChecked(settings.getBoolean("sync_sms", false));
+            }
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                Settings settings = Settings.getInstance(MainActivity.this);
+                settings.setBoolean("sync_sms", getIsChecked());
+                if (getIsChecked())
+                    startService(new Intent(MainActivity.this, SyncService.class));
+                else
+                    settings.setLong("last_sms_sync", 0);
             }
         });
 

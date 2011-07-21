@@ -2,6 +2,7 @@ package com.koushikdutta.desktopsms;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -21,7 +22,13 @@ import android.util.Log;
 
 public class ServiceHelper {
     private static String LOGTAG = ServiceHelper.class.getSimpleName();
-    private static final String SETTINGS_URL = "https://desksms.appspot.com/settings";
+    public static final String BASE_URL = "https://2.desksms.appspot.com";
+    public static final String SETTINGS_URL = BASE_URL + "/settings";
+    public static final String MESSAGE_URL = BASE_URL + "/message";
+    public final static String REGISTER_URL = BASE_URL + "/register";
+    public static final String AUTH_URL = BASE_URL + "/_ah/login";
+    public static final String API_URL = BASE_URL + "/api/v1";
+    public static final String SMS_URL = API_URL + "/user/%s/sms";
 
     static void addAuthentication(Context context, HttpMessage message) {
         Settings settings = Settings.getInstance(context);
@@ -30,7 +37,15 @@ public class ServiceHelper {
         message.setHeader("X-Same-Domain", "1"); // XSRF
     }
     
-    static HttpPost getAuthenticatedPost(Context context, URI uri, ArrayList<NameValuePair> params) throws UnsupportedEncodingException {
+    static HttpPost getAuthenticatedPost(Context context, String url) throws UnsupportedEncodingException, URISyntaxException {
+        URI uri = new URI(url);
+        HttpPost post = new HttpPost(uri);
+        addAuthentication(context, post);
+        return post;
+    }
+    
+    static HttpPost getAuthenticatedPost(Context context, String url, ArrayList<NameValuePair> params) throws UnsupportedEncodingException, URISyntaxException {
+        URI uri = new URI(url);
         HttpPost post = new HttpPost(uri);
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
         post.setEntity(entity);
@@ -46,7 +61,7 @@ public class ServiceHelper {
                     params.add(new BasicNameValuePair("forward_xmpp", String.valueOf(xmpp)));
                     params.add(new BasicNameValuePair("forward_email", String.valueOf(mail)));
 
-                    HttpPost post = ServiceHelper.getAuthenticatedPost(context, new URI(SETTINGS_URL), params);
+                    HttpPost post = ServiceHelper.getAuthenticatedPost(context, SETTINGS_URL, params);
                     DefaultHttpClient client = new DefaultHttpClient();
                     HttpResponse res = client.execute(post);
                     Log.i(LOGTAG, "Status code from register: " + res.getStatusLine().getStatusCode());

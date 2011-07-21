@@ -100,6 +100,8 @@ public final class R {
         public static final int signin_failure=0x7f050003;
         public static final int signin_success=0x7f050002;
         public static final int sms_received=0x7f050019;
+        public static final int sync_sms=0x7f050025;
+        public static final int sync_sms_summary=0x7f050026;
         public static final int test_message=0x7f050010;
         public static final int test_message_content=0x7f050012;
         public static final int test_message_info=0x7f050011;

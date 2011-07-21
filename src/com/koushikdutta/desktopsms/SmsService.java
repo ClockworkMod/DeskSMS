@@ -93,6 +93,14 @@ public class SmsService extends MessageServiceBase {
                     }, 15000);
                 }
             }
+            
+            // kick off a sync
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startService(new Intent(SmsService.this, SyncService.class));
+                }
+            }, 1000);
         }
         catch (Exception ex) {
             ex.printStackTrace();

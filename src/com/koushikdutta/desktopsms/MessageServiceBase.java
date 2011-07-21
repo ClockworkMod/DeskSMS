@@ -28,24 +28,10 @@ import android.util.Log;
 public class MessageServiceBase extends Service {
     private static final String LOGTAG = MessageServiceBase.class.getSimpleName();
 
-    int mVersionCode = 0;
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        try {
-            PackageInfo pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            mVersionCode = pinfo.versionCode;
-        }
-        catch (Exception ex) {
-        }
-    }
-    
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
-
-    private static final String MESSAGE_URL = "https://desksms.appspot.com/message";
 
     protected void sendMessage(final String number, final String message, final int subjectResource, final String type) {
         final String account = Settings.getInstance(this).getString("account");
@@ -60,7 +46,7 @@ public class MessageServiceBase extends Service {
     
     private void sendMessageInternal(final String account, final String ascidCookie, final String number, final String message, final int subjectResource, String type, int attempt) {
         try {
-            URI uri = new URI(String.format("%s/%s/%s", MESSAGE_URL, account, number));
+            URI uri = new URI(String.format("%s/%s/%s", ServiceHelper.MESSAGE_URL, account, number));
             ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
             Uri curi = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
             Cursor c = getContentResolver().query(curi, new String[] { PhoneLookup.DISPLAY_NAME }, null, null, null);
@@ -80,7 +66,7 @@ public class MessageServiceBase extends Service {
                 displayName = number;
 
             HttpPost post = new HttpPost(uri);
-            params.add(new BasicNameValuePair("version_code", String.valueOf(mVersionCode)));
+            params.add(new BasicNameValuePair("version_code", String.valueOf(DesktopSMSApplication.mVersionCode)));
             params.add(new BasicNameValuePair("number", number));
             params.add(new BasicNameValuePair("message", message));
             params.add(new BasicNameValuePair("type", type));

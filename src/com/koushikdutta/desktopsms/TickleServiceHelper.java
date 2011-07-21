@@ -39,12 +39,7 @@ public class TickleServiceHelper {
     private static final String LOGTAG = TickleServiceHelper.class.getSimpleName();
 
     private TickleServiceHelper() {
-
     }
-
-    private final static String BASE_URL = "https://desksms.appspot.com";
-    private final static String REGISTER_URL = BASE_URL + "/register";
-    private static final String AUTH_URL = BASE_URL + "/_ah/login";
     
     static String getCookie(final Context context) throws Exception {
         Settings settings = Settings.getInstance(context);
@@ -55,8 +50,8 @@ public class TickleServiceHelper {
         Log.i(LOGTAG, "getting cookie");
         // Get ACSID cookie
         DefaultHttpClient client = new DefaultHttpClient();
-        String continueURL = BASE_URL;
-        URI uri = new URI(AUTH_URL + "?continue=" + URLEncoder.encode(continueURL, "UTF-8") + "&auth=" + authToken);
+        String continueURL = ServiceHelper.BASE_URL;
+        URI uri = new URI(ServiceHelper.AUTH_URL + "?continue=" + URLEncoder.encode(continueURL, "UTF-8") + "&auth=" + authToken);
         HttpGet method = new HttpGet(uri);
         final HttpParams getParams = new BasicHttpParams();
         HttpClientParams.setRedirecting(getParams, false); // continue is not
@@ -89,7 +84,7 @@ public class TickleServiceHelper {
         DefaultHttpClient client = new DefaultHttpClient();
 
         // Make POST request
-        URI uri = new URI(REGISTER_URL);
+        URI uri = new URI(ServiceHelper.REGISTER_URL);
         HttpPost post = new HttpPost(uri);
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("applicationId", "DesktopSms"));
