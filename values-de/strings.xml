@@ -31,7 +31,7 @@
     
     <string name="number_retrieval_error">Keine Feststellung Ihrer Telefonnummer möglich. Nutzen Sie bitte Ihre Nachrichtenanwendung und senden Sie sich selbst manuell eine Nachricht zu, um DesktopSMS zu testen.</string>
 
-<string name="msg_app_detected">Die Anwendung %s wurde installiert gefunden. Falls Sie keine Nachricht erhalten, überprüfen Sie bitte, dass es die Empfangsbenachrichtigung in den Einstellungen der Anwendung nicht deaktiviert hat.</string>
+    <string name="msg_app_detected">Die Anwendung %s wurde installiert gefunden. Falls Sie keine Nachricht erhalten, überprüfen Sie bitte, dass es die Empfangsbenachrichtigung in den Einstellungen der Anwendung nicht deaktiviert hat.</string>
     <string name="handcent">Handcent</string>
     <string name="gosms">GoSMS</string>
     
@@ -41,7 +41,7 @@
     <string name="missed_call_at">Entgangener Anruf um %s.</string>
     <string name="sms_received">Neue Nachricht von %s erhalten</string>
 
-<string name="account">Konto</string>
+    <string name="account">Konto</string>
     <string name="notifications">Benachrichtigungen</string>
     <string name="google_talk">Google Talk</string>
     <string name="gmail">Google Mail</string>
