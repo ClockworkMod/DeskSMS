@@ -9,15 +9,23 @@ import java.util.Iterator;
 import org.apache.http.HttpMessage;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONObject;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 public class ServiceHelper {
@@ -30,6 +38,43 @@ public class ServiceHelper {
     public static final String API_URL = BASE_URL + "/api/v1";
     public static final String SMS_URL = API_URL + "/user/%s/sms";
     public static final String OUTBOX_URL = API_URL + "/user/%s/outbox";
+    
+    static HttpResponse retryExecute(Context context, String account, HttpClient client, HttpUriRequest req) throws Exception {
+        addAuthentication(context, req);
+
+        final HttpParams httpParams = new BasicHttpParams();
+        HttpClientParams.setRedirecting(httpParams, false);
+        req.setParams(httpParams);
+
+        HttpResponse res = client.execute(req);
+        
+        if (res.getStatusLine().getStatusCode() != 302)
+            return res;
+        
+        AccountManager accountManager = AccountManager.get(context);
+        Account acct = new Account(account, "com.google");
+        String curAuthToken = Settings.getInstance(context).getString("web_connect_auth_token");
+        if (!Helper.isJavaScriptNullOrEmpty(curAuthToken))
+            accountManager.invalidateAuthToken(acct.type, curAuthToken);
+        Bundle bundle = accountManager.getAuthToken(acct, TickleServiceHelper.AUTH_TOKEN_TYPE, false, null, null).getResult();
+        final String authToken = bundle.getString(AccountManager.KEY_AUTHTOKEN);
+        if (!Helper.isJavaScriptNullOrEmpty(authToken)) {
+            Settings settings = Settings.getInstance(context);
+            settings.setString("web_connect_auth_token", authToken);
+        }
+        if (authToken == null)
+            return null;
+        String newCookie = TickleServiceHelper.getCookie(context);
+        if (newCookie == null)
+            return null;
+
+        addAuthentication(context, req);
+        res = client.execute(req);
+        
+        if (res.getStatusLine().getStatusCode() != 302)
+            return res;
+        return null;
+    }
 
     static void addAuthentication(Context context, HttpMessage message) {
         Settings settings = Settings.getInstance(context);

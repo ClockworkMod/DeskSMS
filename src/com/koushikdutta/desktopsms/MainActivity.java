@@ -117,10 +117,11 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                 super.onClick(view);
                 Settings settings = Settings.getInstance(MainActivity.this);
                 settings.setBoolean("sync_sms", getIsChecked());
-                if (getIsChecked())
-                    startService(new Intent(MainActivity.this, SyncService.class));
-                else
+                if (getIsChecked()) {
+                    // reset the sync counter so it resends the sms history
                     settings.setLong("last_sms_sync", 0);
+                    startService(new Intent(MainActivity.this, SyncService.class));
+                }
             }
         });
 

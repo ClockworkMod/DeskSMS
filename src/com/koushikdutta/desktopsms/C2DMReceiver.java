@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.params.HttpClientParams;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,6 +82,7 @@ public class C2DMReceiver extends BroadcastReceiver {
             // the outbox MUST come in order, from the oldest to the newest.
             // TODO: this should be sorted just to sanity check I guess.
             JSONArray outbox = new JSONArray(outboxData);
+            //Log.i(LOGTAG, outbox.toString(4));
             for (int i = 0; i < outbox.length(); i++) {
                 try {
                     JSONObject sms = outbox.getJSONObject(i);
@@ -88,6 +92,7 @@ public class C2DMReceiver extends BroadcastReceiver {
                     long date = sms.getLong("date");
                     if (date <= lastOutboxSync)
                         continue;
+                    //Log.i(LOGTAG, sms.toString(4));
                     maxOutboxSync = Math.max(maxOutboxSync, date);
                     sendUsingSmsManager(context, number, message);
                 }
@@ -103,7 +108,7 @@ public class C2DMReceiver extends BroadcastReceiver {
                     AndroidHttpClient client = AndroidHttpClient.newInstance(context.getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
                     try {
                         HttpDelete delete = new HttpDelete(String.format(ServiceHelper.OUTBOX_URL, account) + "?max_date=" + max);
-                        client.execute(delete);
+                        ServiceHelper.retryExecute(context, account, client, delete);
                     }
                     catch (Exception ex) {
                         ex.printStackTrace();
@@ -112,7 +117,7 @@ public class C2DMReceiver extends BroadcastReceiver {
                         client.close();
                     }
                 }
-            };//.start();
+            }.start();
         }
         catch (Exception ex) {
             ex.printStackTrace();

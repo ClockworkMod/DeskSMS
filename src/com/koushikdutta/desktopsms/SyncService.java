@@ -35,10 +35,13 @@ public class SyncService extends Service {
         void get(Cursor c, JSONObject j, String name, int index) throws JSONException;
     }
     
+    private static final int INCOMING_SMS = 1;
+    private static final int OUTGOING_SMS = 1;
+    
     static class TypeMapper extends Hashtable<Integer, String> {
         {
-            put(2, "outgoing");
-            put(1, "incoming");
+            put(OUTGOING_SMS, "outgoing");
+            put(INCOMING_SMS, "incoming");
         }
         
         public static TypeMapper Instance = new TypeMapper();
@@ -122,6 +125,7 @@ public class SyncService extends Service {
         try {
             Settings settings = Settings.getInstance(this);
             String account = settings.getString("account");
+            boolean sync = settings.getBoolean("sync_sms", false);
 
             // we may beat the provider to the punch, so let's try a few times
             for (int poll = 0; poll < 10; poll++) {
@@ -153,7 +157,7 @@ public class SyncService extends Service {
                             tuple.Second.get(c, sms, tuple.First, i);
                         }
                         // only incoming SMS needs to be marked up with the display name and subject
-                        if (c.getInt(typeColumn) == 1) {
+                        if (c.getInt(typeColumn) == INCOMING_SMS) {
                             String number = c.getString(addressColumn);
                             String displayName = getDisplayName(number);
                             if (displayName != null)
@@ -161,6 +165,11 @@ public class SyncService extends Service {
                             else
                                 displayName = number;
                             sms.put("subject", getString(R.string.sms_received, displayName));
+                        }
+                        else {
+                            // if we are not syncing, do not bother sending the outgoing message history
+                            if (!sync)
+                                continue;
                         }
                         smsArray.put(sms);
                         long date = c.getLong(dateColumn);
@@ -180,13 +189,16 @@ public class SyncService extends Service {
                 envelope.put("is_initial_sync", isInitialSync);
                 envelope.put("data", smsArray);
                 envelope.put("version_code", DesktopSMSApplication.mVersionCode);
+                envelope.put("sync", sync);
                 System.out.println(envelope.toString(4));
                 StringEntity entity = new StringEntity(envelope.toString());
                 HttpPost post = ServiceHelper.getAuthenticatedPost(this, String.format(ServiceHelper.SMS_URL, account));
                 post.setEntity(entity);
                 AndroidHttpClient client = AndroidHttpClient.newInstance(getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
                 try {
-                    HttpResponse res = client.execute(post);
+                    HttpResponse res = ServiceHelper.retryExecute(this, account, client, post);
+                    if (res == null)
+                        throw new Exception("Unable to authenticate");
                     String results = StreamUtility.readToEnd(res.getEntity().getContent());
                     System.out.println(results);
                     settings.setLong("last_sms_sync", latestSms);
@@ -227,9 +239,7 @@ public class SyncService extends Service {
     
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Settings settings = Settings.getInstance(this);
-        if (settings.getBoolean("sync_sms", false))
-            sync();
+        sync();
         return super.onStartCommand(intent, flags, startId);
     }
 }
