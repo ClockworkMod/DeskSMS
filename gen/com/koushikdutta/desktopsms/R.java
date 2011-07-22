@@ -64,7 +64,10 @@ public final class R {
     public static final class string {
         public static final int account=0x7f05001a;
         public static final int accounts=0x7f05001f;
+        public static final int add_desksms_contact_info=0x7f050028;
+        public static final int add_desksms_contact_info_summary=0x7f050029;
         public static final int app_name=0x7f050000;
+        public static final int contacts=0x7f050027;
         public static final int current_account=0x7f05000c;
         public static final int description=0x7f050001;
         public static final int disable_notifications=0x7f050023;
@@ -96,8 +99,10 @@ public final class R {
         public static final int notifications=0x7f05001b;
         public static final int number_retrieval_error=0x7f050013;
         public static final int permission_request=0x7f050006;
+        public static final int please_wait_contact_list=0x7f05002b;
         public static final int proxied=0x7f05000e;
         public static final int registering_with_server=0x7f05000b;
+        public static final int remove_desksms_contact_info=0x7f05002a;
         public static final int requesting_permissions=0x7f050005;
         public static final int retrieving_authentication=0x7f05000a;
         public static final int send_email=0x7f050008;

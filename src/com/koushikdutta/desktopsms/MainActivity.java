@@ -1,16 +1,31 @@
 package com.koushikdutta.desktopsms;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Hashtable;
+
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.Data;
+import android.provider.ContactsContract.PhoneLookup;
+import android.provider.ContactsContract.RawContacts;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends ActivityBase implements ActivityResultDelegate {
@@ -68,11 +83,95 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         builder.create().show();
     }
 
+    private void addDeskSmsContactInfo() {
+        final ProgressDialog dlg = new ProgressDialog(this);
+        dlg.setMessage(getString(R.string.please_wait_contact_list));
+        dlg.show();
+        
+        final String account = mSettings.getString("account");
+        new Thread() {
+            public void run() {
+                try {
+                    int deleted = getContentResolver().delete(ContactsContract.Data.CONTENT_URI, String.format("%s = '%s' and %s = 'DeskSMS'", Data.MIMETYPE, CommonDataKinds.Email.CONTENT_ITEM_TYPE, CommonDataKinds.Email.LABEL), null);
+
+                    HashSet<Long> rawContacts = new HashSet<Long>();
+                    Cursor c = getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI, new String[] { RawContacts._ID }, String.format("%s = 'com.google' AND %s = '%s'", RawContacts.ACCOUNT_TYPE, RawContacts.ACCOUNT_NAME, account), null, null);
+                    int idColumn = c.getColumnIndex(RawContacts._ID);
+                    while (c.moveToNext()) {
+                        long id = c.getLong(idColumn);
+                        rawContacts.add(id);
+                    }
+                    c.close();
+                    
+                    Hashtable<Long, String> numbers = new Hashtable<Long, String>();
+                    c = getContentResolver().query(Data.CONTENT_URI, new String[] { Phone.NUMBER, Phone.TYPE, Data.RAW_CONTACT_ID }, String.format("%s = '%s' and (%s = '%s' or %s = '%s')", ContactsContract.Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE, Phone.TYPE, Phone.TYPE_HOME, Phone.TYPE, Phone.TYPE_MOBILE), null, null);
+                    int typeColumn = c.getColumnIndex(Phone.TYPE);
+                    idColumn = c.getColumnIndex(Data.RAW_CONTACT_ID);
+                    int numberColumn = c.getColumnIndex(Phone.NUMBER);
+                    while (c.moveToNext()) {
+                        long rawContact = c.getLong(idColumn);
+                        if (!rawContacts.contains(rawContact))
+                            continue;
+                        int type = c.getInt(typeColumn);
+                        String number = c.getString(numberColumn);
+                        if (type == Phone.TYPE_MOBILE) {
+                            numbers.put(rawContact, number);
+                        }
+                        else {
+                            if (!numbers.contains(number))
+                                numbers.put(rawContact, number);
+                        }
+                    }
+                    c.close();
+                    
+                    
+                    ArrayList<ContentValues> cvs = new ArrayList<ContentValues>();
+                    for (long rawContact: numbers.keySet()) {
+                        String number = numbers.get(rawContact);
+                        number = ServiceHelper.numbersOnly(number);
+                        ContentValues cv = new ContentValues();
+                        cv.put(Data.RAW_CONTACT_ID, rawContact);
+                        cv.put(Data.MIMETYPE, CommonDataKinds.Email.CONTENT_ITEM_TYPE);
+                        String email = String.format("%s@desksms.appspotmail.com", number);
+                        cv.put(CommonDataKinds.Email.DATA, email);
+                        cv.put(CommonDataKinds.Email.TYPE, CommonDataKinds.Email.TYPE_CUSTOM);
+                        cv.put(CommonDataKinds.Email.LABEL, "DeskSMS");
+                        cvs.add(cv);
+                        
+                        cv = new ContentValues();
+                        cv.put(Data.RAW_CONTACT_ID, rawContact);
+                        cv.put(Data.MIMETYPE, CommonDataKinds.Email.CONTENT_ITEM_TYPE);
+                        String xmpp = String.format("%s@desksms.appspotchat.com", number);
+                        cv.put(CommonDataKinds.Email.DATA, xmpp);
+                        cv.put(CommonDataKinds.Email.TYPE, CommonDataKinds.Email.TYPE_CUSTOM);
+                        cv.put(CommonDataKinds.Email.LABEL, "DeskSMS");
+                        cvs.add(cv);
+                    }
+                    
+                    ContentValues[] cvsArray = new ContentValues[cvs.size()];
+                    cvs.toArray(cvsArray);
+                    getContentResolver().bulkInsert(Data.CONTENT_URI, cvsArray);
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                finally {
+                    dlg.dismiss();
+                }
+            };
+        }.start();
+    }
+    
+    private void removeDeskSmsContactInfo() {
+        
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         String account = mSettings.getString("account");
+
         if (mSettings.getLong("last_missed_call", 0) == 0) {
             mSettings.setLong("last_missed_call", System.currentTimeMillis());
         }
@@ -192,6 +291,22 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             }
         });
 
+        addItem(R.string.contacts, new ListItem(this, R.string.add_desksms_contact_info, R.string.add_desksms_contact_info_summary) {
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                addDeskSmsContactInfo();
+            }
+        });
+        
+        addItem(R.string.contacts, new ListItem(this, R.string.remove_desksms_contact_info, 0) {
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                removeDeskSmsContactInfo();
+            }
+        });
+        
         addItem(R.string.troubleshooting, new ListItem(this, R.string.test_message, 0) {
             @Override
             public void onClick(View view) {

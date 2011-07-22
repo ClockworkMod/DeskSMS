@@ -40,6 +40,17 @@ public class ServiceHelper {
     public static final String SMS_URL = USER_URL + "/sms";
     public static final String OUTBOX_URL = USER_URL + "/outbox";
     
+    static String numbersOnly(String number) {
+        StringBuilder ret = new StringBuilder();
+        for (int i = 0; i < number.length(); i++) {
+            char c = number.charAt(i);
+            if ((c >= '0' && c <= '9') || c == '+')
+                ret.append(c);
+        }
+        
+        return ret.toString();
+    }
+    
     static HttpResponse retryExecute(Context context, String account, HttpClient client, HttpUriRequest req) throws Exception {
         addAuthentication(context, req);
 

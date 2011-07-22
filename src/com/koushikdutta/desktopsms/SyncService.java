@@ -21,6 +21,8 @@ import android.net.Uri;
 import android.net.http.AndroidHttpClient;
 import android.os.Handler;
 import android.os.IBinder;
+import android.provider.ContactsContract.CommonDataKinds;
+import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.PhoneLookup;
 import android.util.Log;
 
@@ -96,20 +98,30 @@ public class SyncService extends Service {
         }
     };
     
-    String getDisplayName(String number) {
+    CachedPhoneLookup getPhoneLookup(String number) {
         try {
-            String displayName = mDisplayNames.get(number);
-            if (displayName != null)
-                return displayName;
+            CachedPhoneLookup lookup = mLookup.get(number);
+            if (lookup != null)
+                return lookup;
             Uri curi = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
-            Cursor c = getContentResolver().query(curi, new String[] { PhoneLookup.DISPLAY_NAME }, null, null, null);
+            Cursor c = getContentResolver().query(curi, null, null, null, null);
             
             if (c != null) {
                 if (c.moveToNext()) {
-                    displayName = c.getString(c.getColumnIndex(PhoneLookup.DISPLAY_NAME));
+                    String displayName = c.getString(c.getColumnIndex(PhoneLookup.DISPLAY_NAME));
+                    String enteredNumber = c.getString(c.getColumnIndex(PhoneLookup.NUMBER));
                     if (!Helper.isJavaScriptNullOrEmpty(displayName)) {
-                        mDisplayNames.put(number, displayName);
-                        return displayName;
+                        c.close();
+                        lookup = new CachedPhoneLookup();
+                        lookup.displayName = displayName;
+                        lookup.enteredNumber = ServiceHelper.numbersOnly(enteredNumber);
+                        // see if the user has a jabber contact for this address
+                        String jid = String.format("%s@desksms.appspotchat.com", lookup.enteredNumber);
+                        c = getContentResolver().query(Data.CONTENT_URI, new String[] { Data._ID }, String.format("%s = '%s' and %s = '%s'", Data.MIMETYPE, CommonDataKinds.Email.CONTENT_ITEM_TYPE, CommonDataKinds.Email.DATA, jid), null, null);
+                        lookup.hasDeskSMSContact = c.moveToNext();
+                        c.close();
+                        mLookup.put(number, lookup);
+                        return lookup;
                     }
                 }
                 c.close();
@@ -120,7 +132,13 @@ public class SyncService extends Service {
         return null;
     }
     
-    Hashtable<String, String> mDisplayNames = new Hashtable<String, String>();
+    private static final class CachedPhoneLookup {
+        public String displayName;
+        public String enteredNumber;
+        public boolean hasDeskSMSContact;
+    }
+    
+    Hashtable<String, CachedPhoneLookup> mLookup = new Hashtable<String, CachedPhoneLookup>();
     
     private void syncInternal() {
         try {
@@ -160,11 +178,17 @@ public class SyncService extends Service {
                         // only incoming SMS needs to be marked up with the display name and subject
                         if (c.getInt(typeColumn) == INCOMING_SMS) {
                             String number = c.getString(addressColumn);
-                            String displayName = getDisplayName(number);
-                            if (displayName != null)
-                                sms.put("name", displayName);
-                            else
+                            CachedPhoneLookup lookup = getPhoneLookup(number);
+                            String displayName;
+                            if (lookup != null) {
+                                displayName = lookup.displayName;
+                                sms.put("name", lookup.displayName);
+                                sms.put("entered_number", lookup.enteredNumber);
+                                sms.put("has_desksms_contact", lookup.hasDeskSMSContact);
+                            }
+                            else {
                                 displayName = number;
+                            }
                             sms.put("subject", getString(R.string.sms_received, displayName));
                         }
                         else {
