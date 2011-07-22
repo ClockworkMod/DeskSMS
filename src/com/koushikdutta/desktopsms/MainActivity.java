@@ -83,7 +83,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         builder.create().show();
     }
 
-    private void addDeskSmsContactInfo() {
+    private void addDeskSmsContactInfo(final boolean onlyRemove) {
         final ProgressDialog dlg = new ProgressDialog(this);
         dlg.setMessage(getString(R.string.please_wait_contact_list));
         dlg.show();
@@ -93,6 +93,8 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             public void run() {
                 try {
                     int deleted = getContentResolver().delete(ContactsContract.Data.CONTENT_URI, String.format("%s = '%s' and %s = 'DeskSMS'", Data.MIMETYPE, CommonDataKinds.Email.CONTENT_ITEM_TYPE, CommonDataKinds.Email.LABEL), null);
+                    if (onlyRemove)
+                        return;
 
                     HashSet<Long> rawContacts = new HashSet<Long>();
                     Cursor c = getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI, new String[] { RawContacts._ID }, String.format("%s = 'com.google' AND %s = '%s'", RawContacts.ACCOUNT_TYPE, RawContacts.ACCOUNT_NAME, account), null, null);
@@ -118,7 +120,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                             numbers.put(rawContact, number);
                         }
                         else {
-                            if (!numbers.contains(number))
+                            if (!numbers.containsKey(rawContact));
                                 numbers.put(rawContact, number);
                         }
                     }
@@ -163,7 +165,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
     }
     
     private void removeDeskSmsContactInfo() {
-        
+        addDeskSmsContactInfo(true);
     }
 
     @Override
@@ -295,7 +297,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                addDeskSmsContactInfo();
+                addDeskSmsContactInfo(false);
             }
         });
         

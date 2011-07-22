@@ -216,11 +216,10 @@ public class SyncService extends Service {
                 envelope.put("version_code", DesktopSMSApplication.mVersionCode);
                 envelope.put("sync", sync);
                 System.out.println(envelope.toString(4));
-                StringEntity entity = new StringEntity(envelope.toString());
+                StringEntity entity = new StringEntity(envelope.toString(), "utf-8");
                 HttpPost post = ServiceHelper.getAuthenticatedPost(this, String.format(ServiceHelper.SMS_URL, account));
                 post.setEntity(entity);
-                //AndroidHttpClient client = AndroidHttpClient.newInstance(getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
-                DefaultHttpClient client = new DefaultHttpClient();
+                AndroidHttpClient client = AndroidHttpClient.newInstance(getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
                 try {
                     HttpResponse res = ServiceHelper.retryExecute(this, account, client, post);
                     if (res == null)
@@ -230,7 +229,7 @@ public class SyncService extends Service {
                     settings.setLong("last_sms_sync", latestSms);
                 }
                 finally {
-                    //client.close();
+                    client.close();
                 }
                 break;
             }
