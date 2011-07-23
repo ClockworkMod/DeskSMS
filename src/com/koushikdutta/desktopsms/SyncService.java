@@ -1,20 +1,26 @@
 package com.koushikdutta.desktopsms;
 
-import java.net.URI;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.app.Service;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -24,9 +30,11 @@ import android.os.IBinder;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.PhoneLookup;
+import android.telephony.SmsManager;
 import android.util.Log;
 
 public class SyncService extends Service {
+    private Settings mSettings;
     private static final String LOGTAG = SyncService.class.getSimpleName();
 
     @Override
@@ -139,132 +147,277 @@ public class SyncService extends Service {
     }
     
     Hashtable<String, CachedPhoneLookup> mLookup = new Hashtable<String, CachedPhoneLookup>();
-    
-    private void syncInternal() {
-        try {
-            Settings settings = Settings.getInstance(this);
-            String account = settings.getString("account");
-            boolean sync = settings.getBoolean("sync_sms", false);
 
-            // we may beat the provider to the punch, so let's try a few times
-            for (int poll = 0; poll < 10; poll++) {
-                Thread.sleep(1000);
-                
-                long lastSmsSync = settings.getLong("last_sms_sync", 0);
-                boolean isInitialSync = false;
-                if (lastSmsSync == 0) {
-                    isInitialSync = true;
-                    // only grab 3 days worth
-                    lastSmsSync = System.currentTimeMillis() - 3L * 24L * 60L * 60L * 1000L;
-                }
-                Cursor c = getContentResolver().query(Uri.parse("content://sms"), null, "date > ?", new String[] { String.valueOf(lastSmsSync) }, null);
-                
-                String[] columnNames = c.getColumnNames();
-                JSONArray smsArray = new JSONArray();
-                long latestSms = lastSmsSync;
-                int dateColumn = c.getColumnIndex("date");
-                int addressColumn = c.getColumnIndex("address");
-                int typeColumn = c.getColumnIndex("type");
-                while (c.moveToNext()) {
-                    try {
-                        JSONObject sms = new JSONObject();
-                        for (int i = 0; i < c.getColumnCount(); i++) {
-                            String name = columnNames[i];
-                            Tuple<String, CursorGetter> tuple = smsmapper.get(name);
-                            if (tuple == null)
-                                continue;
-                            tuple.Second.get(c, sms, tuple.First, i);
-                        }
-                        // only incoming SMS needs to be marked up with the display name and subject
-                        if (c.getInt(typeColumn) == INCOMING_SMS) {
-                            String number = c.getString(addressColumn);
-                            CachedPhoneLookup lookup = getPhoneLookup(number);
-                            String displayName;
-                            if (lookup != null) {
-                                displayName = lookup.displayName;
-                                sms.put("name", lookup.displayName);
-                                sms.put("entered_number", lookup.enteredNumber);
-                                sms.put("has_desksms_contact", lookup.hasDeskSMSContact);
-                            }
-                            else {
-                                displayName = number;
-                            }
-                            sms.put("subject", getString(R.string.sms_received, displayName));
-                        }
-                        else {
-                            // if we are not syncing, do not bother sending the outgoing message history
-                            if (!sync)
-                                continue;
-                        }
-                        smsArray.put(sms);
-                        long date = c.getLong(dateColumn);
-                        latestSms = Math.max(date, latestSms);
-                    }
-                    catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-                
-                if (smsArray.length() == 0) {
-                    Log.i(LOGTAG, "No new messages");
+    void sendUsingSmsManager(Context context, String number, String message) {
+        SmsManager sm = SmsManager.getDefault();
+        ArrayList<String> messages = sm.divideMessage(message);
+        int messageCount = messages.size();
+        if (messageCount == 0)
+            return;
+
+        sm.sendMultipartTextMessage(number, null, messages, null, null);
+        ContentValues values = new ContentValues();
+        values.put("address", number);
+        values.put("body", message);
+        context.getContentResolver().insert(Uri.parse("content://sms/sent"), values);
+    }
+    
+    void sendUsingContentProvider(Context context, String number, String message) throws Exception {
+        ContentResolver r = context.getContentResolver();
+        //ContentProviderClient client = r.acquireContentProviderClient(Uri.parse("content://sms/queued"));
+        ContentValues sv = new ContentValues();
+        sv.put("address", number);
+        sv.put("date", System.currentTimeMillis());
+        sv.put("read", 1);
+        sv.put("body", message);
+        sv.put("type", SyncService.OUTGOING_SMS);
+        String n = null;
+        sv.put("subject", n);
+        //sv.put("status", 32);
+        Uri u = r.insert(Uri.parse("content://sms/queued"), sv);
+        if (u == null) {
+            throw new Exception();
+        }
+        Intent bcast = new Intent("com.android.mms.transaction.SEND_MESSAGE");
+        bcast.setClassName("com.android.mms", "com.android.mms.transaction.SmsReceiverService");
+        context.startService(bcast);
+    }
+
+    private void sendOutbox(String outboxData) throws ClientProtocolException, OperationCanceledException, AuthenticatorException, IOException, URISyntaxException, JSONException {
+        long maxOutboxSync = mLastOutboxSync;
+        // the outbox MUST come in order, from the oldest to the newest.
+        // TODO: this should be sorted just to sanity check I guess.
+        JSONArray outbox;
+        // LEGACY: we should always expect an envelope
+        try {
+            outbox = new JSONArray(outboxData);
+        }
+        catch (Exception ex){
+            JSONObject envelope = new JSONObject(outboxData);
+            outbox = envelope.getJSONArray("data");
+        }
+        
+        if (outbox.length() == 0) {
+            Log.i(LOGTAG, "Empty outbox");
+            return;
+        }
+
+        Log.i(LOGTAG, "================Sending outbox================");
+        //Log.i(LOGTAG, outbox.toString(4));
+        for (int i = 0; i < outbox.length(); i++) {
+            try {
+                JSONObject sms = outbox.getJSONObject(i);
+                String number = sms.getString("number");
+                String message = sms.getString("message");
+                // make sure that any messages we get are new messages
+                long date = sms.getLong("date");
+                if (date <= mLastOutboxSync)
                     continue;
-                }
-                
-                JSONObject envelope = new JSONObject();
-                envelope.put("is_initial_sync", isInitialSync);
-                envelope.put("data", smsArray);
-                envelope.put("version_code", DesktopSMSApplication.mVersionCode);
-                envelope.put("sync", sync);
-                System.out.println(envelope.toString(4));
-                StringEntity entity = new StringEntity(envelope.toString(), "utf-8");
-                HttpPost post = ServiceHelper.getAuthenticatedPost(this, String.format(ServiceHelper.SMS_URL, account));
-                post.setEntity(entity);
-                AndroidHttpClient client = AndroidHttpClient.newInstance(getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
-                try {
-                    HttpResponse res = ServiceHelper.retryExecute(this, account, client, post);
-                    if (res == null)
-                        throw new Exception("Unable to authenticate");
-                    String results = StreamUtility.readToEnd(res.getEntity().getContent());
-                    System.out.println(results);
-                    settings.setLong("last_sms_sync", latestSms);
-                }
-                finally {
-                    client.close();
-                }
-                break;
+                //Log.i(LOGTAG, sms.toString(4));
+                maxOutboxSync = Math.max(maxOutboxSync, date);
+                //sendUsingSmsManager(this, number, message);
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
-        catch (Exception ex) {
-            ex.printStackTrace();
+        mLastOutboxSync = maxOutboxSync;
+        mSettings.setLong("last_outbox_sync", maxOutboxSync);
+
+        final long max = maxOutboxSync;
+        AndroidHttpClient client = AndroidHttpClient.newInstance(getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
+        try {
+            HttpDelete delete = new HttpDelete(String.format(ServiceHelper.OUTBOX_URL, mAccount) + "?max_date=" + max);
+            ServiceHelper.retryExecute(this, mAccount, client, delete);
         }
         finally {
-            mHandler.post(new Runnable() {
-               @Override
-                public void run() {
-                   mSyncThread = null;
-                } 
-            });
+            client.close();
         }
     }
 
+    private void syncOutbox(String outbox) throws ClientProtocolException, OperationCanceledException, AuthenticatorException, IOException, URISyntaxException, JSONException {
+        if (outbox == null) {
+            AndroidHttpClient client = AndroidHttpClient.newInstance(getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
+            try {
+                HttpGet get = new HttpGet(String.format(ServiceHelper.OUTBOX_URL, mAccount) + "?min_date=" + mLastOutboxSync);
+                ServiceHelper.addAuthentication(SyncService.this, get);
+                HttpResponse res = client.execute(get);
+                outbox = StreamUtility.readToEnd(res.getEntity().getContent());
+                sendOutbox(outbox);
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                client.close();
+            }
+        }
+        else {
+            sendOutbox(outbox);
+        }
+    }
+
+    private void syncSms() throws Exception {
+        long lastSmsSync = mSettings.getLong("last_sms_sync", 0);
+        boolean isInitialSync = false;
+        if (lastSmsSync == 0) {
+            isInitialSync = true;
+            // only grab 3 days worth
+            lastSmsSync = System.currentTimeMillis() - 3L * 24L * 60L * 60L * 1000L;
+        }
+        Cursor c = getContentResolver().query(Uri.parse("content://sms"), null, "date > ?", new String[] { String.valueOf(lastSmsSync) }, null);
+
+        String[] columnNames = c.getColumnNames();
+        JSONArray smsArray = new JSONArray();
+        long latestSms = lastSmsSync;
+        int dateColumn = c.getColumnIndex("date");
+        int addressColumn = c.getColumnIndex("address");
+        int typeColumn = c.getColumnIndex("type");
+        while (c.moveToNext()) {
+            try {
+                JSONObject sms = new JSONObject();
+                for (int i = 0; i < c.getColumnCount(); i++) {
+                    String name = columnNames[i];
+                    Tuple<String, CursorGetter> tuple = smsmapper.get(name);
+                    if (tuple == null)
+                        continue;
+                    tuple.Second.get(c, sms, tuple.First, i);
+                }
+                // only incoming SMS needs to be marked up with the display name and subject
+                if (c.getInt(typeColumn) == INCOMING_SMS) {
+                    String number = c.getString(addressColumn);
+                    CachedPhoneLookup lookup = getPhoneLookup(number);
+                    String displayName;
+                    if (lookup != null) {
+                        displayName = lookup.displayName;
+                        sms.put("name", lookup.displayName);
+                        sms.put("entered_number", lookup.enteredNumber);
+                        sms.put("has_desksms_contact", lookup.hasDeskSMSContact);
+                    }
+                    else {
+                        displayName = number;
+                    }
+                    sms.put("subject", getString(R.string.sms_received, displayName));
+                }
+                else {
+                    // if we are not syncing, do not bother sending the outgoing message history
+                    if (!mSyncSms)
+                        continue;
+                }
+                smsArray.put(sms);
+                long date = c.getLong(dateColumn);
+                latestSms = Math.max(date, latestSms);
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        if (smsArray.length() == 0) {
+            Log.i(LOGTAG, "No new messages");
+            return;
+        }
+
+        JSONObject envelope = new JSONObject();
+        envelope.put("is_initial_sync", isInitialSync);
+        envelope.put("data", smsArray);
+        envelope.put("version_code", DesktopSMSApplication.mVersionCode);
+        envelope.put("sync", mSyncSms);
+        System.out.println(envelope.toString(4));
+        StringEntity entity = new StringEntity(envelope.toString(), "utf-8");
+        HttpPost post = ServiceHelper.getAuthenticatedPost(this, String.format(ServiceHelper.SMS_URL, mAccount));
+        post.setEntity(entity);
+        AndroidHttpClient client = AndroidHttpClient.newInstance(getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
+        try {
+            HttpResponse res = ServiceHelper.retryExecute(this, mAccount, client, post);
+            if (res == null)
+                throw new Exception("Unable to authenticate");
+            String results = StreamUtility.readToEnd(res.getEntity().getContent());
+            System.out.println(results);
+            mSettings.setLong("last_sms_sync", latestSms);
+        }
+        finally {
+            client.close();
+        }
+    }
+
+    boolean mSyncSms;
+    long mLastOutboxSync;
+    String mAccount;
     Handler mHandler = new Handler();
     Thread mSyncThread = null;
-    private void sync() {
+    String mPendingOutbox;
+    boolean mPendingOutboxSync;
+    private void sync(Intent intent) {
+        mPendingOutbox = intent.getStringExtra("outbox");
+        mPendingOutboxSync = "outbox".equals(intent.getStringExtra("reason"));
         if (mSyncThread != null)
             return;
+
+        mAccount = mSettings.getString("account");
+        if (mAccount == null)
+            return;
+        mLastOutboxSync = mSettings.getLong("last_outbox_sync", 0);
+        mSyncSms = mSettings.getBoolean("sync_sms", false);
 
         mSyncThread = new Thread() {
             @Override
             public void run() {
-                syncInternal();
+                try {
+                    // if we are starting for the outbox, do that immediately
+                    boolean startedForOutbox = mPendingOutboxSync;
+                    if (mPendingOutboxSync) {
+                        mPendingOutboxSync = false;
+                        syncOutbox(mPendingOutbox);
+                        mPendingOutbox = null;
+                    }
+
+                    // and poll against the sms content provider 10 times
+                    for (int i = 0; i < 10; i++) {
+                        syncSms();
+
+                        // however, if an outbox message comes in while we are polling,
+                        // let's send it
+                        if (mPendingOutboxSync) {
+                            Log.i(LOGTAG, "================Outbox ping received================");
+                            mPendingOutboxSync = false;
+                            syncOutbox(mPendingOutbox);
+                            mPendingOutbox = null;
+                        }
+                        Thread.sleep(1000);
+                    }
+
+                    // if we did not start for the outbox, sync it now just in case
+                    if (!startedForOutbox) {
+                        syncOutbox(mPendingOutbox);
+                        mPendingOutbox = null;
+                    }
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                finally {
+                    mHandler.post(new Runnable() {
+                       @Override
+                        public void run() {
+                           mSyncThread = null;
+                        }
+                    });
+                }
             }
         };
         mSyncThread.start();
     }
     
     @Override
+    public void onCreate() {
+        super.onCreate();
+        mSettings = Settings.getInstance(this);
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        sync();
+        sync(intent);
         return super.onStartCommand(intent, flags, startId);
     }
 }

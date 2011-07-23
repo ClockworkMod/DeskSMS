@@ -1,5 +1,6 @@
 package com.koushikdutta.desktopsms;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -9,6 +10,7 @@ import java.util.Iterator;
 import org.apache.http.HttpMessage;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -23,6 +25,8 @@ import org.json.JSONObject;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,7 +55,7 @@ public class ServiceHelper {
         return ret.toString();
     }
     
-    static HttpResponse retryExecute(Context context, String account, HttpClient client, HttpUriRequest req) throws Exception {
+    static HttpResponse retryExecute(Context context, String account, HttpClient client, HttpUriRequest req) throws ClientProtocolException, IOException, OperationCanceledException, AuthenticatorException, URISyntaxException {
         addAuthentication(context, req);
 
         final HttpParams httpParams = new BasicHttpParams();

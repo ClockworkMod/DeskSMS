@@ -1,12 +1,15 @@
 package com.koushikdutta.desktopsms;
 
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -41,7 +44,7 @@ public class TickleServiceHelper {
     private TickleServiceHelper() {
     }
     
-    static String getCookie(final Context context) throws Exception {
+    static String getCookie(final Context context) throws ClientProtocolException, IOException, URISyntaxException {
         Settings settings = Settings.getInstance(context);
         final String authToken = settings.getString("web_connect_auth_token");
         if (authToken == null)
@@ -61,7 +64,8 @@ public class TickleServiceHelper {
         HttpResponse res = client.execute(method);
         Header[] headers = res.getHeaders("Set-Cookie");
         if (res.getStatusLine().getStatusCode() != 302 || headers.length == 0) {
-            throw new Exception("failure getting cookie: " + res.getStatusLine().getStatusCode() + " " + res.getStatusLine().getReasonPhrase());
+            //throw new Exception("failure getting cookie: " + res.getStatusLine().getStatusCode() + " " + res.getStatusLine().getReasonPhrase());
+            return null;
         }
 
         String ascidCookie = null;
