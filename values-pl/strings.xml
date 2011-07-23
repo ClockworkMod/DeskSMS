@@ -34,6 +34,7 @@
     <string name="msg_app_detected">Wykryto aplikację %s. Jeśli nie otrzymałeś wiadomości sprawdź w ustawianiach aplikacji czy powiadomienia nie są wyłączone</string>
     <string name="handcent">Handcent</string>
     <string name="gosms">GoSMS</string>
+
     <!-- Missed call from Koushik Dutta -->
     <string name="missed_call_from">Nieodebrane połączenie od %s.</string>
     <!-- Missed call at 12:30PM -->
@@ -51,4 +52,17 @@
     
     <string name="widget_name">Widget DeskSMS</string>
 
+    <string name="updating_settings">Aktualizacja ustawień serwera...</string>
+    <string name="updating_settings_error">Błąd komunikacji z serwerem. Sprawdź połączenie.</string>
+    <string name="disable_notifications">Wyłącz powiadomienia SMS</string>
+    <string name="disable_notifications_summary">Wyłącz powiadomienia SMS innych aplikacji. Nie wyłączaj powiadomień w GoSMS lub Handcent; zamiast tego skorzystaj z tej opcji.</string>
+    
+    <string name="sync_sms">Synchronizuj SMS</string>
+    <string name="sync_sms_summary">Synchronizuj historię wiadomości SMS z serwerem DeskSMS. Pozwoli to na korzystanie z interfejsu webowego DeskSMS i podgląd historii Twoich wiadomości online.</string>
+    
+    <string name="contacts">Kontakty</string>
+    <string name="add_desksms_contact_info">Dołącz kontakty DeskSMS</string>
+    <string name="add_desksms_contact_info_summary">Dodaj adresy email i IM DeskSMS do Twojej listy kontaktów. Pozwoli to rozpocząć rozmowę (SMS) przez email lub IM.</string>
+    <string name="remove_desksms_contact_info">Usuń kontakty DeskSMS</string>
+    <string name="please_wait_contact_list">Proszę czekać, trwa aktualizowanie listy kontaktów...</string>
 </resources>
