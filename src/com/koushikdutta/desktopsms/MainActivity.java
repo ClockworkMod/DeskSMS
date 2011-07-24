@@ -130,7 +130,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                     ArrayList<ContentValues> cvs = new ArrayList<ContentValues>();
                     for (long rawContact: numbers.keySet()) {
                         String number = numbers.get(rawContact);
-                        number = ServiceHelper.numbersOnly(number);
+                        number = ServiceHelper.numbersOnly(number, false);
                         ContentValues cv = new ContentValues();
                         cv.put(Data.RAW_CONTACT_ID, rawContact);
                         cv.put(Data.MIMETYPE, CommonDataKinds.Email.CONTENT_ITEM_TYPE);

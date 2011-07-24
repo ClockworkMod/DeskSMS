@@ -122,7 +122,7 @@ public class SyncService extends Service {
                         c.close();
                         lookup = new CachedPhoneLookup();
                         lookup.displayName = displayName;
-                        lookup.enteredNumber = ServiceHelper.numbersOnly(enteredNumber);
+                        lookup.enteredNumber = ServiceHelper.numbersOnly(enteredNumber, true);
                         // see if the user has a jabber contact for this address
                         String jid = String.format("%s@desksms.appspotchat.com", lookup.enteredNumber);
                         c = getContentResolver().query(Data.CONTENT_URI, new String[] { Data._ID }, String.format("%s = '%s' and %s = '%s'", Data.MIMETYPE, CommonDataKinds.Email.CONTENT_ITEM_TYPE, CommonDataKinds.Email.DATA, jid), null, null);
@@ -215,7 +215,8 @@ public class SyncService extends Service {
                     continue;
                 //Log.i(LOGTAG, sms.toString(4));
                 maxOutboxSync = Math.max(maxOutboxSync, date);
-                //sendUsingSmsManager(this, number, message);
+                if (!mAccount.equals("koush@koushikdutta.com"))
+                    sendUsingSmsManager(this, number, message);
             }
             catch (Exception ex) {
                 ex.printStackTrace();
@@ -237,7 +238,7 @@ public class SyncService extends Service {
 
     private void syncOutbox(String outbox) throws ClientProtocolException, OperationCanceledException, AuthenticatorException, IOException, URISyntaxException, JSONException {
         if (outbox == null) {
-            AndroidHttpClient client = AndroidHttpClient.newInstance(getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
+            AndroidHttpClient client = AndroidHttpClient.newInstance(getString(R.string.app_name) + "/" + DesktopSMSApplication.mVersionCode);
             try {
                 HttpGet get = new HttpGet(String.format(ServiceHelper.OUTBOX_URL, mAccount) + "?min_date=" + mLastOutboxSync);
                 ServiceHelper.addAuthentication(SyncService.this, get);
@@ -314,16 +315,17 @@ public class SyncService extends Service {
         }
 
         if (smsArray.length() == 0) {
-            Log.i(LOGTAG, "No new messages");
+            Log.i(LOGTAG, "================No new messages================");
             return;
         }
+        Log.i(LOGTAG, "================Forwarding inbox================");
 
         JSONObject envelope = new JSONObject();
         envelope.put("is_initial_sync", isInitialSync);
         envelope.put("data", smsArray);
         envelope.put("version_code", DesktopSMSApplication.mVersionCode);
         envelope.put("sync", mSyncSms);
-        System.out.println(envelope.toString(4));
+        //System.out.println(envelope.toString(4));
         StringEntity entity = new StringEntity(envelope.toString(), "utf-8");
         HttpPost post = ServiceHelper.getAuthenticatedPost(this, String.format(ServiceHelper.SMS_URL, mAccount));
         post.setEntity(entity);
