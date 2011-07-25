@@ -225,6 +225,25 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                 }
             }
         });
+        
+        addItem(R.string.account, new ListItem(this, R.string.sync_calls, R.string.sync_calls_summary) {
+            {
+                CheckboxVisible = true;
+                Settings settings = Settings.getInstance(MainActivity.this);
+                setIsChecked(settings.getBoolean("sync_sms", false));
+            }
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                Settings settings = Settings.getInstance(MainActivity.this);
+                settings.setBoolean("sync_calls", getIsChecked());
+                if (getIsChecked()) {
+                    // reset the sync counter so it resends the sms history
+                    settings.setLong("last_calls_sync", 0);
+                    startService(new Intent(MainActivity.this, SyncService.class));
+                }
+            }
+        });
 
         final Runnable updateSettings = new Runnable() {
             @Override

@@ -81,7 +81,7 @@ public class TickleServiceHelper {
         return ascidCookie;
     }
 
-    private static void registerWebConnect(final Context context) throws Exception {
+    static void registerWebConnect(final Context context) throws Exception {
         String ascidCookie = getCookie(context);
         Settings settings = Settings.getInstance(context);
         final String registration = settings.getString("registration_id");
@@ -117,7 +117,6 @@ public class TickleServiceHelper {
     }
 
     public static void login(final Activity context, final ActivityResultDelegate delegate, final Callback<Boolean> callback) {
-        final Handler handler = new Handler();
         final String[] accounts = getGoogleAccounts(context);
         AlertDialog.Builder builder = new Builder(context);
         builder.setCancelable(false);

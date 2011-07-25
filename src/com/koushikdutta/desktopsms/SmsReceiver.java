@@ -10,6 +10,7 @@ public class SmsReceiver extends BroadcastReceiver {
     public void onReceive(final Context context, Intent intent) {
         Intent i = new Intent(context, SyncService.class);
         i.putExtras(intent);
+        i.putExtra("reason", "sms");
         context.startService(i);
     
         boolean disable = Settings.getInstance(context).getBoolean("disable_notifications", false);

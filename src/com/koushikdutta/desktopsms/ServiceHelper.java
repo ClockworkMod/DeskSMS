@@ -42,6 +42,7 @@ public class ServiceHelper {
     public static final String USER_URL = API_URL + "/user/%s";
     public static final String SETTINGS_URL = USER_URL + "/settings";
     public static final String SMS_URL = USER_URL + "/sms";
+    public static final String CALL_URL = USER_URL + "/call";
     public static final String OUTBOX_URL = USER_URL + "/outbox";
     
     static String numbersOnly(String number, boolean allowPlus) {

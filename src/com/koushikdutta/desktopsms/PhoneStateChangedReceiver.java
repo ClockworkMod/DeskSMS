@@ -10,7 +10,8 @@ public class PhoneStateChangedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i(LOGTAG, "===== Starting PhoneStateChangedReceiver =====");
-        Intent i = new Intent(context, PhoneStateChangedService.class);
+        Intent i = new Intent(context, SyncService.class);
+        i.putExtra("reason", "phone");
         context.startService(i);
     }
 }

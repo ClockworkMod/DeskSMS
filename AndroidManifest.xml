@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.koushikdutta.desktopsms" android:versionCode="1020"
-	android:versionName="1.0.2.0">
+	package="com.koushikdutta.desktopsms" android:versionCode="1030"
+	android:versionName="1.0.3.0">
 
 	<uses-sdk android:minSdkVersion="8" />
 	<application android:icon="@drawable/icon" android:label="@string/app_name" android:name=".DesktopSMSApplication">
@@ -43,8 +43,6 @@
                 <action android:name="android.intent.action.DATE_CHANGED" />
             </intent-filter>
 		</receiver>
-		<service android:name=".SmsService" />
-		<service android:name=".PhoneStateChangedService" />
 		<service android:name=".SyncService" />
 		
         <receiver android:name=".WidgetProvider"
