@@ -230,7 +230,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             {
                 CheckboxVisible = true;
                 Settings settings = Settings.getInstance(MainActivity.this);
-                setIsChecked(settings.getBoolean("sync_sms", false));
+                setIsChecked(settings.getBoolean("sync_calls", false));
             }
             @Override
             public void onClick(View view) {
