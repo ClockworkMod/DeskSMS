@@ -65,4 +65,7 @@
     <string name="add_desksms_contact_info_summary">Add DeskSMS email and IM addresses to your contact list. This will allow you to initate an SMS to someone via email or IM.</string>
     <string name="remove_desksms_contact_info">Remove DeskSMS Contacts</string>
     <string name="please_wait_contact_list">Please wait while your contact list is updated...</string>
+
+	<string name="sync_calls">Sync Calls</string>
+	<string name="sync_calls_summary">Sync your Call history to the DeskSMS server for online viewing.</string>
 </resources>
