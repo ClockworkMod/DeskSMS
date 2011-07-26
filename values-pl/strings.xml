@@ -65,4 +65,7 @@
     <string name="add_desksms_contact_info_summary">Dodaj adresy email i IM DeskSMS do Twojej listy kontaktów. Pozwoli to rozpocząć rozmowę (SMS) przez email lub IM.</string>
     <string name="remove_desksms_contact_info">Usuń kontakty DeskSMS</string>
     <string name="please_wait_contact_list">Proszę czekać, trwa aktualizowanie listy kontaktów...</string>
+
+    <string name="sync_calls">Synchronizuj połączenia</string>
+    <string name="sync_calls_summary">Synchronizuj historię połączeń z serwerem DeskSMS. Umożliwi Ci to dostęp online.</string>
 </resources>
