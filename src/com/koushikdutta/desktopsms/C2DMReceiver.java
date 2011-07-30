@@ -65,6 +65,12 @@ public class C2DMReceiver extends BroadcastReceiver {
                 serviceIntent.putExtra("reason", "outbox");
                 context.startService(serviceIntent);
             }
+            else if ("dial".equals(type)) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse(String.format("tel:%s", intent.getStringExtra("number"))));
+                callIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(callIntent);
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();

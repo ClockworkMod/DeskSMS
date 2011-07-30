@@ -183,17 +183,21 @@ public class SyncService extends Service {
     
     Hashtable<String, CachedPhoneLookup> mLookup = new Hashtable<String, CachedPhoneLookup>();
 
-    void sendUsingSmsManager(Context context, String number, String message) {
+    void sendUsingSmsManager(Context context, String number, String message, long date) {
         SmsManager sm = SmsManager.getDefault();
         ArrayList<String> messages = sm.divideMessage(message);
         int messageCount = messages.size();
         if (messageCount == 0)
             return;
 
-        sm.sendMultipartTextMessage(number, null, messages, null, null);
+        if (!mAccount.equals("koush@koushikdutta.com"))
+            sm.sendMultipartTextMessage(number, null, messages, null, null);
         ContentValues values = new ContentValues();
         values.put("address", number);
         values.put("body", message);
+        values.put("type", SyncService.OUTGOING_SMS);
+        values.put("date", date);
+        values.put("read", 1);
         context.getContentResolver().insert(Uri.parse("content://sms/sent"), values);
     }
     
@@ -250,8 +254,7 @@ public class SyncService extends Service {
                     continue;
                 //Log.i(LOGTAG, sms.toString(4));
                 maxOutboxSync = Math.max(maxOutboxSync, date);
-                if (!mAccount.equals("koush@koushikdutta.com"))
-                    sendUsingSmsManager(this, number, message);
+                sendUsingSmsManager(this, number, message, date);
             }
             catch (Exception ex) {
                 ex.printStackTrace();
