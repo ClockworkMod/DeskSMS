@@ -190,8 +190,7 @@ public class SyncService extends Service {
         if (messageCount == 0)
             return;
 
-        if (!mAccount.equals("koush@koushikdutta.com"))
-            sm.sendMultipartTextMessage(number, null, messages, null, null);
+        sm.sendMultipartTextMessage(number, null, messages, null, null);
         ContentValues values = new ContentValues();
         values.put("address", number);
         values.put("body", message);
