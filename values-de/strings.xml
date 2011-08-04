@@ -48,12 +48,12 @@
     
     <string name="troubleshooting">Störungssuche</string>
 
-<string name="accounts">Konten</string>
+    <string name="accounts">Konten</string>
     
     <string name="widget_name">DeskSMS Widget</string>
     
     <string name="updating_settings">Server Einstellungen Aktualisierung...</string>
-    <string name="updating_settings_error">Fehler bei der Kommunikation zum Servers ist aufgetretten. Bitte überprüfen Sie Ihre Internet Verbindung.
+    <string name="updating_settings_error">Fehler bei der Kommunikation zum Servers ist aufgetretten. Bitte überprüfen Sie Ihre Internet Verbindung.</string>
     <string name="disable_notifications">SMS Empfangsbenachrichtigung deaktivieren</string>
     <string name="disable_notifications_summary">Deaktivieren von SMS Empfangsbenachrichtigung zu anderen Anwendungen. Verwenden Sie nicht den Benachrichtigungs-Deaktivierer in GoSMS oder in Handcent; aktivieren Sie dies stattdessen.</string>
     
