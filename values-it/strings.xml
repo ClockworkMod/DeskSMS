@@ -2,36 +2,36 @@
 <resources>
     <string name="app_name">DeskSMS</string>
     
-    <string name="description">DeskSMS inoltra i sui SMS al suo account Google Talk e/o Gmail. E rispondere tramite SMS!</string>
+    <string name="description">DeskSMS inoltra i tuoi SMS al tuo account Google Talk e/o Gmail. E ti permette di rispondere via SMS!</string>
     
-    <string name="signin_success">Ha effettuato l\'accesso con successo!</string>
-    <string name="signin_failure">Accesso fallito. Si prega di verificare la connessione a Internet e riprovare. Accesso con un indirizzo di Google Apps potrebbe non funzionare. Se l’errore persiste, si prega di inviare un registro allo sviluppatore.</string>
+    <string name="signin_success">Hai effettuato correttamente l\'accesso!</string>
+    <string name="signin_failure">Impossibile accedere. Controlla di avere una connessione ad Internet attiva e riprova. Potrebbe non essere possibile accedere con un account Google Apps. Se l\'errore si presenta spesso, invia una segnalazione allo sviluppatore.</string>
     
-    <string name="login_with_google">Acceda con il suo account Google</string>
-    <string name="requesting_permissions">Ora DeskSMS le chiederà l’autorizzazione per utilizzare l’autenticazione del suo Account Google per le notifiche push e la registrazione con il nostro server. Desktop SMS non avrà accesso alla sua password o ai dati personali.</string>
+    <string name="login_with_google">Accedi con il tuo account Google</string>
+    <string name="requesting_permissions">Adesso DeskSMS ti chiederà l’autorizzazione per utilizzare l’autenticazione del tuo Account Google per le notifiche push e la registrazione con il nostro server. Desktop SMS non potrà accedere alla tua password o ai dati personali.</string>
     <string name="permission_request">Richiesta di autorizzazione</string>
     
-    <string name="send_xmpp">Collegare a Google Talk</string>
-    <string name="send_email">Collegare a Gmail</string>
+    <string name="send_xmpp">Collega a Google Talk</string>
+    <string name="send_email">Collega a Gmail</string>
     
-    <string name="setting_up_push">Impostare le notifiche push...</string>
+    <string name="setting_up_push">Impostazione delle notifiche push...</string>
     <string name="retrieving_authentication">Recupero dei token di autenticazione Google...</string>
-    <string name="registering_with_server">Registrazione al server push...</string>
+    <string name="registering_with_server">Registrazione al server delle notifiche push...</string>
     
-    <string name="current_account">Account Attuale: %s</string>
+    <string name="current_account">Account attivo: %s</string>
     
-    <string name="forwarded">%s SMS inviato/i al suo computer</string>
-    <string name="proxied">%s SMS inviato/i dal suo computer</string>
+    <string name="forwarded">%s SMS inviato/i al tuo computer</string>
+    <string name="proxied">%s SMS inviato/i dal tuo computer</string>
     
-    <string name="not_logged_in">Per cortesia accede col suo Account Google per utilizzare DeskSMS.</string>
+    <string name="not_logged_in">Per favore, accedi col tuo Account Google per utilizzare DeskSMS.</string>
     
     <string name="test_message">Invia SMS</string>
-    <string name="test_message_info">Prema OK per inviarsi un SMS. Il SMS dovrebbe arrivare nel suo applicazione messaggi come al solito. Dovrebbe anche ricevere una email e facoltativamente un SMS Google Talk!</string>
-    <string name="test_message_content">Questo è un SMS da DeskSMS!</string>
+    <string name="test_message_info">Premi OK per inviarti un SMS di prova. L\'SMS dovrebbe arrivare nella tua solita applicazione dei messaggi. Dovresti anche ricevere una email e/o un messaggio su Google Talk!</string>
+    <string name="test_message_content">Questo è un SMS di prova da DeskSMS!</string>
     
-    <string name="number_retrieval_error">Impossibile recuperare il suo numero di telefono. Per cortesia utilizzi l’applicazione messaggi per inviarsi manualmente un SMS per provare Desktop SMS.</string>
+    <string name="number_retrieval_error">Impossibile recuperare il tuo numero di telefono. Usa l’applicazione dei messaggi per inviarti manualmente un SMS per provare DesktopSMS.</string>
     
-    <string name="msg_app_detected">L’applicazione %s è stata trovata installata. Se non receve un SMS, per cortesia verifica che non ha disattivato le notifiche SMS nelle impostazioni dell’applicazione.</string>
+    <string name="msg_app_detected">Nel dispositivo è stata trovata l\'applicazione %s. Se non ricevi un SMS, verifica di non aver disattivato le notifiche SMS nelle impostazioni dell’applicazione.</string>
     <string name="handcent">Handcent</string>
     <string name="gosms">GoSMS</string>
     
@@ -46,5 +46,26 @@
     <string name="google_talk">Google Talk</string>
     <string name="gmail">Gmail</string>
     
-    <string name="troubleshooting">Troubleshooting</string>
+    <string name="troubleshooting">Risoluzione dei problemi</string>
+	
+	<string name="accounts">Account</string>
+    
+    <string name="widget_name">Widget di DeskSMS</string>
+    
+    <string name="updating_settings">Aggiornamento impostazioni del server...</string>
+    <string name="updating_settings_error">Impossibile comunicare con il server. Controlla di avere una connessione attiva ad Internet.</string>
+    <string name="disable_notifications">Disabilita notifiche SMS</string>
+    <string name="disable_notifications_summary">Disabilita le notifiche degli SMS alle altre applicazioni. Non usare la disabilitazione delle notifiche in GoSMS o Handcent, abilita questa.</string>
+    
+    <string name="sync_sms">Sincronizza SMS</string>
+    <string name="sync_sms_summary">Sincronizza tutti i tuoi SMS con il server di DeskSMS. In questo modo potrai usare l\'interfaccia web di DeskSMS per vederli online.</string>
+    
+    <string name="contacts">Contatti</string>
+    <string name="add_desksms_contact_info">Unisci contatti DeskSMS</string>
+    <string name="add_desksms_contact_info_summary">Aggiunge le email e gli indirizzi di Google Talk usati da DeskSMS alla tua lista contatti. In questo modo potrai avviare una conversazione via SMS dalla mail o da Google Talk.</string>
+    <string name="remove_desksms_contact_info">Rimuovi contatti DeskSMS</string>
+    <string name="please_wait_contact_list">Aggiornamento della lista dei contatti in corso...</string>
+
+	<string name="sync_calls">Sincronizza chiamate</string>
+	<string name="sync_calls_summary">Sincronizza il tuo registro delle chiamate con il server di DeskSMS per visualizzarlo online.</string>
 </resources>
