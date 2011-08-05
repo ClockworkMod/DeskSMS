@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.koushikdutta.desktopsms" android:versionCode="1040"
-	android:versionName="1.0.4.0">
+	package="com.koushikdutta.desktopsms" android:versionCode="1042"
+	android:versionName="1.0.4.2">
 
 	<uses-sdk android:minSdkVersion="8" />
-	<application android:icon="@drawable/icon" android:label="@string/app_name" android:name=".DesktopSMSApplication">
+	<application android:icon="@drawable/icon" android:label="@string/app_name" android:name=".DesktopSMSApplication" android:theme="@android:style/Theme.Light">
 		<activity android:name=".MainActivity" android:label="@string/app_name"
 			android:configChanges="orientation|keyboard|keyboardHidden"
 			android:screenOrientation="portrait">
@@ -43,6 +43,11 @@
                 <action android:name="android.intent.action.DATE_CHANGED" />
             </intent-filter>
 		</receiver>
+		<receiver android:name=".BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+		</receiver>
 		<service android:name=".SyncService" />
 		
         <receiver android:name=".WidgetProvider"
@@ -50,6 +55,7 @@
             <intent-filter>
                 <action android:name="com.koushikdutta.desktopsms.TOGGLE_EMAIL" />
                 <action android:name="com.koushikdutta.desktopsms.TOGGLE_XMPP" />
+                <action android:name="com.koushikdutta.desktopsms.TOGGLE_WEB" />
                 <action android:name="com.koushikdutta.desktopsms.APPWIDGET_UPDATE" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

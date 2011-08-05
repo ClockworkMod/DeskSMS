@@ -31,17 +31,6 @@ import android.view.View;
 public class MainActivity extends ActivityBase implements ActivityResultDelegate {
     private static final String LOGTAG = MainActivity.class.getSimpleName();
     private Handler mHandler = new Handler();
-
-    
-    boolean appExists(String pkg) {
-        try {
-            return getPackageManager().getPackageInfo(pkg, 0) != null;
-        }
-        catch (Exception ex) {
-        }
-        return false;
-    }
-    
     
     private void doLogin() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -73,8 +62,8 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                         testMessage.setEnabled(true);
 
                         mSettings.setLong("last_sms_sync", 0);
-                        if (mSettings.getBoolean("sync_sms", false))
-                            startService(new Intent(MainActivity.this, SyncService.class));
+                        mSettings.setLong("last_calls_sync", 0);
+                        Helper.startSyncService(MainActivity.this);
                     }
                 });
             }
@@ -139,7 +128,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                         cv.put(CommonDataKinds.Email.TYPE, CommonDataKinds.Email.TYPE_CUSTOM);
                         cv.put(CommonDataKinds.Email.LABEL, "DeskSMS");
                         cvs.add(cv);
-                        
+
                         cv = new ContentValues();
                         cv.put(Data.RAW_CONTACT_ID, rawContact);
                         cv.put(Data.MIMETYPE, CommonDataKinds.Email.CONTENT_ITEM_TYPE);
@@ -171,14 +160,17 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
+        Helper.startSyncService(this);
+
         String account = mSettings.getString("account");
+        String registrationId = mSettings.getString("registration_id");
 
         if (mSettings.getLong("last_missed_call", 0) == 0) {
             mSettings.setLong("last_missed_call", System.currentTimeMillis());
         }
         
-        if (Helper.isJavaScriptNullOrEmpty(account)) {
+        if (Helper.isJavaScriptNullOrEmpty(account) || Helper.isJavaScriptNullOrEmpty(registrationId)) {
             doLogin();
         }
         
@@ -206,55 +198,18 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                 doLogin();
             }
         });
-        
-        addItem(R.string.account, new ListItem(this, R.string.sync_sms, R.string.sync_sms_summary) {
-            {
-                CheckboxVisible = true;
-                Settings settings = Settings.getInstance(MainActivity.this);
-                setIsChecked(settings.getBoolean("sync_sms", false));
-            }
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                Settings settings = Settings.getInstance(MainActivity.this);
-                settings.setBoolean("sync_sms", getIsChecked());
-                if (getIsChecked()) {
-                    // reset the sync counter so it resends the sms history
-                    settings.setLong("last_sms_sync", 0);
-                    startService(new Intent(MainActivity.this, SyncService.class));
-                }
-            }
-        });
-        
-        addItem(R.string.account, new ListItem(this, R.string.sync_calls, R.string.sync_calls_summary) {
-            {
-                CheckboxVisible = true;
-                Settings settings = Settings.getInstance(MainActivity.this);
-                setIsChecked(settings.getBoolean("sync_calls", false));
-            }
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                Settings settings = Settings.getInstance(MainActivity.this);
-                settings.setBoolean("sync_calls", getIsChecked());
-                if (getIsChecked()) {
-                    // reset the sync counter so it resends the sms history
-                    settings.setLong("last_calls_sync", 0);
-                    startService(new Intent(MainActivity.this, SyncService.class));
-                }
-            }
-        });
 
         final Runnable updateSettings = new Runnable() {
             @Override
             public void run() {
                 final ListItem gmail = findItem(R.string.gmail);
                 final ListItem gtalk = findItem(R.string.google_talk);
+                final ListItem web = findItem(R.string.web);
                 final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
                 dialog.setMessage(getString(R.string.updating_settings));
                 dialog.show();
                 dialog.setCancelable(false);
-                ServiceHelper.updateSettings(MainActivity.this, gtalk.getIsChecked(), gmail.getIsChecked(), new Callback<Boolean>() {
+                ServiceHelper.updateSettings(MainActivity.this, gtalk.getIsChecked(), gmail.getIsChecked(), web.getIsChecked(), new Callback<Boolean>() {
                     @Override
                     public void onCallback(final Boolean result) {
                         runOnUiThread(new Runnable() {
@@ -265,6 +220,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                                     Helper.showAlertDialog(MainActivity.this, R.string.updating_settings_error);
                                     gmail.setIsChecked(mSettings.getBoolean("forward_email", true));
                                     gtalk.setIsChecked(mSettings.getBoolean("forward_xmpp", true));
+                                    web.setIsChecked(mSettings.getBoolean("forward_web", true));
                                 }
                             }
                         });
@@ -298,17 +254,23 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                 updateSettings.run();
             }
         });
-        
-        addItem(R.string.notifications, new ListItem(this, R.string.disable_notifications, R.string.disable_notifications_summary) {
+
+        addItem(R.string.notifications, new ListItem(this, R.string.web, 0) {
             {
                 CheckboxVisible = true;
-                setIsChecked(mSettings.getBoolean("disable_notifications", false));
+                setIsChecked(mSettings.getBoolean("forward_web", true));
             }
             
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                mSettings.setBoolean("disable_notifications", getIsChecked());
+                if (getIsChecked()) {
+                    // reset the sync counter so it resends the sms history
+                    mSettings.setLong("last_sms_sync", 0);
+                    mSettings.setLong("last_calls_sync", 0);
+                    Helper.startSyncService(MainActivity.this);
+                }
+                updateSettings.run();
             }
         });
 
@@ -340,46 +302,22 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                     Helper.showAlertDialog(MainActivity.this, R.string.number_retrieval_error);
                     return;
                 }
-                
-                boolean handcent = appExists("com.handcent.nextsms");
-                boolean gosms = appExists("com.jb.gosms");
-                
-                final Runnable pre = new Runnable() {
-                    @Override
-                    public void run() {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setTitle(R.string.test_message);
-                        builder.setMessage(R.string.test_message_info);
-                        builder.setNegativeButton(android.R.string.cancel, null);
-                        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
 
-                                String message = getString(R.string.test_message_content);
-                                SmsManager sm = SmsManager.getDefault();
-                                sm.sendTextMessage(number, null, message, null, null);
-                            }
-                        });
-                        builder.setCancelable(true);
-                        builder.create().show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle(R.string.test_message);
+                builder.setMessage(R.string.test_message_info);
+                builder.setNegativeButton(android.R.string.cancel, null);
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        String message = getString(R.string.test_message_content);
+                        SmsManager sm = SmsManager.getDefault();
+                        sm.sendTextMessage(number, null, message, null, null);
                     }
-                };
-                
-                if (handcent || gosms) {
-                    AlertDialog.Builder builder = new Builder(MainActivity.this);
-                    builder.setMessage(getString(R.string.msg_app_detected, getString(handcent ? R.string.handcent : R.string.gosms)));
-                    builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            pre.run();
-                        }
-                    });
-                    builder.setCancelable(true);
-                    builder.create().show();
-                }
-                else {
-                    pre.run();
-                }
+                });
+                builder.setCancelable(true);
+                builder.create().show();
             }
         });
     }

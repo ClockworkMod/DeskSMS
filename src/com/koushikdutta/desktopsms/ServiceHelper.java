@@ -35,10 +35,10 @@ import android.util.Log;
 public class ServiceHelper {
     private static String LOGTAG = ServiceHelper.class.getSimpleName();
     public static final String BASE_URL = "https://desksms.appspot.com";
-    public static final String MESSAGE_URL = BASE_URL + "/message";
-    public final static String REGISTER_URL = BASE_URL + "/register";
     public static final String AUTH_URL = BASE_URL + "/_ah/login";
     public static final String API_URL = BASE_URL + "/api/v1";
+    public final static String REGISTER_URL = API_URL + "/register";
+    public final static String PING_URL = API_URL + "/ping";
     public static final String USER_URL = API_URL + "/user/%s";
     public static final String SETTINGS_URL = USER_URL + "/settings";
     public static final String SMS_URL = USER_URL + "/sms";
@@ -116,7 +116,7 @@ public class ServiceHelper {
         return post;
     }
     
-    static void updateSettings(final Context context, final boolean xmpp, final boolean mail, final Callback<Boolean> callback) {
+    static void updateSettings(final Context context, final boolean xmpp, final boolean mail, final boolean web, final Callback<Boolean> callback) {
         new Thread() {
             public void run() {
                 try {
@@ -125,6 +125,7 @@ public class ServiceHelper {
                     ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
                     params.add(new BasicNameValuePair("forward_xmpp", String.valueOf(xmpp)));
                     params.add(new BasicNameValuePair("forward_email", String.valueOf(mail)));
+                    params.add(new BasicNameValuePair("forward_web", String.valueOf(web)));
 
                     HttpPost post = ServiceHelper.getAuthenticatedPost(context, String.format(SETTINGS_URL, account), params);
                     DefaultHttpClient client = new DefaultHttpClient();
@@ -132,6 +133,7 @@ public class ServiceHelper {
                     Log.i(LOGTAG, "Status code from settings: " + res.getStatusLine().getStatusCode());
                     settings.setBoolean("forward_xmpp", xmpp);
                     settings.setBoolean("forward_email", mail);
+                    settings.setBoolean("forward_web", web);
                     if (callback != null)
                         callback.onCallback(true);
                 }

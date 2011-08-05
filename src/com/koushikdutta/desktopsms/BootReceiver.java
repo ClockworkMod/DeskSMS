@@ -3,14 +3,10 @@ package com.koushikdutta.desktopsms;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 
-public class DateChangedReceiver extends BroadcastReceiver {
-    Handler mHandler = new Handler();
-
+public class BootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        TickleServiceHelper.registerForPush(context, null);
         Helper.startSyncService(context);
     }
 }

@@ -23,6 +23,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.net.http.AndroidHttpClient;
@@ -263,7 +264,7 @@ public class SyncService extends Service {
         mSettings.setLong("last_outbox_sync", maxOutboxSync);
 
         final long max = maxOutboxSync;
-        AndroidHttpClient client = AndroidHttpClient.newInstance(getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
+        AndroidHttpClient client = Helper.getHttpClient(this);
         try {
             HttpDelete delete = new HttpDelete(String.format(ServiceHelper.OUTBOX_URL, mAccount) + "?max_date=" + max);
             ServiceHelper.retryExecute(this, mAccount, client, delete);
@@ -274,8 +275,9 @@ public class SyncService extends Service {
     }
 
     private void syncOutbox(String outbox) throws ClientProtocolException, OperationCanceledException, AuthenticatorException, IOException, URISyntaxException, JSONException {
+        Log.i(LOGTAG, "================Checking outbox================");
         if (outbox == null) {
-            AndroidHttpClient client = AndroidHttpClient.newInstance(getString(R.string.app_name) + "/" + DesktopSMSApplication.mVersionCode);
+            AndroidHttpClient client = Helper.getHttpClient(this);
             try {
                 HttpGet get = new HttpGet(String.format(ServiceHelper.OUTBOX_URL, mAccount) + "?min_date=" + mLastOutboxSync);
                 ServiceHelper.addAuthentication(SyncService.this, get);
@@ -299,7 +301,6 @@ public class SyncService extends Service {
         Uri contentProviderUri;
         String postUrl;
         String lastSyncSetting;
-        boolean sync;
         Hashtable<String, Tuple<String, CursorGetter>> mapper;
         int messageEventType;
         
@@ -350,11 +351,6 @@ public class SyncService extends Service {
                         setSubject(event, displayName, c);
                         setMessage(event, displayName, c);
                     }
-                    else {
-                        // if we are not syncing, do not bother sending the outgoing message history
-                        if (!sync)
-                            continue;
-                    }
                     eventArray.put(event);
                     long date = c.getLong(dateColumn);
                     latestEvent = Math.max(date, latestEvent);
@@ -374,12 +370,11 @@ public class SyncService extends Service {
             envelope.put("is_initial_sync", isInitialSync);
             envelope.put("data", eventArray);
             envelope.put("version_code", DesktopSMSApplication.mVersionCode);
-            envelope.put("sync", sync);
             System.out.println(envelope.toString(4));
             StringEntity entity = new StringEntity(envelope.toString(), "utf-8");
             HttpPost post = ServiceHelper.getAuthenticatedPost(SyncService.this, String.format(postUrl, mAccount));
             post.setEntity(entity);
-            AndroidHttpClient client = AndroidHttpClient.newInstance(getString(R.string.app_name) + "/" + DesktopSMSApplication.mVersionCode);
+            AndroidHttpClient client = Helper.getHttpClient(SyncService.this);
             try {
                 HttpResponse res = ServiceHelper.retryExecute(SyncService.this, mAccount, client, post);
                 if (res == null)
@@ -403,12 +398,6 @@ public class SyncService extends Service {
             mapper = smsmapper;
             messageEventType = INCOMING_SMS;
         }
-        
-        @Override
-        public void sync() throws Exception {
-            sync = mSyncSms;
-            super.sync();
-        }
 
         @Override
         void setSubject(JSONObject event, String displayName, Cursor cursor) throws JSONException {
@@ -428,12 +417,6 @@ public class SyncService extends Service {
             mapper = callmapper;
             messageEventType = MISSED_CALL;
         }
-        
-        @Override
-        public void sync() throws Exception {
-            sync = mSyncCalls;
-            super.sync();
-        }
 
         @Override
         void setSubject(JSONObject event, String displayName, Cursor cursor) throws JSONException {
@@ -450,8 +433,6 @@ public class SyncService extends Service {
         
     }
 
-    boolean mSyncSms;
-    boolean mSyncCalls;
     long mLastOutboxSync;
     String mAccount;
     Handler mHandler = new Handler();
@@ -459,23 +440,25 @@ public class SyncService extends Service {
     String mPendingOutbox;
     boolean mPendingOutboxSync;
     private void sync(final Intent intent) {
-        if (intent != null) {
-            mPendingOutbox = intent.getStringExtra("outbox");
-            mPendingOutboxSync = "outbox".equals(intent.getStringExtra("reason"));
-        }
-        else {
-            Log.e(LOGTAG, "!!!!!!!!!!!!!!!!!!!!!!Intent to SyncService is null???!!!!!!!!!!!!!!!!!!!!!!");
+        // for the very first startup of the service, we set the first start as sms, to flush anything pending.
+        final String reason = mFirstStart ? "sms" : intent.getStringExtra("reason");
+        mFirstStart = false;
+        
+        // no reason? this is just a 15 min repeating wakeup call then.
+        if (reason == null)
             return;
-        }
+
+        mPendingOutbox = intent.getStringExtra("outbox");
+        mPendingOutboxSync = "outbox".equals(reason);
+
         if (mSyncThread != null)
             return;
 
+        String registrationId = mSettings.getString("registration_id");
         mAccount = mSettings.getString("account");
-        if (mAccount == null)
+        if (mAccount == null || registrationId == null)
             return;
         mLastOutboxSync = mSettings.getLong("last_outbox_sync", 0);
-        mSyncSms = mSettings.getBoolean("sync_sms", false);
-        mSyncCalls = mSettings.getBoolean("sync_calls", false);
 
         mSyncThread = new Thread() {
             @Override
@@ -483,8 +466,8 @@ public class SyncService extends Service {
                 try {
                     // if we are starting for the outbox, do that immediately
                     boolean startedForOutbox = mPendingOutboxSync;
-                    boolean startedForPhoneState = "phone".equals(intent.getStringExtra("reason"));
-                    boolean startedForSms = "sms".equals(intent.getStringExtra("reason"));
+                    boolean startedForPhoneState = "phone".equals(reason);
+                    boolean startedForSms = "sms".equals(reason);
                     if (mPendingOutboxSync) {
                         mPendingOutboxSync = false;
                         syncOutbox(mPendingOutbox);
@@ -492,7 +475,7 @@ public class SyncService extends Service {
                     }
 
                     // and poll against the sms content provider 10 times
-                    for (int i = 0; i < 5; i++) {
+                    for (int i = 0; i < 3; i++) {
                         mSmsSyncer.sync();
                         mCallSyncer.sync();
 
@@ -504,7 +487,11 @@ public class SyncService extends Service {
                             syncOutbox(mPendingOutbox);
                             mPendingOutbox = null;
                         }
-                        Thread.sleep(2000);
+                        
+                        if (reason == null)
+                            break;
+
+                        Thread.sleep(3000);
                     }
 
                     // if we did not start for the outbox, sync it now just in case
@@ -533,15 +520,47 @@ public class SyncService extends Service {
     SmsSync mSmsSyncer = new SmsSync();
     CallSync mCallSyncer = new CallSync();
     
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mSettings = Settings.getInstance(this);
+    ContentObserver mSmsObserver = new ContentObserver(mHandler) {
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            Intent intent = new Intent();
+            intent.putExtra("reason", "sms");
+            sync(intent);
+        }
+    };
+    
+    ContentObserver mCallsObserver = new ContentObserver(mHandler) {
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            Intent intent = new Intent();
+            intent.putExtra("reason", "phone");
+            sync(intent);
+        }
+    };
+
+    public void onDestroy() {
+        getContentResolver().unregisterContentObserver(mSmsObserver);
+        getContentResolver().unregisterContentObserver(mCallsObserver);
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        setForeground(true);
+        mSettings = Settings.getInstance(this);
+        
+        getContentResolver().registerContentObserver(mSmsSyncer.contentProviderUri, true, mSmsObserver);
+        getContentResolver().registerContentObserver(mCallSyncer.contentProviderUri, true, mCallsObserver);
+    }
+
+    boolean mFirstStart = true;
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        sync(intent);
+        Log.i(LOGTAG, "Service starting");
+        if (intent != null)
+            sync(intent);
         return super.onStartCommand(intent, flags, startId);
     }
 }

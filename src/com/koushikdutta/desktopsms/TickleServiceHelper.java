@@ -11,6 +11,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.HttpClientParams;
@@ -34,6 +35,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -145,17 +147,55 @@ public class TickleServiceHelper {
 
                                     dlg.setMessage(context.getString(R.string.registering_with_server));
                                     new Thread() {
+                                        boolean pushReceived = false;
                                         public void run() {
                                             try {
                                                 registerWebConnect(context);
+
                                                 context.runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {
+                                                        dlg.setMessage(context.getString(R.string.testing_push));
+                                                    }
+                                                });
+
+                                                final BroadcastReceiver pushReceiver = new BroadcastReceiver() {
+                                                    @Override
+                                                    public void onReceive(Context context, Intent intent) {
+                                                        pushReceived = true;
                                                         dlg.dismiss();
                                                         Helper.showAlertDialog(context, R.string.signin_success);
                                                         callback.onCallback(true);
                                                     }
-                                                });
+                                                };
+                                                IntentFilter filter = new IntentFilter(C2DMReceiver.PING);
+                                                context.registerReceiver(pushReceiver, filter);
+
+                                                {
+                                                    AndroidHttpClient client = Helper.getHttpClient(context);
+                                                    try {
+                                                        HttpGet get = new HttpGet(ServiceHelper.PING_URL);
+                                                        HttpResponse res = ServiceHelper.retryExecute(context, accountName, client, get);
+                                                        if (res != null) {
+                                                            Log.i(LOGTAG, "Response: " + res.getStatusLine().getStatusCode());
+                                                        }
+                                                    }
+                                                    finally {
+                                                        client.close();
+                                                    }
+                                                }
+
+                                                Thread.sleep(10000);
+                                                if (!pushReceived) {
+                                                    context.runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            dlg.dismiss();
+                                                            Helper.showAlertDialog(context, R.string.push_failed);
+                                                            callback.onCallback(true);
+                                                        }
+                                                    });
+                                                }
                                             }
                                             catch (Exception ex) {
                                                 ex.printStackTrace();

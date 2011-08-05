@@ -13,6 +13,7 @@ import android.util.Log;
 public class C2DMReceiver extends BroadcastReceiver {
     private final static String LOGTAG = C2DMReceiver.class.getSimpleName();
     public static final String ACTION_REGISTRATION_RECEIVED = "com.koushikdutta.desktopsms.REGISTRATION_RECEIVED";
+    public static final String PING = "com.koushikdutta.desktopsms.PING";
     
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("com.google.android.c2dm.intent.REGISTRATION")) {
@@ -62,14 +63,17 @@ public class C2DMReceiver extends BroadcastReceiver {
             else if ("outbox".equals(type)) {
                 Intent serviceIntent = new Intent(context, SyncService.class);
                 serviceIntent.putExtra("outbox", intent.getStringExtra("outbox"));
-                serviceIntent.putExtra("reason", "outbox");
-                context.startService(serviceIntent);
+                Helper.startSyncService(context, serviceIntent, "outbox");
             }
             else if ("dial".equals(type)) {
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse(String.format("tel:%s", intent.getStringExtra("number"))));
                 callIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(callIntent);
+            }
+            else if ("ping".equals(type)) {
+                Intent bcast = new Intent(PING);
+                context.sendBroadcast(bcast);
             }
         }
         catch (Exception ex) {
