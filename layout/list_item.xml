@@ -8,9 +8,9 @@
     <LinearLayout android:layout_gravity="center_vertical" android:layout_width="fill_parent"
         android:layout_height="wrap_content" android:orientation="vertical" android:layout_weight="1">
         <TextView android:id="@+id/title" android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:textSize="22sp" android:textColor="@android:color/primary_text_dark" android:layout_marginLeft="2dp" android:layout_marginRight="2dp" />
+        android:layout_height="wrap_content" android:textSize="22sp" android:layout_marginLeft="2dp" android:layout_marginRight="2dp" />
         <TextView android:id="@+id/summary" android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:textSize="14sp" android:textColor="@android:color/secondary_text_dark" android:layout_marginLeft="2dp" android:layout_marginRight="2dp" />
+        android:layout_height="wrap_content" android:textSize="14sp" android:layout_marginLeft="2dp" android:layout_marginRight="2dp" />
     </LinearLayout>
 	<CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/checkbox" android:visibility="gone" android:focusable="false" android:focusableInTouchMode="false" android:layout_marginLeft="2dp" android:layout_marginRight="2dp" android:layout_gravity="center" />
 </LinearLayout>

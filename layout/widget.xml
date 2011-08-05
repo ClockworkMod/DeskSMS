@@ -18,9 +18,9 @@
 		android:clickable="true" android:focusable="true"
 		android:orientation="vertical">
 
-		<ImageView android:layout_width="match_parent"
+		<ImageView android:layout_width="match_parent" android:padding="8dp"
 			android:layout_height="0dip" android:layout_weight="1"
-			android:scaleType="center" android:src="@drawable/ic_launcher_mail" />
+			android:scaleType="fitCenter" android:src="@drawable/ic_launcher_mail" />
 
 		<ImageView android:id="@+id/email_ind" android:layout_width="match_parent"
 			android:layout_height="wrap_content" android:scaleType="fitXY" />
@@ -36,11 +36,30 @@
 		android:clickable="true" android:focusable="true"
 		android:orientation="vertical">
 
-		<ImageView android:layout_width="match_parent"
+		<ImageView android:layout_width="match_parent" android:padding="8dp"
 			android:layout_height="0dip" android:layout_weight="1"
-			android:scaleType="center" android:src="@drawable/ic_launcher_google_talk" />
+			android:scaleType="fitCenter" android:src="@drawable/ic_launcher_google_talk" />
 
 		<ImageView android:id="@+id/xmpp_ind" android:layout_width="match_parent"
+			android:layout_height="wrap_content" android:scaleType="fitXY" />
+	</LinearLayout>
+
+
+	<ImageView android:layout_width="1dip"
+		android:layout_height="match_parent"
+		android:background="@drawable/appwidget_settings_divider" />
+
+	<LinearLayout android:id="@+id/forward_web"
+		android:layout_width="0dip" android:layout_weight="1"
+		android:layout_height="match_parent" android:background="@drawable/appwidget_button_center"
+		android:clickable="true" android:focusable="true"
+		android:orientation="vertical">
+
+		<ImageView android:layout_width="match_parent" android:padding="8dp"
+			android:layout_height="0dip" android:layout_weight="1"
+			android:scaleType="fitCenter" android:src="@drawable/chrome" />
+
+		<ImageView android:id="@+id/web_ind" android:layout_width="match_parent"
 			android:layout_height="wrap_content" android:scaleType="fitXY" />
 	</LinearLayout>
 

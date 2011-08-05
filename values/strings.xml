@@ -68,4 +68,6 @@
 
 	<string name="sync_calls">Sync Calls</string>
 	<string name="sync_calls_summary">Sync your Call history to the DeskSMS server for online viewing.</string>
+	
+	<string name="web">Browser and Extensions</string>
 </resources>
