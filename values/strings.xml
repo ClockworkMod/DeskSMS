@@ -70,4 +70,7 @@
 	<string name="sync_calls_summary">Sync your Call history to the DeskSMS server for online viewing.</string>
 	
 	<string name="web">Browser and Extensions</string>
+
+	<string name="testing_push">Testing push notifications...</string>
+	<string name="push_failed">You have successfully signed in!\n\nWarning: Push notifications were set up successfully, but the test push notification failed. There may be issues when sending messages via DeskSMS.</string>
 </resources>
