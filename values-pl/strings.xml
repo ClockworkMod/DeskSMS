@@ -68,4 +68,9 @@
 
     <string name="sync_calls">Synchronizuj połączenia</string>
     <string name="sync_calls_summary">Synchronizuj historię połączeń z serwerem DeskSMS. Umożliwi Ci to dostęp online.</string>
+
+    <string name="web">Przeglądarka i Rozszerzenie</string>
+ 
+    <string name="testing_push">Test powiadomień...</string>
+    <string name="push_failed">Logowanie powiodło się!\n\nUwaga: Powiadomienia zostały skonfigurowane, ale test nie zakończył się powodzeniem. Mogą wystąpić problemy z wysyłaniem wiadomości przez DeskSMS.</string>
 </resources>
