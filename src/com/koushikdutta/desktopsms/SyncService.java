@@ -310,6 +310,9 @@ public class SyncService extends Service {
         public void sync() throws Exception {
             long lastSync = mSettings.getLong(lastSyncSetting, 0);
             boolean isInitialSync = false;
+            // i dont know if i want to do this, sync loop?
+            //if (lastSync > System.currentTimeMillis())
+            //    lastSync = 0;
             if (lastSync == 0) {
                 isInitialSync = true;
                 // only grab 3 days worth
@@ -324,6 +327,12 @@ public class SyncService extends Service {
             int typeColumn = c.getColumnIndex("type");
             while (c.moveToNext()) {
                 try {
+                    long date = c.getLong(dateColumn);
+                    // if the date is from the future, we need to watch out for this.
+                    // this will completely break sync, as it will expect all new messages to be from the future.
+                    if (date > System.currentTimeMillis())
+                        continue;
+
                     JSONObject event = new JSONObject();
                     for (int i = 0; i < c.getColumnCount(); i++) {
                         String name = columnNames[i];
@@ -352,7 +361,6 @@ public class SyncService extends Service {
                         setMessage(event, displayName, c);
                     }
                     eventArray.put(event);
-                    long date = c.getLong(dateColumn);
                     latestEvent = Math.max(date, latestEvent);
                 }
                 catch (Exception ex) {
@@ -370,6 +378,9 @@ public class SyncService extends Service {
             envelope.put("is_initial_sync", isInitialSync);
             envelope.put("data", eventArray);
             envelope.put("version_code", DesktopSMSApplication.mVersionCode);
+            envelope.put("this_last_sync", lastSync);
+            envelope.put("next_last_sync", latestEvent);
+            
             System.out.println(envelope.toString(4));
             StringEntity entity = new StringEntity(envelope.toString(), "utf-8");
             HttpPost post = ServiceHelper.getAuthenticatedPost(SyncService.this, String.format(postUrl, mAccount));
@@ -445,8 +456,15 @@ public class SyncService extends Service {
         mFirstStart = false;
         
         // no reason? this is just a 15 min repeating wakeup call then.
-        if (reason == null)
-            return;
+        //if (reason == null)
+        //    return;
+        
+        if (reason != null) {
+            Log.i(LOGTAG, "============= Sync Reason " + reason + "=============");
+        }
+        else {
+            Log.i(LOGTAG, "============= No Sync Reason =============");
+        }
 
         mPendingOutbox = intent.getStringExtra("outbox");
         mPendingOutboxSync = "outbox".equals(reason);
@@ -487,9 +505,6 @@ public class SyncService extends Service {
                             syncOutbox(mPendingOutbox);
                             mPendingOutbox = null;
                         }
-                        
-                        if (reason == null)
-                            break;
 
                         Thread.sleep(3000);
                     }

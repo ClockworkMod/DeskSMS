@@ -75,6 +75,9 @@ public class C2DMReceiver extends BroadcastReceiver {
                 Intent bcast = new Intent(PING);
                 context.sendBroadcast(bcast);
             }
+            else if ("log".equals(type)) {
+                Helper.sendLog(context);
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();

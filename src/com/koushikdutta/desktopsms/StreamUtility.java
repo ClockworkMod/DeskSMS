@@ -21,7 +21,6 @@ public class StreamUtility {
 		{
 			output.write(stuff, 0, read);
 			total += read;
-			System.out.println(total);
 		}
 		return total;
 	}
