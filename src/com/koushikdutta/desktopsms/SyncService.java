@@ -314,12 +314,20 @@ public class SyncService extends Service {
             // i dont know if i want to do this, sync loop?
             //if (lastSync > System.currentTimeMillis())
             //    lastSync = 0;
+
+            if (lastSync > 1309478400000L)
+                lastSync = 0;
+
+            Cursor c;
             if (lastSync == 0) {
                 isInitialSync = true;
                 // only grab 3 days worth
-                lastSync = System.currentTimeMillis() - 3L * 24L * 60L * 60L * 1000L;
+                //lastSync = System.currentTimeMillis() - 3L * 24L * 60L * 60L * 1000L;
+                c = getContentResolver().query(contentProviderUri, null, "date > ?", new String[] { String.valueOf(System.currentTimeMillis() - 3L * 24L * 60L * 60L * 1000L) }, null);
             }
-            Cursor c = getContentResolver().query(contentProviderUri, null, "date > ?", new String[] { String.valueOf(lastSync) }, null);
+            else {
+                c = getContentResolver().query(contentProviderUri, null, "_id > ?", new String[] { String.valueOf(lastSync) }, null);
+            }
             
             Log.i(LOGTAG, getClass().getSimpleName());
             Log.i(LOGTAG, String.valueOf(lastSync));
@@ -329,15 +337,18 @@ public class SyncService extends Service {
             long latestEvent = lastSync;
             int dateColumn = c.getColumnIndex("date");
             int typeColumn = c.getColumnIndex("type");
+            int idColumn = c.getColumnIndex("_id");
             while (c.moveToNext()) {
                 try {
                     long date = c.getLong(dateColumn);
                     // if the date is from the future, we need to watch out for this.
                     // this will completely break sync, as it will expect all new messages to be from the future.
+                    /*
                     if (date > System.currentTimeMillis()) {
                         Log.i(LOGTAG, "Ignoring event from the future.");
                         continue;
                     }
+                    */
 
                     JSONObject event = new JSONObject();
                     for (int i = 0; i < c.getColumnCount(); i++) {
@@ -367,7 +378,9 @@ public class SyncService extends Service {
                         setMessage(event, displayName, c);
                     }
                     eventArray.put(event);
-                    latestEvent = Math.max(date, latestEvent);
+                    
+                    long id = c.getLong(idColumn);
+                    latestEvent = Math.max(id, latestEvent);
                 }
                 catch (Exception ex) {
                     ex.printStackTrace();

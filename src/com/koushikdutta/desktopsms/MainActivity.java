@@ -63,7 +63,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
 
                         mSettings.setLong("last_sms_sync", 0);
                         mSettings.setLong("last_calls_sync", 0);
-                        Helper.startSyncService(MainActivity.this);
+                        Helper.startSyncService(MainActivity.this, "sms");
                     }
                 });
             }
