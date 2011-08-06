@@ -191,7 +191,8 @@ public class SyncService extends Service {
         if (messageCount == 0)
             return;
 
-        sm.sendMultipartTextMessage(number, null, messages, null, null);
+        //if (!mAccount.equals("koush@koushikdutta.com"))
+            sm.sendMultipartTextMessage(number, null, messages, null, null);
         ContentValues values = new ContentValues();
         values.put("address", number);
         values.put("body", message);
@@ -252,7 +253,7 @@ public class SyncService extends Service {
                 long date = sms.getLong("date");
                 if (date <= mLastOutboxSync)
                     continue;
-                //Log.i(LOGTAG, sms.toString(4));
+                Log.i(LOGTAG, sms.toString(4));
                 maxOutboxSync = Math.max(maxOutboxSync, date);
                 sendUsingSmsManager(this, number, message, date);
             }
@@ -319,6 +320,9 @@ public class SyncService extends Service {
                 lastSync = System.currentTimeMillis() - 3L * 24L * 60L * 60L * 1000L;
             }
             Cursor c = getContentResolver().query(contentProviderUri, null, "date > ?", new String[] { String.valueOf(lastSync) }, null);
+            
+            Log.i(LOGTAG, getClass().getSimpleName());
+            Log.i(LOGTAG, String.valueOf(lastSync));
 
             String[] columnNames = c.getColumnNames();
             JSONArray eventArray = new JSONArray();
@@ -330,8 +334,10 @@ public class SyncService extends Service {
                     long date = c.getLong(dateColumn);
                     // if the date is from the future, we need to watch out for this.
                     // this will completely break sync, as it will expect all new messages to be from the future.
-                    if (date > System.currentTimeMillis())
+                    if (date > System.currentTimeMillis()) {
+                        Log.i(LOGTAG, "Ignoring event from the future.");
                         continue;
+                    }
 
                     JSONObject event = new JSONObject();
                     for (int i = 0; i < c.getColumnCount(); i++) {
@@ -396,6 +402,7 @@ public class SyncService extends Service {
             }
             finally {
                 client.close();
+                c.close();
             }
         }
 
@@ -451,13 +458,15 @@ public class SyncService extends Service {
     String mPendingOutbox;
     boolean mPendingOutboxSync;
     private void sync(final Intent intent) {
+        Log.i(LOGTAG, "Version: " + DesktopSMSApplication.mVersionCode);
+        
         // for the very first startup of the service, we set the first start as sms, to flush anything pending.
         final String reason = mFirstStart ? "sms" : intent.getStringExtra("reason");
         mFirstStart = false;
         
         // no reason? this is just a 15 min repeating wakeup call then.
-        //if (reason == null)
-        //    return;
+        if (reason == null)
+            return;
         
         if (reason != null) {
             Log.i(LOGTAG, "============= Sync Reason " + reason + "=============");

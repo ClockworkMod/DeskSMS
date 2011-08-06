@@ -1,5 +1,6 @@
 package com.koushikdutta.desktopsms;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigInteger;
@@ -91,32 +92,30 @@ public class Helper {
         return AndroidHttpClient.newInstance(context.getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
     }
 
-    public final static String LINE_SEPARATOR = System.getProperty("line.separator");//$NON-NLS-1$
-    static void sendLog(final Context context) {
-        Settings settings = Settings.getInstance(context);
-        final String registrationId = settings.getString("registration_id");
+    public final static String LINE_SEPARATOR = System.getProperty("line.separator");
+    static void sendLog(Intent intent) {
+        final String registrationId = intent.getStringExtra("registration_id");
         if (registrationId == null)
             return;
-    }
-    static void sendLog(final String registrationId) {
         new Thread() {
             public void run() {
                 try{
                     ArrayList<String> commandLine = new ArrayList<String>();
                     commandLine.add("logcat");//$NON-NLS-1$
-                    //commandLine.add("-d");//$NON-NLS-1$
-                    
+                    commandLine.add("-d");//$NON-NLS-1$
+
                     Process process = Runtime.getRuntime().exec(commandLine.toArray(new String[0]));
+                    byte[] data = StreamUtility.readToEndAsArray(process.getInputStream());
                     URL url = new URL("https://logpush.deployfu.com/" + registrationId);
-                    //URL url = new URL("http://192.168.1.102:3000/" + registrationId);
                     HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                     conn.setRequestProperty("Content-Type", "application/binary");
                     conn.setRequestProperty("Connection", "Keep-Alive");
-                    conn.setChunkedStreamingMode(32);
+                    conn.setRequestProperty("Content-Length", String.valueOf(data.length));
+                    //conn.setChunkedStreamingMode(32);
                     conn.setDoInput(true);
                     conn.setDoOutput(true);
-                    OutputStream os = conn.getOutputStream();
-                    StreamUtility.copyStream(process.getInputStream(), os);
+                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                    os.write(data);
                     os.close();
                     String contents = StreamUtility.readToEnd(conn.getInputStream());
                     Log.i("DeskSMS", contents);

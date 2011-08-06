@@ -24,21 +24,26 @@ public class StreamUtility {
 		}
 		return total;
 	}
-	
+	   
+    public static byte[] readToEndAsArray(InputStream input) throws IOException
+    {
+        DataInputStream dis = new DataInputStream(input);
+        byte[] stuff = new byte[1024];
+        ByteArrayOutputStream buff = new ByteArrayOutputStream();
+        int read = 0;
+        int total = 0;
+        while ((read = dis.read(stuff)) != -1)
+        {
+            buff.write(stuff, 0, read);
+            total += read;
+        }
+        
+        return buff.toByteArray();
+    }
+    
 	public static String readToEnd(InputStream input) throws IOException
 	{
-		DataInputStream dis = new DataInputStream(input);
-		byte[] stuff = new byte[1024];
-		ByteArrayOutputStream buff = new ByteArrayOutputStream();
-		int read = 0;
-		int total = 0;
-		while ((read = dis.read(stuff)) != -1)
-		{
-			buff.write(stuff, 0, read);
-			total += read;
-		}
-		
-		return new String(buff.toByteArray());
+	    return new String(readToEndAsArray(input));
 	}
 
     static public String readFile(String filename) throws IOException {

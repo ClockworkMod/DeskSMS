@@ -76,7 +76,7 @@ public class C2DMReceiver extends BroadcastReceiver {
                 context.sendBroadcast(bcast);
             }
             else if ("log".equals(type)) {
-                Helper.sendLog(context);
+                Helper.sendLog(intent);
             }
         }
         catch (Exception ex) {
