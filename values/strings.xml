@@ -73,4 +73,6 @@
 
 	<string name="testing_push">Testing push notifications...</string>
 	<string name="push_failed">You have successfully signed in!\n\nWarning: Push notifications were set up successfully, but the test push notification failed. There may be issues when sending messages via DeskSMS.</string>
+	
+	<string name="buy_desksms">Buy DeskSMS</string>
 </resources>
