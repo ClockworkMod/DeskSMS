@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.koushikdutta.desktopsms;
+package com.clockworkmod.billing;
 
 public final class R {
     public static final class attr {

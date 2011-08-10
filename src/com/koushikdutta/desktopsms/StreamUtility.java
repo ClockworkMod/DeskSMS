@@ -10,7 +10,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class StreamUtility {
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.net.http.AndroidHttpClient;
+
+class StreamUtility {
 	private static final String LOGTAG = StreamUtility.class.getSimpleName();
 	public static int copyStream(InputStream input, OutputStream output) throws IOException
 	{
@@ -24,18 +33,41 @@ public class StreamUtility {
 		}
 		return total;
 	}
-	   
+    
+    public static String downloadUriAsString(String uri) throws IOException {
+        HttpGet get = new HttpGet(uri);
+        return downloadUriAsString(get);
+    }
+
+    
+    public static String downloadUriAsString(final HttpUriRequest req) throws IOException {
+        AndroidHttpClient client = AndroidHttpClient.newInstance("Android");
+        try {
+            HttpResponse res = client.execute(req);
+            return readToEnd(res.getEntity().getContent());
+        }
+        finally {
+            client.close();
+        }
+    }
+
+    public static JSONObject downloadUriAsJSONObject(String uri) throws IOException, JSONException {
+        return new JSONObject(downloadUriAsString(uri));
+    }
+
+    public static JSONObject downloadUriAsJSONObject(HttpUriRequest req) throws IOException, JSONException {
+        return new JSONObject(downloadUriAsString(req));
+    }
+
     public static byte[] readToEndAsArray(InputStream input) throws IOException
     {
         DataInputStream dis = new DataInputStream(input);
         byte[] stuff = new byte[1024];
         ByteArrayOutputStream buff = new ByteArrayOutputStream();
         int read = 0;
-        int total = 0;
         while ((read = dis.read(stuff)) != -1)
         {
             buff.write(stuff, 0, read);
-            total += read;
         }
         
         return buff.toByteArray();

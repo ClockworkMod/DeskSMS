@@ -2,12 +2,13 @@ package com.koushikdutta.desktopsms;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.math.BigInteger;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
 
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -99,29 +100,26 @@ public class Helper {
             return;
         new Thread() {
             public void run() {
+                AndroidHttpClient client = AndroidHttpClient.newInstance("LogPush");
                 try{
                     ArrayList<String> commandLine = new ArrayList<String>();
-                    commandLine.add("logcat");//$NON-NLS-1$
-                    commandLine.add("-d");//$NON-NLS-1$
+                    commandLine.add("logcat");
+                    commandLine.add("-d");
 
                     Process process = Runtime.getRuntime().exec(commandLine.toArray(new String[0]));
                     byte[] data = StreamUtility.readToEndAsArray(process.getInputStream());
-                    URL url = new URL("https://logpush.deployfu.com/" + registrationId);
-                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-                    conn.setRequestProperty("Content-Type", "application/binary");
-                    conn.setRequestProperty("Connection", "Keep-Alive");
-                    conn.setRequestProperty("Content-Length", String.valueOf(data.length));
-                    //conn.setChunkedStreamingMode(32);
-                    conn.setDoInput(true);
-                    conn.setDoOutput(true);
-                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    os.write(data);
-                    os.close();
-                    String contents = StreamUtility.readToEnd(conn.getInputStream());
-                    Log.i("DeskSMS", contents);
+                    HttpPost post = new HttpPost("https://logpush.deployfu.com/" + registrationId);
+                    post.setEntity(new ByteArrayEntity(data));
+                    post.setHeader("Content-Type", "application/binary");
+                    HttpResponse resp = client.execute(post);
+                    String contents = StreamUtility.readToEnd(resp.getEntity().getContent());
+                    Log.i("LogPush", contents);
                 } 
-                catch (IOException e){
+                catch (Exception e){
                     e.printStackTrace();
+                }
+                finally {
+                    client.close();
                 } 
             }
         }.start();

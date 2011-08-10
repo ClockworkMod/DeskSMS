@@ -4,28 +4,29 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
 
-import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.client.methods.HttpGet;
 import org.json.JSONObject;
 
+import com.clockworkmod.billing.ClockworkModBillingClient;
+
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Data;
-import android.provider.ContactsContract.PhoneLookup;
 import android.provider.ContactsContract.RawContacts;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 
 public class MainActivity extends ActivityBase implements ActivityResultDelegate {
@@ -333,5 +334,38 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         super.onActivityResult(requestCode, resultCode, data);
         if (mActivityResultCallback != null)
             mActivityResultCallback.onCallback(new Tuple<Integer, Tuple<Integer, Intent>>(requestCode, new Tuple<Integer, Intent>(resultCode, data)));
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        final HttpGet get = new HttpGet(ServiceHelper.WHOAMI);
+        ServiceHelper.addAuthentication(MainActivity.this, get);
+        MenuItem buy = menu.add(R.string.buy_desksms);
+        buy.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                final ClockworkModBillingClient client = ClockworkModBillingClient.getInstance(MainActivity.this, "koushd@gmail.com", true);
+                ThreadingRunnable.background(new ThreadingRunnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject whoami = StreamUtility.downloadUriAsJSONObject(get);
+                            final String buyerId = whoami.getString("buyer_id");
+                            foreground(new Runnable() {
+                                @Override
+                                public void run() {
+                                    client.startPurchase(MainActivity.this, "desksms.subscription0", buyerId, buyerId, null);
+                                }
+                            });
+                        }
+                        catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+                return true;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 }

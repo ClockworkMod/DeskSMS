@@ -8,7 +8,6 @@ import java.util.Hashtable;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -263,16 +262,6 @@ public class SyncService extends Service {
         }
         mLastOutboxSync = maxOutboxSync;
         mSettings.setLong("last_outbox_sync", maxOutboxSync);
-
-        final long max = maxOutboxSync;
-        AndroidHttpClient client = Helper.getHttpClient(this);
-        try {
-            HttpDelete delete = new HttpDelete(String.format(ServiceHelper.OUTBOX_URL, mAccount) + "?max_date=" + max);
-            ServiceHelper.retryExecute(this, mAccount, client, delete);
-        }
-        finally {
-            client.close();
-        }
     }
 
     private void syncOutbox(String outbox) throws ClientProtocolException, OperationCanceledException, AuthenticatorException, IOException, URISyntaxException, JSONException {
@@ -327,6 +316,18 @@ public class SyncService extends Service {
             }
             else {
                 c = getContentResolver().query(contentProviderUri, null, "_id > ?", new String[] { String.valueOf(lastSync) }, null);
+                Cursor sanityCursor = getContentResolver().query(contentProviderUri, new String[] { "_id" }, null, null, "_id DESC");
+                try {
+                    if (sanityCursor.moveToNext()) {
+                        long sanityId = sanityCursor.getLong(sanityCursor.getColumnIndex("_id"));
+                        if (sanityId < lastSync) {
+                            lastSync = sanityId;
+                        }
+                    }
+                }
+                finally {
+                    sanityCursor.close();
+                }
             }
             
             Log.i(LOGTAG, getClass().getSimpleName());
