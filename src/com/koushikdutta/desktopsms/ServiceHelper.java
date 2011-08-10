@@ -34,7 +34,7 @@ import android.util.Log;
 
 public class ServiceHelper {
     private static String LOGTAG = ServiceHelper.class.getSimpleName();
-    public static final String BASE_URL = "https://desksms.appspot.com";
+    public static final String BASE_URL = "https://2.desksms.appspot.com";
     public static final String AUTH_URL = BASE_URL + "/_ah/login";
     public static final String API_URL = BASE_URL + "/api/v1";
     public final static String REGISTER_URL = API_URL + "/register";

@@ -86,6 +86,7 @@ public class TickleServiceHelper {
     static void registerWebConnect(final Context context) throws Exception {
         String ascidCookie = getCookie(context);
         Settings settings = Settings.getInstance(context);
+        settings.setBoolean("registered", false);
         final String registration = settings.getString("registration_id");
         DefaultHttpClient client = new DefaultHttpClient();
 
@@ -96,12 +97,24 @@ public class TickleServiceHelper {
         params.add(new BasicNameValuePair("applicationId", "DesktopSms"));
         params.add(new BasicNameValuePair("clientId", Helper.getSafeDeviceId(context)));
         params.add(new BasicNameValuePair("registration_id", registration));
+        params.add(new BasicNameValuePair("version_code", String.valueOf(DesktopSMSApplication.mVersionCode)));
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
         post.setEntity(entity);
         post.setHeader("X-Same-Domain", "1"); // XSRF
         post.setHeader("Cookie", ascidCookie);
-        HttpResponse res = client.execute(post);
-        Log.i(LOGTAG, "Status code from register: " + res.getStatusLine().getStatusCode());
+        try {
+            HttpResponse res = client.execute(post);
+            Log.i(LOGTAG, "Status code from register: " + res.getStatusLine().getStatusCode());
+            if (res.getStatusLine().getStatusCode() != 200)
+                throw new Exception("status from server: " + res.getStatusLine().getStatusCode());
+            settings.setBoolean("registered", true);
+        }
+        catch (Exception ex) {
+            settings.setBoolean("registered", false);
+            settings.setString("account", null);
+            settings.setString("registration_id", null);
+            throw ex;
+        }
     }
 
     public static String[] getGoogleAccounts(Context context) {

@@ -411,6 +411,13 @@ public class SyncService extends Service {
                 if (res == null)
                     throw new Exception("Unable to authenticate");
                 String results = StreamUtility.readToEnd(res.getEntity().getContent());
+                JSONObject sr = new JSONObject(results);
+                if (!sr.optBoolean("registered", true)) {
+                    mSettings.setBoolean("registered", false);
+                    mSettings.setString("account", null);
+                    mSettings.setString("registration_id", null);
+                    throw new Exception("not registered");
+                }
                 System.out.println(results);
                 mSettings.setLong(lastSyncSetting, latestEvent);
             }
@@ -497,7 +504,8 @@ public class SyncService extends Service {
 
         String registrationId = mSettings.getString("registration_id");
         mAccount = mSettings.getString("account");
-        if (mAccount == null || registrationId == null)
+        boolean registered = mSettings.getBoolean("registered", true);
+        if (mAccount == null || registrationId == null || !registered)
             return;
         mLastOutboxSync = mSettings.getLong("last_outbox_sync", 0);
 
