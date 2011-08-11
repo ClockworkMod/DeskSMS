@@ -21,7 +21,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 public class Helper {
-    static final boolean SANDBOX = false;
+    static final boolean SANDBOX = true;
 
     static public boolean isJavaScriptNullOrEmpty(String s) {
         return s == null || s.equals("") || s.equals("null");

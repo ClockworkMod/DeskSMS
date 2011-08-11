@@ -334,13 +334,6 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
 
     public void setOnActivityResultCallback(Callback<Tuple<Integer, Tuple<Integer, Intent>>> callback) {
         mActivityResultCallback = callback;
-
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                refreshAccount();
-            }
-        }, 5000);
     }
 
     @Override
@@ -348,6 +341,13 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         super.onActivityResult(requestCode, resultCode, data);
         if (mActivityResultCallback != null)
             mActivityResultCallback.onCallback(new Tuple<Integer, Tuple<Integer, Intent>>(requestCode, new Tuple<Integer, Intent>(resultCode, data)));
+
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshAccount();
+            }
+        }, 5000);
     }
     
     private void refreshAccount(long expiration) {
