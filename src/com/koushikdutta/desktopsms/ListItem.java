@@ -23,6 +23,18 @@ public class ListItem {
         Context.mAdapter.notifyDataSetChanged();
     }
     
+    public void setTitle(int title) {
+        if (title == 0)
+            setTitle(null);
+        else
+            setTitle(Context.getString(title));
+    }
+    
+    public void setTitle(String title) {
+        Title = title;
+        Context.mAdapter.notifyDataSetChanged();
+    }
+
     public void setSummary(int summary) {
         if (summary == 0)
             setSummary(null);

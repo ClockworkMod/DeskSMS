@@ -47,6 +47,10 @@
             </intent-filter>
 		</receiver>
 		<service android:name=".SyncService" />
+		<activity android:theme="@style/Dialog"
+			android:configChanges="orientation|keyboard|keyboardHidden"
+			android:screenOrientation="portrait" android:name=".BuyActivity" android:label="@string/desksms_one_year_license">
+		</activity>
 		
         <receiver android:name=".WidgetProvider"
                 android:label="@string/widget_name">

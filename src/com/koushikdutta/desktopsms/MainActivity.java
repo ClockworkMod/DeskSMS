@@ -7,9 +7,8 @@ import java.util.Hashtable;
 import org.apache.http.client.methods.HttpGet;
 import org.json.JSONObject;
 
-import com.clockworkmod.billing.ClockworkModBillingClient;
-
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -28,6 +27,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
+
+import com.clockworkmod.billing.ClockworkModBillingClient;
 
 public class MainActivity extends ActivityBase implements ActivityResultDelegate {
     private static final String LOGTAG = MainActivity.class.getSimpleName();
@@ -338,27 +339,39 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        final HttpGet get = new HttpGet(ServiceHelper.WHOAMI);
-        ServiceHelper.addAuthentication(MainActivity.this, get);
         MenuItem buy = menu.add(R.string.buy_desksms);
         buy.setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                final ClockworkModBillingClient client = ClockworkModBillingClient.getInstance(MainActivity.this, "koushd@gmail.com", true);
+                ClockworkModBillingClient.getInstance(MainActivity.this, "koushd@gmail.com", Helper.SANDBOX);
+                final ProgressDialog dlg = new ProgressDialog(MainActivity.this);
+                dlg.setMessage(getString(R.string.retrieving_status));
+                final HttpGet get = new HttpGet(ServiceHelper.STATUS_URL);
+                ServiceHelper.addAuthentication(MainActivity.this, get);
+                dlg.show();
                 ThreadingRunnable.background(new ThreadingRunnable() {
                     @Override
                     public void run() {
                         try {
-                            JSONObject whoami = StreamUtility.downloadUriAsJSONObject(get);
-                            final String buyerId = whoami.getString("buyer_id");
+                            final JSONObject payload = StreamUtility.downloadUriAsJSONObject(get);
                             foreground(new Runnable() {
                                 @Override
                                 public void run() {
-                                    client.startPurchase(MainActivity.this, "desksms.subscription0", buyerId, buyerId, null);
+                                    dlg.dismiss();
+                                    Intent i = new Intent(MainActivity.this, BuyActivity.class);
+                                    i.putExtra("payload", payload.toString());
+                                    startActivity(i);
                                 }
                             });
                         }
                         catch (Exception ex) {
+                            foreground(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dlg.dismiss();
+                                    Helper.showAlertDialog(MainActivity.this, R.string.status_error);
+                                }
+                            });
                             ex.printStackTrace();
                         }
                     }

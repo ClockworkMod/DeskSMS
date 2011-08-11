@@ -1,7 +1,5 @@
 package com.koushikdutta.desktopsms;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -22,6 +20,8 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 public class Helper {
+    static final boolean SANDBOX = true;
+
     static public boolean isJavaScriptNullOrEmpty(String s) {
         return s == null || s.equals("") || s.equals("null");
     }
@@ -53,14 +53,10 @@ public class Helper {
     
     static public void showAlertDialog(Context context, String s)
     {
-        try {
-            AlertDialog.Builder builder = new Builder(context);
-            builder.setMessage(s);
-            builder.setPositiveButton(android.R.string.ok, null);
-            builder.create().show();
-        }
-        catch(Exception ex) {
-        }
+        AlertDialog.Builder builder = new Builder(context);
+        builder.setMessage(s);
+        builder.setPositiveButton(android.R.string.ok, null);
+        builder.create().show();
     }
     
     
