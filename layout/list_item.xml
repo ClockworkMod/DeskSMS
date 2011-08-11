@@ -6,7 +6,7 @@
     android:layout_width="48dp" android:layout_height="48dp"
     android:layout_gravity="center_vertical" android:layout_margin="2dp"></ImageView>
     <LinearLayout android:layout_gravity="center_vertical" android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:orientation="vertical" android:layout_weight="1">
+        android:layout_height="wrap_content" android:orientation="vertical" android:layout_weight="1" android:paddingLeft="4dp">
         <TextView android:id="@+id/title" android:layout_width="fill_parent"
         android:layout_height="wrap_content" android:textSize="22sp" android:layout_marginLeft="2dp" android:layout_marginRight="2dp" />
         <TextView android:id="@+id/summary" android:layout_width="fill_parent"

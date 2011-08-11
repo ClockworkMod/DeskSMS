@@ -75,4 +75,14 @@
 	<string name="push_failed">You have successfully signed in!\n\nWarning: Push notifications were set up successfully, but the test push notification failed. There may be issues when sending messages via DeskSMS.</string>
 	
 	<string name="buy_desksms">Buy DeskSMS</string>
+	
+	<string name="retrieving_status">Retrieving Account Status...</string>
+	
+	<string name="paypal">PayPal</string>
+	<string name="android_market_inapp">Android Market In-App</string>
+	<string name="payment_options">Payment Options</string>
+	<string name="account_status">Account Status</string>
+	<string name="days_left">%s days left</string>
+	<string name="status_error">Unable to retrieve account status! Please try again later.</string>
+	<string name="desksms_one_year_license">DeskSMS One Year License</string>
 </resources>
