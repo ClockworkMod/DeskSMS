@@ -85,4 +85,5 @@
 	<string name="days_left">%s days left</string>
 	<string name="status_error">Unable to retrieve account status! Please try again later.</string>
 	<string name="desksms_one_year_license">DeskSMS One Year License</string>
+	<string name="purchase_thanks">Thanks! Your purchase will be processed on the DeskSMS servers shortly.</string>
 </resources>
