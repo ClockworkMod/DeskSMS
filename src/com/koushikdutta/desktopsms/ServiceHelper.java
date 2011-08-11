@@ -57,7 +57,7 @@ public class ServiceHelper {
         
         return ret.toString();
     }
-    
+
     static HttpResponse retryExecute(Context context, String account, HttpClient client, HttpUriRequest req) throws ClientProtocolException, IOException, OperationCanceledException, AuthenticatorException, URISyntaxException {
         addAuthentication(context, req);
 

@@ -13,6 +13,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.http.AndroidHttpClient;
 import android.os.SystemClock;
@@ -20,7 +21,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 public class Helper {
-    static final boolean SANDBOX = true;
+    static final boolean SANDBOX = false;
 
     static public boolean isJavaScriptNullOrEmpty(String s) {
         return s == null || s.equals("") || s.equals("null");
@@ -48,14 +49,25 @@ public class Helper {
 
     static public void showAlertDialog(Context context, int stringResource)
     {
-        showAlertDialog(context, context.getString(stringResource));
+        showAlertDialog(context, context.getString(stringResource), null);
+    }
+
+    static public void showAlertDialog(Context context, int stringResource, DialogInterface.OnClickListener okCallback)
+    {
+        showAlertDialog(context, context.getString(stringResource), okCallback);
     }
     
     static public void showAlertDialog(Context context, String s)
     {
+        showAlertDialog(context, s, null);
+    }
+    
+    static public void showAlertDialog(Context context, String s, DialogInterface.OnClickListener okCallback)
+    {
         AlertDialog.Builder builder = new Builder(context);
         builder.setMessage(s);
-        builder.setPositiveButton(android.R.string.ok, null);
+        builder.setPositiveButton(android.R.string.ok, okCallback);
+        builder.setCancelable(false);
         builder.create().show();
     }
     

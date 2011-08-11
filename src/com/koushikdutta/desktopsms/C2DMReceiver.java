@@ -1,11 +1,16 @@
 package com.koushikdutta.desktopsms;
 
+import java.util.ArrayList;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ContentProviderOperation;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,6 +82,30 @@ public class C2DMReceiver extends BroadcastReceiver {
             }
             else if ("log".equals(type)) {
                 Helper.sendLog(intent);
+            }
+            else if ("read".equals(type)) {
+                Cursor c = null;
+                try {
+                    Uri contentProviderUri = Uri.parse("content://sms");
+                    c = context.getContentResolver().query(contentProviderUri, new String[] { "_id" }, "read = 0", null, null);
+                    int idColumn = c.getColumnIndex("_id");
+                    ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+                    while (c.moveToNext()) {
+                        int id = c.getInt(idColumn);
+                        ContentProviderOperation op = ContentProviderOperation.newUpdate(ContentUris.withAppendedId(contentProviderUri, id))
+                                .withValue("read", 1).build();
+                        ops.add(op);
+                    }
+
+                    context.getContentResolver().applyBatch("sms", ops);
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                finally {
+                    if (c != null)
+                        c.close();
+                }
             }
         }
         catch (Exception ex) {

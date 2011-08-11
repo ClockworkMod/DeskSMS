@@ -33,7 +33,6 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
             data.put("account", mSettings.getString("account"));
         }
         catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

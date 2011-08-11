@@ -94,8 +94,7 @@ public class TickleServiceHelper {
         URI uri = new URI(ServiceHelper.REGISTER_URL);
         HttpPost post = new HttpPost(uri);
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("applicationId", "DesktopSms"));
-        params.add(new BasicNameValuePair("clientId", Helper.getSafeDeviceId(context)));
+        params.add(new BasicNameValuePair("device_id", Helper.getSafeDeviceId(context)));
         params.add(new BasicNameValuePair("registration_id", registration));
         params.add(new BasicNameValuePair("version_code", String.valueOf(DesktopSMSApplication.mVersionCode)));
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
@@ -177,8 +176,12 @@ public class TickleServiceHelper {
                                                     public void onReceive(Context context, Intent intent) {
                                                         pushReceived = true;
                                                         dlg.dismiss();
-                                                        Helper.showAlertDialog(context, R.string.signin_success);
-                                                        callback.onCallback(true);
+                                                        Helper.showAlertDialog(context, R.string.signin_success, new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                callback.onCallback(true);
+                                                            }
+                                                        });
                                                     }
                                                 };
                                                 IntentFilter filter = new IntentFilter(C2DMReceiver.PING);
@@ -204,8 +207,12 @@ public class TickleServiceHelper {
                                                         @Override
                                                         public void run() {
                                                             dlg.dismiss();
-                                                            Helper.showAlertDialog(context, R.string.push_failed);
-                                                            callback.onCallback(true);
+                                                            Helper.showAlertDialog(context, R.string.push_failed, new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    callback.onCallback(true);
+                                                                }
+                                                            });
                                                         }
                                                     });
                                                 }
@@ -216,8 +223,12 @@ public class TickleServiceHelper {
                                                     @Override
                                                     public void run() {
                                                         dlg.dismiss();
-                                                        Helper.showAlertDialog(context, R.string.signin_failure);
-                                                        callback.onCallback(false);
+                                                        Helper.showAlertDialog(context, R.string.signin_failure, new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                callback.onCallback(false);
+                                                            }
+                                                        });
                                                     }
                                                 });
                                             }

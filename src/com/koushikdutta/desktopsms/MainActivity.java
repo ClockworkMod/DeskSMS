@@ -8,10 +8,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -53,8 +53,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                         if (!result)
                             return;
 
-                        ListItem acc = findItem(R.string.account);
-                        acc.setSummary(account);
+                        mAccountItem.setTitle(account);
                         ListItem gmail = findItem(R.string.gmail);
                         ListItem gtalk = findItem(R.string.google_talk);
                         gmail.setEnabled(true);
@@ -66,6 +65,8 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                         mSettings.setLong("last_sms_sync", 0);
                         mSettings.setLong("last_calls_sync", 0);
                         Helper.startSyncService(MainActivity.this, "sms");
+
+                        refreshAccount();
                     }
                 });
             }
@@ -159,6 +160,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         addDeskSmsContactInfo(true);
     }
 
+    ListItem mAccountItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,6 +176,9 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         
         if (Helper.isJavaScriptNullOrEmpty(account) || Helper.isJavaScriptNullOrEmpty(registrationId)) {
             doLogin();
+        }
+        else {
+            refreshAccount();
         }
         
         ServiceHelper.getSettings(this, new Callback<JSONObject>() {
@@ -193,7 +198,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             }
         });
 
-        addItem(R.string.account, new ListItem(this, getString(R.string.account), account) {
+        mAccountItem = addItem(R.string.account, new ListItem(this, account, null) {
             @Override
             public void onClick(View view) {
                 super.onClick(view);
@@ -337,6 +342,41 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             mActivityResultCallback.onCallback(new Tuple<Integer, Tuple<Integer, Intent>>(requestCode, new Tuple<Integer, Intent>(resultCode, data)));
     }
     
+    private void refreshAccount(long expiration) {
+        String account = mSettings.getString("account");
+        if (Helper.isJavaScriptNullOrEmpty(account)) {
+            finish();
+            return;
+        }
+
+        long daysLeft = (expiration - System.currentTimeMillis()) / 1000L / 60L / 60L / 24L;
+        mAccountItem.setSummary(getString(R.string.days_left, String.valueOf(daysLeft)));
+    }
+    
+    
+    private void refreshAccount() {
+        final HttpGet get = new HttpGet(ServiceHelper.STATUS_URL);
+        ServiceHelper.addAuthentication(MainActivity.this, get);
+        ThreadingRunnable.background(new ThreadingRunnable() {
+            @Override
+            public void run() {
+                try {
+                    final JSONObject payload = StreamUtility.downloadUriAsJSONObject(get);
+                    final long expiration = payload.getLong("subscription_expiration");
+                    foreground(new Runnable() {
+                        @Override
+                        public void run() {
+                            refreshAccount(expiration);
+                        }
+                    });
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem buy = menu.add(R.string.buy_desksms);
@@ -344,38 +384,46 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 ClockworkModBillingClient.getInstance(MainActivity.this, "koushd@gmail.com", Helper.SANDBOX);
-                final ProgressDialog dlg = new ProgressDialog(MainActivity.this);
-                dlg.setMessage(getString(R.string.retrieving_status));
-                final HttpGet get = new HttpGet(ServiceHelper.STATUS_URL);
-                ServiceHelper.addAuthentication(MainActivity.this, get);
-                dlg.show();
-                ThreadingRunnable.background(new ThreadingRunnable() {
+                Helper.showAlertDialog(MainActivity.this, "DeskSMS is still in beta, and the app remains free. Billing is currently experimental and meant for testers. Please contact koush@clockworkmod.com if you have any issues", new OnClickListener() {
                     @Override
-                    public void run() {
-                        try {
-                            final JSONObject payload = StreamUtility.downloadUriAsJSONObject(get);
-                            foreground(new Runnable() {
-                                @Override
-                                public void run() {
-                                    dlg.dismiss();
-                                    Intent i = new Intent(MainActivity.this, BuyActivity.class);
-                                    i.putExtra("payload", payload.toString());
-                                    startActivity(i);
+                    public void onClick(DialogInterface dialog, int which) {
+                        final ProgressDialog dlg = new ProgressDialog(MainActivity.this);
+                        dlg.setMessage(getString(R.string.retrieving_status));
+                        final HttpGet get = new HttpGet(ServiceHelper.STATUS_URL);
+                        ServiceHelper.addAuthentication(MainActivity.this, get);
+                        dlg.show();
+                        ThreadingRunnable.background(new ThreadingRunnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    final JSONObject payload = StreamUtility.downloadUriAsJSONObject(get);
+                                    final long expiration = payload.getLong("subscription_expiration");
+                                    foreground(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            refreshAccount(expiration);
+                                            dlg.dismiss();
+                                            Intent i = new Intent(MainActivity.this, BuyActivity.class);
+                                            i.putExtra("payload", payload.toString());
+                                            startActivity(i);
+                                        }
+                                    });
                                 }
-                            });
-                        }
-                        catch (Exception ex) {
-                            foreground(new Runnable() {
-                                @Override
-                                public void run() {
-                                    dlg.dismiss();
-                                    Helper.showAlertDialog(MainActivity.this, R.string.status_error);
+                                catch (Exception ex) {
+                                    foreground(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            dlg.dismiss();
+                                            Helper.showAlertDialog(MainActivity.this, R.string.status_error);
+                                        }
+                                    });
+                                    ex.printStackTrace();
                                 }
-                            });
-                            ex.printStackTrace();
-                        }
+                            }
+                        });
                     }
                 });
+
                 return true;
             }
         });
