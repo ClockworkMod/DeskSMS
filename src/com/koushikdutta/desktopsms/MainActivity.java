@@ -179,6 +179,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         }
         else {
             refreshAccount();
+            ClockworkModBillingClient.getInstance(MainActivity.this, "koushd@gmail.com", Helper.SANDBOX).refreshMarketPurchases();
         }
         
         ServiceHelper.getSettings(this, new Callback<JSONObject>() {
@@ -333,6 +334,13 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
 
     public void setOnActivityResultCallback(Callback<Tuple<Integer, Tuple<Integer, Intent>>> callback) {
         mActivityResultCallback = callback;
+
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshAccount();
+            }
+        }, 5000);
     }
 
     @Override
@@ -383,47 +391,46 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         buy.setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                ClockworkModBillingClient.getInstance(MainActivity.this, "koushd@gmail.com", Helper.SANDBOX);
-                Helper.showAlertDialog(MainActivity.this, "DeskSMS is still in beta, and the app remains free. Billing is currently experimental and meant for testers. Please contact koush@clockworkmod.com if you have any issues", new OnClickListener() {
+                ClockworkModBillingClient.getInstance(MainActivity.this, "koushd@gmail.com", Helper.SANDBOX).refreshMarketPurchases();
+//                Helper.showAlertDialog(MainActivity.this, "DeskSMS is still in beta, and the app remains free. Billing is currently experimental for testers. Please contact koush@clockworkmod.com if you have any issues", new OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                    }
+//                });
+                final ProgressDialog dlg = new ProgressDialog(MainActivity.this);
+                dlg.setMessage(getString(R.string.retrieving_status));
+                final HttpGet get = new HttpGet(ServiceHelper.STATUS_URL);
+                ServiceHelper.addAuthentication(MainActivity.this, get);
+                dlg.show();
+                ThreadingRunnable.background(new ThreadingRunnable() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        final ProgressDialog dlg = new ProgressDialog(MainActivity.this);
-                        dlg.setMessage(getString(R.string.retrieving_status));
-                        final HttpGet get = new HttpGet(ServiceHelper.STATUS_URL);
-                        ServiceHelper.addAuthentication(MainActivity.this, get);
-                        dlg.show();
-                        ThreadingRunnable.background(new ThreadingRunnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    final JSONObject payload = StreamUtility.downloadUriAsJSONObject(get);
-                                    final long expiration = payload.getLong("subscription_expiration");
-                                    foreground(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            refreshAccount(expiration);
-                                            dlg.dismiss();
-                                            Intent i = new Intent(MainActivity.this, BuyActivity.class);
-                                            i.putExtra("payload", payload.toString());
-                                            startActivity(i);
-                                        }
-                                    });
+                    public void run() {
+                        try {
+                            final JSONObject payload = StreamUtility.downloadUriAsJSONObject(get);
+                            final long expiration = payload.getLong("subscription_expiration");
+                            foreground(new Runnable() {
+                                @Override
+                                public void run() {
+                                    refreshAccount(expiration);
+                                    dlg.dismiss();
+                                    Intent i = new Intent(MainActivity.this, BuyActivity.class);
+                                    i.putExtra("payload", payload.toString());
+                                    startActivityForResult(i, 2323);
                                 }
-                                catch (Exception ex) {
-                                    foreground(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            dlg.dismiss();
-                                            Helper.showAlertDialog(MainActivity.this, R.string.status_error);
-                                        }
-                                    });
-                                    ex.printStackTrace();
+                            });
+                        }
+                        catch (Exception ex) {
+                            foreground(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dlg.dismiss();
+                                    Helper.showAlertDialog(MainActivity.this, R.string.status_error);
                                 }
-                            }
-                        });
+                            });
+                            ex.printStackTrace();
+                        }
                     }
                 });
-
                 return true;
             }
         });

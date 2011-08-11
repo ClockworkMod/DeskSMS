@@ -121,6 +121,7 @@ public final class R {
         public static final int permission_request=0x7f050007;
         public static final int please_wait_contact_list=0x7f05002c;
         public static final int proxied=0x7f05000f;
+        public static final int purchase_thanks=0x7f05003b;
         public static final int push_failed=0x7f050031;
         public static final int registering_with_server=0x7f05000c;
         public static final int remove_desksms_contact_info=0x7f05002b;

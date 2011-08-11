@@ -3,7 +3,8 @@ package com.koushikdutta.desktopsms;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.graphics.Color;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -70,6 +71,16 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
 
     @Override
     public void onFinished(PurchaseResult result) {
-        finish();
+        if (result != PurchaseResult.SUCCEEDED) {
+            finish();
+            return;
+        }
+        
+        Helper.showAlertDialog(this, R.string.purchase_thanks, new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
     }
 }
