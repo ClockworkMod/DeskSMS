@@ -1,6 +1,8 @@
 package com.koushikdutta.desktopsms;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +26,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory.Options;
 import android.net.Uri;
 import android.net.http.AndroidHttpClient;
 import android.os.Handler;
@@ -35,6 +41,7 @@ import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.PhoneLookup;
 import android.telephony.SmsManager;
 import android.text.format.DateFormat;
+import android.util.Base64;
 import android.util.Log;
 
 public class SyncService extends Service {
@@ -76,7 +83,10 @@ public class SyncService extends Service {
         public static CallTypeMapper Instance = new CallTypeMapper();
     }
     
-    static Hashtable<Class, CursorGetter> mapper = new Hashtable<Class, SyncService.CursorGetter>() {
+    static class MmsImageType {
+    }
+
+    Hashtable<Class, CursorGetter> mapper = new Hashtable<Class, SyncService.CursorGetter>() {
         {
             put(int.class, new CursorGetter() {
                 @Override
@@ -114,16 +124,100 @@ public class SyncService extends Service {
                     j.put(name, CallTypeMapper.Instance.get(c.getInt(index)));
                 }
             });
+            put(MmsImageType.class, new CursorGetter() {
+                @Override
+                public void get(Cursor c, JSONObject j, String name, int index) throws JSONException {
+                    try {
+                        j.put("skip", true);
+                        int mmsId = c.getInt(c.getColumnIndex("_id"));
+
+                        Cursor convo = getContentResolver().query(Uri.parse("content://mms/" + mmsId + "/addr/"), null, null, null, null);
+                        if (!convo.moveToNext()) {
+                            return;
+                        }
+                        j.put("number", convo.getString(convo.getColumnIndex("address")));
+                        convo.close();
+
+                        String selectionPart = "mid=" + mmsId;
+                        Uri uri = Uri.parse("content://mms/part");
+                        Cursor cPart = getContentResolver().query(uri, null,
+                            selectionPart, null, null);
+                        try {
+                            while (cPart.moveToNext()) {
+                                String partId = cPart.getString(cPart.getColumnIndex("_id"));
+                                String type = cPart.getString(cPart.getColumnIndex("ct"));
+                                if ("image/jpeg".equals(type) || "image/bmp".equals(type) || "image/gif".equals(type) || "image/jpg".equals(type)
+                                        || "image/png".equals(type)) {
+                                    String image = getMmsImage(partId);
+                                    if (image != null) {
+                                        j.put("image", image);
+                                        j.remove("skip");
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                        finally {
+                            cPart.close();
+                        }
+                    }
+                    catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+
+                }
+            });
         }
     };
     
-    
-    static Hashtable<String, Tuple<String, CursorGetter>> smsmapper = new Hashtable<String, Tuple<String, CursorGetter>>() {
+    String getMmsImage(String _id) {
+        Uri partURI = Uri.parse("content://mms/part/" + _id);
+        InputStream is = null;
+        Bitmap bitmap = null;
+        try {
+            is = getContentResolver().openInputStream(partURI);
+            BitmapFactory.Options options = new Options();
+            options.inSampleSize = 4;
+            bitmap = BitmapFactory.decodeStream(is, null, options);
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            bitmap.compress(CompressFormat.PNG, 100, out);
+            byte[] bytes = out.toByteArray();
+            String imageString = Base64.encodeToString(bytes, 0);
+            return imageString;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (is != null) {
+                try {
+                    is.close();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+    Hashtable<String, Tuple<String, CursorGetter>> mmsmapper = new Hashtable<String, Tuple<String, CursorGetter>>() {
+        {
+            put("m_type", new Tuple<String, CursorGetter>("message", mapper.get(MmsImageType.class)));
+            //put("seen", new Tuple<String, CursorGetter>("seen", mapper.get(int.class)));
+            put("msg_box", new Tuple<String, CursorGetter>("type", mapper.get(SmsTypeMapper.class)));
+            put("_id", new Tuple<String, CursorGetter>("id", mapper.get(long.class)));
+            put("address", new Tuple<String, CursorGetter>("number", mapper.get(String.class)));
+            put("read", new Tuple<String, CursorGetter>("read", mapper.get(boolean.class)));
+            put("thread_id", new Tuple<String, CursorGetter>("thread_id", mapper.get(long.class)));
+        }
+    };
+
+    Hashtable<String, Tuple<String, CursorGetter>> smsmapper = new Hashtable<String, Tuple<String, CursorGetter>>() {
         {
             put("body", new Tuple<String, CursorGetter>("message", mapper.get(String.class)));
             //put("seen", new Tuple<String, CursorGetter>("seen", mapper.get(int.class)));
             put("type", new Tuple<String, CursorGetter>("type", mapper.get(SmsTypeMapper.class)));
-            put("date", new Tuple<String, CursorGetter>("date", mapper.get(long.class)));
             put("_id", new Tuple<String, CursorGetter>("id", mapper.get(long.class)));
             put("address", new Tuple<String, CursorGetter>("number", mapper.get(String.class)));
             put("read", new Tuple<String, CursorGetter>("read", mapper.get(boolean.class)));
@@ -131,10 +225,9 @@ public class SyncService extends Service {
         }
     };
     
-    static Hashtable<String, Tuple<String, CursorGetter>> callmapper = new Hashtable<String, Tuple<String, CursorGetter>>() {
+    Hashtable<String, Tuple<String, CursorGetter>> callmapper = new Hashtable<String, Tuple<String, CursorGetter>>() {
         {
             put(Calls.TYPE, new Tuple<String, CursorGetter>("type", mapper.get(CallTypeMapper.class)));
-            put(Calls.DATE, new Tuple<String, CursorGetter>("date", mapper.get(long.class)));
             put(Calls._ID, new Tuple<String, CursorGetter>("id", mapper.get(long.class)));
             put(Calls.NUMBER, new Tuple<String, CursorGetter>("number", mapper.get(String.class)));
             put(Calls.DURATION, new Tuple<String, CursorGetter>("duration", mapper.get(int.class)));
@@ -292,7 +385,7 @@ public class SyncService extends Service {
         String postUrl;
         String lastSyncSetting;
         Hashtable<String, Tuple<String, CursorGetter>> mapper;
-        int messageEventType;
+        long dateScale = 1L;
         
         abstract void setSubject(JSONObject event, String displayName, Cursor cursor) throws JSONException;
         abstract void setMessage(JSONObject event, String displayName, Cursor cursor) throws JSONException;
@@ -312,7 +405,7 @@ public class SyncService extends Service {
                 isInitialSync = true;
                 // only grab 3 days worth
                 //lastSync = System.currentTimeMillis() - 3L * 24L * 60L * 60L * 1000L;
-                c = getContentResolver().query(contentProviderUri, null, "date > ?", new String[] { String.valueOf(System.currentTimeMillis() - 3L * 24L * 60L * 60L * 1000L) }, null);
+                c = getContentResolver().query(contentProviderUri, null, "date > ?", new String[] { String.valueOf((System.currentTimeMillis() - 3L * 24L * 60L * 60L * 1000L) / dateScale) }, null);
             }
             else {
                 c = getContentResolver().query(contentProviderUri, null, "_id > ?", new String[] { String.valueOf(lastSync) }, null);
@@ -337,21 +430,12 @@ public class SyncService extends Service {
             JSONArray eventArray = new JSONArray();
             long latestEvent = lastSync;
             int dateColumn = c.getColumnIndex("date");
-            int typeColumn = c.getColumnIndex("type");
             int idColumn = c.getColumnIndex("_id");
             while (c.moveToNext()) {
                 try {
-                    long date = c.getLong(dateColumn);
-                    // if the date is from the future, we need to watch out for this.
-                    // this will completely break sync, as it will expect all new messages to be from the future.
-                    /*
-                    if (date > System.currentTimeMillis()) {
-                        Log.i(LOGTAG, "Ignoring event from the future.");
-                        continue;
-                    }
-                    */
-
+                    long date = c.getLong(dateColumn) * dateScale;
                     JSONObject event = new JSONObject();
+                    event.put("date", date);
                     for (int i = 0; i < c.getColumnCount(); i++) {
                         String name = columnNames[i];
                         Tuple<String, CursorGetter> tuple = mapper.get(name);
@@ -360,6 +444,9 @@ public class SyncService extends Service {
                         tuple.Second.get(c, event, tuple.First, i);
                     }
                     
+                    if (event.optBoolean("skip", false))
+                        continue;
+
                     String number = event.getString("number");
                     CachedPhoneLookup lookup = getPhoneLookup(number);
                     String displayName;
@@ -374,7 +461,7 @@ public class SyncService extends Service {
                     }
 
                     // only incoming events needs to be marked up with the subject and optionally a message (no-op for sms)
-                    if (c.getInt(typeColumn) == messageEventType) {
+                    if (event.getString("type").equals("incoming")) {
                         setSubject(event, displayName, c);
                         setMessage(event, displayName, c);
                     }
@@ -428,14 +515,13 @@ public class SyncService extends Service {
         }
 
     }
-    
+
     class SmsSync extends SyncBase {
         public SmsSync() {
             contentProviderUri = Uri.parse("content://sms");
             postUrl = ServiceHelper.SMS_URL;
             lastSyncSetting = "last_sms_sync";
             mapper = smsmapper;
-            messageEventType = INCOMING_SMS;
         }
 
         @Override
@@ -448,13 +534,32 @@ public class SyncService extends Service {
         }
     }
 
+    class MmsSync extends SyncBase {
+        public MmsSync() {
+            dateScale = 1000;
+            contentProviderUri = Uri.parse("content://mms/");
+            postUrl = ServiceHelper.SMS_URL;
+            lastSyncSetting = "last_mms_sync";
+            mapper = mmsmapper;
+        }
+
+        @Override
+        void setSubject(JSONObject event, String displayName, Cursor cursor) throws JSONException {
+            event.put("subject", getString(R.string.mms_received, displayName));
+        }
+
+        @Override
+        void setMessage(JSONObject event, String displayName, Cursor cursor) throws JSONException {
+            event.put("message", getString(R.string.mms_received, displayName));
+        }
+    }
+
     class CallSync extends SyncBase {
         public CallSync() {
             contentProviderUri = CallLog.Calls.CONTENT_URI;
             postUrl = ServiceHelper.CALL_URL;
             lastSyncSetting = "last_calls_sync";
             mapper = callmapper;
-            messageEventType = MISSED_CALL;
         }
 
         @Override
@@ -469,7 +574,6 @@ public class SyncService extends Service {
             String dateString = df.format(new Date(date));
             event.put("message", getString(R.string.missed_call_at, dateString));
         }
-        
     }
 
     long mLastOutboxSync;
@@ -531,6 +635,7 @@ public class SyncService extends Service {
                     for (int i = 0; i < 3; i++) {
                         mSmsSyncer.sync();
                         mCallSyncer.sync();
+                        mMmsSyncer.sync();
 
                         // however, if an outbox message comes in while we are polling,
                         // let's send it
@@ -568,8 +673,19 @@ public class SyncService extends Service {
     }
     
     SmsSync mSmsSyncer = new SmsSync();
+    MmsSync mMmsSyncer = new MmsSync();
     CallSync mCallSyncer = new CallSync();
     
+    ContentObserver mMmsObserver = new ContentObserver(mHandler) {
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            Intent intent = new Intent();
+            intent.putExtra("reason", "sms");
+            sync(intent);
+        }
+    };
+
     ContentObserver mSmsObserver = new ContentObserver(mHandler) {
         @Override
         public void onChange(boolean selfChange) {

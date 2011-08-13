@@ -112,6 +112,7 @@ public final class R {
  Missed call from Koushik Dutta 
          */
         public static final int missed_call_from=0x7f050018;
+        public static final int mms_received=0x7f05003d;
         public static final int msg_app_detected=0x7f050015;
         public static final int not_logged_in=0x7f050010;
         public static final int notifications=0x7f05001c;
