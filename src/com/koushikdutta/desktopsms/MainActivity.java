@@ -8,6 +8,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -117,8 +118,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                         }
                     }
                     c.close();
-                    
-                    
+
                     ArrayList<ContentValues> cvs = new ArrayList<ContentValues>();
                     for (long rawContact: numbers.keySet()) {
                         String number = numbers.get(rawContact);
@@ -165,8 +165,6 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Helper.startSyncService(this);
-
         String account = mSettings.getString("account");
         String registrationId = mSettings.getString("registration_id");
 
@@ -174,36 +172,33 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             mSettings.setLong("last_missed_call", System.currentTimeMillis());
         }
         
-        if (Helper.isJavaScriptNullOrEmpty(account) || Helper.isJavaScriptNullOrEmpty(registrationId)) {
-            doLogin();
-        }
-        else {
-            refreshAccount();
-            ClockworkModBillingClient.getInstance(MainActivity.this, "koushd@gmail.com", Helper.SANDBOX).refreshMarketPurchases();
-        }
-        
-        ServiceHelper.getSettings(this, new Callback<JSONObject>() {
-            @Override
-            public void onCallback(JSONObject result) {
-                final boolean forward_xmpp = result.optBoolean("forward_xmpp", true);
-                final boolean forward_email = result.optBoolean("forward_email", true);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ListItem gmail = findItem(R.string.gmail);
-                        ListItem gtalk = findItem(R.string.google_talk);
-                        gmail.setIsChecked(forward_email);
-                        gtalk.setIsChecked(forward_xmpp);
-                    }
-                });
-            }
-        });
-
         mAccountItem = addItem(R.string.account, new ListItem(this, account, null) {
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                doLogin();
+                
+                String account = mSettings.getString("account");
+                String registrationId = mSettings.getString("registration_id");
+
+                if (Helper.isJavaScriptNullOrEmpty(account) || Helper.isJavaScriptNullOrEmpty(registrationId)) {
+                    doLogin();
+                }
+                else {
+                    AlertDialog.Builder builder = new Builder(MainActivity.this);
+                    builder.setTitle(R.string.account);
+                    builder.setItems(new String[] { getString(R.string.buy_desksms), getString(R.string.switch_account) }, new OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (which == 0) {
+                                startBuy();
+                            }
+                            else if (which == 1){
+                                doLogin();
+                            }
+                        }
+                    });
+                    builder.create().show();
+                }
             }
         });
 
@@ -328,6 +323,33 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                 builder.create().show();
             }
         });
+
+        Helper.startSyncService(this);
+
+        if (Helper.isJavaScriptNullOrEmpty(account) || Helper.isJavaScriptNullOrEmpty(registrationId)) {
+            doLogin();
+        }
+        else {
+            refreshAccount();
+            ClockworkModBillingClient.getInstance(MainActivity.this, "koushd@gmail.com", Helper.SANDBOX).refreshMarketPurchases();
+        }
+        
+        ServiceHelper.getSettings(this, new Callback<JSONObject>() {
+            @Override
+            public void onCallback(JSONObject result) {
+                final boolean forward_xmpp = result.optBoolean("forward_xmpp", true);
+                final boolean forward_email = result.optBoolean("forward_email", true);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ListItem gmail = findItem(R.string.gmail);
+                        ListItem gtalk = findItem(R.string.google_talk);
+                        gmail.setIsChecked(forward_email);
+                        gtalk.setIsChecked(forward_xmpp);
+                    }
+                });
+            }
+        });
     }
 
     Callback<Tuple<Integer, Tuple<Integer, Intent>>> mActivityResultCallback;
@@ -363,6 +385,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
     
     
     private void refreshAccount() {
+        mAccountItem.setSummary(R.string.retrieving_status);
         final HttpGet get = new HttpGet(ServiceHelper.STATUS_URL);
         ServiceHelper.addAuthentication(MainActivity.this, get);
         ThreadingRunnable.background(new ThreadingRunnable() {
@@ -385,52 +408,56 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         });
     }
     
+    void startBuy() {
+        ClockworkModBillingClient.getInstance(MainActivity.this, "koushd@gmail.com", Helper.SANDBOX).refreshMarketPurchases();
+//      Helper.showAlertDialog(MainActivity.this, "DeskSMS is still in beta, and the app remains free. Billing is currently experimental for testers. Please contact koush@clockworkmod.com if you have any issues", new OnClickListener() {
+//          @Override
+//          public void onClick(DialogInterface dialog, int which) {
+//          }
+//      });
+      final ProgressDialog dlg = new ProgressDialog(MainActivity.this);
+      dlg.setMessage(getString(R.string.retrieving_status));
+      final HttpGet get = new HttpGet(ServiceHelper.STATUS_URL);
+      ServiceHelper.addAuthentication(MainActivity.this, get);
+      dlg.show();
+      ThreadingRunnable.background(new ThreadingRunnable() {
+          @Override
+          public void run() {
+              try {
+                  final JSONObject payload = StreamUtility.downloadUriAsJSONObject(get);
+                  final long expiration = payload.getLong("subscription_expiration");
+                  foreground(new Runnable() {
+                      @Override
+                      public void run() {
+                          refreshAccount(expiration);
+                          dlg.dismiss();
+                          Intent i = new Intent(MainActivity.this, BuyActivity.class);
+                          i.putExtra("payload", payload.toString());
+                          startActivityForResult(i, 2323);
+                      }
+                  });
+              }
+              catch (Exception ex) {
+                  foreground(new Runnable() {
+                      @Override
+                      public void run() {
+                          dlg.dismiss();
+                          Helper.showAlertDialog(MainActivity.this, R.string.status_error);
+                      }
+                  });
+                  ex.printStackTrace();
+              }
+          }
+      });
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem buy = menu.add(R.string.buy_desksms);
         buy.setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                ClockworkModBillingClient.getInstance(MainActivity.this, "koushd@gmail.com", Helper.SANDBOX).refreshMarketPurchases();
-//                Helper.showAlertDialog(MainActivity.this, "DeskSMS is still in beta, and the app remains free. Billing is currently experimental for testers. Please contact koush@clockworkmod.com if you have any issues", new OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                    }
-//                });
-                final ProgressDialog dlg = new ProgressDialog(MainActivity.this);
-                dlg.setMessage(getString(R.string.retrieving_status));
-                final HttpGet get = new HttpGet(ServiceHelper.STATUS_URL);
-                ServiceHelper.addAuthentication(MainActivity.this, get);
-                dlg.show();
-                ThreadingRunnable.background(new ThreadingRunnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            final JSONObject payload = StreamUtility.downloadUriAsJSONObject(get);
-                            final long expiration = payload.getLong("subscription_expiration");
-                            foreground(new Runnable() {
-                                @Override
-                                public void run() {
-                                    refreshAccount(expiration);
-                                    dlg.dismiss();
-                                    Intent i = new Intent(MainActivity.this, BuyActivity.class);
-                                    i.putExtra("payload", payload.toString());
-                                    startActivityForResult(i, 2323);
-                                }
-                            });
-                        }
-                        catch (Exception ex) {
-                            foreground(new Runnable() {
-                                @Override
-                                public void run() {
-                                    dlg.dismiss();
-                                    Helper.showAlertDialog(MainActivity.this, R.string.status_error);
-                                }
-                            });
-                            ex.printStackTrace();
-                        }
-                    }
-                });
+                startBuy();
                 return true;
             }
         });

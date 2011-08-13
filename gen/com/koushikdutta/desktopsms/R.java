@@ -135,6 +135,7 @@ public final class R {
         public static final int signin_success=0x7f050003;
         public static final int sms_received=0x7f05001a;
         public static final int status_error=0x7f050039;
+        public static final int switch_account=0x7f05003c;
         public static final int sync_calls=0x7f05002d;
         public static final int sync_calls_summary=0x7f05002e;
         public static final int sync_sms=0x7f050026;
