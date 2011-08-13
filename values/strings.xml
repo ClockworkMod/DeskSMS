@@ -88,4 +88,6 @@
 	<string name="purchase_thanks">Thanks! Your purchase will be processed on the DeskSMS servers shortly.</string>
 	
 	<string name="switch_account">Switch Account</string>
+
+    <string name="mms_received">MMS Received from %s</string>
 </resources>
