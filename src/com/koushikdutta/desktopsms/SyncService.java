@@ -486,14 +486,18 @@ public class SyncService extends Service {
         mFirstStart = false;
         
         // no reason? this is just a 15 min repeating wakeup call then.
-        if (reason == null)
+        if (reason == null) {
+            Log.i(LOGTAG, "No reaosn for sync");
             return;
-        
-        if (reason != null) {
-            Log.i(LOGTAG, "============= Sync Reason " + reason + "=============");
         }
-        else {
-            Log.i(LOGTAG, "============= No Sync Reason =============");
+        Log.i(LOGTAG, "============= Sync Reason " + reason + "=============");
+        
+        boolean xmpp = mSettings.getBoolean("forward_xmpp", true);
+        boolean email = mSettings.getBoolean("forward_email", true);
+        boolean web = mSettings.getBoolean("forward_web", true);
+        if (!xmpp && !email && !web) {
+            Log.i(LOGTAG, "All forwarding options are disabled.");
+            return;
         }
 
         mPendingOutbox = intent.getStringExtra("outbox");
