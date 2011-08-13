@@ -632,7 +632,7 @@ public class SyncService extends Service {
                     }
 
                     // and poll against the sms content provider 10 times
-                    for (int i = 0; i < 3; i++) {
+                    for (int i = 0; i < 5; i++) {
                         mSmsSyncer.sync();
                         mCallSyncer.sync();
                         mMmsSyncer.sync();
