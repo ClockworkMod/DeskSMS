@@ -55,6 +55,14 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
             }
         });
         
+        ListItem redeem = addItem(R.string.payment_options, new ListItem(this, R.string.redeem_code, 0, R.drawable.icon) {
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                client.startPurchase(BuyActivity.this, "desksms.subscription0", mBuyerId, data.toString(), BuyActivity.this, ClockworkModBillingClient.TYPE_REDEEM);
+            }
+        });
+
         JSONObject payload;
         try {
             payload = new JSONObject(getIntent().getStringExtra("payload"));

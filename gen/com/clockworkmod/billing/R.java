@@ -124,6 +124,7 @@ public final class R {
         public static final int proxied=0x7f05000f;
         public static final int purchase_thanks=0x7f05003b;
         public static final int push_failed=0x7f050031;
+        public static final int redeem_code=0x7f05003e;
         public static final int registering_with_server=0x7f05000c;
         public static final int remove_desksms_contact_info=0x7f05002b;
         public static final int requesting_permissions=0x7f050006;

@@ -389,7 +389,13 @@ public class SyncService extends Service {
         
         abstract void setSubject(JSONObject event, String displayName, Cursor cursor) throws JSONException;
         abstract void setMessage(JSONObject event, String displayName, Cursor cursor) throws JSONException;
-        
+
+        protected void logEnvelope(JSONObject envelope) throws JSONException {
+            JSONArray data = envelope.getJSONArray("data");
+            Log.i(LOGTAG, "Forwarding " + data.length() + " messages.");
+            System.out.println(envelope.toString(4));
+        }
+
         public void sync() throws Exception {
             long lastSync = mSettings.getLong(lastSyncSetting, 0);
             boolean isInitialSync = false;
@@ -487,8 +493,9 @@ public class SyncService extends Service {
             envelope.put("version_code", DesktopSMSApplication.mVersionCode);
             envelope.put("this_last_sync", lastSync);
             envelope.put("next_last_sync", latestEvent);
-            
-            System.out.println(envelope.toString(4));
+
+            logEnvelope(envelope);
+
             StringEntity entity = new StringEntity(envelope.toString(), "utf-8");
             HttpPost post = ServiceHelper.getAuthenticatedPost(SyncService.this, String.format(postUrl, mAccount));
             post.setEntity(entity);
@@ -551,6 +558,13 @@ public class SyncService extends Service {
         @Override
         void setMessage(JSONObject event, String displayName, Cursor cursor) throws JSONException {
             event.put("message", getString(R.string.mms_received, displayName));
+        }
+
+        @Override
+        protected void logEnvelope(JSONObject envelope) throws JSONException {
+            JSONArray data = envelope.getJSONArray("data");
+            Log.i(LOGTAG, "Forwarding MMS:");
+            Log.i(LOGTAG, "Forwarding " + data.length() + " messages.");
         }
     }
 
