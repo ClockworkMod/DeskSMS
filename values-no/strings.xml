@@ -4,7 +4,7 @@
     
     <string name="description">DeskSMS videresender dine tekstmeldinger til din Google Talk og/eller Gmail-konto, og lar deg også svare fra nevnte tjenester.</string>
     
-    <string name="signin_success">Innlogget!/string>
+    <string name="signin_success">Innlogget!</string>
     <string name="signin_failure">Innlogging feilet. Påse at du har en fungerende internettilkobling, og prøv igjen. Innlogging med en Google Apps e-postadresse virker kanskje ikke. Hvis feilen vedvarer vennligst send logg til utvikleren.</string>
     
     <string name="login_with_google">Logg inn med en Google-konto</string>
