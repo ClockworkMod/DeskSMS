@@ -90,4 +90,5 @@
     <string name="switch_account">Trocar de Conta</string>
 
     <string name="mms_received">MMS Recebido de %s</string>
+    <string name="redeem_code">Código de Resgate</string>
 </resources>
