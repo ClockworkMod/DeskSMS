@@ -90,4 +90,6 @@
 	<string name="switch_account">Switch Account</string>
 
     <string name="mms_received">MMS Received from %s</string>
+    
+    <string name="redeem_code">Redeem Code</string>
 </resources>
