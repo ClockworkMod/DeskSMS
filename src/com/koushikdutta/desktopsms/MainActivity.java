@@ -30,6 +30,7 @@ import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 
 import com.clockworkmod.billing.ClockworkModBillingClient;
+import com.clockworkmod.billing.ThreadingRunnable;
 
 public class MainActivity extends ActivityBase implements ActivityResultDelegate {
     private static final String LOGTAG = MainActivity.class.getSimpleName();
@@ -64,6 +65,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                         testMessage.setEnabled(true);
 
                         mSettings.setLong("last_sms_sync", 0);
+                        mSettings.setLong("last_mms_sync", 0);
                         mSettings.setLong("last_calls_sync", 0);
                         Helper.startSyncService(MainActivity.this, "sms");
 
@@ -270,6 +272,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                 if (getIsChecked()) {
                     // reset the sync counter so it resends the sms history
                     mSettings.setLong("last_sms_sync", 0);
+                    mSettings.setLong("last_mms_sync", 0);
                     mSettings.setLong("last_calls_sync", 0);
                     Helper.startSyncService(MainActivity.this);
                 }

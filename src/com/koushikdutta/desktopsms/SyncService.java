@@ -177,10 +177,10 @@ public class SyncService extends Service {
         try {
             is = getContentResolver().openInputStream(partURI);
             BitmapFactory.Options options = new Options();
-            options.inSampleSize = 4;
+            options.inSampleSize = 8;
             bitmap = BitmapFactory.decodeStream(is, null, options);
             ByteArrayOutputStream out = new ByteArrayOutputStream();
-            bitmap.compress(CompressFormat.PNG, 100, out);
+            bitmap.compress(CompressFormat.PNG, 50, out);
             byte[] bytes = out.toByteArray();
             String imageString = Base64.encodeToString(bytes, 0);
             return imageString;
@@ -595,6 +595,7 @@ public class SyncService extends Service {
     Handler mHandler = new Handler();
     Thread mSyncThread = null;
     String mPendingOutbox;
+    long mSyncStart = 0;
     boolean mPendingOutboxSync;
     private void sync(final Intent intent) {
         Log.i(LOGTAG, "Version: " + DesktopSMSApplication.mVersionCode);
@@ -621,6 +622,8 @@ public class SyncService extends Service {
         mPendingOutbox = intent.getStringExtra("outbox");
         mPendingOutboxSync = "outbox".equals(reason);
 
+        mSyncStart = System.currentTimeMillis();
+
         if (mSyncThread != null)
             return;
 
@@ -645,8 +648,7 @@ public class SyncService extends Service {
                         mPendingOutbox = null;
                     }
 
-                    // and poll against the sms content provider 10 times
-                    for (int i = 0; i < 5; i++) {
+                    while (mSyncStart + 15000L > System.currentTimeMillis()) {
                         mSmsSyncer.sync();
                         mCallSyncer.sync();
                         mMmsSyncer.sync();

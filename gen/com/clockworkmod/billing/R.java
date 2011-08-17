@@ -96,21 +96,7 @@ public final class R {
         public static final int handcent=0x7f050016;
         public static final int hello=0x7f050000;
         public static final int login_with_google=0x7f050005;
-        /**  Missed call at 12:30PM 
- Missed call at 12:30PM 
- Missed call at 12:30PM 
- Missed call at 12:30PM 
- Missed call at 12:30PM 
- Missed call at 12:30PM 
-         */
         public static final int missed_call_at=0x7f050019;
-        /**  Missed call from Koushik Dutta 
- Missed call from Koushik Dutta 
- Missed call from Koushik Dutta 
- Missed call from Koushik Dutta 
- Missed call from Koushik Dutta 
- Missed call from Koushik Dutta 
-         */
         public static final int missed_call_from=0x7f050018;
         public static final int mms_received=0x7f05003d;
         public static final int msg_app_detected=0x7f050015;

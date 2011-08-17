@@ -8,7 +8,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        Helper.startSyncService(context, "sms");
+        Helper.startSyncService(context);
     }
 
 }

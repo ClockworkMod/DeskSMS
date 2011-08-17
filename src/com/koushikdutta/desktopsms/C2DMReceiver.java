@@ -2,6 +2,11 @@ package com.koushikdutta.desktopsms;
 
 import java.util.ArrayList;
 
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,11 +20,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.clockworkmod.billing.ThreadingRunnable;
+
 public class C2DMReceiver extends BroadcastReceiver {
     private final static String LOGTAG = C2DMReceiver.class.getSimpleName();
     public static final String ACTION_REGISTRATION_RECEIVED = "com.koushikdutta.desktopsms.REGISTRATION_RECEIVED";
     public static final String PING = "com.koushikdutta.desktopsms.PING";
-    
+
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("com.google.android.c2dm.intent.REGISTRATION")) {
             handleRegistration(context, intent);
@@ -27,7 +34,7 @@ public class C2DMReceiver extends BroadcastReceiver {
             handleMessage(context, intent);
          }
      }
-    
+
     private void handleMessage(final Context context, Intent intent) {
         Log.i(LOGTAG, "Tickle received!");
 
@@ -66,6 +73,7 @@ public class C2DMReceiver extends BroadcastReceiver {
                 context.sendBroadcast(i);
             }
             else if ("outbox".equals(type)) {
+                markAllAsRead(context);
                 Intent serviceIntent = new Intent(context, SyncService.class);
                 serviceIntent.putExtra("outbox", intent.getStringExtra("outbox"));
                 Helper.startSyncService(context, serviceIntent, "outbox");
@@ -84,38 +92,71 @@ public class C2DMReceiver extends BroadcastReceiver {
                 Helper.sendLog(intent);
             }
             else if ("read".equals(type)) {
-                Cursor c = null;
+                markAllAsRead(context);
+            }
+            else if ("pong".equals(type)) {
                 try {
-                    Uri contentProviderUri = Uri.parse("content://sms");
-                    c = context.getContentResolver().query(contentProviderUri, new String[] { "_id" }, "read = 0", null, null);
-                    int idColumn = c.getColumnIndex("_id");
-                    ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
-                    while (c.moveToNext()) {
-                        int id = c.getInt(idColumn);
-                        ContentProviderOperation op = ContentProviderOperation.newUpdate(ContentUris.withAppendedId(contentProviderUri, id))
-                                .withValue("read", 1).build();
-                        ops.add(op);
-                    }
-
-                    context.getContentResolver().applyBatch("sms", ops);
+                    final JSONObject envelope = new JSONObject();
+                    JSONArray data = new JSONArray();
+                    JSONObject sms = new JSONObject();
+                    sms.put("subject", "Test successful");
+                    sms.put("message", "Response received from phone.");
+                    sms.put("type", "incoming");
+                    sms.put("number", "DeskSMS");
+                    sms.put("date", System.currentTimeMillis());
+                    envelope.put("is_initial_sync", false);
+                    envelope.put("version_code", DesktopSMSApplication.mVersionCode);
+                    envelope.put("data", data);
+                    data.put(sms);
+                    final String account = settings.getString("account");
+                    ThreadingRunnable.background(new ThreadingRunnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                HttpPost post = new HttpPost(String.format(ServiceHelper.SMS_URL, account));
+                                post.setEntity(new StringEntity(envelope.toString()));
+                                ServiceHelper.addAuthentication(context, post);
+                                StreamUtility.downloadUriAsJSONObject(post);
+                            }
+                            catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    });
                 }
                 catch (Exception ex) {
                     ex.printStackTrace();
-                }
-                finally {
-                    if (c != null)
-                        c.close();
                 }
             }
         }
         catch (Exception ex) {
             ex.printStackTrace();
         }
-        /*
-        for (String key: intent.getExtras().keySet()) {
-            Log.i(LOGTAG, key + ": " + intent.getStringExtra(key));
+    }
+
+    private void markAllAsRead(Context context) {
+        Cursor c = null;
+        try {
+            Uri contentProviderUri = Uri.parse("content://sms");
+            c = context.getContentResolver().query(contentProviderUri, new String[] { "_id" }, "read = 0", null, null);
+            int idColumn = c.getColumnIndex("_id");
+            ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+            while (c.moveToNext()) {
+                int id = c.getInt(idColumn);
+                ContentProviderOperation op = ContentProviderOperation.newUpdate(ContentUris.withAppendedId(contentProviderUri, id))
+                        .withValue("read", 1).build();
+                ops.add(op);
+            }
+
+            context.getContentResolver().applyBatch("sms", ops);
         }
-        */
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (c != null)
+                c.close();
+        }
     }
 
     private void handleRegistration(Context context, Intent intent) {
