@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DeskSMS</string>
+    
+    <string name="description">DeskSMS encaminha suas menssagens de texto SMS para o seu Google Talk e/ou Gmail. E responda de volta via texto!</string>
+    
+    <string name="signin_success">Você logou com sucesso!</string>
+    <string name="signin_failure">O login falhou. Por favor verifique sua conexão com a internet e tente novamente. Logando com um endereço de email do Google Aps pode não funcionar. Se o problema persistir, por favor envie o log de erro para o desenvolvedor.</string>
+    
+    <string name="login_with_google">Logar com uma conta do Google</string>
+    <string name="requesting_permissions">Agora o DeskSMS irá  pedir permissão para usar a autenticação da conta do Google para efeitos de notificações e registro com o nosso servidor. DeskSMS não terá acesso às suas senhas ou dados pessoais.</string>
+    <string name="permission_request">Permissões Solicitadas</string>
+    
+    <string name="send_xmpp">Conectar ao Google Talk</string>
+    <string name="send_email">Conectar ao Gmail</string>
+    
+    <string name="setting_up_push">Configurando as notificações...</string>
+    <string name="retrieving_authentication">Adquirindo o token de autenticação do Google...</string>
+    <string name="registering_with_server">Registrando com o servidor de notificações...</string>
+    
+    <string name="current_account">Conta Atual: %s</string>
+    
+    <string name="forwarded">%s SMS enviado para o seu Desktop</string>
+    <string name="proxied">%s SMS pelo seu Desktop</string>
+    
+    <string name="not_logged_in">Por favor faça o login com a sua conta Google antes de usar o DeskSMS.</string>
+    
+    <string name="test_message">Enviar uma mensagem de teste</string>
+    <string name="test_message_info">Pressione OK para enviar um SMS para você mesmo. Você deverá ver o SMS chegar em seu aplicativo de mensagens normal. Você também deve receber um e-mail e, opcionalmente, uma mensagem do Google Talk também!</string>
+    <string name="test_message_content">TEsta é uma mensagem de teste do  DeskSMS!</string>
+    
+    <string name="number_retrieval_error">Não é possível acessar o seu número de telefone. Por favor, use o aplicativo de mensagens para enviar manualmente uma mensagem de texto para você mesmo para testar o DeskSMS</string>
+    
+    <string name="msg_app_detected">A aplicação %s está instalada. Se você não receber uma mensagem de texto, verifique se as notificações de SMS não estão desativadas na configuração da aplicação.</string>
+    <string name="handcent">Handcent</string>
+    <string name="gosms">GoSMS</string>
+    
+    <!-- Missed call from Koushik Dutta -->
+    <string name="missed_call_from">Chamada não atendida de %s.</string>
+    <!-- Missed call at 12:30PM -->
+    <string name="missed_call_at">Chamada não atendida as %s.</string>
+    <string name="sms_received">SMS recebida de %s</string>
+    
+    <string name="account">Conta</string>
+    <string name="notifications">Notificações</string>
+    <string name="google_talk">Google Talk</string>
+    <string name="gmail">Gmail</string>
+    
+    <string name="troubleshooting">Solução de problemas</string>
+
+    <string name="accounts">Contas</string>
+    
+    <string name="widget_name">DeskSMS Widget</string>
+    
+    <string name="updating_settings">Atualizando configurações do servidor...</string>
+    <string name="updating_settings_error">HHouve um erro na comunicação com o servidor. Por favor verifique sua conexão.</string>
+    <string name="disable_notifications">Desativar Notificações SMS</string>
+    <string name="disable_notifications_summary">DDesativar notificação SMS para outras aplicações. Não desabilite as notificações no GoSMS ou Handcent; habilite esta opção ao invés.</string>
+    
+    <string name="sync_sms">Sincronizar SMS</string>
+    <string name="sync_sms_summary">Sincronize o seu histórico de SMS com o servidor DeskSMS. Isto irá permitir que você use a interface web do DeskSMS e ver o seu histórico de mensagens on-line</string>
+    
+    <string name="contacts">Contatos</string>
+    <string name="add_desksms_contact_info">Adicionar Contatos do DeskSMS</string>
+    <string name="add_desksms_contact_info_summary">Adicionar email e mensagens instantâneas do DeskSMS na sua lista de contatos. Isto irá permitir que você inicie um SMS para alguém via email ou mensagem instantânea.</string>
+    <string name="remove_desksms_contact_info">Remover Contatos do DeskSMS</string>
+    <string name="please_wait_contact_list">Por favor aguarde enquanto sua lista de contatos é atualizada...</string>
+
+	<string name="sync_calls">Sincrozinar Chamadas</string>
+	<string name="sync_calls_summary">Sincronize o seu histórico de chamadas com o servidor do DeskSMS para visualização online.</string>
+	
+	<string name="web">Navegador e Extensões</string>
+
+	<string name="testing_push">Testando notificações...</string>
+	<string name="push_failed">Você logou com sucesso!\n\nAtenção: As notificações foram criadas com sucesso, mas a notificação de envio de teste falhou. Podem haver problemas no envio de mensagens via DeskSMS.</string>
+	
+	<string name="buy_desksms">Compre o DeskSMS</string>
+	
+	<string name="retrieving_status">Acessando o Status da Conta...</string>
+	
+	<string name="paypal">PayPal</string>
+	<string name="android_market_inapp">Android Market In-App</string>
+	<string name="payment_options">Opções de Pagamento</string>
+	<string name="account_status">Status da Conta</string>
+	<string name="days_left">%s dias restantes</string>
+	<string name="status_error">Não foi possível acessar o status da conta! Por favor tente novamente.</string>
+	<string name="desksms_one_year_license">DeskSMS - Licença de 1 Ano</string>
+	<string name="purchase_thanks">Obrigado! Sua compra será processada pelos servidores do DeskSMS em breve.</string>
+	
+	<string name="switch_account">Trocar de Conta</string>
+
+    <string name="mms_received">MMS recebida de %s</string>
+    
+    <string name="redeem_code">Redimir Código</string>
+</resources>
