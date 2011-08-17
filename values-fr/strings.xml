@@ -33,9 +33,7 @@
 	<string name="handcent">Handcent</string>
 	<string name="gosms">GoSMS</string>
 
-	<!-- Missed call from Koushik Dutta -->
 	<string name="missed_call_from">Appel manqué de %s.</string>
-	<!-- Missed call at 12:30PM -->
 	<string name="missed_call_at">Appel manqué à %s.</string>
 	<string name="sms_received">SMS reçu de %s</string>
 
