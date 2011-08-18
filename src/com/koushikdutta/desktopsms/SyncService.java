@@ -177,7 +177,7 @@ public class SyncService extends Service {
         try {
             is = getContentResolver().openInputStream(partURI);
             BitmapFactory.Options options = new Options();
-            options.inSampleSize = 8;
+            options.inSampleSize = 6;
             bitmap = BitmapFactory.decodeStream(is, null, options);
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             bitmap.compress(CompressFormat.PNG, 50, out);
