@@ -386,6 +386,7 @@ public class SyncService extends Service {
         String lastSyncSetting;
         Hashtable<String, Tuple<String, CursorGetter>> mapper;
         long dateScale = 1L;
+        String incomingType = "incoming";
         
         abstract void setSubject(JSONObject event, String displayName, Cursor cursor) throws JSONException;
         abstract void setMessage(JSONObject event, String displayName, Cursor cursor) throws JSONException;
@@ -467,7 +468,7 @@ public class SyncService extends Service {
                     }
 
                     // only incoming events needs to be marked up with the subject and optionally a message (no-op for sms)
-                    if (event.getString("type").equals("incoming")) {
+                    if (event.getString("type").equals(incomingType)) {
                         setSubject(event, displayName, c);
                         setMessage(event, displayName, c);
                     }
@@ -574,6 +575,7 @@ public class SyncService extends Service {
             postUrl = ServiceHelper.CALL_URL;
             lastSyncSetting = "last_calls_sync";
             mapper = callmapper;
+            incomingType = "missed";
         }
 
         @Override
