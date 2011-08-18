@@ -38,8 +38,8 @@ public class ServiceHelper {
     public static final String AUTH_URL = BASE_URL + "/_ah/login";
     public static final String API_URL = BASE_URL + "/api/v1";
     public final static String REGISTER_URL = API_URL + "/register";
-    public final static String PING_URL = API_URL + "/ping";
     public static final String USER_URL = API_URL + "/user/default";
+    public final static String PING_URL = USER_URL + "/ping";
     public static final String SETTINGS_URL = USER_URL + "/settings";
     public static final String SMS_URL = USER_URL + "/sms";
     public static final String CALL_URL = USER_URL + "/call";
