@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.clockworkmod.billing.ClockworkModBillingClient;
 import com.clockworkmod.billing.ThreadingRunnable;
 
 public class C2DMReceiver extends BroadcastReceiver {
@@ -93,6 +94,9 @@ public class C2DMReceiver extends BroadcastReceiver {
             }
             else if ("read".equals(type)) {
                 markAllAsRead(context);
+            }
+            else if ("refreshmarket".equals(type)) {
+                ClockworkModBillingClient.getInstance(context, "koushd@gmail.com", Helper.SANDBOX).refreshMarketPurchases();
             }
             else if ("pong".equals(type)) {
                 try {
