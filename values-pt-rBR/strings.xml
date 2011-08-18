@@ -4,7 +4,7 @@
     
     <string name="description">DeskSMS encaminha suas menssagens de texto SMS para o seu Google Talk e/ou Gmail. E responda de volta via texto!</string>
     
-    <string name="signin_success">Você logou com sucesso!</string>
+    <string name="signin_success">Login feito com sucesso!</string>
     <string name="signin_failure">O login falhou. Por favor verifique sua conexão com a internet e tente novamente. Logando com um endereço de email do Google Aps pode não funcionar. Se o problema persistir, por favor envie o log de erro para o desenvolvedor.</string>
     
     <string name="login_with_google">Logar com uma conta do Google</string>
@@ -51,7 +51,7 @@
     <string name="widget_name">DeskSMS Widget</string>
     
     <string name="updating_settings">Atualizando configurações do servidor...</string>
-    <string name="updating_settings_error">HHouve um erro na comunicação com o servidor. Por favor verifique sua conexão.</string>
+    <string name="updating_settings_error">Houve um erro na comunicação com o servidor. Por favor verifique sua conexão.</string>
     <string name="disable_notifications">Desativar Notificações SMS</string>
     <string name="disable_notifications_summary">DDesativar notificação SMS para outras aplicações. Não desabilite as notificações no GoSMS ou Handcent; habilite esta opção ao invés.</string>
     
@@ -89,5 +89,5 @@
 
     <string name="mms_received">MMS recebida de %s</string>
     
-    <string name="redeem_code">Redimir Código</string>
+    <string name="redeem_code">Código de Resgate</string>
 </resources>
