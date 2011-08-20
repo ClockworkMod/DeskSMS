@@ -174,6 +174,12 @@ public class TickleServiceHelper {
                                                 final BroadcastReceiver pushReceiver = new BroadcastReceiver() {
                                                     @Override
                                                     public void onReceive(Context context, Intent intent) {
+                                                        try {
+                                                            context.unregisterReceiver(this);
+                                                        }
+                                                        catch (Exception ex) {
+                                                            ex.printStackTrace();
+                                                        }
                                                         pushReceived = true;
                                                         dlg.dismiss();
                                                         Helper.showAlertDialog(context, R.string.signin_success, new DialogInterface.OnClickListener() {
@@ -252,6 +258,10 @@ public class TickleServiceHelper {
     }
 
     static void registerForPush(final Context context, final Callback<Void> callback) {
+        Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
+        unregIntent.putExtra("app", PendingIntent.getBroadcast(context, 0, new Intent(), 0));
+        context.startService(unregIntent);
+
         Intent registrationIntent = new Intent("com.google.android.c2dm.intent.REGISTER");
         registrationIntent.putExtra("app", PendingIntent.getBroadcast(context, 0, new Intent(), 0));
         registrationIntent.putExtra("sender", "koushd@gmail.com");
