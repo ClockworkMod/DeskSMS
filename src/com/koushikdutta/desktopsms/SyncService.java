@@ -1,6 +1,7 @@
 package com.koushikdutta.desktopsms;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -12,7 +13,11 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
+import org.codehaus.jackson.JsonEncoding;
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.JsonGenerator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,8 +32,8 @@ import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.net.Uri;
 import android.net.http.AndroidHttpClient;
@@ -433,71 +438,85 @@ public class SyncService extends Service {
             Log.i(LOGTAG, getClass().getSimpleName());
             Log.i(LOGTAG, String.valueOf(lastSync));
 
-            String[] columnNames = c.getColumnNames();
-            JSONArray eventArray = new JSONArray();
+            JsonFactory jf = new JsonFactory();
+            JsonGenerator gen = jf.createJsonGenerator(getFileStreamPath("sync.json"), JsonEncoding.UTF8);
             long latestEvent = lastSync;
-            int dateColumn = c.getColumnIndex("date");
-            int idColumn = c.getColumnIndex("_id");
-            while (c.moveToNext()) {
-                try {
-                    long date = c.getLong(dateColumn) * dateScale;
-                    JSONObject event = new JSONObject();
-                    event.put("date", date);
-                    for (int i = 0; i < c.getColumnCount(); i++) {
-                        String name = columnNames[i];
-                        Tuple<String, CursorGetter> tuple = mapper.get(name);
-                        if (tuple == null)
+            try {
+                gen.writeStartObject();
+                gen.writeArrayFieldStart("data");
+
+                int eventCount = 0;
+                String[] columnNames = c.getColumnNames();
+                int dateColumn = c.getColumnIndex("date");
+                int idColumn = c.getColumnIndex("_id");
+                while (c.moveToNext()) {
+                    try {
+                        long date = c.getLong(dateColumn) * dateScale;
+                        JSONObject event = new JSONObject();
+                        event.put("date", date);
+                        for (int i = 0; i < c.getColumnCount(); i++) {
+                            String name = columnNames[i];
+                            Tuple<String, CursorGetter> tuple = mapper.get(name);
+                            if (tuple == null)
+                                continue;
+                            tuple.Second.get(c, event, tuple.First, i);
+                        }
+
+                        if (event.optBoolean("skip", false))
                             continue;
-                        tuple.Second.get(c, event, tuple.First, i);
-                    }
-                    
-                    if (event.optBoolean("skip", false))
-                        continue;
 
-                    String number = event.getString("number");
-                    CachedPhoneLookup lookup = getPhoneLookup(number);
-                    String displayName;
-                    if (lookup != null) {
-                        displayName = lookup.displayName;
-                        event.put("name", lookup.displayName);
-                        event.put("entered_number", lookup.enteredNumber);
-                        event.put("has_desksms_contact", lookup.hasDeskSMSContact);
-                    }
-                    else {
-                        displayName = number;
-                    }
+                        eventCount++;
 
-                    // only incoming events needs to be marked up with the subject and optionally a message (no-op for sms)
-                    if (event.getString("type").equals(incomingType)) {
-                        setSubject(event, displayName, c);
-                        setMessage(event, displayName, c);
+                        String number = event.getString("number");
+                        CachedPhoneLookup lookup = getPhoneLookup(number);
+                        String displayName;
+                        if (lookup != null) {
+                            displayName = lookup.displayName;
+                            event.put("name", lookup.displayName);
+                            event.put("entered_number", lookup.enteredNumber);
+                            event.put("has_desksms_contact", lookup.hasDeskSMSContact);
+                        }
+                        else {
+                            displayName = number;
+                        }
+
+                        // only incoming events needs to be marked up with the subject and optionally a message (no-op for sms)
+                        if (event.getString("type").equals(incomingType)) {
+                            setSubject(event, displayName, c);
+                            setMessage(event, displayName, c);
+                        }
+
+                        gen.writeRawValue(event.toString());
+
+                        long id = c.getLong(idColumn);
+                        latestEvent = Math.max(id, latestEvent);
                     }
-                    eventArray.put(event);
-                    
-                    long id = c.getLong(idColumn);
-                    latestEvent = Math.max(id, latestEvent);
+                    catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
-                catch (Exception ex) {
-                    ex.printStackTrace();
+
+                gen.writeEndArray();
+
+                if (eventCount == 0) {
+                    Log.i(LOGTAG, "================No new messages================");
+                    return;
                 }
+                Log.i(LOGTAG, "================Forwarding inbox================");
+
+                gen.writeBooleanField("is_initial_sync", isInitialSync);
+                gen.writeNumberField("version_code", DesktopSMSApplication.mVersionCode);
+                gen.writeNumberField("this_last_sync", lastSync);
+                gen.writeNumberField("next_last_sync", latestEvent);
+
+                gen.writeEndObject();
+            }
+            finally {
+                gen.close();
             }
 
-            if (eventArray.length() == 0) {
-                Log.i(LOGTAG, "================No new messages================");
-                return;
-            }
-            Log.i(LOGTAG, "================Forwarding inbox================");
-
-            JSONObject envelope = new JSONObject();
-            envelope.put("is_initial_sync", isInitialSync);
-            envelope.put("data", eventArray);
-            envelope.put("version_code", DesktopSMSApplication.mVersionCode);
-            envelope.put("this_last_sync", lastSync);
-            envelope.put("next_last_sync", latestEvent);
-
-            logEnvelope(envelope);
-
-            StringEntity entity = new StringEntity(envelope.toString(), "utf-8");
+            File syncFile = getFileStreamPath("sync.json");
+            InputStreamEntity entity = new InputStreamEntity(openFileInput("sync.json"), syncFile.length());
             HttpPost post = ServiceHelper.getAuthenticatedPost(SyncService.this, String.format(postUrl, mAccount));
             post.setEntity(entity);
             AndroidHttpClient client = Helper.getHttpClient(SyncService.this);
@@ -521,7 +540,6 @@ public class SyncService extends Service {
                 c.close();
             }
         }
-
     }
 
     class SmsSync extends SyncBase {
