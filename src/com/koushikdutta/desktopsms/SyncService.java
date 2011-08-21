@@ -396,10 +396,8 @@ public class SyncService extends Service {
         abstract void setSubject(JSONObject event, String displayName, Cursor cursor) throws JSONException;
         abstract void setMessage(JSONObject event, String displayName, Cursor cursor) throws JSONException;
 
-        protected void logEnvelope(JSONObject envelope) throws JSONException {
-            JSONArray data = envelope.getJSONArray("data");
-            Log.i(LOGTAG, "Forwarding " + data.length() + " messages.");
-            System.out.println(envelope.toString(4));
+        protected void logEvent(JSONObject event) throws JSONException {
+            System.out.println(event.toString(4));
         }
 
         public void sync() throws Exception {
@@ -486,6 +484,7 @@ public class SyncService extends Service {
                             setMessage(event, displayName, c);
                         }
 
+                        logEvent(event);
                         gen.writeRawValue(event.toString());
 
                         long id = c.getLong(idColumn);
@@ -579,11 +578,9 @@ public class SyncService extends Service {
             event.put("message", getString(R.string.mms_received, displayName));
         }
 
-        @Override
-        protected void logEnvelope(JSONObject envelope) throws JSONException {
-            JSONArray data = envelope.getJSONArray("data");
-            Log.i(LOGTAG, "Forwarding MMS:");
-            Log.i(LOGTAG, "Forwarding " + data.length() + " messages.");
+
+        protected void logEvent(JSONObject event) throws JSONException {
+            Log.i(LOGTAG, "Forwarding MMS.");
         }
     }
 
