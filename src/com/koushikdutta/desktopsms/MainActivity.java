@@ -37,6 +37,15 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
     private Handler mHandler = new Handler();
     
     private void doLogin() {
+        mSettings.setString("account", null);
+        mSettings.setString("registration_id", null);
+        mSettings.setLong("last_sms_sync", 0);
+        mSettings.setLong("last_mms_sync", 0);
+        mSettings.setLong("last_calls_sync", 0);
+        mSettings.setBoolean("registered", false);
+        mAccountItem.setSummary(null);
+        mAccountItem.setTitle(null);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(R.string.permission_request);
         builder.setMessage(R.string.requesting_permissions);

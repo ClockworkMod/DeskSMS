@@ -140,7 +140,10 @@ public class SyncService extends Service {
                         if (!convo.moveToNext()) {
                             return;
                         }
-                        j.put("number", convo.getString(convo.getColumnIndex("address")));
+                        String number = convo.getString(convo.getColumnIndex("address"));
+                        if ("insert-address-token".equals(number))
+                            return;
+                        j.put("number", number);
                         convo.close();
 
                         String selectionPart = "mid=" + mmsId;
@@ -174,7 +177,7 @@ public class SyncService extends Service {
             });
         }
     };
-    
+
     String getMmsImage(String _id) {
         Uri partURI = Uri.parse("content://mms/part/" + _id);
         InputStream is = null;
@@ -503,6 +506,7 @@ public class SyncService extends Service {
                 }
                 Log.i(LOGTAG, "================Forwarding inbox================");
 
+                gen.writeStringField("registration_id", mRegistrationId);
                 gen.writeBooleanField("is_initial_sync", isInitialSync);
                 gen.writeNumberField("version_code", DesktopSMSApplication.mVersionCode);
                 gen.writeNumberField("this_last_sync", lastSync);
@@ -614,6 +618,7 @@ public class SyncService extends Service {
     String mPendingOutbox;
     long mSyncStart = 0;
     boolean mPendingOutboxSync;
+    String mRegistrationId;
     private void sync(final Intent intent) {
         Log.i(LOGTAG, "Version: " + DesktopSMSApplication.mVersionCode);
         
@@ -644,10 +649,10 @@ public class SyncService extends Service {
         if (mSyncThread != null)
             return;
 
-        String registrationId = mSettings.getString("registration_id");
+        mRegistrationId = mSettings.getString("registration_id");
         mAccount = mSettings.getString("account");
         boolean registered = mSettings.getBoolean("registered", true);
-        if (mAccount == null || registrationId == null || !registered)
+        if (mAccount == null || mRegistrationId == null || !registered)
             return;
         mLastOutboxSync = mSettings.getLong("last_outbox_sync", 0);
 
@@ -758,6 +763,7 @@ public class SyncService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(LOGTAG, "Service starting");
+        TickleServiceHelper.registerForPush(this, null);
         if (intent != null)
             sync(intent);
         return super.onStartCommand(intent, flags, startId);
