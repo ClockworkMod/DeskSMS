@@ -65,9 +65,9 @@ public class ActivityBase extends Activity {
             return item.Enabled;
         }
     }
-    
+
     HashMap<Integer, MyListAdapter> mAdapters = new HashMap<Integer, ActivityBase.MyListAdapter>();
-    
+
     protected MyListAdapter ensureHeader(int sectionName) {
         MyListAdapter adapter = mAdapters.get(sectionName);
         if (adapter == null) {

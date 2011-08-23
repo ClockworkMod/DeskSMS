@@ -163,20 +163,40 @@ public class C2DMReceiver extends BroadcastReceiver {
         }
     }
 
-    private void handleRegistration(Context context, Intent intent) {
-        String registration = intent.getStringExtra("registration_id"); 
+    private void handleRegistration(final Context context, Intent intent) {
+        String registration = intent.getStringExtra("registration_id");
         if (intent.getStringExtra("error") != null) {
             // Registration failed, should try again later.
-        	Log.i(LOGTAG, intent.getStringExtra("error"));
-        } else if (intent.getStringExtra("unregistered") != null) {
+            Log.i(LOGTAG, intent.getStringExtra("error"));
+        }
+        else if (intent.getStringExtra("unregistered") != null) {
             // unregistration done, new messages from the authorized sender will be rejected
-        } else if (registration != null) {
-           Log.i(LOGTAG, registration);
-           Settings settings = Settings.getInstance(context);
-           settings.setString("registration_id", registration);
-           
-           Intent i = new Intent(ACTION_REGISTRATION_RECEIVED);
-           context.sendBroadcast(i);
+        }
+        else if (registration != null) {
+            Log.i(LOGTAG, registration);
+            Settings settings = Settings.getInstance(context);
+
+            String oldRegistrationId = settings.getString("registration_id");
+            settings.setString("registration_id", registration);
+
+            // if the registration ids do not match, and we are registered, notify the server.
+            if (oldRegistrationId != null && !oldRegistrationId.equals(registration) && settings.getBoolean("registered", false)) {
+                Log.i(LOGTAG, "Registration change detected!");
+                ThreadingRunnable.background(new ThreadingRunnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            TickleServiceHelper.registerWebConnect(context);
+                        }
+                        catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+            }
+
+            Intent i = new Intent(ACTION_REGISTRATION_RECEIVED);
+            context.sendBroadcast(i);
         }
     }
 }
