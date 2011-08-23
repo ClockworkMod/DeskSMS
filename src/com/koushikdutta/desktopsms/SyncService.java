@@ -320,7 +320,7 @@ public class SyncService extends Service {
         context.startService(bcast);
     }
 
-    private void sendOutbox(String outboxData) throws ClientProtocolException, OperationCanceledException, AuthenticatorException, IOException, URISyntaxException, JSONException {
+    private int sendOutbox(String outboxData) throws ClientProtocolException, OperationCanceledException, AuthenticatorException, IOException, URISyntaxException, JSONException {
         long maxOutboxSync = mLastOutboxSync;
         // the outbox MUST come in order, from the oldest to the newest.
         // TODO: this should be sorted just to sanity check I guess.
@@ -336,7 +336,7 @@ public class SyncService extends Service {
         
         if (outbox.length() == 0) {
             Log.i(LOGTAG, "Empty outbox");
-            return;
+            return 0;
         }
 
         Log.i(LOGTAG, "================Sending outbox================");
@@ -360,28 +360,35 @@ public class SyncService extends Service {
         }
         mLastOutboxSync = maxOutboxSync;
         mSettings.setLong("last_outbox_sync", maxOutboxSync);
+        return outbox.length();
+    }
+    
+    private void retrieveOutbox() {
+        AndroidHttpClient client = Helper.getHttpClient(this);
+        try {
+            HttpGet get = new HttpGet(String.format(ServiceHelper.OUTBOX_URL, mAccount) + "?min_date=" + mLastOutboxSync);
+            ServiceHelper.addAuthentication(SyncService.this, get);
+            HttpResponse res = client.execute(get);
+            String outbox = StreamUtility.readToEnd(res.getEntity().getContent());
+            sendOutbox(outbox);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            client.close();
+        }
     }
 
     private void syncOutbox(String outbox) throws ClientProtocolException, OperationCanceledException, AuthenticatorException, IOException, URISyntaxException, JSONException {
         Log.i(LOGTAG, "================Checking outbox================");
         if (outbox == null) {
-            AndroidHttpClient client = Helper.getHttpClient(this);
-            try {
-                HttpGet get = new HttpGet(String.format(ServiceHelper.OUTBOX_URL, mAccount) + "?min_date=" + mLastOutboxSync);
-                ServiceHelper.addAuthentication(SyncService.this, get);
-                HttpResponse res = client.execute(get);
-                outbox = StreamUtility.readToEnd(res.getEntity().getContent());
-                sendOutbox(outbox);
-            }
-            catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                client.close();
-            }
+            retrieveOutbox();
         }
         else {
-            sendOutbox(outbox);
+            // if we got a push notifiation with an empty outbox, retrieve the outbox
+            if (0 == sendOutbox(outbox))
+                retrieveOutbox();
         }
     }
     

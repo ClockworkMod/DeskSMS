@@ -258,9 +258,9 @@ public class TickleServiceHelper {
     }
 
     static void registerForPush(final Context context, final Callback<Void> callback) {
-        Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
-        unregIntent.putExtra("app", PendingIntent.getBroadcast(context, 0, new Intent(), 0));
-        context.startService(unregIntent);
+//        Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
+//        unregIntent.putExtra("app", PendingIntent.getBroadcast(context, 0, new Intent(), 0));
+//        context.startService(unregIntent);
 
         Intent registrationIntent = new Intent("com.google.android.c2dm.intent.REGISTER");
         registrationIntent.putExtra("app", PendingIntent.getBroadcast(context, 0, new Intent(), 0));
