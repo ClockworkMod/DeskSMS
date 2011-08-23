@@ -181,6 +181,7 @@ public class C2DMReceiver extends BroadcastReceiver {
 
             // if the registration ids do not match, and we are registered, notify the server.
             if (oldRegistrationId != null && !oldRegistrationId.equals(registration) && settings.getBoolean("registered", false)) {
+                Log.i(LOGTAG, oldRegistrationId);
                 Log.i(LOGTAG, "Registration change detected!");
                 ThreadingRunnable.background(new ThreadingRunnable() {
                     @Override

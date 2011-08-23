@@ -53,8 +53,6 @@ public class WidgetProvider extends AppWidgetProvider {
     }
 
     public RemoteViews getRemoteViews(Context context, boolean forward_xmpp, boolean forward_email, boolean forward_web) {
-        System.out.println(forward_xmpp);
-        System.out.println(forward_email);
         RemoteViews rvs = new RemoteViews(context.getPackageName(), R.layout.widget);
         rvs.setImageViewResource(R.id.email_ind, forward_email ? R.drawable.appwidget_settings_ind_on_l : R.drawable.appwidget_settings_ind_mid_red_l);
         rvs.setImageViewResource(R.id.xmpp_ind, forward_xmpp ? R.drawable.appwidget_settings_ind_on_c : R.drawable.appwidget_settings_ind_mid_red_c);

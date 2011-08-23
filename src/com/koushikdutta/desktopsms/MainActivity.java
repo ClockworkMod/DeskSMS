@@ -73,6 +73,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                         ListItem testMessage = findItem(R.string.test_message);
                         testMessage.setEnabled(true);
 
+                        mSettings.setBoolean("registered", true);
                         mSettings.setLong("last_sms_sync", 0);
                         mSettings.setLong("last_mms_sync", 0);
                         mSettings.setLong("last_calls_sync", 0);
@@ -392,6 +393,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         }
 
         long daysLeft = (expiration - System.currentTimeMillis()) / 1000L / 60L / 60L / 24L;
+        daysLeft = Math.max(0, daysLeft);
         mAccountItem.setSummary(getString(R.string.days_left, String.valueOf(daysLeft)));
     }
     

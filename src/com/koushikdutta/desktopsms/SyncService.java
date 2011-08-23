@@ -635,7 +635,7 @@ public class SyncService extends Service {
         
         // no reason? this is just a 15 min repeating wakeup call then.
         if (reason == null) {
-            Log.i(LOGTAG, "No reaosn for sync");
+            Log.i(LOGTAG, "No reason for sync");
             return;
         }
         Log.i(LOGTAG, "============= Sync Reason " + reason + "=============");
@@ -653,14 +653,18 @@ public class SyncService extends Service {
 
         mSyncStart = System.currentTimeMillis();
 
-        if (mSyncThread != null)
+        if (mSyncThread != null) {
+            Log.i(LOGTAG, "Sync is already running.");
             return;
+        }
 
         mRegistrationId = mSettings.getString("registration_id");
         mAccount = mSettings.getString("account");
-        boolean registered = mSettings.getBoolean("registered", true);
-        if (mAccount == null || mRegistrationId == null || !registered)
+        boolean registered = mSettings.getBoolean("registered", false);
+        if (mAccount == null || mRegistrationId == null || !registered) {
+            Log.i(LOGTAG, "User is not registered.");
             return;
+        }
         mLastOutboxSync = mSettings.getLong("last_outbox_sync", 0);
 
         mSyncThread = new Thread() {
@@ -759,6 +763,7 @@ public class SyncService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        TickleServiceHelper.registerForPush(this, null);
         setForeground(true);
         mSettings = Settings.getInstance(this);
         
@@ -770,7 +775,6 @@ public class SyncService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(LOGTAG, "Service starting");
-        TickleServiceHelper.registerForPush(this, null);
         if (intent != null)
             sync(intent);
         return super.onStartCommand(intent, flags, startId);
