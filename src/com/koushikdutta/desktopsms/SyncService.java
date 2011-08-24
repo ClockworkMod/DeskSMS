@@ -421,6 +421,27 @@ public class SyncService extends Service {
                 lastSync = 0;
 
             Cursor c;
+            if (lastSync != 0) {
+                // make sure the id that we last used is still valid
+                // users deleting messages can muck with ids.
+                Cursor sanityCursor = getContentResolver().query(contentProviderUri, new String[] { "_id" }, null, null, "_id DESC LIMIT 1");
+                try {
+                    if (sanityCursor.moveToNext()) {
+                        long sanityId = sanityCursor.getLong(sanityCursor.getColumnIndex("_id"));
+                        if (sanityId < lastSync) {
+                            Log.i(LOGTAG, "Sanity check failed. Forcing initial sync.");
+                            Log.i(LOGTAG, "Sanity id: " + sanityId);
+                            Log.i(LOGTAG, "Id was: " + lastSync);
+                            lastSync = 0;
+                            mSettings.setLong(lastSyncSetting, 0);
+                        }
+                    }
+                }
+                finally {
+                    sanityCursor.close();
+                }
+            }
+
             if (lastSync == 0) {
                 isInitialSync = true;
                 // only grab 3 days worth
@@ -429,18 +450,6 @@ public class SyncService extends Service {
             }
             else {
                 c = getContentResolver().query(contentProviderUri, null, "_id > ?", new String[] { String.valueOf(lastSync) }, null);
-                Cursor sanityCursor = getContentResolver().query(contentProviderUri, new String[] { "_id" }, null, null, "_id DESC");
-                try {
-                    if (sanityCursor.moveToNext()) {
-                        long sanityId = sanityCursor.getLong(sanityCursor.getColumnIndex("_id"));
-                        if (sanityId < lastSync) {
-                            lastSync = sanityId;
-                        }
-                    }
-                }
-                finally {
-                    sanityCursor.close();
-                }
             }
             
             Log.i(LOGTAG, getClass().getSimpleName());
@@ -470,8 +479,11 @@ public class SyncService extends Service {
                             tuple.Second.get(c, event, tuple.First, i);
                         }
 
-                        if (event.optBoolean("skip", false))
+                        if (event.optBoolean("skip", false)) {
+                            Log.i(LOGTAG, "=========Skipping event.=========");
+                            logEvent(event);
                             continue;
+                        }
 
                         eventCount++;
 
@@ -542,7 +554,8 @@ public class SyncService extends Service {
                     mSettings.setString("registration_id", null);
                     throw new Exception("not registered");
                 }
-                System.out.println(results);
+                Log.i(LOGTAG, results);
+                Log.i(LOGTAG, "===== Updating last sync to " + latestEvent);
                 mSettings.setLong(lastSyncSetting, latestEvent);
             }
             finally {

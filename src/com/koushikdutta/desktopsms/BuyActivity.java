@@ -43,7 +43,7 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                client.startPurchase(BuyActivity.this, "desksms.subscription0", mBuyerId, data.toString(), BuyActivity.this, ClockworkModBillingClient.TYPE_PAYPAL);
+                client.startPurchase(BuyActivity.this, "desksms.subscription0", mBuyerId, mSettings.getString("account"), data.toString(), BuyActivity.this, ClockworkModBillingClient.TYPE_PAYPAL);
             }
         });
 
@@ -51,7 +51,7 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                client.startPurchase(BuyActivity.this, "desksms.subscription0", mBuyerId, data.toString(), BuyActivity.this, ClockworkModBillingClient.TYPE_MARKET);
+                client.startPurchase(BuyActivity.this, "desksms.subscription0", mBuyerId, mSettings.getString("account"), data.toString(), BuyActivity.this, ClockworkModBillingClient.TYPE_MARKET);
             }
         });
         
@@ -59,7 +59,7 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                client.startPurchase(BuyActivity.this, "desksms.subscription0", mBuyerId, data.toString(), BuyActivity.this, ClockworkModBillingClient.TYPE_REDEEM);
+                client.startPurchase(BuyActivity.this, "desksms.subscription0", mBuyerId, mSettings.getString("account"), data.toString(), BuyActivity.this, ClockworkModBillingClient.TYPE_REDEEM);
             }
         });
 
