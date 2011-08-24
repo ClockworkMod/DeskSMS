@@ -122,6 +122,7 @@ public class ServiceHelper {
         new Thread() {
             public void run() {
                 try {
+                    Log.i(LOGTAG, "Attempting to update settings.");
                     final Settings settings = Settings.getInstance(context);
                     final String account = settings.getString("account");
                     ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -136,11 +137,12 @@ public class ServiceHelper {
                     settings.setBoolean("forward_xmpp", xmpp);
                     settings.setBoolean("forward_email", mail);
                     settings.setBoolean("forward_web", web);
+                    Log.i(LOGTAG, "Settings updated.");
                     if (callback != null)
                         callback.onCallback(true);
                 }
                 catch (Exception ex) {
-                    //ex.printStackTrace();
+                    ex.printStackTrace();
                     if (callback != null)
                         callback.onCallback(false);
                 }
