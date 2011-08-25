@@ -90,4 +90,6 @@
     <string name="mms_received">MMS Received from %s</string>
     
     <string name="redeem_code">Redeem Code</string>
+
+    <string name="plugin_name">DeskSMS</string>
 </resources>

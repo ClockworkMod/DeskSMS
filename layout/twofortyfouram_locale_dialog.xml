@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+** Copyright 2011 two forty four a.m. LLC <http://www.twofortyfouram.com>
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at <http://www.apache.org/licenses/LICENSE-2.0>
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License. 
+-->
+    <!--
+        This layout is for the textual content of an alert dialog. The buttons are not part of this
+        layout, as they are provided by Android automatically.
+    -->
+    <!--
+        ScrollView permits this dialog to function with various screen sizes or languages, without
+        worrying about whether the content will get cropped.
+    -->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    >
+        <!-- The primary alert message of the dialog -->
+        <TextView
+            android:id="@+id/twofortyfouram_locale_dialog_primary_message"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="10.0dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/primary_text_dark"
+            android:textStyle="bold"
+            android:autoLink="all" />
+        <!--
+            The secondary message contains additional information, such as what will happen when the
+            user taps a button
+        -->
+        <TextView
+            android:id="@+id/twofortyfouram_locale_dialog_secondary_message"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/secondary_text_dark"
+            android:padding="10.0dp"
+            android:layout_below="@+id/twofortyfouram_locale_dialog_primary_message"
+            android:autoLink="all" />
+    </RelativeLayout>
+</ScrollView>
