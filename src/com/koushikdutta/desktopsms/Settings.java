@@ -63,14 +63,6 @@ public class Settings
             if (cursor.moveToNext())
                 return cursor.getString(0);
         }
-        catch (IllegalStateException ex) {
-            // this is a possible workaround for:
-            // http://code.google.com/p/android/issues/detail?id=11019
-            openDatabase();
-            cursor = mDatabase.query("settings", new String[] { "value" }, "key='" + name + "'", null, null, null, null);
-            if (cursor.moveToNext())
-                return cursor.getString(0);
-        }
         finally
         {
             cursor.close();

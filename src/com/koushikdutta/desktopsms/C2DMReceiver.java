@@ -139,10 +139,9 @@ public class C2DMReceiver extends BroadcastReceiver {
     }
 
     private void markAllAsRead(Context context) {
-        Cursor c = null;
+        Uri contentProviderUri = Uri.parse("content://sms");
+        Cursor c = context.getContentResolver().query(contentProviderUri, new String[] { "_id" }, "read = 0", null, null);;
         try {
-            Uri contentProviderUri = Uri.parse("content://sms");
-            c = context.getContentResolver().query(contentProviderUri, new String[] { "_id" }, "read = 0", null, null);
             int idColumn = c.getColumnIndex("_id");
             ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
             while (c.moveToNext()) {

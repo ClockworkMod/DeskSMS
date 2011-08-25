@@ -137,19 +137,22 @@ public class SyncService extends Service {
                         int mmsId = c.getInt(c.getColumnIndex("_id"));
 
                         Cursor convo = getContentResolver().query(Uri.parse("content://mms/" + mmsId + "/addr/"), null, null, null, null);
-                        if (!convo.moveToNext()) {
-                            return;
+                        try {
+                            if (!convo.moveToNext()) {
+                                return;
+                            }
+                            String number = convo.getString(convo.getColumnIndex("address"));
+                            if ("insert-address-token".equals(number))
+                                return;
+                            j.put("number", number);
                         }
-                        String number = convo.getString(convo.getColumnIndex("address"));
-                        if ("insert-address-token".equals(number))
-                            return;
-                        j.put("number", number);
-                        convo.close();
+                        finally {
+                            convo.close();
+                        }
 
                         String selectionPart = "mid=" + mmsId;
                         Uri uri = Uri.parse("content://mms/part");
-                        Cursor cPart = getContentResolver().query(uri, null,
-                            selectionPart, null, null);
+                        Cursor cPart = getContentResolver().query(uri, null, selectionPart, null, null);
                         try {
                             while (cPart.moveToNext()) {
                                 String partId = cPart.getString(cPart.getColumnIndex("_id"));
@@ -249,8 +252,7 @@ public class SyncService extends Service {
                 return lookup;
             Uri curi = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
             Cursor c = getContentResolver().query(curi, null, null, null, null);
-            
-            if (c != null) {
+            try {
                 if (c.moveToNext()) {
                     String displayName = c.getString(c.getColumnIndex(PhoneLookup.DISPLAY_NAME));
                     String enteredNumber = c.getString(c.getColumnIndex(PhoneLookup.NUMBER));
@@ -268,6 +270,8 @@ public class SyncService extends Service {
                         return lookup;
                     }
                 }
+            }
+            finally {
                 c.close();
             }
         }
@@ -420,7 +424,6 @@ public class SyncService extends Service {
             if (lastSync > 1309478400000L)
                 lastSync = 0;
 
-            Cursor c;
             if (lastSync != 0) {
                 // make sure the id that we last used is still valid
                 // users deleting messages can muck with ids.
@@ -442,6 +445,10 @@ public class SyncService extends Service {
                 }
             }
 
+            JsonFactory jf = new JsonFactory();
+            JsonGenerator gen = jf.createJsonGenerator(getFileStreamPath("sync.json"), JsonEncoding.UTF8);
+
+            Cursor c;
             if (lastSync == 0) {
                 isInitialSync = true;
                 // only grab 3 days worth
@@ -454,9 +461,6 @@ public class SyncService extends Service {
             
             Log.i(LOGTAG, getClass().getSimpleName());
             Log.i(LOGTAG, String.valueOf(lastSync));
-
-            JsonFactory jf = new JsonFactory();
-            JsonGenerator gen = jf.createJsonGenerator(getFileStreamPath("sync.json"), JsonEncoding.UTF8);
             long latestEvent = lastSync;
             try {
                 gen.writeStartObject();
@@ -534,6 +538,7 @@ public class SyncService extends Service {
                 gen.writeEndObject();
             }
             finally {
+                c.close();
                 gen.close();
             }
 
@@ -560,7 +565,6 @@ public class SyncService extends Service {
             }
             finally {
                 client.close();
-                c.close();
             }
         }
     }
