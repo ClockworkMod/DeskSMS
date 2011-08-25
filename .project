@@ -36,5 +36,10 @@
 			<type>2</type>
 			<locationURI>_android_ClockworkModBillingLibrary_e2c6c323/src</locationURI>
 		</link>
+		<link>
+			<name>DesktopSmsPlugin_src</name>
+			<type>2</type>
+			<locationURI>_android_DesktopSmsPlugin_10a82550/src</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>

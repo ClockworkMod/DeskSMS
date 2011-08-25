@@ -677,7 +677,9 @@ public class SyncService extends Service {
 
         mRegistrationId = mSettings.getString("registration_id");
         mAccount = mSettings.getString("account");
-        boolean registered = mSettings.getBoolean("registered", false);
+        // this defaults to true because this flag used to not exist
+        // and upgraded clients will stop syncing.
+        boolean registered = mSettings.getBoolean("registered", true);
         if (mAccount == null || mRegistrationId == null || !registered) {
             Log.i(LOGTAG, "User is not registered.");
             return;
@@ -781,7 +783,6 @@ public class SyncService extends Service {
     public void onCreate() {
         super.onCreate();
         TickleServiceHelper.registerForPush(this, null);
-        setForeground(true);
         mSettings = Settings.getInstance(this);
         
         getContentResolver().registerContentObserver(mSmsSyncer.contentProviderUri, true, mSmsObserver);

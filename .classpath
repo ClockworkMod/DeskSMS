@@ -6,5 +6,7 @@
 	<classpathentry kind="lib" path="/ClockworkModBillingLibrary/libs/PayPal_MPL.jar"/>
 	<classpathentry kind="src" path="ClockworkModBillingLibrary_src"/>
 	<classpathentry kind="lib" path="libs/jackson-core-asl-1.8.5.jar"/>
+	<classpathentry kind="src" path="DesktopSmsPlugin_src"/>
+	<classpathentry kind="lib" path="/DesktopSmsPlugin/libs/android-support-v4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

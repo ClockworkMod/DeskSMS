@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.koushikdutta.desktopsms;
+package com.koushikdutta.desktopsms.plugin;
 
 public final class R {
     public static final class attr {
