@@ -98,7 +98,7 @@ public class Helper {
     }
     
     static AndroidHttpClient getHttpClient(Context context) {
-        return AndroidHttpClient.newInstance(context.getString(R.string.app_name) + "." + DesktopSMSApplication.mVersionCode);
+        return AndroidHttpClient.newInstance("Android/" + context.getString(R.string.app_name) + "/" + DesktopSMSApplication.mVersionCode);
     }
 
     public final static String LINE_SEPARATOR = System.getProperty("line.separator");
