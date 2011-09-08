@@ -414,6 +414,10 @@ public class SyncService extends Service {
             System.out.println(event.toString(4));
         }
 
+        protected long getDate(Cursor c, JSONObject event, int dateColumn) {
+            return c.getLong(dateColumn) * dateScale;
+        }
+
         public void sync() throws Exception {
             long lastSync = mSettings.getLong(lastSyncSetting, 0);
             boolean isInitialSync = false;
@@ -472,9 +476,7 @@ public class SyncService extends Service {
                 int idColumn = c.getColumnIndex("_id");
                 while (c.moveToNext()) {
                     try {
-                        long date = c.getLong(dateColumn) * dateScale;
                         JSONObject event = new JSONObject();
-                        event.put("date", date);
                         for (int i = 0; i < c.getColumnCount(); i++) {
                             String name = columnNames[i];
                             Tuple<String, CursorGetter> tuple = mapper.get(name);
@@ -488,6 +490,9 @@ public class SyncService extends Service {
                             logEvent(event);
                             continue;
                         }
+
+                        long date = getDate(c, event, dateColumn);
+                        event.put("date", date);
 
                         eventCount++;
 
@@ -585,6 +590,15 @@ public class SyncService extends Service {
         @Override
         void setMessage(JSONObject event, String displayName, Cursor cursor) {
         }
+        
+        @Override
+        protected long getDate(Cursor c, JSONObject event, int dateColumn) {
+            long date = super.getDate(c, event, dateColumn);
+            if ("incoming".equals(event.optString("type"))) {
+                return date + mAdjustSmsDate;
+            }
+            return date;
+        }
     }
 
     class MmsSync extends SyncBase {
@@ -643,6 +657,7 @@ public class SyncService extends Service {
     long mSyncStart = 0;
     boolean mPendingOutboxSync;
     String mRegistrationId;
+    long mAdjustSmsDate;
     private void sync(final Intent intent) {
         Log.i(LOGTAG, "Version: " + DesktopSMSApplication.mVersionCode);
         
@@ -675,6 +690,7 @@ public class SyncService extends Service {
             return;
         }
 
+        mAdjustSmsDate = mSettings.getInt("adjust_sms_date", 0) * 60L * 60L * 1000L;
         mRegistrationId = mSettings.getString("registration_id");
         mAccount = mSettings.getString("account");
         // this defaults to true because this flag used to not exist

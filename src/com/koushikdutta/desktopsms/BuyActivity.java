@@ -38,7 +38,7 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
         }
 
         ListItem status = addItem(R.string.account_status, new ListItem(this, R.string.account_status, 0));
-        
+
         ListItem paypal = addItem(R.string.payment_options, new ListItem(this, R.string.paypal, 0, R.drawable.paypal) {
             @Override
             public void onClick(View view) {
@@ -54,7 +54,7 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
                 client.startPurchase(BuyActivity.this, "desksms.subscription0", mBuyerId, mSettings.getString("account"), data.toString(), BuyActivity.this, ClockworkModBillingClient.TYPE_MARKET);
             }
         });
-        
+
         ListItem redeem = addItem(R.string.payment_options, new ListItem(this, R.string.redeem_code, 0, R.drawable.icon) {
             @Override
             public void onClick(View view) {

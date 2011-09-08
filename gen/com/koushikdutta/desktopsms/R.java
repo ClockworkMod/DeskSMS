@@ -104,6 +104,10 @@ public final class R {
         public static final int accounts=0x7f06002c;
         public static final int add_desksms_contact_info=0x7f060035;
         public static final int add_desksms_contact_info_summary=0x7f060036;
+        public static final int adjust_hour=0x7f06004e;
+        public static final int adjust_hours=0x7f06004f;
+        public static final int adjust_sms_date=0x7f06004c;
+        public static final int adjust_sms_date_summary=0x7f06004d;
         public static final int android_market_inapp=0x7f060041;
         public static final int app_name=0x7f060000;
         public static final int buy_desksms=0x7f06003e;
@@ -114,6 +118,8 @@ public final class R {
         public static final int desksms_one_year_license=0x7f060046;
         public static final int disable_notifications=0x7f060030;
         public static final int disable_notifications_summary=0x7f060031;
+        public static final int disable_notifications_summary2=0x7f06004b;
+        public static final int disabled=0x7f060050;
         public static final int forwarded=0x7f06001a;
         public static final int gmail=0x7f06002a;
         public static final int google_talk=0x7f060029;

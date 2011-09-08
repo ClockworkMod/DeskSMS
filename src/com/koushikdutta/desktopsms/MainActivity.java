@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
 
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.json.JSONObject;
 
@@ -15,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
@@ -289,6 +291,21 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                 updateSettings.run();
             }
         });
+        
+        addItem(R.string.notifications, new ListItem(this, R.string.disable_notifications, R.string.disable_notifications_summary2) {
+            {
+                CheckboxVisible = true;
+                setIsChecked(mSettings.getBoolean("disable_sms_notifications", false));
+            }
+            
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                
+                boolean disable = getIsChecked();
+                mSettings.setBoolean("disable_sms_notifications", disable);
+            } 
+        });
 
         addItem(R.string.contacts, new ListItem(this, R.string.add_desksms_contact_info, R.string.add_desksms_contact_info_summary) {
             @Override
@@ -336,6 +353,71 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                 builder.create().show();
             }
         });
+        
+        addItem(R.string.troubleshooting, new ListItem(this, getString(R.string.adjust_sms_date), getAdjustmentString() + "\n" + getString(R.string.adjust_sms_date_summary)) {
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                
+                ArrayList<String> adjusts = new ArrayList<String>();
+                for (int adjust = -6; adjust < 7; adjust++) {
+                    adjusts.add(getAdjustmentString(adjust));
+                }
+                
+                String[] options = new String[adjusts.size()];
+                options = adjusts.toArray(options);
+                
+                AlertDialog.Builder builder = new Builder(MainActivity.this);
+                builder.setTitle(R.string.adjust_sms_date);
+                builder.setItems(options, new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, final int which) {
+                        final ProgressDialog dlg = new ProgressDialog(MainActivity.this);
+                        dlg.setMessage(getString(R.string.updating_settings));
+                        dlg.show();
+
+                        ThreadingRunnable.background(new ThreadingRunnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    AndroidHttpClient client = Helper.getHttpClient(MainActivity.this);
+                                    try {
+                                        String account = mSettings.getString("account");
+                                        HttpDelete delete = new HttpDelete(String.format(ServiceHelper.SMS_URL, account));
+                                        ServiceHelper.retryExecute(MainActivity.this, account, client, delete);
+                                        foreground(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                dlg.dismiss();
+                                                int adjust = -6 + which;
+                                                mSettings.setInt("adjust_sms_date", adjust);
+                                                setSummary(getAdjustmentString() + "\n" + getString(R.string.adjust_sms_date_summary));
+                                                mSettings.setLong("last_sms_sync", 0);
+                                                Helper.startSyncService(MainActivity.this, "sms");
+                                            }
+                                        });
+                                    }
+                                    finally {
+                                        client.close();
+                                    }
+                                }
+                                catch (Exception ex) {
+                                    ex.printStackTrace();
+                                    foreground(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            dlg.dismiss();
+                                            Helper.showAlertDialog(MainActivity.this, R.string.updating_settings_error);
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+                builder.create().show();
+            }
+        });
 
         Helper.startSyncService(this);
 
@@ -369,6 +451,25 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
 
     public void setOnActivityResultCallback(Callback<Tuple<Integer, Tuple<Integer, Intent>>> callback) {
         mActivityResultCallback = callback;
+    }
+    
+    String getAdjustmentString() {
+        int adjust = mSettings.getInt("adjust_sms_date", 0);
+        return getAdjustmentString(adjust);
+    }
+    
+    String getAdjustmentString(int adjust) {
+        if (adjust == 0)
+            return getString(R.string.disabled);
+
+        if (adjust == -1)
+            return getString(R.string.adjust_hour, "-1");
+        else if (adjust == 1)
+            return getString(R.string.adjust_hour, "+1");
+        else if (adjust < 0)
+            return getString(R.string.adjust_hours, adjust);
+        else
+            return getString(R.string.adjust_hours, "+" + adjust);
     }
 
     @Override
