@@ -11,10 +11,10 @@ import java.util.Hashtable;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.InputStreamEntity;
-import org.apache.http.entity.StringEntity;
 import org.codehaus.jackson.JsonEncoding;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonGenerator;
@@ -367,6 +367,19 @@ public class SyncService extends Service {
         }
         mLastOutboxSync = maxOutboxSync;
         mSettings.setLong("last_outbox_sync", maxOutboxSync);
+        
+        AndroidHttpClient client = Helper.getHttpClient(this);
+        try {
+            HttpDelete delete = new HttpDelete(String.format(ServiceHelper.OUTBOX_URL, mAccount) + "?max_date=" + mLastOutboxSync);
+            ServiceHelper.retryExecute(this, mAccount, client, delete);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            client.close();
+        }
+
         return outbox.length();
     }
     

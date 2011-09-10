@@ -10,6 +10,7 @@ public class SmsReceiver extends BroadcastReceiver {
         try {
             Helper.startSyncService(context);
 
+            /*
             Settings settings = Settings.getInstance(context);
             boolean disable = settings.getBoolean("disable_sms_notifications", false);
             if (!disable)
@@ -23,6 +24,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 return;
 
             abortBroadcast();
+            */
         }
         catch (Exception ex) {
             ex.printStackTrace();

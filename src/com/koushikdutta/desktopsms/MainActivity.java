@@ -292,6 +292,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             }
         });
         
+        /*
         addItem(R.string.notifications, new ListItem(this, R.string.disable_notifications, R.string.disable_notifications_summary2) {
             {
                 CheckboxVisible = true;
@@ -306,6 +307,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                 mSettings.setBoolean("disable_sms_notifications", disable);
             } 
         });
+        */
 
         addItem(R.string.contacts, new ListItem(this, R.string.add_desksms_contact_info, R.string.add_desksms_contact_info_summary) {
             @Override
@@ -360,7 +362,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                 super.onClick(view);
                 
                 ArrayList<String> adjusts = new ArrayList<String>();
-                for (int adjust = -6; adjust < 7; adjust++) {
+                for (int adjust = -12; adjust < 13; adjust++) {
                     adjusts.add(getAdjustmentString(adjust));
                 }
                 
@@ -389,7 +391,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                                             @Override
                                             public void run() {
                                                 dlg.dismiss();
-                                                int adjust = -6 + which;
+                                                int adjust = -12 + which;
                                                 mSettings.setInt("adjust_sms_date", adjust);
                                                 setSummary(getAdjustmentString() + "\n" + getString(R.string.adjust_sms_date_summary));
                                                 mSettings.setLong("last_sms_sync", 0);
