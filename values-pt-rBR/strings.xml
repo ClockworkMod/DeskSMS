@@ -91,7 +91,7 @@
     
     <string name="redeem_code">Código de Resgate</string>
     
-    <string name="disable_notifications_summary2">Desativa a notificação do programa Stock de Mensagens enquanto  o DeskSMS as encaminha para o servidor.</string>
+    <string name="disable_notifications_summary2">Desativa a notificação do programa Stock de Mensagens enquanto o DeskSMS as encaminha para o servidor.</string>
     <string name="adjust_sms_date">Ajustar data do SMS</string>
     <string name="adjust_sms_date_summary">Ajusta a data em mensagens recebidas. Isso é necessário para resolver bugs de data em alguns celulares Motorola.</string>
     <string name="adjust_hour">%s hora</string>
