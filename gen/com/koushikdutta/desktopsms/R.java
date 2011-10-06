@@ -152,6 +152,7 @@ public final class R {
         public static final int send_email=0x7f060015;
         public static final int send_xmpp=0x7f060014;
         public static final int setting_up_push=0x7f060016;
+        public static final int signin_complete=0x7f060051;
         public static final int signin_failure=0x7f060010;
         public static final int signin_success=0x7f06000f;
         public static final int sms_received=0x7f060026;

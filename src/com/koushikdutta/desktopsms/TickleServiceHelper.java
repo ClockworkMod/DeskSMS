@@ -84,6 +84,10 @@ public class TickleServiceHelper {
     }
 
     static void registerWebConnect(final Context context) throws Exception {
+        registerWebConnect(context, false);
+    }
+
+    static void registerWebConnect(final Context context, boolean sendEmail) throws Exception {
         String ascidCookie = getCookie(context);
         Settings settings = Settings.getInstance(context);
         final String registration = settings.getString("registration_id");
@@ -96,6 +100,7 @@ public class TickleServiceHelper {
         params.add(new BasicNameValuePair("device_id", Helper.getSafeDeviceId(context)));
         params.add(new BasicNameValuePair("registration_id", registration));
         params.add(new BasicNameValuePair("version_code", String.valueOf(DesktopSMSApplication.mVersionCode)));
+        params.add(new BasicNameValuePair("send_email", String.valueOf(sendEmail)));
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
         post.setEntity(entity);
         post.setHeader("X-Same-Domain", "1"); // XSRF
@@ -152,7 +157,7 @@ public class TickleServiceHelper {
                                         boolean pushReceived = false;
                                         public void run() {
                                             try {
-                                                registerWebConnect(context);
+                                                registerWebConnect(context, true);
 
                                                 context.runOnUiThread(new Runnable() {
                                                     @Override
@@ -160,6 +165,18 @@ public class TickleServiceHelper {
                                                         dlg.setMessage(context.getString(R.string.testing_push));
                                                     }
                                                 });
+                                                
+                                                final Runnable emailSent = new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        Helper.showAlertDialog(context, R.string.signin_complete, new OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                callback.onCallback(true);
+                                                            }
+                                                        });
+                                                    }
+                                                };
 
                                                 final BroadcastReceiver pushReceiver = new BroadcastReceiver() {
                                                     @Override
@@ -175,7 +192,7 @@ public class TickleServiceHelper {
                                                         Helper.showAlertDialog(context, R.string.signin_success, new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialog, int which) {
-                                                                callback.onCallback(true);
+                                                                emailSent.run();
                                                             }
                                                         });
                                                     }
@@ -206,7 +223,7 @@ public class TickleServiceHelper {
                                                             Helper.showAlertDialog(context, R.string.push_failed, new DialogInterface.OnClickListener() {
                                                                 @Override
                                                                 public void onClick(DialogInterface dialog, int which) {
-                                                                    callback.onCallback(true);
+                                                                    emailSent.run();
                                                                 }
                                                             });
                                                         }
