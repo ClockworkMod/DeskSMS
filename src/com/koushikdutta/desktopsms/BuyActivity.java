@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.clockworkmod.billing.ClockworkModBillingClient;
 import com.clockworkmod.billing.PurchaseCallback;
 import com.clockworkmod.billing.PurchaseResult;
+import com.clockworkmod.billing.PurchaseType;
 
 public class BuyActivity extends ActivityBase implements PurchaseCallback {
     String mBuyerId;
@@ -26,7 +27,7 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
         TextView tv = (TextView)findViewById(R.id.title);
         tv.setText(R.string.desksms_one_year_license);
         
-        final ClockworkModBillingClient client = ClockworkModBillingClient.getInstance(this, "koushd@gmail.com", Helper.SANDBOX);
+        final ClockworkModBillingClient client = ClockworkModBillingClient.getInstance();
         
         final JSONObject data = new JSONObject();
         try {
@@ -43,7 +44,7 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                client.startPurchase(BuyActivity.this, "desksms.subscription0", mBuyerId, mSettings.getString("account"), data.toString(), BuyActivity.this, ClockworkModBillingClient.TYPE_PAYPAL);
+                client.startPurchase(BuyActivity.this, "desksms.subscription0", mBuyerId, mSettings.getString("account"), data.toString(), PurchaseType.PAYPAL, BuyActivity.this);
             }
         });
 
@@ -51,7 +52,7 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                client.startPurchase(BuyActivity.this, "desksms.subscription0", mBuyerId, mSettings.getString("account"), data.toString(), BuyActivity.this, ClockworkModBillingClient.TYPE_MARKET);
+                client.startPurchase(BuyActivity.this, "desksms.subscription0", mBuyerId, mSettings.getString("account"), data.toString(), PurchaseType.MARKET_INAPP, BuyActivity.this);
             }
         });
 
@@ -59,7 +60,7 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                client.startPurchase(BuyActivity.this, "desksms.subscription0", mBuyerId, mSettings.getString("account"), data.toString(), BuyActivity.this, ClockworkModBillingClient.TYPE_REDEEM);
+                client.startPurchase(BuyActivity.this, "desksms.subscription0", mBuyerId, mSettings.getString("account"), data.toString(), PurchaseType.REDEEM, BuyActivity.this);
             }
         });
 

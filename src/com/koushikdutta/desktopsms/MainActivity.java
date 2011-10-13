@@ -428,7 +428,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         }
         else {
             refreshAccount();
-            ClockworkModBillingClient.getInstance(MainActivity.this, "koushd@gmail.com", Helper.SANDBOX).refreshMarketPurchases();
+            ClockworkModBillingClient.getInstance().refreshMarketPurchases();
         }
         
         ServiceHelper.getSettings(this, new Callback<JSONObject>() {
@@ -526,7 +526,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
     }
     
     void startBuy() {
-        ClockworkModBillingClient.getInstance(MainActivity.this, "koushd@gmail.com", Helper.SANDBOX).refreshMarketPurchases();
+        ClockworkModBillingClient.getInstance().refreshMarketPurchases();
 //      Helper.showAlertDialog(MainActivity.this, "DeskSMS is still in beta, and the app remains free. Billing is currently experimental for testers. Please contact koush@clockworkmod.com if you have any issues", new OnClickListener() {
 //          @Override
 //          public void onClick(DialogInterface dialog, int which) {

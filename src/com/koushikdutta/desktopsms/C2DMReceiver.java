@@ -96,7 +96,7 @@ public class C2DMReceiver extends BroadcastReceiver {
                 markAllAsRead(context);
             }
             else if ("refreshmarket".equals(type)) {
-                ClockworkModBillingClient.getInstance(context, "koushd@gmail.com", Helper.SANDBOX).refreshMarketPurchases();
+                ClockworkModBillingClient.getInstance().refreshMarketPurchases();
             }
             else if ("pong".equals(type)) {
                 try {
