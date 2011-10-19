@@ -423,7 +423,12 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
 
         Helper.startSyncService(this);
 
+        Intent intent = getIntent();
         if (Helper.isJavaScriptNullOrEmpty(account) || Helper.isJavaScriptNullOrEmpty(registrationId)) {
+            doLogin();
+        }
+        else if (intent != null && intent.getBooleanExtra("relogin", false)) {
+            intent.removeExtra("relogin");
             doLogin();
         }
         else {
@@ -503,13 +508,12 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
     
     private void refreshAccount() {
         mAccountItem.setSummary(R.string.retrieving_status);
-        final HttpGet get = new HttpGet(ServiceHelper.STATUS_URL);
-        ServiceHelper.addAuthentication(MainActivity.this, get);
         ThreadingRunnable.background(new ThreadingRunnable() {
             @Override
             public void run() {
                 try {
-                    final JSONObject payload = StreamUtility.downloadUriAsJSONObject(get);
+                    final HttpGet get = new HttpGet(ServiceHelper.STATUS_URL);
+                    final JSONObject payload = ServiceHelper.retryExecuteAsJSONObject(MainActivity.this, mSettings.getString("account"), get);
                     final long expiration = payload.getLong("subscription_expiration");
                     foreground(new Runnable() {
                         @Override
@@ -519,6 +523,12 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                     });
                 }
                 catch (Exception ex) {
+                    foreground(new Runnable() {
+                        @Override
+                        public void run() {
+                            mAccountItem.setSummary(R.string.status_error);
+                        }
+                    });
                     ex.printStackTrace();
                 }
             }
@@ -527,45 +537,39 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
     
     void startBuy() {
         ClockworkModBillingClient.getInstance().refreshMarketPurchases();
-//      Helper.showAlertDialog(MainActivity.this, "DeskSMS is still in beta, and the app remains free. Billing is currently experimental for testers. Please contact koush@clockworkmod.com if you have any issues", new OnClickListener() {
-//          @Override
-//          public void onClick(DialogInterface dialog, int which) {
-//          }
-//      });
-      final ProgressDialog dlg = new ProgressDialog(MainActivity.this);
-      dlg.setMessage(getString(R.string.retrieving_status));
-      final HttpGet get = new HttpGet(ServiceHelper.STATUS_URL);
-      ServiceHelper.addAuthentication(MainActivity.this, get);
-      dlg.show();
-      ThreadingRunnable.background(new ThreadingRunnable() {
-          @Override
-          public void run() {
-              try {
-                  final JSONObject payload = StreamUtility.downloadUriAsJSONObject(get);
-                  final long expiration = payload.getLong("subscription_expiration");
-                  foreground(new Runnable() {
-                      @Override
-                      public void run() {
-                          refreshAccount(expiration);
-                          dlg.dismiss();
-                          Intent i = new Intent(MainActivity.this, BuyActivity.class);
-                          i.putExtra("payload", payload.toString());
-                          startActivityForResult(i, 2323);
-                      }
-                  });
-              }
-              catch (Exception ex) {
-                  foreground(new Runnable() {
-                      @Override
-                      public void run() {
-                          dlg.dismiss();
-                          Helper.showAlertDialog(MainActivity.this, R.string.status_error);
-                      }
-                  });
-                  ex.printStackTrace();
-              }
-          }
-      });
+        final ProgressDialog dlg = new ProgressDialog(MainActivity.this);
+        dlg.setMessage(getString(R.string.retrieving_status));
+        dlg.show();
+        ThreadingRunnable.background(new ThreadingRunnable() {
+            @Override
+            public void run() {
+                try {
+                    final HttpGet get = new HttpGet(ServiceHelper.STATUS_URL);
+                    final JSONObject payload = ServiceHelper.retryExecuteAsJSONObject(MainActivity.this, mSettings.getString("account"), get);
+                    final long expiration = payload.getLong("subscription_expiration");
+                    foreground(new Runnable() {
+                        @Override
+                        public void run() {
+                            refreshAccount(expiration);
+                            dlg.dismiss();
+                            Intent i = new Intent(MainActivity.this, BuyActivity.class);
+                            i.putExtra("payload", payload.toString());
+                            startActivityForResult(i, 2323);
+                        }
+                    });
+                }
+                catch (Exception ex) {
+                    foreground(new Runnable() {
+                        @Override
+                        public void run() {
+                            dlg.dismiss();
+                            Helper.showAlertDialog(MainActivity.this, R.string.status_error);
+                        }
+                    });
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
     
     @Override

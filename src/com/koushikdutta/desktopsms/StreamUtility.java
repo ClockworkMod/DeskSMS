@@ -44,7 +44,7 @@ class StreamUtility {
         AndroidHttpClient client = AndroidHttpClient.newInstance("Android");
         try {
             HttpResponse res = client.execute(req);
-            return readToEnd(res.getEntity().getContent());
+            return downloadUriAsString(res);
         }
         finally {
             client.close();
@@ -55,8 +55,16 @@ class StreamUtility {
         return new JSONObject(downloadUriAsString(uri));
     }
 
+    public static JSONObject downloadUriAsJSONObject(HttpResponse res) throws IOException, JSONException {
+        return new JSONObject(downloadUriAsString(res));
+    }
+
     public static JSONObject downloadUriAsJSONObject(HttpUriRequest req) throws IOException, JSONException {
         return new JSONObject(downloadUriAsString(req));
+    }
+    
+    public static String downloadUriAsString(HttpResponse res) throws IllegalStateException, IOException {
+        return readToEnd(res.getEntity().getContent());
     }
 
     public static byte[] readToEndAsArray(InputStream input) throws IOException

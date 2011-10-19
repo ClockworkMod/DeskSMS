@@ -17,20 +17,25 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.params.HttpClientParams;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 public class ServiceHelper {
     private static String LOGTAG = ServiceHelper.class.getSimpleName();
@@ -57,7 +62,38 @@ public class ServiceHelper {
         
         return ret.toString();
     }
+    
+    static JSONObject retryExecuteAsJSONObject(Context context, String account, HttpUriRequest req) throws ClientProtocolException, IOException, OperationCanceledException, AuthenticatorException, URISyntaxException, JSONException {
+        AndroidHttpClient client = Helper.getHttpClient(context);
+        try {
+            return StreamUtility.downloadUriAsJSONObject(retryExecute(context, account, client, req));
+        }
+        finally {
+            client.close();
+        }
+    }
 
+    static String retryExecuteAsString(Context context, String account, HttpUriRequest req) throws ClientProtocolException, IOException, OperationCanceledException, AuthenticatorException, URISyntaxException {
+        AndroidHttpClient client = Helper.getHttpClient(context);
+        try {
+            return StreamUtility.downloadUriAsString(retryExecute(context, account, client, req));
+        }
+        finally {
+            client.close();
+        }
+    }
+    
+    static void createAuthenticationNotification(Context context) {
+        NotificationManager n = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = new Notification(R.drawable.icon, context.getString(R.string.authentification_notification), System.currentTimeMillis());
+        notification.contentView = new RemoteViews(context.getPackageName(), R.layout.notification);
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra("relogin", true);
+        notification.contentIntent = PendingIntent.getActivity(context, 0, intent, Intent.FLAG_ACTIVITY_NEW_TASK);
+        n.cancel(444);
+        n.notify(444, notification);
+    }
+    
     static HttpResponse retryExecute(Context context, String account, HttpClient client, HttpUriRequest req) throws ClientProtocolException, IOException, OperationCanceledException, AuthenticatorException, URISyntaxException {
         addAuthentication(context, req);
 
@@ -81,17 +117,26 @@ public class ServiceHelper {
             Settings settings = Settings.getInstance(context);
             settings.setString("web_connect_auth_token", authToken);
         }
-        if (authToken == null)
+        if (authToken == null) {
+            Log.e(LOGTAG, "Authentication failure.");
+            createAuthenticationNotification(context);
             return null;
+        }
         String newCookie = TickleServiceHelper.getCookie(context);
-        if (newCookie == null)
+        if (newCookie == null) {
+            Log.e(LOGTAG, "Authentication failure.");
+            createAuthenticationNotification(context);
             return null;
+        }
 
         addAuthentication(context, req);
         res = client.execute(req);
         
         if (res.getStatusLine().getStatusCode() != 302)
             return res;
+        
+        createAuthenticationNotification(context);
+        Log.e(LOGTAG, "Authentication failure.");
         return null;
     }
 
@@ -117,7 +162,7 @@ public class ServiceHelper {
         addAuthentication(context, post);
         return post;
     }
-    
+
     static void updateSettings(final Context context, final boolean xmpp, final boolean mail, final boolean web, final Callback<Boolean> callback) {
         new Thread() {
             public void run() {
@@ -131,9 +176,8 @@ public class ServiceHelper {
                     params.add(new BasicNameValuePair("forward_web", String.valueOf(web)));
 
                     HttpPost post = ServiceHelper.getAuthenticatedPost(context, String.format(SETTINGS_URL, account), params);
-                    DefaultHttpClient client = new DefaultHttpClient();
-                    HttpResponse res = client.execute(post);
-                    Log.i(LOGTAG, "Status code from settings: " + res.getStatusLine().getStatusCode());
+                    String res = ServiceHelper.retryExecuteAsString(context, account, post);
+                    Log.i(LOGTAG, "Status code from settings: " + res);
                     settings.setBoolean("forward_xmpp", xmpp);
                     settings.setBoolean("forward_email", mail);
                     settings.setBoolean("forward_web", web);
@@ -162,10 +206,7 @@ public class ServiceHelper {
                     final Settings settings = Settings.getInstance(context);
                     final String account = settings.getString("account");
                     HttpGet get = new HttpGet(new URI(String.format(SETTINGS_URL, account)));
-                    ServiceHelper.addAuthentication(context, get);
-                    DefaultHttpClient client = new DefaultHttpClient();
-                    HttpResponse res = client.execute(get);
-                    final JSONObject s = new JSONObject(StreamUtility.readToEnd(res.getEntity().getContent()));
+                    JSONObject s = retryExecuteAsJSONObject(context, account, get);
                     Iterator<String> keys = s.keys();
                     while (keys.hasNext()) {
                         String key = keys.next();

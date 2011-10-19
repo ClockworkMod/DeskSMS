@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -384,19 +383,13 @@ public class SyncService extends Service {
     }
     
     private void retrieveOutbox() {
-        AndroidHttpClient client = Helper.getHttpClient(this);
         try {
             HttpGet get = new HttpGet(String.format(ServiceHelper.OUTBOX_URL, mAccount) + "?min_date=" + mLastOutboxSync);
-            ServiceHelper.addAuthentication(SyncService.this, get);
-            HttpResponse res = client.execute(get);
-            String outbox = StreamUtility.readToEnd(res.getEntity().getContent());
+            String outbox = ServiceHelper.retryExecuteAsString(this, mAccount, get);
             sendOutbox(outbox);
         }
         catch (Exception ex) {
             ex.printStackTrace();
-        }
-        finally {
-            client.close();
         }
     }
 
@@ -562,28 +555,19 @@ public class SyncService extends Service {
 
             File syncFile = getFileStreamPath("sync.json");
             InputStreamEntity entity = new InputStreamEntity(openFileInput("sync.json"), syncFile.length());
-            HttpPost post = ServiceHelper.getAuthenticatedPost(SyncService.this, String.format(postUrl, mAccount));
+            HttpPost post = new HttpPost(String.format(postUrl, mAccount));
             post.setEntity(entity);
-            AndroidHttpClient client = Helper.getHttpClient(SyncService.this);
-            try {
-                HttpResponse res = ServiceHelper.retryExecute(SyncService.this, mAccount, client, post);
-                if (res == null)
-                    throw new Exception("Unable to authenticate");
-                String results = StreamUtility.readToEnd(res.getEntity().getContent());
-                JSONObject sr = new JSONObject(results);
-                if (!sr.optBoolean("registered", true)) {
-                    mSettings.setBoolean("registered", false);
-                    mSettings.setString("account", null);
-                    mSettings.setString("registration_id", null);
-                    throw new Exception("not registered");
-                }
-                Log.i(LOGTAG, results);
-                Log.i(LOGTAG, "===== Updating last sync to " + latestEvent);
-                mSettings.setLong(lastSyncSetting, latestEvent);
+            String results = ServiceHelper.retryExecuteAsString(SyncService.this, mAccount, post);
+            JSONObject sr = new JSONObject(results);
+            if (!sr.optBoolean("registered", true)) {
+                mSettings.setBoolean("registered", false);
+                mSettings.setString("account", null);
+                mSettings.setString("registration_id", null);
+                throw new Exception("not registered");
             }
-            finally {
-                client.close();
-            }
+            Log.i(LOGTAG, results);
+            Log.i(LOGTAG, "===== Updating last sync to " + latestEvent);
+            mSettings.setLong(lastSyncSetting, latestEvent);
         }
     }
 
