@@ -89,7 +89,7 @@
                  - The Activity requires permissions not available to Locale -->
         <activity
             android:label="@string/plugin_name"
-            android:icon="@drawable/icon_plugin"
+            android:icon="@drawable/icon"
             android:theme="@style/Theme.Locale.Dark"
             android:exported="true"
         android:name=".plugin.EditActivity" android:enabled="true">
