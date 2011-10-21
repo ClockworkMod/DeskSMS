@@ -523,6 +523,7 @@ public class SyncService extends Service {
 
                         logEvent(event);
                         gen.writeRawValue(event.toString());
+                        gen.flush();
 
                         long id = c.getLong(idColumn);
                         latestEvent = Math.max(id, latestEvent);
@@ -682,75 +683,77 @@ public class SyncService extends Service {
 
         mSyncStart = System.currentTimeMillis();
 
-        if (mSyncThread != null) {
-            Log.i(LOGTAG, "Sync is already running.");
-            return;
-        }
+        synchronized (this) {
+            if (mSyncThread != null) {
+                Log.i(LOGTAG, "Sync is already running.");
+                return;
+            }
 
-        mAdjustSmsDate = mSettings.getInt("adjust_sms_date", 0) * 60L * 60L * 1000L;
-        mRegistrationId = mSettings.getString("registration_id");
-        mAccount = mSettings.getString("account");
-        // this defaults to true because this flag used to not exist
-        // and upgraded clients will stop syncing.
-        boolean registered = mSettings.getBoolean("registered", true);
-        if (mAccount == null || mRegistrationId == null || !registered) {
-            Log.i(LOGTAG, "User is not registered.");
-            return;
-        }
-        mLastOutboxSync = mSettings.getLong("last_outbox_sync", 0);
+            mAdjustSmsDate = mSettings.getInt("adjust_sms_date", 0) * 60L * 60L * 1000L;
+            mRegistrationId = mSettings.getString("registration_id");
+            mAccount = mSettings.getString("account");
+            // this defaults to true because this flag used to not exist
+            // and upgraded clients will stop syncing.
+            boolean registered = mSettings.getBoolean("registered", true);
+            if (mAccount == null || mRegistrationId == null || !registered) {
+                Log.i(LOGTAG, "User is not registered.");
+                return;
+            }
+            mLastOutboxSync = mSettings.getLong("last_outbox_sync", 0);
 
-        mSyncThread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    // if we are starting for the outbox, do that immediately
-                    boolean startedForOutbox = mPendingOutboxSync;
-                    boolean startedForPhoneState = "phone".equals(reason);
-                    boolean startedForSms = "sms".equals(reason);
-                    if (mPendingOutboxSync) {
-                        mPendingOutboxSync = false;
-                        syncOutbox(mPendingOutbox);
-                        mPendingOutbox = null;
-                    }
-
-                    while (mSyncStart + 15000L > System.currentTimeMillis()) {
-                        mSmsSyncer.sync();
-                        mCallSyncer.sync();
-                        mMmsSyncer.sync();
-
-                        // however, if an outbox message comes in while we are polling,
-                        // let's send it
+            mSyncThread = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        // if we are starting for the outbox, do that immediately
+                        boolean startedForOutbox = mPendingOutboxSync;
+                        boolean startedForPhoneState = "phone".equals(reason);
+                        boolean startedForSms = "sms".equals(reason);
                         if (mPendingOutboxSync) {
-                            Log.i(LOGTAG, "================Outbox ping received================");
                             mPendingOutboxSync = false;
                             syncOutbox(mPendingOutbox);
                             mPendingOutbox = null;
                         }
 
-                        Thread.sleep(3000);
-                    }
+                        while (mSyncStart + 15000L > System.currentTimeMillis()) {
+                            mSmsSyncer.sync();
+                            mCallSyncer.sync();
+                            mMmsSyncer.sync();
 
-                    // if we did not start for the outbox, sync it now just in case
-                    // but don't do it on phone state change.
-                    if (startedForSms) {
-                        syncOutbox(mPendingOutbox);
-                        mPendingOutbox = null;
+                            // however, if an outbox message comes in while we are polling,
+                            // let's send it
+                            if (mPendingOutboxSync) {
+                                Log.i(LOGTAG, "================Outbox ping received================");
+                                mPendingOutboxSync = false;
+                                syncOutbox(mPendingOutbox);
+                                mPendingOutbox = null;
+                            }
+
+                            Thread.sleep(3000);
+                        }
+
+                        // if we did not start for the outbox, sync it now just in case
+                        // but don't do it on phone state change.
+                        if (startedForSms) {
+                            syncOutbox(mPendingOutbox);
+                            mPendingOutbox = null;
+                        }
+                    }
+                    catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    finally {
+                        mHandler.post(new Runnable() {
+                           @Override
+                            public void run() {
+                               mSyncThread = null;
+                            }
+                        });
                     }
                 }
-                catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                finally {
-                    mHandler.post(new Runnable() {
-                       @Override
-                        public void run() {
-                           mSyncThread = null;
-                        }
-                    });
-                }
-            }
-        };
-        mSyncThread.start();
+            };
+            mSyncThread.start();
+        }
     }
     
     SmsSync mSmsSyncer = new SmsSync();
