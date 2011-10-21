@@ -1,0 +1,3 @@
+[submodule "ClockworkModBilling"]
+	path = ClockworkModBilling
+	url = git@github.com:ClockworkMod/ClockworkModBilling.git
