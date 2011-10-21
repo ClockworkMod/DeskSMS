@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DeskSMS</string>
+    
+    <string name="description">DeskSMS posreduje vaš SMS na Google Talk in/ali Gmail. Odpišite, da odgovorite s tekstovnim sporočilo!</string>
+    
+    <string name="signin_success">Uspešno ste se vpisali!</string>
+    <string name="signin_failure">Ni vas bilo mogoče vpisati. Prosim preverite vašo internetno povezavo in poskusite ponovno. Vpis z elektronskim naslovom Google Apps morda ne bo deloval. Če napaka ostaja, prosim posredujte dnevnik razvijalcu.</string>
+    
+    <string name="login_with_google">Vpišite se z Google računom</string>
+    <string name="requesting_permissions">DeskSMS vas bo zdaj vprašal za dovoljenje uporabe vašega Google računa, za posredovanje potisnih obvestil in prijavo v naše strežnike.server. DeskSMS ne bo imel dostopa do vaših gesel ali osebnih podatkov.</string>
+    <string name="permission_request">Zahteva za dovoljenje</string>
+    
+    <string name="send_xmpp">Povežite z Google Talk</string>
+    <string name="send_email">Povežite z Gmail</string>
+    
+    <string name="setting_up_push">Vzpostavljanje potisnih obvestil...</string>
+    <string name="retrieving_authentication">Prejemanje Googlovega verifikacijskega žetona...</string>
+    <string name="registering_with_server">Prijava na potisni strežnik...</string>
+    
+    <string name="current_account">Trenuten račun: %s</string>
+    
+    <string name="forwarded">%s SMS sporočil poslanih na vaš računalnik</string>
+    <string name="proxied">%s SMS sporočil poslanih z vašega računalnika</string>
+    
+    <string name="not_logged_in">Za uporabo DeskSMS se prosim prijavite z vašim Google računom.</string>
+    
+    <string name="test_message">Pošlji poskusno sporočilo</string>
+    <string name="test_message_info">Pritisnite OK, da si pošljete SMS sporočilo. Sporočilo bi moralo kot ponavadi prispeti v vašo Messaging aplikacijo. Prav tako bi morali prejeti e-pošto in opcijsko tudi Google Talk sporočilo!</string>
+    <string name="test_message_content">To je poskusno sporočilo DeskSMS-a!</string>
+    
+    <string name="number_retrieval_error">Ni bilo mogoče pridobiti vaše telefonske številke. Prosim uporabite aplikacijo Messaging, da si ročno pošljete tekstovno sporočilo in preizkusite DeskSMS.</string>
+    
+    <string name="msg_app_detected">Aplikacija %s je bila najdena na vaši napravi. Če ne prejmete tekstovnega sporočila, preverite, ali je ta možnost onemogočena v njenih nastavitvah.</string>
+    <string name="handcent">Handcent</string>
+    <string name="gosms">GoSMS</string>
+    
+    <string name="missed_call_from">Zgrešen klic od %s.</string>
+    <string name="missed_call_at">Zgrešen klic ob %s.</string>
+    <string name="sms_received">SMS sporočilo od %s</string>
+    
+    <string name="account">Račun</string>
+    <string name="notifications">Obvestila</string>
+    <string name="google_talk">Google Talk</string>
+    <string name="gmail">Gmail</string>
+    
+    <string name="troubleshooting">Odpravljanje težav</string>
+
+    <string name="accounts">Računi</string>
+    
+    <string name="widget_name">DeskSMS Widget</string>
+    
+    <string name="updating_settings">Posodabljanje nastavitev strežnika...</string>
+    <string name="updating_settings_error">Težava v komunikaciji s strežnikom. Prosim preverite povezavo.</string>
+    <string name="disable_notifications">Onemogočite SMS obvestila</string>
+    <string name="disable_notifications_summary">Onemogočite SMS obvestila ostalim aplikacijam. Te funkcije ne uporabljajte v GoSMS ali Handcent temveč tukaj.</string>
+    
+    <string name="sync_sms">Sinhronizacija SMS</string>
+    <string name="sync_sms_summary">Sinhronizirajte vašo zgodovino SMS sporočil z DeskSMS strežnikom. To vam bo omogočilo uporabo DeskSMS spletnega vmesnika in ogled zgodovine sporočil na spletu.</string>
+    
+    <string name="contacts">Kontakti</string>
+    <string name="add_desksms_contact_info">Zdužite DeskSMS kontakte</string>
+    <string name="add_desksms_contact_info_summary">Dodajte DeskSMS e-poštni ali IM naslov v vašo kontaktno listo. To vam bo omogočilo pričetek SMS pogovora preko e-pošte ali IM.</string>
+    <string name="remove_desksms_contact_info">Odstranite DeskSMS kontakte</string>
+    <string name="please_wait_contact_list">Prosim počakajte, medtem ko se posodablja vaš seznam kontaktov...</string>
+
+	<string name="sync_calls">Sinhronizacija klicev</string>
+	<string name="sync_calls_summary">Sinhronizirajte vašo zgodovino klicev z DeskSMS strežnikom za ogled na spletu.</string>
+	
+	<string name="web">Brskalnik in razširitve</string>
+
+	<string name="testing_push">Preizkušanje potisnih obvestil...</string>
+	<string name="push_failed">Uspešno ste se vpisali!\n\nOpozorilo: Potisna obvestilo so bila uspešno vzpostavljena, a je bilo poskusno obvestilo neuspešno. Lahko, da so težave s pošiljanjem sporočil preko DeskSMS.</string>
+	
+	<string name="buy_desksms">Kupite DeskSMS</string>
+	
+	<string name="retrieving_status">Prejemanje stanja računa...</string>
+	
+	<string name="paypal">PayPal</string>
+	<string name="android_market_inapp">Android Market In-App</string>
+	<string name="payment_options">Možnosti plačila</string>
+	<string name="account_status">Stanje računa</string>
+	<string name="days_left">Ostalo je %s dni</string>
+	<string name="status_error">Ni mogoče prejeti stanja računa! Prosim poskusite ponovno kasneje.</string>
+	<string name="desksms_one_year_license">DeskSMS licenca za eno leto</string>
+	<string name="purchase_thanks">Hvala! Vaš nakup bo v kratkem potrjen na DeskSMS strežnikih.</string>
+	
+	<string name="switch_account">Sprememba računa</string>
+
+    <string name="mms_received">MMS sporočilo od %s</string>
+    
+    <string name="redeem_code">Registracija s kodo</string>
+
+    <string name="plugin_name">DeskSMS</string>
+</resources>

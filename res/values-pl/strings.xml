@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DeskSMS</string>
+    
+    <string name="description">DeskSMS przesyła Twoje SMSy na Twoje konto Gmail i/lub Google Talk. Jeśli odpowiesz, nadawca dostanie SMSa z Twojego numeru!</string>
+    
+    <string name="signin_success">Logowanie powiodło się!</string>
+    <string name="signin_failure">Logowanie nie powiodło się. Sprawdź połączenie z internetem i spróbuj ponownie. Logowanie przy pomocy adresu Google Apps może nie działać prawidłowo. W razie wystąpienia błędów, prosimy o przesłanie logów.</string>
+    
+    <string name="login_with_google">Logowanie przy pomocy konta Google.</string>
+    <string name="requesting_permissions">DeskSMS poprosi teraz o zgodę na autoryzację przy pomocy konta Google w celu uruchomienia powiadomień i rejestracji na naszym serwerze. Desktop SMS nie będzie miał dostępu od Twoich haseł ani osobistych danych.</string>
+    <string name="permission_request">Żądanie dostępu</string>
+    
+    <string name="send_xmpp">Połącz z Google Talk</string>
+    <string name="send_email">Połącz z Gmail</string>
+    
+    <string name="setting_up_push">Konfiguracja powiadomień...</string>
+    <string name="retrieving_authentication">Pobieranie tokena uwierzytelniania Google...</string>
+    <string name="registering_with_server">Rejestracja na serwerze...</string>
+    
+    <string name="current_account">Aktualne konto: %s</string>
+    
+    <string name="forwarded">%s SMS wysłany do Twojego Desktop</string>
+    <string name="proxied">%s SMS wysłany przez Twój Desktop</string>
+    
+    <string name="not_logged_in">Zaloguj się przy pomocy konta Google żeby skorzystać z DeskSMS.</string>
+    
+    <string name="test_message">Wyślij wiadomość testową</string>
+    <string name="test_message_info">Wciśnij OK żeby wysłać do siebie SMS. Powinna pojawić się nowa wiadomość. Powinien również pojawić się nowy email, oraz opcjonalnie wiadomość Google Talk!</string>
+    <string name="test_message_content">To jest wiadomość tekstowa z DeskSMS!</string>
+    
+    <string name="number_retrieval_error">Uzyskanie Twojego numeru telefonu nie było możliwe. Spróbuj samodzielnie wysłać do siebie wiadomość SMS.</string>
+
+    <string name="msg_app_detected">Wykryto aplikację %s. Jeśli nie otrzymałeś wiadomości sprawdź w ustawianiach aplikacji czy powiadomienia nie są wyłączone</string>
+    <string name="handcent">Handcent</string>
+    <string name="gosms">GoSMS</string>
+
+    <string name="missed_call_from">Nieodebrane połączenie od %s.</string>
+    <string name="missed_call_at">Nieodebrane połączenie o %s.</string>
+    <string name="sms_received">Odebrano wiadomość od %s</string>
+    
+    <string name="account">Konto</string>
+    <string name="notifications">Powiadomienia</string>
+    <string name="google_talk">Google Talk</string>
+    <string name="gmail">Gmail</string>
+    
+    <string name="troubleshooting">Rozwiązywanie problemów</string>
+
+    <string name="accounts">Konta</string>
+    
+    <string name="widget_name">Widget DeskSMS</string>
+
+    <string name="updating_settings">Aktualizacja ustawień serwera...</string>
+    <string name="updating_settings_error">Błąd komunikacji z serwerem. Sprawdź połączenie.</string>
+    <string name="disable_notifications">Wyłącz powiadomienia SMS</string>
+    <string name="disable_notifications_summary">Wyłącz powiadomienia SMS innych aplikacji. Nie wyłączaj powiadomień w GoSMS lub Handcent; zamiast tego skorzystaj z tej opcji.</string>
+    
+    <string name="sync_sms">Synchronizuj SMS</string>
+    <string name="sync_sms_summary">Synchronizuj historię wiadomości SMS z serwerem DeskSMS. Pozwoli to na korzystanie z interfejsu webowego DeskSMS i podgląd historii Twoich wiadomości online.</string>
+    
+    <string name="contacts">Kontakty</string>
+    <string name="add_desksms_contact_info">Dołącz kontakty DeskSMS</string>
+    <string name="add_desksms_contact_info_summary">Dodaj adresy email i IM DeskSMS do Twojej listy kontaktów. Pozwoli to rozpocząć rozmowę (SMS) przez email lub IM.</string>
+    <string name="remove_desksms_contact_info">Usuń kontakty DeskSMS</string>
+    <string name="please_wait_contact_list">Proszę czekać, trwa aktualizowanie listy kontaktów...</string>
+
+    <string name="sync_calls">Synchronizuj połączenia</string>
+    <string name="sync_calls_summary">Synchronizuj historię połączeń z serwerem DeskSMS. Umożliwi Ci to dostęp online.</string>
+
+    <string name="web">Przeglądarka i Rozszerzenie</string>
+ 
+    <string name="testing_push">Test powiadomień...</string>
+    <string name="push_failed">Logowanie powiodło się!\n\nUwaga: Powiadomienia zostały skonfigurowane, ale test nie zakończył się powodzeniem. Mogą wystąpić problemy z wysyłaniem wiadomości przez DeskSMS.</string>
+</resources>

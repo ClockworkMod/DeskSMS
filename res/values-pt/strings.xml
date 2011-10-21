@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DeskSMS</string>
+    
+    <string name="description">DeskSMS encaminha seus SMS para seu Google Talk e/ou Gmail. Basta responder para enviar um SMS de volta!</string>
+    
+    <string name="signin_success">Você fez login com sucesso!</string>
+    <string name="signin_failure">Login falhou. Verifique sua conexão com a internet e tente novamente. Entrar com uma conta do Google Apps pode não funcionar. Se o erro persistir, por favor envie um log para o desenvolvedor.</string>
+    
+    <string name="login_with_google">Entrar com uma conta do Google</string>
+    <string name="requesting_permissions">Desktop SMS irá agora solicitar permissão para utilizar sua conta do Google para utilizar notificações Push e registrar com nosso servidor. Desktop SMS não terá acesso a sua senha ou dados pessoais.</string>
+    <string name="permission_request">Permissões necessárias</string>
+    
+    <string name="send_xmpp">Conectar ao Google Talk</string>
+    <string name="send_email">Conectar ao Gmail</string>
+    
+    <string name="setting_up_push">Configurando notificações push...</string>
+    <string name="retrieving_authentication">Recuperando tokens de autenticação do Google...</string>
+    <string name="registering_with_server">Registrando com o servidor push...</string>
+    
+    <string name="current_account">Conta atual: %s</string>
+    
+    <string name="forwarded">%s SMS enviados ao seu Desktop</string>
+    <string name="proxied">%s SMS enviados por seu Desktop</string>
+    
+    <string name="not_logged_in">Por favor, entre com sua conta do Google para utilizar o DeskSMS.</string>
+    
+    <string name="test_message">Enviar mensagem de teste</string>
+    <string name="test_message_info">Pressione OK para enviar um SMS para si próprio. Você deverá ver este SMS chegar em seu programa de Mensagens como sempre. Você também deverá receber um email e opcionalmente uma mensagem no Google Talk também!</string>
+    <string name="test_message_content">Esta é uma mensagem de teste do DeskSMS!</string>
+
+    <string name="number_retrieval_error">Impossível detectar seu número de telefone. Por favor utilize seu programa de Mensagens para manualmente enviar uma mensagem de texto a si próprio para testar o Desktop SMS.</string>
+
+    <string name="msg_app_detected">O programa %s foi encontrado instalado. Se você não receber uma mensagem de texto, por favor verifique que ele não desativou as notificações de SMS nas configurações do aplicativo.</string>
+    <string name="handcent">Handcent</string>
+    <string name="gosms">GoSMS</string>
+    
+    <string name="missed_call_from">Chamada perdida de %s.</string>
+    <string name="missed_call_at">Chamada perdida em %s.</string>
+    <string name="sms_received">SMS Recebido de %s</string>
+
+    <string name="account">Account</string>
+    <string name="notifications">Notificações</string>
+    <string name="google_talk">Google Talk</string>
+    <string name="gmail">Gmail</string>
+    
+    <string name="troubleshooting">Resolução de Problemas</string>
+
+    <string name="accounts">Contas</string>
+    
+    <string name="widget_name">Widget DeskSMS</string>
+    
+    <string name="updating_settings">Atualizando configurações do servidor...</string>
+    <string name="updating_settings_error">Houve um erro de comunicação com o servidor. Verifique sua conexão.</string>
+    <string name="disable_notifications">Desativar Notificações SMS</string>
+    <string name="disable_notifications_summary">Desativar Notificações SMS em outros aplicativos. Não utilize o desativador de notificações no GoSMS ou Handcent; ao invés disso, ative este.</string>
+    
+    <string name="sync_sms">Sincronizar SMS</string>
+    <string name="sync_sms_summary">Sincronizar seu histórico de SMS com o servidor DeskSMS. Isso vai permitir que você utilize a interface web e veja seu histórico de mensagens online.</string>
+    
+    <string name="contacts">Contatos</string>
+    <string name="add_desksms_contact_info">Juntar contatos DeskSMS</string>
+    <string name="add_desksms_contact_info_summary">Adiciona endereços de email e Mensagens Instantâneas do DeskSMS à sua lista de contatos. Isso vai permitir que você inicie uma conversa SMS com alguém via email ou Mensagem Instantânea</string>
+    <string name="remove_desksms_contact_info">Remover Contatos DeskSMS</string>
+    <string name="please_wait_contact_list">Aguarde enquanto sua lista de contatos é atualizada...</string>
+
+    <string name="sync_calls">Sincronizar Chamadas</string>
+    <string name="sync_calls_summary">Sincronizar seu histórico de Chamadas com o servidor DeskSMS para visualização online.</string>
+
+    <string name="web">Navegador e Extensões</string>
+
+    <string name="testing_push">Testando notificações push...</string>
+    <string name="push_failed">Você entrou com sucesso!\n\nAviso: Notificações push foram configuradas corretamente, mas o teste de notificação push falhou. Podem haver problemas ao enviar mensagens via DeskSMS.</string>
+
+    <string name="buy_desksms">Comprar DeskSMS</string>
+
+    <string name="retrieving_status">Recuperando Status da Conta...</string>
+
+    <string name="paypal">PayPal</string>
+    <string name="android_market_inapp">Android Market In-App</string>
+    <string name="payment_options">Opções de Pagamento</string>
+    <string name="account_status">Status da Conta</string>
+    <string name="days_left">%s dias restantes</string>
+    <string name="status_error">Impossível recuperar status da conta! Tente novamente mais tarde.</string>
+    <string name="desksms_one_year_license">Licensa DeskSMS de Um Ano</string>
+    <string name="purchase_thanks">Obrigado! Sua compra será processada em breve nos servidores DeskSMS.</string>
+
+    <string name="switch_account">Trocar de Conta</string>
+
+    <string name="mms_received">MMS Recebido de %s</string>
+    <string name="redeem_code">Código de Resgate</string>
+    
+    <string name="disable_notifications_summary2">Desativa a notificação do programa Stock de Mensagens enquanto o DeskSMS as encaminha para o servidor.</string>
+    <string name="adjust_sms_date">Ajustar data do SMS</string>
+    <string name="adjust_sms_date_summary">Ajusta a data em mensagens recebidas. Isso é necessário para resolver bugs de data em alguns celulares Motorola.</string>
+    <string name="adjust_hour">%s hora</string>
+    <string name="adjust_hours">%s horas</string>
+    <string name="disabled">Desativado</string>
+</resources>

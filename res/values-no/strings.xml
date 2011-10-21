@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DeskSMS</string>
+    
+    <string name="description">DeskSMS videresender dine tekstmeldinger til din Google Talk og/eller Gmail-konto, og lar deg også svare fra nevnte tjenester.</string>
+    
+    <string name="signin_success">Innlogget!</string>
+    <string name="signin_failure">Innlogging feilet. Påse at du har en fungerende internettilkobling, og prøv igjen. Innlogging med en Google Apps e-postadresse virker kanskje ikke. Hvis feilen vedvarer vennligst send logg til utvikleren.</string>
+    
+    <string name="login_with_google">Logg inn med en Google-konto</string>
+    <string name="requesting_permissions">DeskSMS vil nå spørre etter tillatelse til å bruke din Google-konto for push-varslinger og registrering på vår server. DeskSMS vil ikke få tilgang til dine passord eller andre personlige data.</string>
+    <string name="permission_request">Tilgangsforespørsel</string>
+    
+    <string name="send_xmpp">Koble til Google Talk</string>
+    <string name="send_email">Koble til Gmail</string>
+    
+    <string name="setting_up_push">Setter opp push-varslinger...</string>
+    <string name="retrieving_authentication">Mottar autentiseringsnøkler fra Google...</string>
+    <string name="registering_with_server">Registrerer hos push-tjener...</string>
+    
+    <string name="current_account">Nåværende konto: %s</string>
+    
+    <string name="forwarded">%s SMS har blitt sendt til din datamaskin</string>
+    <string name="proxied">%s SMS har blitt sendt fra din datamaskin</string>
+    
+    <string name="not_logged_in">Vennligst logg inn med din Google-konto for å bruke DeskSMS.</string>
+    
+    <string name="test_message">Send testmelding</string>
+    <string name="test_message_info">Trykk OK for å sende en tekstmelding til deg selv. Om alt fungerer som forventet skal du da motta en tekstmelding som normalt på telefonen, og du skal også motta en epost og/eller Google Talk-beskjed.</string>
+    <string name="test_message_content">Dette er en testmelding fra DeskSMS!</string>
+    
+    <string name="number_retrieval_error">Klarte ikke å hente ditt telefonnummer. For å teste DeskSMS, vennligst bruk den vanlige tekstmeldingsapplikasjonen, og send en tekstmelding til deg selv..</string>
+    
+    <string name="msg_app_detected">Det ser ut til at du har %s installert. Dersom du ikke mottar en SMS, vennligst påse at du har skrudd av SMS-varsling i applikasjonsinnstillingene.</string>
+    <string name="handcent">Handcent</string>
+    <string name="gosms">GoSMS</string>
+    
+    <string name="missed_call_from">Tapt anrop fra %s.</string>
+    <string name="missed_call_at">Tapt anrop kl. %s.</string>
+    <string name="sms_received">Tekstmelding mottatt fra %s.</string>
+    
+    <string name="account">Konto</string>
+    <string name="notifications">Varslinger</string>
+    <string name="google_talk">Google Talk</string>
+    <string name="gmail">Gmail</string>
+    
+    <string name="troubleshooting">Feilsøking</string>
+
+    <string name="accounts">Kontoer</string>
+    
+    <string name="widget_name">DeskSMS Widget</string>
+    
+    <string name="updating_settings">Oppdaterer tjenerinnstillinger...</string>
+    <string name="updating_settings_error">En feil oppstod ved tilkobling til tjeneren. Vennligst sjekk at du er tilkoblet internett.</string>
+    <string name="disable_notifications">Skru av SMS-varsler</string>
+    <string name="disable_notifications_summary">Skru av SMS-varsling til andre applikasjoner. Ikke bruk tilsvarende funksjonalitet i GoSMS eller Handcent, men bruk denne i stedet.</string>
+    
+    <string name="sync_sms">Synkronisér SMS</string>
+    <string name="sync_sms_summary">Synkronisér din SMS-historikk med DeskSMS-serveren. Ved å gjøre dette vil du kunne bruke DeskSMS sitt web-grensesnitt, og vise din meldingshistorikk online.</string>
+    
+    <string name="contacts">Kontakter</string>
+    <string name="add_desksms_contact_info">Slå sammen DeskSMS-kontakter</string>
+    <string name="add_desksms_contact_info_summary">Legg til DeskSMS-mail og IM-adresser til din kontaktliste. Dette vil la deg sende SMS via email eller IM. </string>
+    <string name="remove_desksms_contact_info">Fjern DeskSMS-kontakter</string>
+    <string name="please_wait_contact_list">Vennligst vent mens kontaktlisten din oppdateres...</string>
+
+	<string name="sync_calls">Synkronisér utgående anrop</string>
+	<string name="sync_calls_summary">Synkronisér utgående anropshistorikk med DeskSMS-serveren. Dette vil la deg vise historikken online.</string>
+
+	<string name="web">Nettleser og Utvidelser</string>
+
+	<string name="testing_push">Tester push-varslinger...</string>
+	<string name="push_failed">Innloggingen var vellykket!\n\Advarsel: Oppsett av push-varslinger ble korrekt satt opp, men test av push-varslinger feilet. Det er mulig at problemer vil oppstå når du forsøker å sende SMS via DeskSMS.</string>
+
+	<string name="buy_desksms">Kjøp DeskSMS</string>
+
+	<string name="retrieving_status">Henter kontostatus...</string>
+
+	<string name="paypal">PayPal</string>
+	<string name="android_market_inapp">Android Market In-App</string>
+	<string name="payment_options">Betalingsalternativer</string>
+	<string name="account_status">Kontostatus</string>
+	<string name="days_left">%s dager igjen</string>
+	<string name="status_error">Kunne ikke hente kontostatus. Vennligst prøv igjen senere.</string>
+	<string name="desksms_one_year_license">Ettårs DeskSMS-lisens</string>
+	<string name="purchase_thanks">Takk! Ditt kjøp vil straks bli behandlet av DeskSMS-serverene.</string>
+
+	<string name="switch_account">Bytt konto</string>
+
+    <string name="mms_received">MMS mottatt fra %s</string>
+    
+    <string name="redeem_code">Bruk verdikode</string>
+</resources>

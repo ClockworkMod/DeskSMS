@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DeskSMS</string>
+    
+    <string name="description">DeskSMS videresender dine SMS beskeder til din Google Talk og/eller Gmail.</string>
+    
+    <string name="signin_success">Du blev succesfuldt logget ind!</string>
+    <string name="signin_failure">Log ind fejlede. Tjek venligst din internet forbindelse og prøv igen. Hvis du logger ind med en Google Apps konto, så er der stor sandsynlighed for, at det ikke vil virke. Hvis fejlen bliver ved, send venligst en log til udvikleren.</string>
+    
+    <string name="login_with_google">Login med din Google Konto</string>
+    <string name="requesting_permissions">DeskSMS vil nu spørge om adgang til at bruge din Google Konto autentificering for at kunne sende push beskeder og registrere med vores server. DeskSMS vil ikke få adgang til dine kodeord eller personlige data.</string>
+    <string name="permission_request">Adgangs anmodning</string>
+    
+    <string name="send_xmpp">Forbind til Google Talk</string>
+    <string name="send_email">Forbind til Gmail</string>
+    
+    <string name="setting_up_push">Opsætter push beskeder...</string>
+    <string name="retrieving_authentication">Modtager Google autentificering tokens...</string>
+    <string name="registering_with_server">Registrerer med push server...</string>
+    
+    <string name="current_account">Nuværende Konto: %s</string>
+    
+    <string name="forwarded">%s SMS\'er sendt til din Computer</string>
+    <string name="proxied">%s SMS\'er sendt af din Computer</string>
+    
+    <string name="not_logged_in">Log ind med din Google Konto for at bruge DeskSMS.</string>
+    
+    <string name="test_message">Send Test Besked</string>
+    <string name="test_message_info">Tryk OK for at sende en SMS til dig selv. Du burde modtage en SMS besked i din SMS App som sædvanlig. Du burde også modtage en email og en Google Talk besked hvis dette er valgt!</string>
+    <string name="test_message_content">Dette er en test besked fra DeskSMS!</string>
+    
+    <string name="number_retrieval_error">Dit telefon nr. blev ikke fundet. Brug venligst din SMS app til manuelt at sende en SMS besked til dig selv for at teste DeskSMS.</string>
+    
+    <string name="msg_app_detected">%s blev fundet installeret. Hvis du ikke modtager en besked, så tjek om SMS notificeringer er slået til i programmets indstillinger.</string>
+    <string name="handcent">Handcent</string>
+    <string name="gosms">GoSMS</string>
+	
+    <string name="missed_call_from">Mistet opkald fra %s.</string>
+    <string name="missed_call_at">Mistet opkald kl. %s.</string>
+    <string name="sms_received">SMS Modtaget fra %s</string>
+</resources>

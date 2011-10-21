@@ -1,0 +1,11 @@
+<resources>
+	<item
+		type="id"
+		name="twofortyfouram_locale_menu_help" />
+	<item
+		type="id"
+		name="twofortyfouram_locale_menu_dontsave" />
+	<item
+		type="id"
+		name="twofortyfouram_locale_menu_save" />
+</resources>
