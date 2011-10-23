@@ -8,15 +8,12 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.http.AndroidHttpClient;
-import android.os.SystemClock;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -88,13 +85,6 @@ public class Helper {
         if (reason != null)
             serviceIntent.putExtra("reason", reason);
         context.startService(serviceIntent);
-        
-        Intent broadcastIntent = new Intent(context, SyncService.class);
-        PendingIntent pi = PendingIntent.getService(context, 0, broadcastIntent, 0);
-        AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        am.cancel(pi);
-        Log.i("DeskSMS", "========== Scheduling Alarm ==========");
-        am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_FIFTEEN_MINUTES, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pi);
     }
     
     static AndroidHttpClient getHttpClient(Context context) {

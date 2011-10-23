@@ -459,14 +459,16 @@ public class SyncService extends Service {
             JsonGenerator gen = jf.createJsonGenerator(getFileStreamPath("sync.json"), JsonEncoding.UTF8);
 
             Cursor c;
+            String threeDaysAgo = String.valueOf((System.currentTimeMillis() - 3L * 24L * 60L * 60L * 1000L) / dateScale);
             if (lastSync == 0) {
                 isInitialSync = true;
                 // only grab 3 days worth
                 //lastSync = System.currentTimeMillis() - 3L * 24L * 60L * 60L * 1000L;
-                c = getContentResolver().query(contentProviderUri, null, "date > ?", new String[] { String.valueOf((System.currentTimeMillis() - 3L * 24L * 60L * 60L * 1000L) / dateScale) }, null);
+                c = getContentResolver().query(contentProviderUri, null, "date > ?", new String[] { threeDaysAgo }, null);
             }
             else {
-                c = getContentResolver().query(contentProviderUri, null, "_id > ?", new String[] { String.valueOf(lastSync) }, null);
+                // we resume at the last id, but make sure that the last id isn't so ancient that it grabs a crapload of messages
+                c = getContentResolver().query(contentProviderUri, null, "date > ? AND _id > ?", new String[] { threeDaysAgo, String.valueOf(lastSync) }, null);
             }
             
             Log.i(LOGTAG, getClass().getSimpleName());
@@ -793,6 +795,7 @@ public class SyncService extends Service {
     public void onDestroy() {
         getContentResolver().unregisterContentObserver(mSmsObserver);
         getContentResolver().unregisterContentObserver(mCallsObserver);
+        getContentResolver().unregisterContentObserver(mMmsObserver);
     }
 
     @Override
@@ -803,6 +806,7 @@ public class SyncService extends Service {
         
         getContentResolver().registerContentObserver(mSmsSyncer.contentProviderUri, true, mSmsObserver);
         getContentResolver().registerContentObserver(mCallSyncer.contentProviderUri, true, mCallsObserver);
+        getContentResolver().registerContentObserver(mMmsSyncer.contentProviderUri, true, mCallsObserver);
     }
 
     boolean mFirstStart = true;
