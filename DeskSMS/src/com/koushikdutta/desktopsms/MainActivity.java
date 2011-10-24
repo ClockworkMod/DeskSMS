@@ -44,6 +44,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.clockworkmod.billing.ClockworkModBillingClient;
 import com.clockworkmod.billing.ThreadingRunnable;
@@ -367,7 +368,9 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                 
                 LinearLayout layout = new LinearLayout(MainActivity.this);
                 layout.setOrientation(LinearLayout.VERTICAL);
-                
+                TextView  blacklistTitle = new TextView(MainActivity.this);
+                blacklistTitle.setText(R.string.DeskSMS_blacklist_title);
+                layout.addView(blacklistTitle);
                 listView.setAdapter(listViewAdapter);
                 listViewAdapter.notifyDataSetChanged();
                 listView.setOnItemClickListener(new OnItemClickListener() {
