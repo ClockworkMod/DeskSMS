@@ -308,8 +308,13 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             } 
         });
         */
-
-        addItem(R.string.contacts, new BlackListActivity(this, R.string.manage_blacklist,0));
+        addItem(R.string.contacts, new ListItem(this, R.string.manage_blacklist,0) {
+        	@Override
+            public void onClick(View view) {
+                super.onClick(view);
+                MainActivity.this.startActivity(new Intent(MainActivity.this, BlackListActivity.class));
+            }
+        });
   
         
         addItem(R.string.contacts, new ListItem(this, R.string.add_desksms_contact_info, R.string.add_desksms_contact_info_summary) {
