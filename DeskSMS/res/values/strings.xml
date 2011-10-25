@@ -59,10 +59,6 @@
     <string name="sync_sms_summary">Sync your SMS history to the DeskSMS server. This will enable you to use the DeskSMS web interface and view your message history online.</string>
     
     <string name="contacts">Contacts</string>
-    <string name="manage_blacklist">Manage Blacklist</string>
-    <string name="add_to_blacklist">Add To Blacklist</string>
-    <string name="DeskSMS_blacklist_title">DeskSMS Blacklist</string>
-    <string name="blacklist_remove_number">Do you want to remove this number from the blacklist?</string>
     <string name="add_desksms_contact_info">Merge DeskSMS Contacts</string>
     <string name="add_desksms_contact_info_summary">Add DeskSMS email and IM addresses to your contact list. This will allow you to initate an SMS to someone via email or IM.</string>
     <string name="remove_desksms_contact_info">Remove DeskSMS Contacts</string>
@@ -107,4 +103,9 @@
     <string name="signin_complete">The links to the DeskSMS Website, Chrome extensions, and usage tips has been sent to your email address.</string>
     
     <string name="authentification_notification">DeskSMS was unable to log into your account. Please click to reauthenticate.</string>
+
+    <string name="manage_blacklist">Manage Blacklist</string>
+    <string name="blacklist_summary">Use the blacklist to prevent notifications from specific numbers.</string>
+    <string name="add_to_blacklist">Add To Blacklist</string>
+    <string name="blacklist_remove_number">Remove %s from the blacklist?</string>
 </resources>

@@ -111,7 +111,7 @@
                 <action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING" />
             </intent-filter>
         </receiver>
-        <activity android:name="BlackListActivity"></activity>
+        <activity android:name="BlackListActivity" android:configChanges="orientation|keyboard|keyboardHidden" android:windowSoftInputMode="adjustPan"></activity>
 	</application>
 
 	<uses-permission android:name="android.permission.READ_LOGS" />

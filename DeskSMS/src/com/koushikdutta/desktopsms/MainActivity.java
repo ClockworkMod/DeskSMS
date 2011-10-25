@@ -292,23 +292,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             }
         });
         
-        /*
-        addItem(R.string.notifications, new ListItem(this, R.string.disable_notifications, R.string.disable_notifications_summary2) {
-            {
-                CheckboxVisible = true;
-                setIsChecked(mSettings.getBoolean("disable_sms_notifications", false));
-            }
-            
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                
-                boolean disable = getIsChecked();
-                mSettings.setBoolean("disable_sms_notifications", disable);
-            } 
-        });
-        */
-        addItem(R.string.contacts, new ListItem(this, R.string.manage_blacklist,0) {
+        addItem(R.string.contacts, new ListItem(this, R.string.manage_blacklist, R.string.blacklist_summary) {
         	@Override
             public void onClick(View view) {
                 super.onClick(view);

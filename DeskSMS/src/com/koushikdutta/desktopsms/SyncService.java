@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Hashtable;
 
 import org.apache.http.client.ClientProtocolException;
@@ -500,18 +501,19 @@ public class SyncService extends Service {
                             continue;
                         }
 
+                        String number = event.getString("number");
+
+                        if(mBlacklist.getBoolean(number, false))
+                            continue;
+                        
                         long date = getDate(c, event, dateColumn);
                         event.put("date", date);
-
-
-                        String number = event.getString("number");
+                        
                         CachedPhoneLookup lookup = getPhoneLookup(number);
-                        SharedPreferences pref = getApplicationContext().getSharedPreferences("blacklist", MODE_PRIVATE);
-                        if(pref.getBoolean(number, false))
-                        	continue;
-                        eventCount++;
                         String displayName;
                         if (lookup != null) {
+                            if (mBlacklistedContacts.contains(lookup.enteredNumber))
+                                continue;
                             displayName = lookup.displayName;
                             event.put("name", lookup.displayName);
                             event.put("entered_number", lookup.enteredNumber);
@@ -520,6 +522,7 @@ public class SyncService extends Service {
                         else {
                             displayName = number;
                         }
+                        eventCount++;
 
                         // only incoming events needs to be marked up with the subject and optionally a message (no-op for sms)
                         if (event.getString("type").equals(incomingType)) {
@@ -662,7 +665,16 @@ public class SyncService extends Service {
     boolean mPendingOutboxSync;
     String mRegistrationId;
     long mAdjustSmsDate;
+    SharedPreferences mBlacklist;
+    HashSet<String> mBlacklistedContacts;
     private void sync(final Intent intent) {
+        mBlacklist = getSharedPreferences("blacklist", MODE_PRIVATE);
+        mBlacklistedContacts = new HashSet<String>();
+        for (String number: mBlacklist.getAll().keySet()) {
+            CachedPhoneLookup lookup = getPhoneLookup(number);
+            if (lookup != null)
+                mBlacklistedContacts.add(lookup.enteredNumber);
+        }
         Log.i(LOGTAG, "Version: " + DesktopSMSApplication.mVersionCode);
         
         // for the very first startup of the service, we set the first start as sms, to flush anything pending.
