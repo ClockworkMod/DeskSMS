@@ -3,9 +3,6 @@ package com.koushikdutta.desktopsms;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -18,7 +15,6 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
@@ -30,21 +26,10 @@ import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.RawContacts;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
-import android.text.InputFilter;
-import android.text.method.SingleLineTransformationMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.clockworkmod.billing.ClockworkModBillingClient;
 import com.clockworkmod.billing.ThreadingRunnable;
@@ -324,6 +309,9 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         });
         */
 
+        addItem(R.string.contacts, new BlackListActivity(this, R.string.manage_blacklist,0));
+  
+        
         addItem(R.string.contacts, new ListItem(this, R.string.add_desksms_contact_info, R.string.add_desksms_contact_info_summary) {
             @Override
             public void onClick(View view) {
@@ -340,91 +328,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             }
         });
         
-        addItem(R.string.contacts, new ListItem(this, R.string.manage_blacklist,0) {
-        	final SharedPreferences blacklist = getApplicationContext().getSharedPreferences("blacklist", MODE_PRIVATE);
-        	String[] numbersArray;
-        	ArrayAdapter<String> listViewAdapter;
-        	ListView listView = new ListView(MainActivity.this);
-        	private void updateNumbers() {
-        		numbersArray = getNumbers();
-        		listViewAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, numbersArray);
-        		listView.setAdapter(listViewAdapter);
-        	}
-        	private String[] getNumbers() {
-                Map<String,?> numbersMap = blacklist.getAll();
-                List<String> numbersList = new ArrayList<String>();
-                for(Entry<String,?> e : numbersMap.entrySet()) {
-                	if((Boolean) e.getValue()) {
-                		numbersList.add(e.getKey());
-                	}
-                }
-                return numbersList.toArray(new String[0]);
-        	}
-        	@Override
-            public void onClick(View view) {
-                super.onClick(view);
-                
-                updateNumbers();
-                
-                LinearLayout layout = new LinearLayout(MainActivity.this);
-                layout.setOrientation(LinearLayout.VERTICAL);
-                TextView  blacklistTitle = new TextView(MainActivity.this);
-                blacklistTitle.setText(R.string.DeskSMS_blacklist_title);
-                layout.addView(blacklistTitle);
-                listView.setAdapter(listViewAdapter);
-                listViewAdapter.notifyDataSetChanged();
-                listView.setOnItemClickListener(new OnItemClickListener() {
-
-					@Override
-					public void onItemClick(AdapterView<?> a, View v, int position, long id)
-					{
-						final int selectedNumber = position;
-	                  	AlertDialog.Builder numberBuilder = new AlertDialog.Builder(MainActivity.this);
-	                  	numberBuilder.setTitle(R.string.blacklist_remove_number);
-	                  	numberBuilder.setNegativeButton(android.R.string.cancel,null);
-	                  	numberBuilder.setPositiveButton(android.R.string.ok, new OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog, int which)
-								{
-									Log.i(LOGTAG,"selected number is:"+selectedNumber);
-									blacklist.edit().putBoolean(numbersArray[selectedNumber],false).commit();
-									updateNumbers();
-								}
-	                  	});
-	                  	numberBuilder.create().show();
-						
-					}});
-                layout.addView(listView);
-                final EditText numberToAdd = new EditText(MainActivity.this);
-                numberToAdd.setTransformationMethod(new SingleLineTransformationMethod());
-                numberToAdd.setMinWidth(250);
-                numberToAdd.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
-                LinearLayout buttonAndEditText = new LinearLayout(MainActivity.this);
-                buttonAndEditText.addView(numberToAdd);
-                buttonAndEditText.setOrientation(LinearLayout.HORIZONTAL);
-                Button addToBlacklist = new Button(MainActivity.this);
-                addToBlacklist.setText("Add To Blacklist");
-                buttonAndEditText.addView(addToBlacklist);
-                addToBlacklist.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v)
-					{
-						String numberAdded = numberToAdd.getText().toString();
-						blacklist.edit().putBoolean(numberAdded,true).commit();
-						updateNumbers();
-						Log.i(LOGTAG,"Added "+numberAdded + " to blacklist.");
-						
-					}
-                	
-                });
-                layout.addView(buttonAndEditText);
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setView(layout);
-                builder.create().show();
-            }
-        });
-        
+       
         addItem(R.string.troubleshooting, new ListItem(this, R.string.test_message, 0) {
             @Override
             public void onClick(View view) {
