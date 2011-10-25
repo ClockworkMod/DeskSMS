@@ -63,7 +63,6 @@ public class BlackListActivity extends ListItem {
 	 		else
 	 			Log.i(LOGTAG,"ListAdapter is null");
 	 	}
-		layout.removeAllViews();
         if(listViewAdapter  == null) {
         	listViewAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, numbersList);
         	listView = new ListView(context);
@@ -80,9 +79,6 @@ public class BlackListActivity extends ListItem {
 		layout.removeView(listView);
         layout.addView(listView);
         listViewAdapter.notifyDataSetChanged();
-//		listView.setAdapter(listViewAdapter);
-//		listView.refreshDrawableState();
-//		layout.refreshDrawableState();
 	}
 	
 	@Override
@@ -90,10 +86,10 @@ public class BlackListActivity extends ListItem {
         super.onClick(view);
         TextView  blacklistTitle = new TextView(context);
         blacklistTitle.setText(R.string.DeskSMS_blacklist_title);
-        layout.addView(blacklistTitle);
         updateNumbers();
         
         layout.setOrientation(LinearLayout.VERTICAL);
+        layout.addView(blacklistTitle,0);
         
         listView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -130,6 +126,7 @@ public class BlackListActivity extends ListItem {
 			public void onClick(View v) {
 				String numberAdded = numberToAdd.getText().toString();
 				blacklist.edit().putBoolean(numberAdded,true).commit();
+				numberToAdd.setText("");
 				updateNumbers();
 				Log.i(LOGTAG,"Added "+numberAdded + " to blacklist.");
 				
