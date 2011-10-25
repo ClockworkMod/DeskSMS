@@ -28,6 +28,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -502,10 +503,13 @@ public class SyncService extends Service {
                         long date = getDate(c, event, dateColumn);
                         event.put("date", date);
 
-                        eventCount++;
 
                         String number = event.getString("number");
                         CachedPhoneLookup lookup = getPhoneLookup(number);
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences("blacklist", MODE_PRIVATE);
+                        if(pref.getBoolean(number, false))
+                        	continue;
+                        eventCount++;
                         String displayName;
                         if (lookup != null) {
                             displayName = lookup.displayName;

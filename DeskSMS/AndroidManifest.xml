@@ -111,6 +111,7 @@
                 <action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING" />
             </intent-filter>
         </receiver>
+        <activity android:name="BlackListActivity"></activity>
 	</application>
 
 	<uses-permission android:name="android.permission.READ_LOGS" />
