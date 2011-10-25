@@ -12,6 +12,7 @@ import android.text.InputFilter;
 import android.text.method.SingleLineTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -63,22 +64,25 @@ public class BlackListActivity extends ListItem {
 	 		else
 	 			Log.i(LOGTAG,"ListAdapter is null");
 	 	}
+	 	layout.removeView(listView);
         if(listViewAdapter  == null) {
         	listViewAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, numbersList);
-        	listView = new ListView(context);
-        	listView.setAdapter(listViewAdapter);
-        	layout.addView(listView);
+        	initListView(listViewAdapter);
         	return;
         }
     	listViewAdapter.clear();
     	for (String number : numbersList) {
 			listViewAdapter.add(number);
 		}
-    	listView = new ListView(context);
-    	listView.setAdapter(listViewAdapter);
-		layout.removeView(listView);
-        layout.addView(listView);
+    	initListView(listViewAdapter);
         listViewAdapter.notifyDataSetChanged();
+	}
+
+	private void initListView(ArrayAdapter<String> listViewAdapter)
+	{
+		listView = new ListView(context);
+		listView.setAdapter(listViewAdapter);
+		layout.addView(listView);
 	}
 	
 	@Override
@@ -133,7 +137,8 @@ public class BlackListActivity extends ListItem {
 			}
         	
         });
-        layout.addView(buttonAndEditText);
+        buttonAndEditText.setMinimumHeight(100);
+        layout.addView(buttonAndEditText,1);
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(layout);
         builder.setInverseBackgroundForced(true);
