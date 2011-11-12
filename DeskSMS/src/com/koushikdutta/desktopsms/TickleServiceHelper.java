@@ -125,7 +125,7 @@ public class TickleServiceHelper {
         return result;
     }
 
-    public static void login(final Activity context, final ActivityResultDelegate delegate, final Callback<Boolean> callback) {
+    public static void login(final Activity context, final Callback<Boolean> callback) {
         final String[] accounts = getGoogleAccounts(context);
         AlertDialog.Builder builder = new Builder(context);
         builder.setCancelable(false);
@@ -143,12 +143,9 @@ public class TickleServiceHelper {
                     @Override
                     public void onCallback(Void result) {
                         dlg.setMessage(context.getString(R.string.retrieving_authentication));
-                        tryAuth(context, accountName, new Callback<Bundle>() {
-                            public void onCallback(Bundle bundle) {
+                        tryAuth(context, accountName, new Callback<String>() {
+                            public void onCallback(String authToken) {
                                 try {
-                                    if (bundle == null)
-                                        throw new Exception();
-                                    String authToken = bundle.getString(AccountManager.KEY_AUTHTOKEN);
                                     if (authToken == null)
                                         throw new Exception();
 
@@ -255,7 +252,7 @@ public class TickleServiceHelper {
                                     callback.onCallback(false);
                                 }
                             }
-                        }, delegate);
+                        });
                     }
                 });
             }
@@ -290,48 +287,23 @@ public class TickleServiceHelper {
     }
     
     static final String AUTH_TOKEN_TYPE = "ah";
-    private static void tryAuth(final Activity context, final String accountName, final Callback<Bundle> callback, final ActivityResultDelegate delegate) {
+    private static void tryAuth(final Activity context, final String accountName, final Callback<String> callback) {
         AccountManager accountManager = AccountManager.get(context);
         Account account = new Account(accountName, "com.google");
         String curAuthToken = Settings.getInstance(context).getString("web_connect_auth_token");
         if (!Helper.isJavaScriptNullOrEmpty(curAuthToken))
             accountManager.invalidateAuthToken(account.type, curAuthToken);
-        accountManager.getAuthToken(account, AUTH_TOKEN_TYPE, false, new AccountManagerCallback<Bundle>() {
+        accountManager.getAuthToken(account, AUTH_TOKEN_TYPE, null, context, new AccountManagerCallback<Bundle>() {
             public void run(AccountManagerFuture<Bundle> future) {
                 try {
                     Bundle bundle = future.getResult();
                     final String authToken = bundle.getString(AccountManager.KEY_AUTHTOKEN);
-                    if (authToken == null) {
-                        if (delegate == null)
-                            throw new Exception();
-                        Intent authIntent = (Intent) bundle.get(AccountManager.KEY_INTENT);
-                        delegate.setOnActivityResultCallback(new Callback<Tuple<Integer, Tuple<Integer, Intent>>>() {
-                            public void onCallback(Tuple<Integer, Tuple<Integer, Intent>> result) {
-                                if (result.First != 242424)
-                                    return;
-                                if (result.Second.First == Activity.RESULT_OK)
-                                    tryAuth(context, accountName, callback, null);
-                                else
-                                    callback.onCallback(null);
-                            }
-                        });
-                        // for some reason it sets the intent flag with FLAG_ACTIVITY_NEW_TASK
-                        // This ends up sending an immediatae Activity.RESULT_CANCELLED event to
-                        // the calling activity.
-                        authIntent.setFlags(0);
-                        context.startActivityForResult(authIntent, 242424);
-                    }
-                    else {
+                    if (authToken != null) {
                         Settings settings = Settings.getInstance(context);
                         settings.setString("web_connect_auth_token", authToken);
                         settings.setString("account", accountName.toLowerCase());
-                        try {
-                            callback.onCallback(future.getResult());
-                        }
-                        catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
                     }
+                    callback.onCallback(authToken);
                 }
                 catch (Exception ex) {
                     callback.onCallback(null);

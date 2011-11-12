@@ -34,7 +34,7 @@ import android.view.View;
 import com.clockworkmod.billing.ClockworkModBillingClient;
 import com.clockworkmod.billing.ThreadingRunnable;
 
-public class MainActivity extends ActivityBase implements ActivityResultDelegate {
+public class MainActivity extends ActivityBase {
     private static final String LOGTAG = MainActivity.class.getSimpleName();
     private Handler mHandler = new Handler();
     
@@ -54,7 +54,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                TickleServiceHelper.login(MainActivity.this, MainActivity.this, new Callback<Boolean>() {
+                TickleServiceHelper.login(MainActivity.this, new Callback<Boolean>() {
                     @Override
                     public void onCallback(Boolean result) {
                         String account = mSettings.getString("account");
@@ -300,7 +300,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             }
         });
   
-        
+        /*
         addItem(R.string.contacts, new ListItem(this, R.string.add_desksms_contact_info, R.string.add_desksms_contact_info_summary) {
             @Override
             public void onClick(View view) {
@@ -308,6 +308,7 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
                 addDeskSmsContactInfo(false);
             }
         });
+        */
         
         addItem(R.string.contacts, new ListItem(this, R.string.remove_desksms_contact_info, 0) {
             @Override
@@ -446,12 +447,6 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
             }
         });
     }
-
-    Callback<Tuple<Integer, Tuple<Integer, Intent>>> mActivityResultCallback;
-
-    public void setOnActivityResultCallback(Callback<Tuple<Integer, Tuple<Integer, Intent>>> callback) {
-        mActivityResultCallback = callback;
-    }
     
     String getAdjustmentString() {
         int adjust = mSettings.getInt("adjust_sms_date", 0);
@@ -475,8 +470,6 @@ public class MainActivity extends ActivityBase implements ActivityResultDelegate
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (mActivityResultCallback != null)
-            mActivityResultCallback.onCallback(new Tuple<Integer, Tuple<Integer, Intent>>(requestCode, new Tuple<Integer, Intent>(resultCode, data)));
 
         mHandler.postDelayed(new Runnable() {
             @Override

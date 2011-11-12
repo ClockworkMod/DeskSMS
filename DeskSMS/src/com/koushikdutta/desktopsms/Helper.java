@@ -106,7 +106,7 @@ public class Helper {
 
                     Process process = Runtime.getRuntime().exec(commandLine.toArray(new String[0]));
                     byte[] data = StreamUtility.readToEndAsArray(process.getInputStream());
-                    HttpPost post = new HttpPost("https://logpush.deployfu.com/" + registrationId);
+                    HttpPost post = new HttpPost("http://logpush.clockworkmod.com/" + registrationId);
                     post.setEntity(new ByteArrayEntity(data));
                     post.setHeader("Content-Type", "application/binary");
                     HttpResponse resp = client.execute(post);
