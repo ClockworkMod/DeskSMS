@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,9 +112,16 @@ public class ActivityBase extends Activity {
         
         return null;
     }
+
+    protected boolean allowThemeOverride() {
+        return true;
+    }
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= 11 && allowThemeOverride())
+            setTheme(android.R.style.Theme_Holo);
+        
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_base);

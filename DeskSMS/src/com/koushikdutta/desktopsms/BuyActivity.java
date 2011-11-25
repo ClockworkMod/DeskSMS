@@ -8,6 +8,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.clockworkmod.billing.ClockworkModBillingClient;
@@ -16,14 +17,19 @@ import com.clockworkmod.billing.PurchaseResult;
 import com.clockworkmod.billing.PurchaseType;
 
 public class BuyActivity extends ActivityBase implements PurchaseCallback {
+    protected boolean allowThemeOverride() {
+        return false;
+    }
+    
     String mBuyerId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
-        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.buy_title);
+        LinearLayout title = (LinearLayout)findViewById(R.id.title_container);
+        title.addView(getLayoutInflater().inflate(R.layout.buy_title, null));
+
         TextView tv = (TextView)findViewById(R.id.title);
         tv.setText(R.string.desksms_one_year_license);
         
