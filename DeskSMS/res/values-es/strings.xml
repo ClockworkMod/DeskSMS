@@ -37,7 +37,7 @@
     
     <string name="missed_call_from">Llamada perdida de %s.</string>
     <string name="missed_call_at">Llamada perdida a las %s.</string>
-    <string name="sms_received">SMS recivido de %s</string>
+    <string name="sms_received">SMS recibido de %s</string>
     
     <string name="account">Cuenta</string>
     <string name="notifications">Notificaciones</string>
@@ -87,7 +87,7 @@
 	
 	<string name="switch_account">Cambiar Cuenta</string>
 
-    <string name="mms_received">MMS recivido de %s</string>
+    <string name="mms_received">MMS recibido de %s</string>
     
     <string name="redeem_code">Recuperar Código</string>
 </resources>
