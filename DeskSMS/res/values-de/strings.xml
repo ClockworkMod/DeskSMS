@@ -5,10 +5,10 @@
     <string name="description">DesktopSMS leitet Ihre SMS auf Ihr Google Talk und / oder Google-Konto weiter und antworten Sie via Text!</string>
     
     <string name="signin_success">Anmeldung erfolgreich!</string>
-    <string name="signin_failure">Anmeldung fehlgeschlagen. Bitte überprüfen Sie Ihre Internet Verbindung und versuchen Sie es erneut. Anmelden mit einem Google Apps-Konto könnte derzeitig nicht funktionieren. Tritt dieser Fehler weiterhin auf senden Sie bitte ein Protokoll an den Entwickler.</string>
+    <string name="signin_failure">Anmeldung fehlgeschlagen. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut. Anmelden mit einem Google Apps-Konto könnte derzeit nicht funktionieren. Tritt dieser Fehler weiterhin auf senden Sie bitte ein Protokoll an den Entwickler.</string>
     
     <string name="login_with_google">Melden Sie sich an mit Ihrem Google-Konto</string>
-    <string name="requesting_permissions">DesktopSMS wird für Push-Benachrichtigungen und Registrierung an unserem Sever Zugriff auf Ihr Google-Konto anfordern. DesktopSMS wird keinen Zugriff auf Ihre Passwörter und persönliche Daten haben.</string>
+    <string name="requesting_permissions">DesktopSMS wird für Push-Benachrichtigungen und Registrierung an unserem Sever Zugriff auf Ihr Google-Konto anfordern. DesktopSMS wird keinen Zugriff auf Ihre Passwörter und persönlichen Daten haben.</string>
     <string name="permission_request">Zulassungsanfrage</string>
     
     <string name="send_xmpp">Verbindung mit Google Talk</string>
@@ -51,19 +51,19 @@
     <string name="widget_name">DeskSMS Widget</string>
     
     <string name="updating_settings">Server Einstellungen Aktualisierung...</string>
-    <string name="updating_settings_error">Fehler bei der Kommunikation zum Servers ist aufgetretten. Bitte überprüfen Sie Ihre Internet Verbindung.</string>
+    <string name="updating_settings_error">Fehler bei der Kommunikation zum Servers ist aufgetretten. Bitte überprüfen Sie Ihre Internetverbindung.</string>
     <string name="disable_notifications">SMS Empfangsbenachrichtigung deaktivieren</string>
     <string name="disable_notifications_summary">Deaktivieren von SMS Empfangsbenachrichtigung zu anderen Anwendungen. Verwenden Sie nicht den Benachrichtigungs-Deaktivierer in GoSMS oder in Handcent; aktivieren Sie dies stattdessen.</string>
     
     <string name="sync_sms">SMS synchronisieren</string>
-    <string name="sync_sms_summary">Synchronisieren Sie Ihre Nachrichten Geschichte auf den DeskSMS Server. Dies wird Ihnen die Möglichkeit geben, das DeskSMS Web-Interface zu nutze, und Ihre Nachrichten Geschichte Online anzusehen.</string>
+    <string name="sync_sms_summary">Synchronisieren Sie Ihre Nachrichten-Historie mit dem DeskSMS Server. Dies ermöglicht es, das DeskSMS Web-Interface zu nutzen, und Ihre Nachrichten-Historie online anzusehen.</string>
     
-    <string name="contacts">Kontakten</string>
-    <string name="add_desksms_contact_info">DeskSMS Kontakten verbinden</string>
-    <string name="add_desksms_contact_info_summary">Fügen Sie DeskSMS Email und Sofortnachrichten Konten zu Ihrer Kontakt Liste zu. Dies wird Sie ermöglichen, eine SMS an jemanden via Email oder Sofortnachricht zu initiieren.</string>
-    <string name="remove_desksms_contact_info">DeskSMS Kontakten entfernen</string>
-    <string name="please_wait_contact_list">Warten Sie einen Moment während sich Ihre Kontakten Liste aktualisiert...</string>
+    <string name="contacts">Kontakte</string>
+    <string name="add_desksms_contact_info">DeskSMS Kontakte verknüpfen</string>
+    <string name="add_desksms_contact_info_summary">Fügen Sie DeskSMS Email und Sofortnachrichten Konten zu Ihrer Kontaktliste zu. Dies ermöglicht es, eine SMS via Email oder Sofortnachricht zu schicken.</string>
+    <string name="remove_desksms_contact_info">DeskSMS Kontakte entfernen</string>
+    <string name="please_wait_contact_list">Warten Sie einen Moment während sich Ihre Kontaktliste aktualisiert...</string>
 
 	<string name="sync_calls">Anrufe synchronisieren</string>
-	<string name="sync_calls_summary">Anrufliste auf den DeskSMS Server synchronisieren für Online Anzeige.</string>
+	<string name="sync_calls_summary">Anrufliste auf den DeskSMS Server synchronisieren für Online-Anzeige.</string>
 </resources>
