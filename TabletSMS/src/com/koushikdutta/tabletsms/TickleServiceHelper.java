@@ -1,7 +1,6 @@
-package com.koushikdutta.desktopsms;
+package com.koushikdutta.tabletsms;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -10,14 +9,10 @@ import java.util.ArrayList;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 
@@ -83,31 +78,12 @@ public class TickleServiceHelper {
     }
 
     static void registerWithServer(final Context context) throws Exception {
-        registerWithServer(context, false);
-    }
-
-    static void registerWithServer(final Context context, boolean sendEmail) throws Exception {
-        String ascidCookie = getCookie(context);
         Settings settings = Settings.getInstance(context);
         final String registration = settings.getString("registration_id");
-        DefaultHttpClient client = new DefaultHttpClient();
+        final String account = settings.getString("account");
 
-        // Make POST request
-        URI uri = new URI(ServiceHelper.REGISTER_URL);
-        HttpPost post = new HttpPost(uri);
-        ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("device_id", Helper.getSafeDeviceId(context)));
-        params.add(new BasicNameValuePair("registration_id", registration));
-        params.add(new BasicNameValuePair("version_code", String.valueOf(DesktopSMSApplication.mVersionCode)));
-        params.add(new BasicNameValuePair("send_email", String.valueOf(sendEmail)));
-        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
-        post.setEntity(entity);
-        post.setHeader("X-Same-Domain", "1"); // XSRF
-        post.setHeader("Cookie", ascidCookie);
-        HttpResponse res = client.execute(post);
-        Log.i(LOGTAG, "Status code from register: " + res.getStatusLine().getStatusCode());
-        if (res.getStatusLine().getStatusCode() != 200)
-            throw new Exception("status from server: " + res.getStatusLine().getStatusCode());
+        URL url = new URL(ServiceHelper.PUSH_URL + "?type=register-device&data.registration=" + URLEncoder.encode(registration));
+        ServiceHelper.retryExecuteAndDisconnect(context, account, url, null);
     }
 
     public static String[] getGoogleAccounts(Context context) {
@@ -125,6 +101,7 @@ public class TickleServiceHelper {
     }
 
     public static void login(final Activity context, final Callback<Boolean> callback) {
+        final Settings settings = Settings.getInstance(context);
         final String[] accounts = getGoogleAccounts(context);
         AlertDialog.Builder builder = new Builder(context);
         builder.setCancelable(false);
@@ -153,7 +130,7 @@ public class TickleServiceHelper {
                                         boolean pushReceived = false;
                                         public void run() {
                                             try {
-                                                registerWithServer(context, true);
+                                                registerWithServer(context);
 
                                                 context.runOnUiThread(new Runnable() {
                                                     @Override
@@ -196,9 +173,7 @@ public class TickleServiceHelper {
                                                 IntentFilter filter = new IntentFilter(C2DMReceiver.PING);
                                                 context.registerReceiver(pushReceiver, filter);
 
-                                                {
-                                                    ServiceHelper.retryExecuteAndDisconnect(context, accountName, new URL(ServiceHelper.PING_URL), null);
-                                                }
+                                                ServiceHelper.retryExecuteAndDisconnect(context, accountName, new URL(ServiceHelper.PUSH_URL + "?type=echo"), null);
 
                                                 Thread.sleep(10000);
                                                 if (!pushReceived) {

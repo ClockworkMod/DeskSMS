@@ -1,6 +1,7 @@
 package com.koushikdutta.desktopsms;
 
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -76,7 +77,7 @@ public class C2DMReceiver extends BroadcastReceiver {
                 markAllAsRead(context);
                 Intent serviceIntent = new Intent(context, SyncService.class);
                 serviceIntent.putExtra("outbox", intent.getStringExtra("outbox"));
-                Helper.startSyncService(context, serviceIntent, "outbox");
+                SyncHelper.startSyncService(context, serviceIntent, "outbox");
             }
             else if ("dial".equals(type)) {
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
@@ -96,6 +97,42 @@ public class C2DMReceiver extends BroadcastReceiver {
             }
             else if ("refreshmarket".equals(type)) {
                 ClockworkModBillingClient.getInstance().refreshMarketPurchases();
+            }
+            else if ("register-device".equals(type)) {
+                String registrations = settings.getString("registrations");
+                String registration = intent.getStringExtra("registration");
+                JSONObject r = null;
+                try {
+                    r = new JSONObject(registrations);
+                }
+                catch (Exception ex) {
+                }
+                if (r == null) {
+                    r = new JSONObject();
+                }
+                r.put(registration, true);
+                settings.setString("registrations", r.toString());
+                Log.i(LOGTAG, "Registered device! " + registration);
+            }
+            else if ("echo".equals(type)) {
+                final String account = settings.getString("account");
+                String registrations = settings.getString("registrations");
+                try {
+                    JSONObject r = new JSONObject(registrations);
+                    JSONArray names = r.names();
+                    for (int i = 0; i < names.length(); i++) {
+                        try {
+                            String registration = names.getString(i);
+                            URL url = new URL(ServiceHelper.PUSH_URL + "?type=ping&registration=" + URLEncoder.encode(registration));
+                            ServiceHelper.retryExecuteAndDisconnect(context, account, url, null);
+                        }
+                        catch (Exception ex) {
+                            
+                        }
+                    }
+                }
+                catch (Exception ex) {
+                }
             }
             else if ("pong".equals(type)) {
                 try {
@@ -182,7 +219,7 @@ public class C2DMReceiver extends BroadcastReceiver {
                     @Override
                     public void run() {
                         try {
-                            TickleServiceHelper.registerWebConnect(context);
+                            TickleServiceHelper.registerWithServer(context);
                         }
                         catch (Exception ex) {
                             ex.printStackTrace();

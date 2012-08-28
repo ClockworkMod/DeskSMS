@@ -1,4 +1,4 @@
-package com.koushikdutta.desktopsms;
+package com.koushikdutta.tabletsms;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,12 +8,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
 
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -187,81 +183,5 @@ public class ServiceHelper {
         String ascidCookie = settings.getString("Cookie");
         conn.addRequestProperty("Cookie", ascidCookie);
         conn.addRequestProperty("X-Same-Domain", "1"); // XSRF
-    }
-
-    static void updateSettings(final Context context, final boolean xmpp, final boolean mail, final boolean web, final Callback<Boolean> callback) {
-        new Thread() {
-            public void run() {
-                try {
-                    Log.i(LOGTAG, "Attempting to update settings.");
-                    final Settings settings = Settings.getInstance(context);
-                    final String account = settings.getString("account");
-                    final ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-                    params.add(new BasicNameValuePair("forward_xmpp", String.valueOf(xmpp)));
-                    params.add(new BasicNameValuePair("forward_email", String.valueOf(mail)));
-                    params.add(new BasicNameValuePair("forward_web", String.valueOf(web)));
-
-                    String res = ServiceHelper.retryExecuteAsString(context, account, new URL(String.format(SETTINGS_URL, account)), new ConnectionCallback() {
-                        @Override
-                        public void manage(HttpURLConnection conn) throws IOException {
-                            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                            String post = "";
-                            for (NameValuePair pair: params) {
-                                post += pair.getName() + "=" + pair.getValue() + "&";
-                            }
-                            byte[] bytes = post.getBytes();
-                            conn.setRequestProperty("Content-Length", "" + bytes.length);
-                            conn.setDoOutput(true);
-                            OutputStream os = conn.getOutputStream();
-                            os.write(bytes);
-                            os.close();
-                        }
-                    });
-                    Log.i(LOGTAG, "Status code from settings: " + res);
-                    settings.setBoolean("forward_xmpp", xmpp);
-                    settings.setBoolean("forward_email", mail);
-                    settings.setBoolean("forward_web", web);
-                    Log.i(LOGTAG, "Settings updated.");
-                    if (callback != null)
-                        callback.onCallback(true);
-                }
-                catch (Exception ex) {
-                    ex.printStackTrace();
-                    if (callback != null)
-                        callback.onCallback(false);
-                }
-                finally {
-                    Intent i = new Intent(WidgetProvider.UPDATE);
-                    context.sendBroadcast(i);
-                }
-            };
-        }.start();        
-    }
-    
-    static void getSettings(final Context context, final Callback<JSONObject> callback) {
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    final Settings settings = Settings.getInstance(context);
-                    final String account = settings.getString("account");
-                    JSONObject s = retryExecuteAsJSONObject(context, account, new URL(String.format(SETTINGS_URL, account)), null);
-                    Iterator<String> keys = s.keys();
-                    while (keys.hasNext()) {
-                        String key = keys.next();
-                        String value = s.optString(key, null);
-                        if (value == null)
-                            continue;
-                        settings.setString(key, value);
-                    }
-                    callback.onCallback(s);
-                    Intent i = new Intent(WidgetProvider.UPDATE);
-                    context.sendBroadcast(i);
-                }
-                catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }.start();
     }
 }

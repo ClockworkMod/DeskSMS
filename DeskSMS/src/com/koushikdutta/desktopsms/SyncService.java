@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -545,6 +546,18 @@ public class SyncService extends Service {
                 gen.writeNumberField("version_code", DesktopSMSApplication.mVersionCode);
                 gen.writeNumberField("this_last_sync", lastSync);
                 gen.writeNumberField("next_last_sync", latestEvent);
+                gen.writeArrayFieldStart("registrations");
+                try {
+                    String registrations = mSettings.getString("registrations");
+                    JSONObject r = new JSONObject(registrations);
+                    JSONArray names = r.names();
+                    for (int i = 0; i < names.length(); i++) {
+                        String registration = names.getString(i);
+                        gen.writeString(registration);
+                    }                }
+                catch (Exception ex) {
+                }
+                gen.writeEndArray();
 
                 gen.writeEndObject();
             }

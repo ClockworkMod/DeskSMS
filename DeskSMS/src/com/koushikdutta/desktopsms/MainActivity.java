@@ -78,7 +78,7 @@ public class MainActivity extends ActivityBase {
                         mSettings.setLong("last_sms_sync", 0);
                         mSettings.setLong("last_mms_sync", 0);
                         mSettings.setLong("last_calls_sync", 0);
-                        Helper.startSyncService(MainActivity.this, "sms");
+                        SyncHelper.startSyncService(MainActivity.this, "sms");
 
                         refreshAccount();
                     }
@@ -285,7 +285,7 @@ public class MainActivity extends ActivityBase {
                     mSettings.setLong("last_sms_sync", 0);
                     mSettings.setLong("last_mms_sync", 0);
                     mSettings.setLong("last_calls_sync", 0);
-                    Helper.startSyncService(MainActivity.this);
+                    SyncHelper.startSyncService(MainActivity.this);
                 }
                 updateSettings.run();
             }
@@ -385,7 +385,7 @@ public class MainActivity extends ActivityBase {
                                             mSettings.setInt("adjust_sms_date", adjust);
                                             setSummary(getAdjustmentString() + "\n" + getString(R.string.adjust_sms_date_summary));
                                             mSettings.setLong("last_sms_sync", 0);
-                                            Helper.startSyncService(MainActivity.this, "sms");
+                                            SyncHelper.startSyncService(MainActivity.this, "sms");
                                         }
                                     });
                                 }
@@ -407,7 +407,7 @@ public class MainActivity extends ActivityBase {
             }
         });
 
-        Helper.startSyncService(this);
+        SyncHelper.startSyncService(this);
 
         Intent intent = getIntent();
         if (Helper.isJavaScriptNullOrEmpty(account) || Helper.isJavaScriptNullOrEmpty(registrationId)) {

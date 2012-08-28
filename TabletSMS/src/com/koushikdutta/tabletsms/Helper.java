@@ -1,4 +1,4 @@
-package com.koushikdutta.desktopsms;
+package com.koushikdutta.tabletsms;
 
 import java.math.BigInteger;
 import java.net.NetworkInterface;
@@ -113,5 +113,12 @@ public class Helper {
                 } 
             }
         }.start();
+    }
+    
+    public static void startSync(Context context) {
+        Intent intent = new Intent();
+        intent.setAction("com.koushikdutta.tabletsms.SYNC");
+        intent.setClass(context, SyncService.class);
+        context.startService(intent);
     }
 }

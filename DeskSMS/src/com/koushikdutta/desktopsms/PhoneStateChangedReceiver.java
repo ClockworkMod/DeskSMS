@@ -10,6 +10,6 @@ public class PhoneStateChangedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i(LOGTAG, "===== Starting PhoneStateChangedReceiver =====");
-        Helper.startSyncService(context, "phone");
+        SyncHelper.startSyncService(context, "phone");
     }
 }

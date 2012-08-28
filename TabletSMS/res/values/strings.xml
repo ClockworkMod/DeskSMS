@@ -1,0 +1,32 @@
+<resources>
+
+    <string name="app_name">TabletSms</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+
+        
+    <string name="signin_success">You have successfully signed in!</string>
+    <string name="signin_failure">Login failed. Please verify your internet connection and try again. Logging in with a Google Apps email address may not work. If the error persists, please send a log to the developer.</string>
+    
+    <string name="login_with_google">Login with Google Account</string>
+    <string name="requesting_permissions">DeskSMS will now ask you for permission to use your Google Account authentication for the purposes of push notifications and registration with our server. DeskSMS will not have access to your passwords or personal data.</string>
+    <string name="permission_request">Permissions Request</string>
+    
+    
+        
+    <string name="setting_up_push">Setting up push notifications...</string>
+    <string name="retrieving_authentication">Retrieving Google authentication tokens...</string>
+    <string name="registering_with_server">Registering with push server...</string>
+    
+    <string name="testing_push">Testing push notifications...</string>
+	<string name="push_failed">You have successfully signed in!\n\nWarning: Push notifications were set up successfully, but the test push notification failed. There may be issues receiving messages via DeskSMS.</string>
+	
+	<string name="signin_complete">Your DeskSMS inbox is now loading.</string>
+    
+	<string name="accounts">Accounts</string>
+    
+        
+	<string name="authentification_notification">DeskSMS was unable to log into your account. Please click to reauthenticate.</string>
+    
+	<string name="logout">Logout</string>
+</resources>

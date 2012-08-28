@@ -11,6 +11,6 @@ public class DateChangedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         TickleServiceHelper.registerForPush(context, null);
-        Helper.startSyncService(context);
+        SyncHelper.startSyncService(context);
     }
 }
