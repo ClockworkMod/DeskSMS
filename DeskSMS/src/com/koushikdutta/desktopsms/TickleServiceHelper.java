@@ -83,10 +83,10 @@ public class TickleServiceHelper {
     }
 
     static void registerWebConnect(final Context context) throws Exception {
-        registerWebConnect(context, false);
+        registerWithServer(context, false);
     }
 
-    static void registerWebConnect(final Context context, boolean sendEmail) throws Exception {
+    static void registerWithServer(final Context context, boolean sendEmail) throws Exception {
         String ascidCookie = getCookie(context);
         Settings settings = Settings.getInstance(context);
         final String registration = settings.getString("registration_id");
@@ -153,7 +153,7 @@ public class TickleServiceHelper {
                                         boolean pushReceived = false;
                                         public void run() {
                                             try {
-                                                registerWebConnect(context, true);
+                                                registerWithServer(context, true);
 
                                                 context.runOnUiThread(new Runnable() {
                                                     @Override
