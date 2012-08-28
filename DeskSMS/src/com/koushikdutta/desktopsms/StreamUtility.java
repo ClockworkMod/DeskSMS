@@ -9,8 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 
-import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -59,12 +59,20 @@ class StreamUtility {
         return new JSONObject(downloadUriAsString(res));
     }
 
+    public static JSONObject downloadUriAsJSONObject(HttpURLConnection conn) throws IOException, JSONException {
+        return new JSONObject(readToEnd(conn.getInputStream()));
+    }
+
     public static JSONObject downloadUriAsJSONObject(HttpUriRequest req) throws IOException, JSONException {
         return new JSONObject(downloadUriAsString(req));
     }
     
     public static String downloadUriAsString(HttpResponse res) throws IllegalStateException, IOException {
         return readToEnd(res.getEntity().getContent());
+    }
+    
+    public static String downloadUriAsString(HttpURLConnection conn) throws IllegalStateException, IOException {
+        return readToEnd(conn.getInputStream());
     }
 
     public static byte[] readToEndAsArray(InputStream input) throws IOException
@@ -78,6 +86,7 @@ class StreamUtility {
             buff.write(stuff, 0, read);
         }
         
+        input.close();
         return buff.toByteArray();
     }
     

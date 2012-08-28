@@ -1,10 +1,10 @@
 package com.koushikdutta.desktopsms;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
 
-import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.json.JSONObject;
 
@@ -16,7 +16,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
@@ -376,26 +375,19 @@ public class MainActivity extends ActivityBase {
                             @Override
                             public void run() {
                                 try {
-                                    AndroidHttpClient client = Helper.getHttpClient(MainActivity.this);
-                                    try {
-                                        String account = mSettings.getString("account");
-                                        HttpDelete delete = new HttpDelete(String.format(ServiceHelper.SMS_URL, account));
-                                        ServiceHelper.retryExecute(MainActivity.this, account, client, delete);
-                                        foreground(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                dlg.dismiss();
-                                                int adjust = -12 + which;
-                                                mSettings.setInt("adjust_sms_date", adjust);
-                                                setSummary(getAdjustmentString() + "\n" + getString(R.string.adjust_sms_date_summary));
-                                                mSettings.setLong("last_sms_sync", 0);
-                                                Helper.startSyncService(MainActivity.this, "sms");
-                                            }
-                                        });
-                                    }
-                                    finally {
-                                        client.close();
-                                    }
+                                    String account = mSettings.getString("account");
+                                    ServiceHelper.retryExecuteAndDisconnect(MainActivity.this, account, new URL(String.format(ServiceHelper.SMS_URL, account) + "?operation=DELETE"), null);
+                                    foreground(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            dlg.dismiss();
+                                            int adjust = -12 + which;
+                                            mSettings.setInt("adjust_sms_date", adjust);
+                                            setSummary(getAdjustmentString() + "\n" + getString(R.string.adjust_sms_date_summary));
+                                            mSettings.setLong("last_sms_sync", 0);
+                                            Helper.startSyncService(MainActivity.this, "sms");
+                                        }
+                                    });
                                 }
                                 catch (Exception ex) {
                                     ex.printStackTrace();
@@ -498,8 +490,7 @@ public class MainActivity extends ActivityBase {
             @Override
             public void run() {
                 try {
-                    final HttpGet get = new HttpGet(ServiceHelper.STATUS_URL);
-                    final JSONObject payload = ServiceHelper.retryExecuteAsJSONObject(MainActivity.this, mSettings.getString("account"), get);
+                    final JSONObject payload = ServiceHelper.retryExecuteAsJSONObject(MainActivity.this, mSettings.getString("account"), new URL(ServiceHelper.STATUS_URL), null);
                     final long expiration = payload.getLong("subscription_expiration");
                     foreground(new Runnable() {
                         @Override
@@ -531,7 +522,7 @@ public class MainActivity extends ActivityBase {
             public void run() {
                 try {
                     final HttpGet get = new HttpGet(ServiceHelper.STATUS_URL);
-                    final JSONObject payload = ServiceHelper.retryExecuteAsJSONObject(MainActivity.this, mSettings.getString("account"), get);
+                    final JSONObject payload = ServiceHelper.retryExecuteAsJSONObject(MainActivity.this, mSettings.getString("account"), new URL(ServiceHelper.STATUS_URL), null);
                     final long expiration = payload.getLong("subscription_expiration");
                     foreground(new Runnable() {
                         @Override

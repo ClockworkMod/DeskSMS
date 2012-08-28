@@ -58,7 +58,7 @@ public class Helper {
     {
         showAlertDialog(context, s, null);
     }
-    
+
     static public void showAlertDialog(Context context, String s, DialogInterface.OnClickListener okCallback)
     {
         AlertDialog.Builder builder = new Builder(context);
@@ -87,10 +87,6 @@ public class Helper {
         context.startService(serviceIntent);
     }
     
-    static AndroidHttpClient getHttpClient(Context context) {
-        return AndroidHttpClient.newInstance("Android/" + context.getString(R.string.app_name) + "/" + DesktopSMSApplication.mVersionCode);
-    }
-
     public final static String LINE_SEPARATOR = System.getProperty("line.separator");
     static void sendLog(Intent intent) {
         final String registrationId = intent.getStringExtra("registration_id");

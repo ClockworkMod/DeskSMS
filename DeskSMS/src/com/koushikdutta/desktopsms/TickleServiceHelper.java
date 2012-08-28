@@ -1,8 +1,10 @@
 package com.koushikdutta.desktopsms;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
@@ -11,7 +13,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.HttpClientParams;
@@ -35,9 +36,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 
 public class TickleServiceHelper {
@@ -198,17 +197,7 @@ public class TickleServiceHelper {
                                                 context.registerReceiver(pushReceiver, filter);
 
                                                 {
-                                                    AndroidHttpClient client = Helper.getHttpClient(context);
-                                                    try {
-                                                        HttpGet get = new HttpGet(ServiceHelper.PING_URL);
-                                                        HttpResponse res = ServiceHelper.retryExecute(context, accountName, client, get);
-                                                        if (res != null) {
-                                                            Log.i(LOGTAG, "Response: " + res.getStatusLine().getStatusCode());
-                                                        }
-                                                    }
-                                                    finally {
-                                                        client.close();
-                                                    }
+                                                    ServiceHelper.retryExecuteAndDisconnect(context, accountName, new URL(ServiceHelper.PING_URL), null);
                                                 }
 
                                                 Thread.sleep(10000);

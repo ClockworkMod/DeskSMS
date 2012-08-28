@@ -1,9 +1,8 @@
 package com.koushikdutta.desktopsms;
 
+import java.net.URL;
 import java.util.ArrayList;
 
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -117,10 +116,7 @@ public class C2DMReceiver extends BroadcastReceiver {
                         @Override
                         public void run() {
                             try {
-                                HttpPost post = new HttpPost(String.format(ServiceHelper.SMS_URL, account));
-                                post.setEntity(new StringEntity(envelope.toString()));
-                                ServiceHelper.addAuthentication(context, post);
-                                StreamUtility.downloadUriAsJSONObject(post);
+                                ServiceHelper.retryExecuteAsJSONObject(context, account, new URL(String.format(ServiceHelper.SMS_URL, account)), new ServiceHelper.JSONPoster(envelope));
                             }
                             catch (Exception ex) {
                                 ex.printStackTrace();

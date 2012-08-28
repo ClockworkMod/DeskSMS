@@ -1,25 +1,19 @@
 package com.koushikdutta.desktopsms;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.apache.http.HttpMessage;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,7 +26,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -63,24 +56,24 @@ public class ServiceHelper {
         return ret.toString();
     }
     
-    static JSONObject retryExecuteAsJSONObject(Context context, String account, HttpUriRequest req) throws ClientProtocolException, IOException, OperationCanceledException, AuthenticatorException, URISyntaxException, JSONException {
-        AndroidHttpClient client = Helper.getHttpClient(context);
-        try {
-            return StreamUtility.downloadUriAsJSONObject(retryExecute(context, account, client, req));
+    static JSONObject retryExecuteAsJSONObject(Context context, String account, URL url, ConnectionCallback callback) throws ClientProtocolException, IOException, OperationCanceledException, AuthenticatorException, URISyntaxException, JSONException {
+        HttpURLConnection conn = retryExecute(context, account, url, callback);
+        JSONObject ret = null;
+        if (conn != null) {
+            ret = StreamUtility.downloadUriAsJSONObject(conn);
+            conn.disconnect();
         }
-        finally {
-            client.close();
-        }
+        return ret;
     }
 
-    static String retryExecuteAsString(Context context, String account, HttpUriRequest req) throws ClientProtocolException, IOException, OperationCanceledException, AuthenticatorException, URISyntaxException {
-        AndroidHttpClient client = Helper.getHttpClient(context);
-        try {
-            return StreamUtility.downloadUriAsString(retryExecute(context, account, client, req));
+    static String retryExecuteAsString(Context context, String account, URL url, ConnectionCallback callback) throws ClientProtocolException, IOException, OperationCanceledException, AuthenticatorException, URISyntaxException {
+        HttpURLConnection conn = retryExecute(context, account, url, callback);
+        String ret = null;
+        if (conn != null) {
+            ret = StreamUtility.downloadUriAsString(conn);
+            conn.disconnect();
         }
-        finally {
-            client.close();
-        }
+        return ret;
     }
     
     static void createAuthenticationNotification(Context context) {
@@ -94,18 +87,67 @@ public class ServiceHelper {
         n.notify(444, notification);
     }
     
-    static HttpResponse retryExecute(Context context, String account, HttpClient client, HttpUriRequest req) throws ClientProtocolException, IOException, OperationCanceledException, AuthenticatorException, URISyntaxException {
-        addAuthentication(context, req);
+    public static interface ConnectionCallback {
+        public void manage(HttpURLConnection conn) throws IOException;
+    }
+    
+    public static class JSONPoster implements ConnectionCallback {
+        JSONObject json;
+        public JSONPoster(JSONObject json) {
+            this.json = json;
+        }
+        @Override
+        public void manage(HttpURLConnection conn) throws IOException {
+            conn.setRequestProperty("Content-Type", "application/json");
+            byte[] bytes = json.toString().getBytes();
+            conn.setDoOutput(true);
+            OutputStream os = conn.getOutputStream();
+            os.write(bytes);
+            os.close();
+        }
+    }    
+    public static class FilePoster implements ConnectionCallback {
+        File file;
+        public FilePoster(File file) {
+            this.file = file;
+        }
+        @Override
+        public void manage(HttpURLConnection conn) throws IOException {
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
+            OutputStream os = conn.getOutputStream();
+            InputStream is = new FileInputStream(file);
+            StreamUtility.copyStream(is, os);
+            os.close();
+            is.close();
+        }
+    }
+    
+    static HttpURLConnection setupConnection(Context context, URL url, ConnectionCallback callback) throws IOException {
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        conn = (HttpURLConnection)url.openConnection();
+        conn.setInstanceFollowRedirects(false);
+        conn.setDoInput(true);
+        addAuthentication(context, conn);
+        if (callback != null) {
+            callback.manage(conn);
+        }
+        return conn;
+    }
 
-        final HttpParams httpParams = new BasicHttpParams();
-        HttpClientParams.setRedirecting(httpParams, false);
-        req.setParams(httpParams);
+    static HttpURLConnection retryExecuteAndDisconnect(Context context, String account, URL url, ConnectionCallback callback) throws ClientProtocolException, IOException, OperationCanceledException, AuthenticatorException, URISyntaxException {
+        HttpURLConnection conn = retryExecute(context, account, url, callback);
+        if (conn != null)
+            conn.disconnect();
+        return conn;
+    }
 
-        HttpResponse res = client.execute(req);
+    private static HttpURLConnection retryExecute(Context context, String account, URL url, ConnectionCallback callback) throws ClientProtocolException, IOException, OperationCanceledException, AuthenticatorException, URISyntaxException {
+        HttpURLConnection conn = setupConnection(context, url, callback);
         
-        if (res.getStatusLine().getStatusCode() != 302)
-            return res;
-        
+        if (conn.getResponseCode() != 302)
+            return conn;
+
         AccountManager accountManager = AccountManager.get(context);
         Account acct = new Account(account, "com.google");
         String curAuthToken = Settings.getInstance(context).getString("web_connect_auth_token");
@@ -129,38 +171,21 @@ public class ServiceHelper {
             return null;
         }
 
-        addAuthentication(context, req);
-        res = client.execute(req);
-        
-        if (res.getStatusLine().getStatusCode() != 302)
-            return res;
+        conn = setupConnection(context, url, callback);
+
+        if (conn.getResponseCode() != 302)
+            return conn;
         
         createAuthenticationNotification(context);
         Log.e(LOGTAG, "Authentication failure.");
         return null;
     }
 
-    static void addAuthentication(Context context, HttpMessage message) {
+    static void addAuthentication(Context context, HttpURLConnection conn) {
         Settings settings = Settings.getInstance(context);
         String ascidCookie = settings.getString("Cookie");
-        message.setHeader("Cookie", ascidCookie);
-        message.setHeader("X-Same-Domain", "1"); // XSRF
-    }
-    
-    static HttpPost getAuthenticatedPost(Context context, String url) throws UnsupportedEncodingException, URISyntaxException {
-        URI uri = new URI(url);
-        HttpPost post = new HttpPost(uri);
-        addAuthentication(context, post);
-        return post;
-    }
-    
-    static HttpPost getAuthenticatedPost(Context context, String url, ArrayList<NameValuePair> params) throws UnsupportedEncodingException, URISyntaxException {
-        URI uri = new URI(url);
-        HttpPost post = new HttpPost(uri);
-        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
-        post.setEntity(entity);
-        addAuthentication(context, post);
-        return post;
+        conn.addRequestProperty("Cookie", ascidCookie);
+        conn.addRequestProperty("X-Same-Domain", "1"); // XSRF
     }
 
     static void updateSettings(final Context context, final boolean xmpp, final boolean mail, final boolean web, final Callback<Boolean> callback) {
@@ -170,13 +195,27 @@ public class ServiceHelper {
                     Log.i(LOGTAG, "Attempting to update settings.");
                     final Settings settings = Settings.getInstance(context);
                     final String account = settings.getString("account");
-                    ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+                    final ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
                     params.add(new BasicNameValuePair("forward_xmpp", String.valueOf(xmpp)));
                     params.add(new BasicNameValuePair("forward_email", String.valueOf(mail)));
                     params.add(new BasicNameValuePair("forward_web", String.valueOf(web)));
 
-                    HttpPost post = ServiceHelper.getAuthenticatedPost(context, String.format(SETTINGS_URL, account), params);
-                    String res = ServiceHelper.retryExecuteAsString(context, account, post);
+                    String res = ServiceHelper.retryExecuteAsString(context, account, new URL(String.format(SETTINGS_URL, account)), new ConnectionCallback() {
+                        @Override
+                        public void manage(HttpURLConnection conn) throws IOException {
+                            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                            String post = "";
+                            for (NameValuePair pair: params) {
+                                post += pair.getName() + "=" + pair.getValue() + "&";
+                            }
+                            byte[] bytes = post.getBytes();
+                            conn.setRequestProperty("Content-Length", "" + bytes.length);
+                            conn.setDoOutput(true);
+                            OutputStream os = conn.getOutputStream();
+                            os.write(bytes);
+                            os.close();
+                        }
+                    });
                     Log.i(LOGTAG, "Status code from settings: " + res);
                     settings.setBoolean("forward_xmpp", xmpp);
                     settings.setBoolean("forward_email", mail);
@@ -205,8 +244,7 @@ public class ServiceHelper {
                 try {
                     final Settings settings = Settings.getInstance(context);
                     final String account = settings.getString("account");
-                    HttpGet get = new HttpGet(new URI(String.format(SETTINGS_URL, account)));
-                    JSONObject s = retryExecuteAsJSONObject(context, account, get);
+                    JSONObject s = retryExecuteAsJSONObject(context, account, new URL(String.format(SETTINGS_URL, account)), null);
                     Iterator<String> keys = s.keys();
                     while (keys.hasNext()) {
                         String key = keys.next();

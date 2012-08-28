@@ -5,16 +5,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
 
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.InputStreamEntity;
 import org.codehaus.jackson.JsonEncoding;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonGenerator;
@@ -37,7 +34,6 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.net.Uri;
-import android.net.http.AndroidHttpClient;
 import android.os.Handler;
 import android.os.IBinder;
 import android.provider.CallLog;
@@ -369,16 +365,11 @@ public class SyncService extends Service {
         mLastOutboxSync = maxOutboxSync;
         mSettings.setLong("last_outbox_sync", maxOutboxSync);
         
-        AndroidHttpClient client = Helper.getHttpClient(this);
         try {
-            HttpDelete delete = new HttpDelete(String.format(ServiceHelper.OUTBOX_URL, mAccount) + "?max_date=" + mLastOutboxSync);
-            ServiceHelper.retryExecute(this, mAccount, client, delete);
+            ServiceHelper.retryExecuteAndDisconnect(this, mAccount, new URL(String.format(ServiceHelper.OUTBOX_URL, mAccount) + "?max_date=" + mLastOutboxSync + "operation=DELETE"), null);
         }
         catch (Exception ex) {
             ex.printStackTrace();
-        }
-        finally {
-            client.close();
         }
 
         return outbox.length();
@@ -386,8 +377,7 @@ public class SyncService extends Service {
     
     private void retrieveOutbox() {
         try {
-            HttpGet get = new HttpGet(String.format(ServiceHelper.OUTBOX_URL, mAccount) + "?min_date=" + mLastOutboxSync);
-            String outbox = ServiceHelper.retryExecuteAsString(this, mAccount, get);
+            String outbox = ServiceHelper.retryExecuteAsString(this, mAccount, new URL(String.format(ServiceHelper.OUTBOX_URL, mAccount) + "?min_date=" + mLastOutboxSync), null);
             sendOutbox(outbox);
         }
         catch (Exception ex) {
@@ -564,10 +554,7 @@ public class SyncService extends Service {
             }
 
             File syncFile = getFileStreamPath("sync.json");
-            InputStreamEntity entity = new InputStreamEntity(openFileInput("sync.json"), syncFile.length());
-            HttpPost post = new HttpPost(String.format(postUrl, mAccount));
-            post.setEntity(entity);
-            String results = ServiceHelper.retryExecuteAsString(SyncService.this, mAccount, post);
+            String results = ServiceHelper.retryExecuteAsString(SyncService.this, mAccount, new URL(String.format(postUrl, mAccount)), new ServiceHelper.FilePoster(syncFile));
             JSONObject sr = new JSONObject(results);
             if (!sr.optBoolean("registered", true)) {
                 mSettings.setBoolean("registered", false);
@@ -722,6 +709,7 @@ public class SyncService extends Service {
             mSyncThread = new Thread() {
                 @Override
                 public void run() {
+                    WakeLock.acquirePartial(SyncService.this);
                     try {
                         // if we are starting for the outbox, do that immediately
                         boolean startedForOutbox = mPendingOutboxSync;
@@ -767,6 +755,7 @@ public class SyncService extends Service {
                                mSyncThread = null;
                             }
                         });
+                        WakeLock.release();
                     }
                 }
             };
