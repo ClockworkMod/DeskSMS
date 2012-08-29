@@ -154,6 +154,14 @@ public class C2DMReceiver extends BroadcastReceiver {
             else if ("pong".equals(type)) {
                 try {
                     final JSONObject envelope = new JSONObject();
+                    try {
+                        String registrations = settings.getString("registrations");
+                        JSONObject r = new JSONObject(registrations);
+                        JSONArray names = r.names();
+                        envelope.put("registrations", names);
+                    }
+                    catch (Exception ex) {
+                    }
                     JSONArray data = new JSONArray();
                     JSONObject sms = new JSONObject();
                     sms.put("subject", "Test successful");

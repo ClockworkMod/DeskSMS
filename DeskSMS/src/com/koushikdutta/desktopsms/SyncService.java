@@ -554,7 +554,8 @@ public class SyncService extends Service {
                     for (int i = 0; i < names.length(); i++) {
                         String registration = names.getString(i);
                         gen.writeString(registration);
-                    }                }
+                    }
+                }
                 catch (Exception ex) {
                 }
                 gen.writeEndArray();

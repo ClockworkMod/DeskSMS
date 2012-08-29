@@ -29,41 +29,42 @@ public class SyncService extends Service {
 
     private boolean handleResult(JSONObject result, boolean isPush) {
         int newCounter = 0;
+        boolean needsSync = !isPush;
         if (isPush) {
             try {
                 newCounter = result.getInt("this_last_sync");
-                if (newCounter != mSyncCounter + 1) {
-                    mSyncCounter = newCounter;
-                    return false;
-                }
+                if (newCounter != mSyncCounter + 1)
+                    needsSync = true;
                 mSyncCounter = newCounter;
             }
             catch (Exception ex) {
-                ex.printStackTrace();
-                return false;
+                needsSync = true;
             }
         }
-        
+
 //        System.out.println(result);
         JSONArray data = result.optJSONArray("data");
         if (data == null) {
             Log.i(LOGTAG, "No data?");
             finishSync();
+            if (isPush)
+                return needsSync;
             return false;
         }
         
         if (data.length() == 0) {
             Log.i(LOGTAG, "Done syncing.");
             finishSync();
+            if (isPush)
+                return needsSync;
             return false;
         }
-        
+
         for (int i = 0; i < data.length(); i++) {
             try {
                 JSONObject message = data.getJSONObject(i);
                 long date = message.getLong("date");
                 mLastSync = Math.max(mLastSync, date);
-                mSettings.setLong("last_sync_timestamp", mLastSync);
                 
                 ContentValues args = new ContentValues();
                 args.put("key", message.getString("number") + "/" + message.getLong("date"));
@@ -81,12 +82,15 @@ public class SyncService extends Service {
                 ex.printStackTrace();
             }
         }
+        mSettings.setLong("last_sync_timestamp", mLastSync);
         
         if (isPush) {
             mSettings.setInt("sync_counter", mSyncCounter);
         }
 
-        return !isPush;
+        if (isPush)
+            return needsSync;
+        return true;
     }
     
     private void doAuth() {
@@ -209,7 +213,7 @@ public class SyncService extends Service {
             try {
                 if ("sms".equals(intent.getStringExtra("bucket"))) {
                     JSONObject envelope = new JSONObject(intent.getStringExtra("envelope"));
-                    if (!handleResult(envelope, true))
+                    if (handleResult(envelope, true))
                         startSync();
                 }
             }

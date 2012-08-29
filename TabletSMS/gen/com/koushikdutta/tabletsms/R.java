@@ -797,12 +797,13 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020059;
         public static final int ic_list_alert_sms_failed=0x7f02005a;
         public static final int ic_menu_msg_compose_holo_dark=0x7f02005b;
-        public static final int ic_send_disabled_holo_light=0x7f02005c;
-        public static final int ic_send_holo_light=0x7f02005d;
-        public static final int ic_sms_mms_pending=0x7f02005e;
-        public static final int icon=0x7f02005f;
-        public static final int placeholder=0x7f020060;
-        public static final int unread=0x7f020061;
+        public static final int ic_menu_trash_holo_dark=0x7f02005c;
+        public static final int ic_send_disabled_holo_light=0x7f02005d;
+        public static final int ic_send_holo_light=0x7f02005e;
+        public static final int ic_sms_mms_pending=0x7f02005f;
+        public static final int icon=0x7f020060;
+        public static final int placeholder=0x7f020061;
+        public static final int unread=0x7f020062;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f050022;
@@ -843,7 +844,7 @@ containing a value of this type.
         public static final int last_message=0x7f05002f;
         public static final int list=0x7f050028;
         public static final int listMode=0x7f050002;
-        public static final int logout=0x7f050036;
+        public static final int logout=0x7f050037;
         public static final int messages=0x7f05002a;
         public static final int name=0x7f050029;
         public static final int normal=0x7f050001;
@@ -857,6 +858,7 @@ containing a value of this type.
         public static final int showTitle=0x7f050007;
         public static final int switcher=0x7f050027;
         public static final int tabMode=0x7f050003;
+        public static final int trash=0x7f050036;
         public static final int unread=0x7f05002d;
         public static final int useLogo=0x7f050004;
         public static final int wrap_content=0x7f050000;

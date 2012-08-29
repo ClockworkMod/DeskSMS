@@ -139,7 +139,9 @@ public class MainActivity extends SherlockFragmentActivity {
             }
         }
         mConversations.notifyDataSetChanged();
-        if (mCurrentConversation != null)
+        // if the conversation is currently being viewed at the time the messages come in
+        // mark them as read
+        if (mCurrentConversation != null && switcher.getCurrentView() == switcher.getChildAt(1))
             markRead(mCurrentConversation);
     }
     
@@ -433,63 +435,7 @@ public class MainActivity extends SherlockFragmentActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == 0) {
-                            final HashMap<String, ArrayList<Long>> numbers = new HashMap<String, ArrayList<Long>>();
-                            mConversations.remove(conversation);
-                            try {
-                                mDatabase.beginTransaction();
-                                for (Message message: conversation.messages.values()) {
-                                    ArrayList<Long> dates = numbers.get(message.number);
-                                    if (dates == null) {
-                                        dates = new ArrayList<Long>();
-                                        numbers.put(message.number, dates);
-                                    }
-                                    dates.add(message.date);
-                                    mDatabase.delete("sms", "key = ?", new String[] { message.key });
-                                }
-                                mDatabase.setTransactionSuccessful();
-                            }
-                            catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
-                            finally {
-                                mDatabase.endTransaction();
-                            }
-                            ThreadingRunnable.background(new ThreadingRunnable() {
-                                String delete;
-                                
-                                void doDelete(String u) {
-                                    try {
-                                        delete += "0]"; // append a dummy zero to fix the trailing comma
-                                        ServiceHelper.retryExecuteAndDisconnect(MainActivity.this, account, new URL(delete), null);
-                                    }
-                                    catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                    finally {
-                                        delete = u;
-                                    }
-                                }
-                                @Override
-                                public void run() {
-                                    for (Entry<String, ArrayList<Long>> entry: numbers.entrySet()) {
-                                        String number = entry.getKey();
-                                        final String u = ServiceHelper.DELETE_CONVERSATION_URL + "?number=" + number + "&dates=[";
-                                        delete = u;
-                                        ArrayList<Long> dates = entry.getValue();
-                                        int count = 0;
-                                        while (dates.size() > 0) {
-                                            long date = dates.remove(dates.size() - 1);
-                                            delete += date + ",";
-                                            count++;
-                                            if (count == 10) {
-                                                doDelete(u);
-                                                count = 0;
-                                            }
-                                        }
-                                        doDelete(u);
-                                    }
-                                }
-                            });
+                            deleteConversation(conversation);
                         }
                     }
                 });
@@ -567,6 +513,7 @@ public class MainActivity extends SherlockFragmentActivity {
     private void back() {
         if (switcher.getCurrentView() == switcher.getChildAt(0))
             return;
+        mMenuTrash.setVisible(false);
         switcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_out));
         switcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_out_fast));
         switcher.showPrevious();
@@ -575,6 +522,7 @@ public class MainActivity extends SherlockFragmentActivity {
     private void forward() {
         if (switcher.getCurrentView() == switcher.getChildAt(1))
             return;
+        mMenuTrash.setVisible(true);
         switcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in));
         switcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in_fast));
         switcher.showNext();
@@ -596,7 +544,7 @@ public class MainActivity extends SherlockFragmentActivity {
         MenuInflater inflater = getSupportMenuInflater();
         inflater.inflate(R.menu.activity_main, menu);
         
-        menu.getItem(1).setOnMenuItemClickListener(new OnMenuItemClickListener() {
+        menu.getItem(2).setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 mSettings.setString("account", null);
@@ -615,8 +563,22 @@ public class MainActivity extends SherlockFragmentActivity {
             }
         });
 
+        mMenuTrash = menu.getItem(1);
+        mMenuTrash.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                back();
+                if (mCurrentConversation != null)
+                    deleteConversation(mCurrentConversation);
+                setCurrentConversation(null);
+                return true;
+            }
+        });
+        mMenuTrash.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
+    
+    MenuItem mMenuTrash;
     
     private static final int PICK_CONTACT = 10004;
 
@@ -636,7 +598,6 @@ public class MainActivity extends SherlockFragmentActivity {
 
                         if (c != null && c.moveToFirst()) {
                             String number = c.getString(0);
-                            int type = c.getInt(1);
                             setCurrentConversation(findOrStartConversation(number));
                         }
                     }
@@ -740,6 +701,8 @@ public class MainActivity extends SherlockFragmentActivity {
     private void setCurrentConversation(Conversation conversation) {
         mConversation.clear();
         mCurrentConversation = conversation;
+        if (conversation == null)
+            return;
         markRead(conversation);
         LinkedHashMap<String, Message> messages = conversation.messages;
         for (Message message: messages.values()) {
@@ -755,4 +718,64 @@ public class MainActivity extends SherlockFragmentActivity {
     }
     
     TextView mCurrentConversationName;
+
+    private void deleteConversation(Conversation conversation) {
+        final HashMap<String, ArrayList<Long>> numbers = new HashMap<String, ArrayList<Long>>();
+        mConversations.remove(conversation);
+        try {
+            mDatabase.beginTransaction();
+            for (Message message: conversation.messages.values()) {
+                ArrayList<Long> dates = numbers.get(message.number);
+                if (dates == null) {
+                    dates = new ArrayList<Long>();
+                    numbers.put(message.number, dates);
+                }
+                dates.add(message.date);
+                mDatabase.delete("sms", "key = ?", new String[] { message.key });
+            }
+            mDatabase.setTransactionSuccessful();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            mDatabase.endTransaction();
+        }
+        ThreadingRunnable.background(new ThreadingRunnable() {
+            String delete;
+            
+            void doDelete(String u) {
+                try {
+                    delete += "0]"; // append a dummy zero to fix the trailing comma
+                    ServiceHelper.retryExecuteAndDisconnect(MainActivity.this, account, new URL(delete), null);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                finally {
+                    delete = u;
+                }
+            }
+            @Override
+            public void run() {
+                for (Entry<String, ArrayList<Long>> entry: numbers.entrySet()) {
+                    String number = entry.getKey();
+                    final String u = ServiceHelper.DELETE_CONVERSATION_URL + "?number=" + URLEncoder.encode(number) + "&dates=[";
+                    delete = u;
+                    ArrayList<Long> dates = entry.getValue();
+                    int count = 0;
+                    while (dates.size() > 0) {
+                        long date = dates.remove(dates.size() - 1);
+                        delete += date + ",";
+                        count++;
+                        if (count == 10) {
+                            doDelete(u);
+                            count = 0;
+                        }
+                    }
+                    doDelete(u);
+                }
+            }
+        });
+    }
 }
