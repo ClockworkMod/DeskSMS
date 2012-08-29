@@ -14,9 +14,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main" 
             android:configChanges="orientation|keyboard|keyboardHidden"
-            >
+            android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,25 +24,19 @@
         </activity>
 
         <receiver
-            android:name=".C2DMReceiver"
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
-
-            <!-- Receive the actual message -->
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
-                <category android:name="com.koushikdutta.desktopsms" />
-            </intent-filter>
-            <!-- Receive the registration id -->
-            <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <category android:name="com.koushikdutta.desktopsms" />
+                <category android:name="com.koushikdutta.tabletsms" />
             </intent-filter>
         </receiver>
+		
+		<service android:name=".GCMIntentService" />
         
-        <service
-            android:name=".SyncService">
+        <service android:name=".SyncService" >
             <intent-filter>
                 <action android:name="com.koushikdutta.tabletsms.SYNC" />
             </intent-filter>
@@ -68,10 +61,10 @@
     <!-- Push -->
     <!-- Only this application can receive the messages and registration result -->
     <permission
-        android:name="com.koushikdutta.desktopsms.permission.C2D_MESSAGE"
+        android:name="com.koushikdutta.tabletsms.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.koushikdutta.desktopsms.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.koushikdutta.tabletsms.permission.C2D_MESSAGE" />
 
     <!-- This app has permission to register and receive message -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />

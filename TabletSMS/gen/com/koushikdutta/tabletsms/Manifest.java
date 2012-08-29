@@ -12,6 +12,6 @@ public final class Manifest {
         /**  Push 
  Only this application can receive the messages and registration result 
          */
-        public static final String C2D_MESSAGE="com.koushikdutta.desktopsms.permission.C2D_MESSAGE";
+        public static final String C2D_MESSAGE="com.koushikdutta.tabletsms.permission.C2D_MESSAGE";
     }
 }

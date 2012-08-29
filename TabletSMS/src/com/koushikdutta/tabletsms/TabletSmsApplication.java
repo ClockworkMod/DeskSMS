@@ -10,7 +10,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Handler;
 import android.provider.ContactsContract;
+import android.util.Log;
 
+import com.google.android.gcm.GCMRegistrar;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper.UrlDownloader;
 
@@ -19,7 +21,7 @@ public class TabletSmsApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Helper.startSync(this);
-        
+
         final Handler handler = new Handler();
         final UrlDownloader downloader = UrlImageViewHelper.getDefaultDownloader();
         UrlDownloader photoDownloader = new UrlDownloader() {

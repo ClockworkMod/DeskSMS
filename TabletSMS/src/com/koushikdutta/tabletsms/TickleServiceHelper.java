@@ -16,6 +16,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 
+import com.google.android.gcm.GCMRegistrar;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
@@ -82,7 +84,7 @@ public class TickleServiceHelper {
         final String registration = settings.getString("registration_id");
         final String account = settings.getString("account");
 
-        URL url = new URL(ServiceHelper.PUSH_URL + "?type=register-device&data.registration=" + URLEncoder.encode(registration));
+        URL url = new URL(ServiceHelper.PUSH_URL + "?type=register-device&data.registration=gcm:" + URLEncoder.encode(registration));
         ServiceHelper.retryExecuteAndDisconnect(context, account, url, null);
     }
 
@@ -170,7 +172,7 @@ public class TickleServiceHelper {
                                                         });
                                                     }
                                                 };
-                                                IntentFilter filter = new IntentFilter(C2DMReceiver.PING);
+                                                IntentFilter filter = new IntentFilter(GCMIntentService.PING);
                                                 context.registerReceiver(pushReceiver, filter);
 
                                                 ServiceHelper.retryExecuteAndDisconnect(context, accountName, new URL(ServiceHelper.PUSH_URL + "?type=echo"), null);
@@ -226,14 +228,6 @@ public class TickleServiceHelper {
     }
 
     static void registerForPush(final Context context, final Callback<Void> callback) {
-//        Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
-//        unregIntent.putExtra("app", PendingIntent.getBroadcast(context, 0, new Intent(), 0));
-//        context.startService(unregIntent);
-
-        Intent registrationIntent = new Intent("com.google.android.c2dm.intent.REGISTER");
-        registrationIntent.putExtra("app", PendingIntent.getBroadcast(context, 0, new Intent(), 0));
-        registrationIntent.putExtra("sender", "koushd@gmail.com");
-        
         if (callback != null) {
             BroadcastReceiver receiver = new BroadcastReceiver() {
                 @Override
@@ -243,11 +237,11 @@ public class TickleServiceHelper {
                 }
             };
         
-            IntentFilter filter = new IntentFilter(C2DMReceiver.ACTION_REGISTRATION_RECEIVED);
+            IntentFilter filter = new IntentFilter(GCMIntentService.ACTION_REGISTRATION_RECEIVED);
             context.registerReceiver(receiver, filter);
         }
         
-        context.startService(registrationIntent);
+        GCMRegistrar.register(context, "960629859371");
     }
     
     static final String AUTH_TOKEN_TYPE = "ah";
