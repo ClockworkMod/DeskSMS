@@ -2,6 +2,8 @@ package com.koushikdutta.tabletsms;
 
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
@@ -9,11 +11,9 @@ import java.util.Map.Entry;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.BroadcastReceiver;
-import android.content.ClipData;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -32,9 +32,6 @@ import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -47,14 +44,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
-public class MainActivity extends Activity {
+public class MainActivity extends SherlockFragmentActivity {
     private static final String LOGTAG = "TabletSms";
     private static class Message implements Comparable<Message> {
         String key;
@@ -88,7 +89,7 @@ public class MainActivity extends Activity {
     }
     
     Conversation mCurrentConversation;
-    long mLastLoaded = 0;//System.currentTimeMillis() - 14L * 24L * 60L * 60L * 1000L;
+    long mLastLoaded = System.currentTimeMillis() - 14L * 24L * 60L * 60L * 1000L;
 
     Settings mSettings;
     SQLiteDatabase mDatabase;
@@ -96,27 +97,36 @@ public class MainActivity extends Activity {
     ArrayAdapter<Conversation> mConversations;
     ArrayAdapter<Message> mConversation;
     
+    private Conversation findConversation(String number) {
+        for (int i = 0; i < mConversations.getCount(); i++) {
+            Conversation conversation = mConversations.getItem(i);
+            if (!NumberHelper.areSimilar(conversation.number, number))
+                continue;
+            return conversation;
+        }
+        return null;
+    }
+    
+    private Conversation findOrStartConversation(String number) {
+        Conversation found = findConversation(number);
+        if (found == null) {
+            found = new Conversation(number);
+        }
+        else {
+            mConversations.remove(found);
+        }
+        mConversations.insert(found, 0);
+        return found;
+    }
+    
     private void merge(LinkedHashMap<String, Message> newMessages) {
-        final Handler handler = new Handler();
         for (Entry<String, Message> entry: newMessages.entrySet()) {
-            Conversation found = null;
-            for (int i = 0; i < mConversations.getCount(); i++) {
-                Conversation conversation = mConversations.getItem(i);
-                if (!NumberHelper.areSimilar(conversation.number, entry.getValue().number))
-                    continue;
-                found = conversation;
-                break;
-            }
-            if (found == null) {
-                found = new Conversation(entry.getValue().number);
-            }
-            else {
-                mConversations.remove(found);
-            }
-            mConversations.insert(found, 0);
-            Message existing = found.messages.put(entry.getKey(), entry.getValue());
-            found.last = Math.max(found.last, entry.getValue().date);
-            found.lastMessageText = entry.getValue().message;
+            String key = entry.getKey();
+            Message message = entry.getValue();
+            Conversation found = findOrStartConversation(message.number);
+            Message existing = found.messages.put(key, message);
+            found.last = Math.max(found.last, message.date);
+            found.lastMessageText = message.message;
             found.unread |= entry.getValue().unread;
             
             if (found == mCurrentConversation) {
@@ -124,7 +134,7 @@ public class MainActivity extends Activity {
                 if (existing != null) {
                     mConversation.remove(existing);
                 }
-                mConversation.add(entry.getValue());
+                mConversation.add(message);
                 scrollToEnd();
             }
         }
@@ -179,7 +189,6 @@ public class MainActivity extends Activity {
     
     private static final class CachedPhoneLookup {
         String displayName;
-        String enteredNumber;
         String photoUri;
     }
     Hashtable<String, CachedPhoneLookup> mLookup = new Hashtable<String, CachedPhoneLookup>();
@@ -203,7 +212,6 @@ public class MainActivity extends Activity {
                         c.close();
                         lookup = new CachedPhoneLookup();
                         lookup.displayName = displayName;
-                        lookup.enteredNumber = ServiceHelper.numbersOnly(enteredNumber, true);
                         if (photoUri != null)
                             lookup.photoUri = photoUri.toString();
                         mLookup.put(number, lookup);
@@ -241,7 +249,8 @@ public class MainActivity extends Activity {
 
     ViewSwitcher switcher;
     ListView messages;
-
+    String account;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -249,7 +258,7 @@ public class MainActivity extends Activity {
 
         mDatabase = Database.open(this);
         mSettings = Settings.getInstance(MainActivity.this);
-        String account = mSettings.getString("account", null);
+        account = mSettings.getString("account", null);
 
         final String myPhotoUri;
         if (account != null) {
@@ -334,7 +343,7 @@ public class MainActivity extends Activity {
                     otext.setVisibility(View.VISIBLE);
                     UrlImageViewHelper.setUrlDrawable(iv, myPhotoUri, R.drawable.contact);
                 }
-                
+
                 if ("pending".equals(message.type) && message.date < System.currentTimeMillis() - 5L * 60L * 1000L) {
                     message.type = "failed";
                 }
@@ -358,7 +367,6 @@ public class MainActivity extends Activity {
                     itext.setVisibility(View.GONE);
                     if ("incoming".equals(message.type)) {
                         ipic.setVisibility(View.VISIBLE);
-                        //https://desksms.appspot.com/api/v1/user/default/image/%2B12063039842/1346269041000
                         UrlImageViewHelper.setUrlDrawable(ipic, ServiceHelper.IMAGE_URL + "/" + URLEncoder.encode(message.key), R.drawable.placeholder);
                     }
                     else {
@@ -366,7 +374,10 @@ public class MainActivity extends Activity {
                         UrlImageViewHelper.setUrlDrawable(opic, ServiceHelper.IMAGE_URL + "/" + message.key, R.drawable.placeholder);
                     }
                 }
-                
+
+                if (message.number.equals("DeskSMS"))
+                    iv.setImageResource(R.drawable.contrast);
+
                 return v;
             }
         };
@@ -402,29 +413,88 @@ public class MainActivity extends Activity {
             }
         });
 
-        final TextView name = (TextView)findViewById(R.id.name);
+        mCurrentConversationName = (TextView)findViewById(R.id.name);
 
         ListView listView = (ListView)findViewById(R.id.list);
         listView.setAdapter(mConversations);
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                mConversation.notifyDataSetChanged();
-                mConversation.clear();
                 Conversation conversation = mConversations.getItem(position);
-                mCurrentConversation = conversation;
-                markRead(conversation);
-                LinkedHashMap<String, Message> messages = conversation.messages;
-                for (Message message: messages.values()) {
-                    mConversation.add(message);
-                }
-                CachedPhoneLookup lookup = getPhoneLookup(conversation.number);
-                if (lookup != null)
-                    name.setText(lookup.displayName);
-                else
-                    name.setText(conversation.number);
-                forward();
-                mConversations.notifyDataSetChanged();
+                setCurrentConversation(conversation);
+            }
+        });
+        listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                final Conversation conversation = mConversations.getItem(position);
+                AlertDialog.Builder builder = new Builder(MainActivity.this);
+                builder.setItems(new CharSequence[] { getString(R.string.delete) }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
+                            final HashMap<String, ArrayList<Long>> numbers = new HashMap<String, ArrayList<Long>>();
+                            mConversations.remove(conversation);
+                            try {
+                                mDatabase.beginTransaction();
+                                for (Message message: conversation.messages.values()) {
+                                    ArrayList<Long> dates = numbers.get(message.number);
+                                    if (dates == null) {
+                                        dates = new ArrayList<Long>();
+                                        numbers.put(message.number, dates);
+                                    }
+                                    dates.add(message.date);
+                                    mDatabase.delete("sms", "key = ?", new String[] { message.key });
+                                }
+                                mDatabase.setTransactionSuccessful();
+                            }
+                            catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                            finally {
+                                mDatabase.endTransaction();
+                            }
+                            ThreadingRunnable.background(new ThreadingRunnable() {
+                                String delete;
+                                
+                                void doDelete(String u) {
+                                    try {
+                                        delete += "0]"; // append a dummy zero to fix the trailing comma
+                                        ServiceHelper.retryExecuteAndDisconnect(MainActivity.this, account, new URL(delete), null);
+                                    }
+                                    catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                    finally {
+                                        delete = u;
+                                    }
+                                }
+                                @Override
+                                public void run() {
+                                    for (Entry<String, ArrayList<Long>> entry: numbers.entrySet()) {
+                                        String number = entry.getKey();
+                                        final String u = ServiceHelper.DELETE_CONVERSATION_URL + "?number=" + number + "&dates=[";
+                                        delete = u;
+                                        ArrayList<Long> dates = entry.getValue();
+                                        int count = 0;
+                                        while (dates.size() > 0) {
+                                            long date = dates.remove(dates.size() - 1);
+                                            delete += date + ",";
+                                            count++;
+                                            if (count == 10) {
+                                                doDelete(u);
+                                                count = 0;
+                                            }
+                                        }
+                                        doDelete(u);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+                builder.create().show();
+                return true;
             }
         });
         
@@ -444,7 +514,7 @@ public class MainActivity extends Activity {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 final Message message = mConversation.getItem(position);
                 AlertDialog.Builder builder = new Builder(MainActivity.this);
-                builder.setItems(R.array.message_options, new DialogInterface.OnClickListener() {
+                builder.setItems(new CharSequence[] { getText(R.string.copy_text), getString(R.string.delete) }, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == 0) {
@@ -455,6 +525,18 @@ public class MainActivity extends Activity {
                             mCurrentConversation.messages.remove(message.key);
                             mConversation.remove(message);
                             mDatabase.delete("sms", "key = ?", new String[] { message.key });
+                            ThreadingRunnable.background(new ThreadingRunnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        String delete = ServiceHelper.SMS_URL + "?operation=DELETE&key=" + URLEncoder.encode(message.key);
+                                        ServiceHelper.retryExecuteAndDisconnect(MainActivity.this, account, new URL(delete), null);
+                                    }
+                                    catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                           });
                         }
                     }
                 });
@@ -483,12 +565,16 @@ public class MainActivity extends Activity {
     }
     
     private void back() {
+        if (switcher.getCurrentView() == switcher.getChildAt(0))
+            return;
         switcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_out));
         switcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_out_fast));
         switcher.showPrevious();
     }
     
     private void forward() {
+        if (switcher.getCurrentView() == switcher.getChildAt(1))
+            return;
         switcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in));
         switcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in_fast));
         switcher.showNext();
@@ -507,8 +593,10 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem mi = menu.add(getString(R.string.logout));
-        mi.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+        MenuInflater inflater = getSupportMenuInflater();
+        inflater.inflate(R.menu.activity_main, menu);
+        
+        menu.getItem(1).setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 mSettings.setString("account", null);
@@ -516,13 +604,58 @@ public class MainActivity extends Activity {
                 return true;
             }
         });
-        return true;
+
+        menu.getItem(0).setOnMenuItemClickListener(new OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+                startActivityForResult(intent, PICK_CONTACT);
+                return true;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
+    
+    private static final int PICK_CONTACT = 10004;
+
+    @Override
+    protected void onActivityResult(int req, int res, Intent data) {
+        super.onActivityResult(req, res, data);
+
+        if (res == RESULT_OK && data != null) {
+            if (req == PICK_CONTACT) {
+                Uri uri = data.getData();
+
+                if (uri != null) {
+                    Cursor c = null;
+                    try {
+                        c = getContentResolver().query(uri,
+                                new String[] { ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE }, null, null, null);
+
+                        if (c != null && c.moveToFirst()) {
+                            String number = c.getString(0);
+                            int type = c.getInt(1);
+                            setCurrentConversation(findOrStartConversation(number));
+                        }
+                    }
+                    finally {
+                        if (c != null) {
+                            c.close();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     
     private void doLogin() {
         TickleServiceHelper.login(MainActivity.this, new com.koushikdutta.tabletsms.Callback<Boolean>() {
             @Override
             public void onCallback(Boolean result) {
+                account = mSettings.getString("account", null);
                 Helper.startSync(MainActivity.this);
                 System.out.println(result);
             }
@@ -603,4 +736,23 @@ public class MainActivity extends Activity {
             }
         });
     }
+    
+    private void setCurrentConversation(Conversation conversation) {
+        mConversation.clear();
+        mCurrentConversation = conversation;
+        markRead(conversation);
+        LinkedHashMap<String, Message> messages = conversation.messages;
+        for (Message message: messages.values()) {
+            mConversation.add(message);
+        }
+        CachedPhoneLookup lookup = getPhoneLookup(conversation.number);
+        if (lookup != null)
+            mCurrentConversationName.setText(lookup.displayName);
+        else
+            mCurrentConversationName.setText(conversation.number);
+        forward();
+        mConversations.notifyDataSetChanged();
+    }
+    
+    TextView mCurrentConversationName;
 }

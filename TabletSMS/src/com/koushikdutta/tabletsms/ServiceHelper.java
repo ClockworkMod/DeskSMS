@@ -38,6 +38,7 @@ public class ServiceHelper {
     public final static String IMAGE_URL = USER_URL + "/image";
     public static final String SETTINGS_URL = USER_URL + "/settings";
     public static final String SMS_URL = USER_URL + "/sms";
+    public static final String DELETE_CONVERSATION_URL = USER_URL + "/delete/conversation";
     public static final String CALL_URL = USER_URL + "/call";
     public static final String WHOAMI_URL = USER_URL + "/whoami";
     public static final String STATUS_URL = USER_URL + "/status";
@@ -103,7 +104,24 @@ public class ServiceHelper {
             os.write(bytes);
             os.close();
         }
-    }    
+    }
+
+    public static class StringPoster implements ConnectionCallback {
+        String s;
+        public StringPoster(String s) {
+            this.s = s;
+        }
+        @Override
+        public void manage(HttpURLConnection conn) throws IOException {
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            byte[] bytes = s.getBytes();
+            conn.setDoOutput(true);
+            OutputStream os = conn.getOutputStream();
+            os.write(bytes);
+            os.close();
+        }
+    }
+
     public static class FilePoster implements ConnectionCallback {
         File file;
         public FilePoster(File file) {

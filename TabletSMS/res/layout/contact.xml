@@ -14,6 +14,7 @@
         android:background="@drawable/unread" />
     
     <ImageView
+        android:layout_marginRight="10dp"
         android:id="@+id/image"
 		android:maxWidth="64dp"
         android:maxHeight="64dp"

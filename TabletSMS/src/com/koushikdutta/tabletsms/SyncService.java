@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import com.koushikdutta.async.http.AsyncHttpClient;
 import com.koushikdutta.async.http.AsyncHttpGet;
@@ -45,7 +44,7 @@ public class SyncService extends Service {
             }
         }
         
-        System.out.println(result);
+//        System.out.println(result);
         JSONArray data = result.optJSONArray("data");
         if (data == null) {
             Log.i(LOGTAG, "No data?");
@@ -71,9 +70,10 @@ public class SyncService extends Service {
                 args.put("number", message.getString("number"));
                 args.put("date", message.getLong("date"));
                 args.put("message", message.optString("message"));
-                args.put("type", message.getString("type"));
+                String type;
+                args.put("type", type = message.getString("type"));
                 args.put("image", message.optString("image"));
-                args.put("unread", 1);
+                args.put("unread", "incoming".equals(type) ? 1 : 0);
                 
                 mDatabase.replace("sms", null, args);
             }
@@ -163,7 +163,7 @@ public class SyncService extends Service {
                         finishSync();
                         return;
                     }
-                    System.out.println(result);
+//                    System.out.println(result);
 
                     if (handleResult(result, false))
                         syncNext();
