@@ -355,7 +355,7 @@ public class SyncService extends Service {
                 long date = sms.getLong("date");
                 if (date <= mLastOutboxSync)
                     continue;
-                Log.i(LOGTAG, sms.toString(4));
+//                Log.i(LOGTAG, sms.toString(4));
                 maxOutboxSync = Math.max(maxOutboxSync, date);
                 sendUsingSmsManager(this, number, message, date);
             }
@@ -410,7 +410,7 @@ public class SyncService extends Service {
         abstract void setMessage(JSONObject event, String displayName, Cursor cursor) throws JSONException;
 
         protected void logEvent(JSONObject event) throws JSONException {
-            System.out.println(event.toString(4));
+//            System.out.println(event.toString(4));
         }
 
         protected long getDate(Cursor c, JSONObject event, int dateColumn) {
@@ -464,8 +464,8 @@ public class SyncService extends Service {
                 c = getContentResolver().query(contentProviderUri, null, "date > ? AND _id > ?", new String[] { threeDaysAgo, String.valueOf(lastSync) }, null);
             }
             
-            Log.i(LOGTAG, getClass().getSimpleName());
-            Log.i(LOGTAG, String.valueOf(lastSync));
+//            Log.i(LOGTAG, getClass().getSimpleName());
+//            Log.i(LOGTAG, String.valueOf(lastSync));
             long latestEvent = lastSync;
             try {
                 gen.writeStartObject();

@@ -35,6 +35,40 @@ public class C2DMReceiver extends BroadcastReceiver {
             handleMessage(context, intent);
          }
      }
+    
+    public static void doEcho(final Context context, final Settings settings) {
+
+        ThreadingRunnable.background(new ThreadingRunnable() {
+            @Override
+            public void run() {
+                final String account = settings.getString("account");
+                String registrations = settings.getString("registrations");
+                try {
+                    JSONObject r = new JSONObject(registrations);
+                    JSONArray names = r.names();
+                    for (int i = 0; i < names.length(); i++) {
+                        try {
+                            String registration = names.getString(i);
+                            URL url = new URL(ServiceHelper.PUSH_URL + "?type=ping&registration=" + URLEncoder.encode(registration));
+                            JSONObject result = ServiceHelper.retryExecuteAsJSONObject(context, account, url, null);
+                            if (!result.optBoolean("success", false)) {
+                                r.remove(registration);
+                                Log.i(LOGTAG, "Purging due to failure: " + registration);
+                            }
+                        }
+                        catch (Exception ex) {
+                        }
+                    }
+                    registrations = r.toString();
+                }
+                catch (Exception ex) {
+                }
+                finally {
+                    settings.setString("registrations", registrations);
+                }
+            }
+        });
+    }
 
     private void handleMessage(final Context context, Intent intent) {
         Log.i(LOGTAG, "Tickle received!");
@@ -115,24 +149,7 @@ public class C2DMReceiver extends BroadcastReceiver {
                 Log.i(LOGTAG, "Registered device! " + registration);
             }
             else if ("echo".equals(type)) {
-                final String account = settings.getString("account");
-                String registrations = settings.getString("registrations");
-                try {
-                    JSONObject r = new JSONObject(registrations);
-                    JSONArray names = r.names();
-                    for (int i = 0; i < names.length(); i++) {
-                        try {
-                            String registration = names.getString(i);
-                            URL url = new URL(ServiceHelper.PUSH_URL + "?type=ping&registration=" + URLEncoder.encode(registration));
-                            ServiceHelper.retryExecuteAndDisconnect(context, account, url, null);
-                        }
-                        catch (Exception ex) {
-                            
-                        }
-                    }
-                }
-                catch (Exception ex) {
-                }
+                doEcho(context, settings);
             }
             else if ("pong".equals(type)) {
                 try {

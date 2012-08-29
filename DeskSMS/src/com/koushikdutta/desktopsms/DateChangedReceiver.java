@@ -12,5 +12,6 @@ public class DateChangedReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         TickleServiceHelper.registerForPush(context, null);
         SyncHelper.startSyncService(context);
+        C2DMReceiver.doEcho(context, Settings.getInstance(context));
     }
 }

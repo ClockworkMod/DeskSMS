@@ -15,7 +15,7 @@ public class Database {
             
             @Override
             public void onCreate(SQLiteDatabase db) {
-                db.execSQL("CREATE TABLE sms (key TEXT PRIMARY KEY NOT NULL, number TEXT NOT NULL, date INTEGER NOT NULL, message TEXT, type TEXT NOT NULL, image TEXT)");
+                db.execSQL("CREATE TABLE sms (key TEXT PRIMARY KEY NOT NULL, number TEXT NOT NULL, date INTEGER NOT NULL, message TEXT, type TEXT NOT NULL, image TEXT, unread INTEGER)");
             }
         };
         

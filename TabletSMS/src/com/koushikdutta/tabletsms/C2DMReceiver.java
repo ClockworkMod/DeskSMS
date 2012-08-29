@@ -28,6 +28,10 @@ public class C2DMReceiver extends BroadcastReceiver {
                 Intent bcast = new Intent(PING);
                 context.sendBroadcast(bcast);
             }
+            else if ("refresh".equals(type)) {
+                intent.setClass(context, SyncService.class);
+                context.startService(intent);
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();

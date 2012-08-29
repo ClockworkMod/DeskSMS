@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import com.koushikdutta.async.http.AsyncHttpClient;
 import com.koushikdutta.async.http.AsyncHttpGet;
@@ -23,20 +24,24 @@ public class SyncService extends Service {
     private Settings mSettings;
     private boolean mSyncing = false;
     private long mLastSync = 0;
+    private int mSyncCounter = 0;
     private String mAccount;
     SQLiteDatabase mDatabase;
-    
+
     private boolean handleResult(JSONObject result, boolean isPush) {
+        int newCounter = 0;
         if (isPush) {
             try {
-                long expectedLastSync = result.getLong("this_last_sync");
-                if (expectedLastSync > mLastSync)
-                    return true;
+                newCounter = result.getInt("this_last_sync");
+                if (newCounter != mSyncCounter + 1) {
+                    mSyncCounter = newCounter;
+                    return false;
+                }
+                mSyncCounter = newCounter;
             }
             catch (Exception ex) {
                 ex.printStackTrace();
-                syncNext();
-                return true;
+                return false;
             }
         }
         
@@ -62,20 +67,25 @@ public class SyncService extends Service {
                 mSettings.setLong("last_sync_timestamp", mLastSync);
                 
                 ContentValues args = new ContentValues();
-                args.put("key", message.getString("key"));
+                args.put("key", message.getString("number") + "/" + message.getLong("date"));
                 args.put("number", message.getString("number"));
                 args.put("date", message.getLong("date"));
                 args.put("message", message.optString("message"));
                 args.put("type", message.getString("type"));
                 args.put("image", message.optString("image"));
+                args.put("unread", 1);
                 
-                mDatabase.insert("sms", null, args);
+                mDatabase.replace("sms", null, args);
             }
             catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
         
+        if (isPush) {
+            mSettings.setInt("sync_counter", mSyncCounter);
+        }
+
         return !isPush;
     }
     
@@ -179,6 +189,7 @@ public class SyncService extends Service {
     }
     
     private void finishSync() {
+        mSettings.setInt("sync_counter", mSyncCounter);
         Intent syncComplete = new Intent();
         syncComplete.setAction("com.koushikdutta.tabletsms.SYNC_COMPLETE");
         sendBroadcast(syncComplete);
@@ -192,6 +203,19 @@ public class SyncService extends Service {
             startSync();
             return START_STICKY;
         }
+        else if ("refresh".equals(intent.getStringExtra("type"))) {
+            try {
+                if ("sms".equals(intent.getStringExtra("bucket"))) {
+                    JSONObject envelope = new JSONObject(intent.getStringExtra("envelope"));
+                    if (!handleResult(envelope, true))
+                        startSync();
+                }
+            }
+            catch (Exception ex) {
+                startSync();
+            }
+        }
+        
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -213,6 +237,7 @@ public class SyncService extends Service {
         mSettings = Settings.getInstance(this);
         // start from a week ago
         mLastSync = mSettings.getLong("last_sync_timestamp", System.currentTimeMillis() - 7L * 24L * 60L * 60L * 1000L);
+        mSyncCounter = mSettings.getInt("sync_counter", 0);
         mDatabase = Database.open(this);
         mAccount = mSettings.getString("account");
     }

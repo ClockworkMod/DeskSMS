@@ -2,7 +2,7 @@
 
     <string name="app_name">TabletSms</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">TabletSMS by DeskSMS</string>
 
         
     <string name="signin_success">You have successfully signed in!</string>
@@ -29,4 +29,12 @@
 	<string name="authentification_notification">DeskSMS was unable to log into your account. Please click to reauthenticate.</string>
     
 	<string name="logout">Logout</string>
+	
+	<string name="send_hint">Type your message here.</string>
+	<string name="send">Send</string>
+	
+	<string-array name="message_options">
+	    <item>Copy Text</item>
+	    <item>Delete</item>
+	</string-array>
 </resources>
