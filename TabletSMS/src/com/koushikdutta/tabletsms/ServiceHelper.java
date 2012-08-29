@@ -35,6 +35,7 @@ public class ServiceHelper {
     public static final String USER_URL = API_URL + "/user/default";
     public final static String PING_URL = USER_URL + "/ping";
     public final static String PUSH_URL = USER_URL + "/push";
+    public final static String IMAGE_URL = USER_URL + "/image";
     public static final String SETTINGS_URL = USER_URL + "/settings";
     public static final String SMS_URL = USER_URL + "/sms";
     public static final String CALL_URL = USER_URL + "/call";

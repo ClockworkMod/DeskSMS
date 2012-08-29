@@ -2,6 +2,7 @@ package com.koushikdutta.desktopsms;
 
 import java.math.BigInteger;
 import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 
@@ -10,6 +11,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -37,7 +39,7 @@ public class Helper {
             return null;
         }
     }
-    
+
     @SuppressLint("NewApi")
     static public String getSafeDeviceId(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);

@@ -199,6 +199,8 @@ public class SyncService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent == null)
+            return super.onStartCommand(intent, flags, startId);
         if ("com.koushikdutta.tabletsms.SYNC".equals(intent.getAction())) {
             startSync();
             return START_STICKY;

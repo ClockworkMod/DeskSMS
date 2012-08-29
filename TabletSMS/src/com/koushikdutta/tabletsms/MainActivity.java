@@ -1,6 +1,7 @@
 package com.koushikdutta.tabletsms;
 
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
@@ -87,7 +88,7 @@ public class MainActivity extends Activity {
     }
     
     Conversation mCurrentConversation;
-    long mLastLoaded = 0;
+    long mLastLoaded = 0;//System.currentTimeMillis() - 14L * 24L * 60L * 60L * 1000L;
 
     Settings mSettings;
     SQLiteDatabase mDatabase;
@@ -284,7 +285,7 @@ public class MainActivity extends Activity {
                 CachedPhoneLookup lookup = getPhoneLookup(conversation.number);
                 if (lookup != null) {
                     name.setText(lookup.displayName);
-                    UrlImageViewHelper.setUrlDrawable(iv, lookup.photoUri);
+                    UrlImageViewHelper.setUrlDrawable(iv, lookup.photoUri, R.drawable.desksms);
                 }
                 else {
                     iv.setImageResource(R.drawable.desksms);
@@ -299,7 +300,7 @@ public class MainActivity extends Activity {
                 return v;
             }
         };
-        
+
         mConversation = new ArrayAdapter<MainActivity.Message>(this, R.id.incoming_message) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -308,27 +309,26 @@ public class MainActivity extends Activity {
                 Message message = getItem(position);
                 CachedPhoneLookup lookup = getPhoneLookup(message.number);
 
-                
                 ImageView iv = (ImageView)v.findViewById(R.id.image);
-                LinearLayout filler = (LinearLayout)v.findViewById(R.id.filler);
-
+                ImageView ipic = (ImageView)v.findViewById(R.id.incoming_image);
+                ImageView opic = (ImageView)v.findViewById(R.id.outgoing_image);
                 TextView otext = (TextView)v.findViewById(R.id.outgoing_message);
                 TextView itext = (TextView)v.findViewById(R.id.incoming_message);
                 ImageView pending = (ImageView)v.findViewById(R.id.pending);
                 if ("incoming".equals(message.type)) {
-                    filler.setVisibility(View.GONE);
+//                    filler.setVisibility(View.GONE);
                     itext.setText(message.message);
                     otext.setVisibility(View.GONE);
                     itext.setVisibility(View.VISIBLE);
                     if (lookup != null) {
-                        UrlImageViewHelper.setUrlDrawable(iv, lookup.photoUri);
+                        UrlImageViewHelper.setUrlDrawable(iv, lookup.photoUri, R.drawable.desksms);
                     }
                     else {
                         iv.setImageResource(R.drawable.desksms);
                     }
                 }
                 else {
-                    filler.setVisibility(View.VISIBLE);
+//                    filler.setVisibility(View.VISIBLE);
                     otext.setText(message.message);
                     itext.setVisibility(View.GONE);
                     otext.setVisibility(View.VISIBLE);
@@ -349,6 +349,22 @@ public class MainActivity extends Activity {
                 }
                 else {
                     pending.setVisibility(View.GONE);
+                }
+                
+                ipic.setVisibility(View.GONE);
+                opic.setVisibility(View.GONE);
+                if ("true".equals(message.image)) {
+                    otext.setVisibility(View.GONE);
+                    itext.setVisibility(View.GONE);
+                    if ("incoming".equals(message.type)) {
+                        ipic.setVisibility(View.VISIBLE);
+                        //https://desksms.appspot.com/api/v1/user/default/image/%2B12063039842/1346269041000
+                        UrlImageViewHelper.setUrlDrawable(ipic, ServiceHelper.IMAGE_URL + "/" + URLEncoder.encode(message.key), R.drawable.placeholder);
+                    }
+                    else {
+                        opic.setVisibility(View.VISIBLE);
+                        UrlImageViewHelper.setUrlDrawable(opic, ServiceHelper.IMAGE_URL + "/" + message.key, R.drawable.placeholder);
+                    }
                 }
                 
                 return v;
