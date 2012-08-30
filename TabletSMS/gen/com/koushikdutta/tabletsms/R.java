@@ -960,6 +960,8 @@ containing a value of this type.
         public static final int signin_success=0x7f0a000f;
         public static final int testing_push=0x7f0a0017;
         public static final int title_activity_main=0x7f0a000e;
+        public static final int welcome=0x7f0a0026;
+        public static final int welcome_info=0x7f0a0027;
     }
     public static final class style {
         public static final int AppTheme=0x7f0b0058;

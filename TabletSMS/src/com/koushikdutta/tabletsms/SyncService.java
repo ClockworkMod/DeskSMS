@@ -75,16 +75,22 @@ public class SyncService extends Service {
                 if (!isPush || !needsSync)
                     mLastSync = Math.max(mLastSync, date);
                 
-                mNewMessageCount++;
                 ContentValues args = new ContentValues();
+                String last;
+                String number;
                 args.put("key", message.getString("number") + "/" + message.getLong("date"));
-                args.put("number", mLastMessageNumber = message.getString("number"));
+                args.put("number", number = message.getString("number"));
                 args.put("date", message.getLong("date"));
-                args.put("message", mLastMessageText = message.optString("message"));
+                args.put("message", last = message.optString("message"));
                 String type;
                 args.put("type", type = message.getString("type"));
                 args.put("image", message.optString("image"));
                 args.put("unread", "incoming".equals(type) ? 1 : 0);
+                if ("incoming".equals(type)) {
+                    mNewMessageCount++;
+                    mLastMessageNumber = number;
+                    mLastMessageText = last;
+                }
                 
                 mDatabase.replace("sms", null, args);
             }
@@ -221,6 +227,7 @@ public class SyncService extends Service {
         Notification n = new Notification();
         PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
         n.icon = R.drawable.ic_stat_message_notification;
+        n.defaults = Notification.DEFAULT_ALL;
         if (mNewMessageCount == 1) {
             CachedPhoneLookup lookup = Helper.getPhoneLookup(this, mLookup, mLastMessageNumber);
             String name = mLastMessageNumber;

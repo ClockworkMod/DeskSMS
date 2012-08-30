@@ -467,7 +467,9 @@ public class MainActivity extends SherlockFragmentActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 load();
-                System.out.println("synced");
+                NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+                nm.cancel(SyncService.NOTIFICATION_ID);
+                mSettings.setInt("new_message_count", 0);
             }
         };
         IntentFilter filter = new IntentFilter("com.koushikdutta.tabletsms.SYNC_COMPLETE");
@@ -605,18 +607,29 @@ public class MainActivity extends SherlockFragmentActivity {
     
     
     private void doLogin() {
-        TickleServiceHelper.login(MainActivity.this, new com.koushikdutta.tabletsms.Callback<Boolean>() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.welcome);
+        builder.setIcon(R.drawable.icon);
+        builder.setMessage(R.string.welcome_info);
+        builder.setCancelable(false);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
-            public void onCallback(Boolean result) {
-                if (!result) {
-                    doLogin();
-                    return;
-                }
-                mAccount = mSettings.getString("account", null);
-                Helper.startSync(MainActivity.this);
-                System.out.println(result);
+            public void onClick(DialogInterface dialog, int which) {
+                TickleServiceHelper.login(MainActivity.this, new com.koushikdutta.tabletsms.Callback<Boolean>() {
+                    @Override
+                    public void onCallback(Boolean result) {
+                        if (!result) {
+                            doLogin();
+                            return;
+                        }
+                        mAccount = mSettings.getString("account", null);
+                        Helper.startSync(MainActivity.this);
+                        System.out.println(result);
+                    }
+                });
             }
         });
+        builder.create().show();
     }
     
     @Override

@@ -26,4 +26,6 @@
 	<string name="checking_desksms">Checking DeskSMS phone version...</string>
 	<string name="desksms_outdated">The DeskSMS app installed on your phone is outdated. Please upgrade the DeskSMS phone app!</string>
 	<string name="mark_as_read">Mark As Read</string>
+	<string name="welcome">Welcome to TabletSMS by DeskSMS</string>
+	<string name="welcome_info">TabletSMS lets you send text messages from your tablet through your phone.\n\nBefore starting, please make sure that:\n1) You have set up <b>DeskSMS</b> on your <b>phone</b>.\n2) You installed <b>TabletSMS</b> on your <b>tablet</b>.\n\nDone? Great! Now, let\'s log in with the Google account you used for DeskSMS.</string>
 </resources>
