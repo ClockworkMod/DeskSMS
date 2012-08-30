@@ -38,6 +38,7 @@ public class ServiceHelper {
     public final static String IMAGE_URL = USER_URL + "/image";
     public static final String SETTINGS_URL = USER_URL + "/settings";
     public static final String SMS_URL = USER_URL + "/sms";
+    public static final String READ_URL = USER_URL + "/read";
     public static final String DELETE_CONVERSATION_URL = USER_URL + "/delete/conversation";
     public static final String CALL_URL = USER_URL + "/call";
     public static final String WHOAMI_URL = USER_URL + "/whoami";

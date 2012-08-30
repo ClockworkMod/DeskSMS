@@ -1,5 +1,8 @@
 package com.koushikdutta.tabletsms;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -8,9 +11,12 @@ import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
+import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.NotificationManager;
@@ -151,8 +157,7 @@ public class MainActivity extends SherlockFragmentActivity {
         if (loading)
             return;
         loading = true;
-        final Handler handler = new Handler();
-        new Thread() {
+        ThreadingRunnable.background(new ThreadingRunnable() {
             public void run() {
                 try {
                     Cursor c = mDatabase.query("sms", null, "date > ?", new String[] { ((Long)mLastLoaded).toString() }, null, null, "date");
@@ -176,7 +181,7 @@ public class MainActivity extends SherlockFragmentActivity {
                         mLastLoaded = Math.max(mLastLoaded, message.date);
                         newMessages.put(message.key, message);
                     }
-                    handler.post(new Runnable() {
+                    foreground(new Runnable() {
                         @Override
                         public void run() {
                             merge(newMessages);
@@ -187,7 +192,7 @@ public class MainActivity extends SherlockFragmentActivity {
                 }
                 loading = false;
             };
-        }.start();
+        });
     }
 
     Hashtable<String, CachedPhoneLookup> mLookup = new Hashtable<String, CachedPhoneLookup>();
@@ -526,6 +531,17 @@ public class MainActivity extends SherlockFragmentActivity {
                     markRead(conversation);
                     mConversations.notifyDataSetChanged();
                 }
+                ThreadingRunnable.background(new ThreadingRunnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            ServiceHelper.retryExecuteAndDisconnect(MainActivity.this, mAccount, new URL(ServiceHelper.READ_URL), null);
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
                 return true;
             }
         });
