@@ -22,4 +22,8 @@
     <string name="copy_text">Copy Text</string>
     <string name="delete">Delete</string>
 	<string name="compose">Compose</string>
+	<string name="new_messages">You have new messages.</string>
+	<string name="checking_desksms">Checking DeskSMS phone version...</string>
+	<string name="desksms_outdated">The DeskSMS app installed on your phone is outdated. Please upgrade the DeskSMS phone app!</string>
+	<string name="mark_as_read">Mark As Read</string>
 </resources>

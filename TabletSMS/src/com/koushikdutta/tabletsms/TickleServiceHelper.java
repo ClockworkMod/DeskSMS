@@ -15,8 +15,7 @@ import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
-
-import com.google.android.gcm.GCMRegistrar;
+import org.json.JSONObject;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -25,7 +24,6 @@ import android.accounts.AccountManagerFuture;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -36,12 +34,14 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.android.gcm.GCMRegistrar;
+
 public class TickleServiceHelper {
     private static final String LOGTAG = TickleServiceHelper.class.getSimpleName();
 
     private TickleServiceHelper() {
     }
-    
+
     static String getCookie(final Context context) throws ClientProtocolException, IOException, URISyntaxException {
         Settings settings = Settings.getInstance(context);
         final String authToken = settings.getString("web_connect_auth_token");
@@ -84,7 +84,7 @@ public class TickleServiceHelper {
         final String registration = settings.getString("registration_id");
         final String account = settings.getString("account");
 
-        URL url = new URL(ServiceHelper.PUSH_URL + "?type=register-device&data.registration=gcm:" + URLEncoder.encode(registration));
+        URL url = new URL(ServiceHelper.PUSH_URL + "?type=register-device&data.registration=gcm:" + URLEncoder.encode(registration) + "&data.device=" + Helper.getSafeDeviceId(context));
         ServiceHelper.retryExecuteAndDisconnect(context, account, url, null);
     }
 
@@ -127,89 +127,136 @@ public class TickleServiceHelper {
                                     if (authToken == null)
                                         throw new Exception();
 
-                                    dlg.setMessage(context.getString(R.string.registering_with_server));
-                                    new Thread() {
-                                        boolean pushReceived = false;
+                                    dlg.setMessage(context.getString(R.string.checking_desksms));
+                                    ThreadingRunnable.background(new ThreadingRunnable() {
                                         public void run() {
                                             try {
-                                                registerWithServer(context);
-
-                                                context.runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        dlg.setMessage(context.getString(R.string.testing_push));
-                                                    }
-                                                });
-                                                
-                                                final Runnable emailSent = new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        Helper.showAlertDialog(context, R.string.signin_complete, new OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialog, int which) {
-                                                                callback.onCallback(true);
-                                                            }
-                                                        });
-                                                    }
-                                                };
-
-                                                final BroadcastReceiver pushReceiver = new BroadcastReceiver() {
-                                                    @Override
-                                                    public void onReceive(Context context, Intent intent) {
-                                                        try {
-                                                            context.unregisterReceiver(this);
-                                                        }
-                                                        catch (Exception ex) {
-                                                            ex.printStackTrace();
-                                                        }
-                                                        pushReceived = true;
-                                                        dlg.dismiss();
-                                                        Helper.showAlertDialog(context, R.string.signin_success, new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialog, int which) {
-                                                                emailSent.run();
-                                                            }
-                                                        });
-                                                    }
-                                                };
-                                                IntentFilter filter = new IntentFilter(GCMIntentService.PING);
-                                                context.registerReceiver(pushReceiver, filter);
-
-                                                ServiceHelper.retryExecuteAndDisconnect(context, accountName, new URL(ServiceHelper.PUSH_URL + "?type=echo"), null);
-
-                                                Thread.sleep(10000);
-                                                if (!pushReceived) {
-                                                    context.runOnUiThread(new Runnable() {
+                                                JSONObject result = ServiceHelper.retryExecuteAsJSONObject(context, accountName, new URL(ServiceHelper.WHOAMI_URL), null);
+                                                if (result.optInt("version_code", 0) < 1110) {
+                                                    foreground(new Runnable() {
                                                         @Override
                                                         public void run() {
                                                             dlg.dismiss();
-                                                            Helper.showAlertDialog(context, R.string.push_failed, new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-                                                                    emailSent.run();
-                                                                }
-                                                            });
+                                                            settings.setString("account", null);
+                                                            Helper.showAlertDialog(context, R.string.desksms_outdated,
+                                                                    new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                            callback.onCallback(false);
+                                                                        }
+                                                                    });
                                                         }
                                                     });
+                                                    return;
                                                 }
+                                                
+                                                foreground(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        dlg.setMessage(context.getString(R.string.registering_with_server));
+                                                        background(new Runnable() {
+                                                            boolean pushReceived = false;
+                                                            @Override
+                                                            public void run() {
+                                                                try {
+                                                                    registerWithServer(context);
+
+                                                                    foreground(new Runnable() {
+                                                                        @Override
+                                                                        public void run() {
+                                                                            dlg.setMessage(context.getString(R.string.testing_push));
+                                                                        }
+                                                                    });
+
+                                                                    final Runnable emailSent = new Runnable() {
+                                                                        @Override
+                                                                        public void run() {
+                                                                            Helper.showAlertDialog(context, R.string.signin_complete, new OnClickListener() {
+                                                                                @Override
+                                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                                    callback.onCallback(true);
+                                                                                }
+                                                                            });
+                                                                        }
+                                                                    };
+
+                                                                    final BroadcastReceiver pushReceiver = new BroadcastReceiver() {
+                                                                        @Override
+                                                                        public void onReceive(Context context, Intent intent) {
+                                                                            try {
+                                                                                context.unregisterReceiver(this);
+                                                                            }
+                                                                            catch (Exception ex) {
+                                                                                ex.printStackTrace();
+                                                                            }
+                                                                            pushReceived = true;
+                                                                            dlg.dismiss();
+                                                                            Helper.showAlertDialog(context, R.string.signin_success,
+                                                                                    new DialogInterface.OnClickListener() {
+                                                                                        @Override
+                                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                                            emailSent.run();
+                                                                                        }
+                                                                                    });
+                                                                        }
+                                                                    };
+                                                                    IntentFilter filter = new IntentFilter(GCMIntentService.PING);
+                                                                    context.registerReceiver(pushReceiver, filter);
+
+                                                                    ServiceHelper.retryExecuteAndDisconnect(context, accountName, new URL(
+                                                                            ServiceHelper.PUSH_URL + "?type=echo"), null);
+
+                                                                    Thread.sleep(10000);
+                                                                    if (!pushReceived) {
+                                                                        foreground(new Runnable() {
+                                                                            @Override
+                                                                            public void run() {
+                                                                                dlg.dismiss();
+                                                                                Helper.showAlertDialog(context, R.string.push_failed,
+                                                                                        new DialogInterface.OnClickListener() {
+                                                                                            @Override
+                                                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                                                emailSent.run();
+                                                                                            }
+                                                                                        });
+                                                                            }
+                                                                        });
+                                                                    }
+                                                                }
+                                                                catch (Exception ex) {
+                                                                    ex.printStackTrace();
+                                                                    foreground(new Runnable() {
+                                                                        @Override
+                                                                        public void run() {
+                                                                            dlg.dismiss();
+                                                                            Helper.showAlertDialog(context, R.string.signin_failure,
+                                                                                    new DialogInterface.OnClickListener() {
+                                                                                        @Override
+                                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                                            callback.onCallback(false);
+                                                                                        }
+                                                                                    });
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                });
                                             }
                                             catch (Exception ex) {
                                                 ex.printStackTrace();
-                                                context.runOnUiThread(new Runnable() {
+                                                foreground(new Runnable() {
                                                     @Override
                                                     public void run() {
                                                         dlg.dismiss();
-                                                        Helper.showAlertDialog(context, R.string.signin_failure, new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialog, int which) {
-                                                                callback.onCallback(false);
-                                                            }
-                                                        });
+                                                        Helper.showAlertDialog(context, R.string.signin_failure);
+                                                        callback.onCallback(false);
                                                     }
                                                 });
                                             }
                                         };
-                                    }.start();
+                                    });
                                 }
                                 catch (Exception e) {
                                     e.printStackTrace();
@@ -241,6 +288,7 @@ public class TickleServiceHelper {
             context.registerReceiver(receiver, filter);
         }
         
+        GCMRegistrar.unregister(context);
         GCMRegistrar.register(context, "960629859371");
     }
     

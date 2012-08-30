@@ -552,7 +552,8 @@ public class SyncService extends Service {
                     JSONObject r = new JSONObject(registrations);
                     JSONArray names = r.names();
                     for (int i = 0; i < names.length(); i++) {
-                        String registration = names.getString(i);
+                        String name = names.getString(i);
+                        String registration = r.getString(name);
                         gen.writeString(registration);
                     }
                 }

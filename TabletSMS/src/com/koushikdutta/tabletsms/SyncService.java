@@ -1,10 +1,15 @@
 package com.koushikdutta.tabletsms;
 
+import java.util.Hashtable;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -25,11 +30,14 @@ public class SyncService extends Service {
     private long mLastSync = 0;
     private int mSyncCounter = 0;
     private String mAccount;
-    SQLiteDatabase mDatabase;
+    private SQLiteDatabase mDatabase;
+    private int mNewMessageCount = 0;
+    private String mLastMessageNumber;
+    private String mLastMessageText;
 
     private boolean handleResult(JSONObject result, boolean isPush) {
         int newCounter = 0;
-        boolean needsSync = !isPush;
+        boolean needsSync = false;
         if (isPush) {
             try {
                 newCounter = result.getInt("this_last_sync");
@@ -64,13 +72,15 @@ public class SyncService extends Service {
             try {
                 JSONObject message = data.getJSONObject(i);
                 long date = message.getLong("date");
-                mLastSync = Math.max(mLastSync, date);
+                if (!isPush || !needsSync)
+                    mLastSync = Math.max(mLastSync, date);
                 
+                mNewMessageCount++;
                 ContentValues args = new ContentValues();
                 args.put("key", message.getString("number") + "/" + message.getLong("date"));
-                args.put("number", message.getString("number"));
+                args.put("number", mLastMessageNumber = message.getString("number"));
                 args.put("date", message.getLong("date"));
-                args.put("message", message.optString("message"));
+                args.put("message", mLastMessageText = message.optString("message"));
                 String type;
                 args.put("type", type = message.getString("type"));
                 args.put("image", message.optString("image"));
@@ -180,9 +190,16 @@ public class SyncService extends Service {
         }
     }
     
+    private void restoreMessageCount() {
+        mNewMessageCount = mSettings.getInt("new_message_count", 0);
+        mLastMessageNumber = mSettings.getString("last_message_number", null);
+        mLastMessageText = mSettings.getString("last_message_text", null);
+    }
+    
     private void startSync() {
         if (mSyncing)
             return;
+        restoreMessageCount();
         if (Helper.isJavaScriptNullOrEmpty(mAccount)) {
             finishSync();
             return;
@@ -192,7 +209,39 @@ public class SyncService extends Service {
         
     }
     
+    Hashtable<String, CachedPhoneLookup> mLookup = new Hashtable<String, CachedPhoneLookup>();
+
+    public static final int NOTIFICATION_ID = 3948934;
+    private void doNotifications() {
+        NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        if (mNewMessageCount == 0) {
+            nm.cancel(NOTIFICATION_ID);
+            return;
+        }
+        Notification n = new Notification();
+        PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+        n.icon = R.drawable.ic_stat_message_notification;
+        if (mNewMessageCount == 1) {
+            CachedPhoneLookup lookup = Helper.getPhoneLookup(this, mLookup, mLastMessageNumber);
+            String name = mLastMessageNumber;
+            if (lookup != null)
+                name = lookup.displayName;
+            n.tickerText = name + ": " + mLastMessageText;
+            n.setLatestEventInfo(this, name, mLastMessageText, pi);
+        }
+        else {
+            n.tickerText = getString(R.string.new_messages);
+            n.setLatestEventInfo(this, getString(R.string.new_messages), null, pi);
+        }
+        nm.notify(NOTIFICATION_ID, n);
+    }
+    
     private void finishSync() {
+        Log.i(LOGTAG, "Finishing sync.");
+        mSettings.setInt("new_message_count", mNewMessageCount);
+        mSettings.setString("last_message_text", mLastMessageText);
+        mSettings.setString("last_message_number", mLastMessageNumber);
+        doNotifications();
         mSettings.setInt("sync_counter", mSyncCounter);
         Intent syncComplete = new Intent();
         syncComplete.setAction("com.koushikdutta.tabletsms.SYNC_COMPLETE");
@@ -212,9 +261,15 @@ public class SyncService extends Service {
         else if ("refresh".equals(intent.getStringExtra("type"))) {
             try {
                 if ("sms".equals(intent.getStringExtra("bucket"))) {
+                    if (Helper.isJavaScriptNullOrEmpty(mAccount)) {
+                        return super.onStartCommand(intent, flags, startId);
+                    }
                     JSONObject envelope = new JSONObject(intent.getStringExtra("envelope"));
+                    restoreMessageCount();
                     if (handleResult(envelope, true))
                         startSync();
+                    else
+                        finishSync();
                 }
             }
             catch (Exception ex) {
@@ -242,7 +297,8 @@ public class SyncService extends Service {
         
         mSettings = Settings.getInstance(this);
         // start from a week ago
-        mLastSync = mSettings.getLong("last_sync_timestamp", System.currentTimeMillis() - 7L * 24L * 60L * 60L * 1000L);
+        mLastSync = mSettings.getLong("last_sync_timestamp", 0);
+        mLastSync = Math.max(mLastSync, System.currentTimeMillis() - 7L * 24L * 60L * 60L * 1000L);
         mSyncCounter = mSettings.getInt("sync_counter", 0);
         mDatabase = Database.open(this);
         mAccount = mSettings.getString("account");

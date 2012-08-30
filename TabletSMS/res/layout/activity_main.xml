@@ -41,11 +41,16 @@
             </ListView>
 
             <LinearLayout
+                android:background="@android:color/background_dark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                 >
 
                 <EditText
+                    android:textCursorDrawable="@null"
+                    android:textColor="@android:color/primary_text_dark"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
                     android:id="@+id/send_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -53,7 +58,12 @@
                     android:hint="@string/send_hint"
                     android:singleLine="false" />
 
-                <Button
+                <ImageButton
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_action_send_text"
                     android:id="@+id/send"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

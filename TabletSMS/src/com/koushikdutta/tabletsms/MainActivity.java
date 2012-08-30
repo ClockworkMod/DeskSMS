@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -27,7 +28,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Email;
-import android.provider.ContactsContract.PhoneLookup;
 import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -43,6 +43,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -130,7 +131,7 @@ public class MainActivity extends SherlockFragmentActivity {
             found.unread |= entry.getValue().unread;
             
             if (found == mCurrentConversation) {
-                messages.setTranscriptMode(ListView.TRANSCRIPT_MODE_DISABLED);
+                mMessages.setTranscriptMode(ListView.TRANSCRIPT_MODE_DISABLED);
                 if (existing != null) {
                     mConversation.remove(existing);
                 }
@@ -141,7 +142,7 @@ public class MainActivity extends SherlockFragmentActivity {
         mConversations.notifyDataSetChanged();
         // if the conversation is currently being viewed at the time the messages come in
         // mark them as read
-        if (mCurrentConversation != null && switcher.getCurrentView() == switcher.getChildAt(1))
+        if (mCurrentConversation != null && mSwitcher.getCurrentView() == mSwitcher.getChildAt(1))
             markRead(mCurrentConversation);
     }
     
@@ -188,47 +189,8 @@ public class MainActivity extends SherlockFragmentActivity {
             };
         }.start();
     }
-    
-    private static final class CachedPhoneLookup {
-        String displayName;
-        String photoUri;
-    }
-    Hashtable<String, CachedPhoneLookup> mLookup = new Hashtable<String, CachedPhoneLookup>();
 
-    CachedPhoneLookup getPhoneLookup(String number) {
-        if (number == null)
-            return null;
-        try {
-            CachedPhoneLookup lookup = mLookup.get(number);
-            if (lookup != null)
-                return lookup;
-            Uri curi = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
-            Cursor c = getContentResolver().query(curi, null, null, null, null);
-            try {
-                if (c.moveToNext()) {
-                    String displayName = c.getString(c.getColumnIndex(PhoneLookup.DISPLAY_NAME));
-                    String enteredNumber = c.getString(c.getColumnIndex(PhoneLookup.NUMBER));
-                    long userId = c.getLong(c.getColumnIndex(ContactsContract.Contacts._ID));
-                    Uri photoUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, userId);
-                    if (!Helper.isJavaScriptNullOrEmpty(displayName)) {
-                        c.close();
-                        lookup = new CachedPhoneLookup();
-                        lookup.displayName = displayName;
-                        if (photoUri != null)
-                            lookup.photoUri = photoUri.toString();
-                        mLookup.put(number, lookup);
-                        return lookup;
-                    }
-                }
-            }
-            finally {
-                c.close();
-            }
-        }
-        catch (Exception ex) {
-        }
-        return null;
-    }
+    Hashtable<String, CachedPhoneLookup> mLookup = new Hashtable<String, CachedPhoneLookup>();
 
     private void markRead(Conversation conversation) {
         conversation.unread = false;
@@ -249,10 +211,19 @@ public class MainActivity extends SherlockFragmentActivity {
         }
     }
 
-    ViewSwitcher switcher;
-    ListView messages;
-    String account;
-    
+    ViewSwitcher mSwitcher;
+    ListView mMessages;
+    String mAccount;
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        nm.cancel(SyncService.NOTIFICATION_ID);
+        mSettings.setInt("new_message_count", 0);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -260,11 +231,11 @@ public class MainActivity extends SherlockFragmentActivity {
 
         mDatabase = Database.open(this);
         mSettings = Settings.getInstance(MainActivity.this);
-        account = mSettings.getString("account", null);
+        mAccount = mSettings.getString("account", null);
 
         final String myPhotoUri;
-        if (account != null) {
-            Cursor me = getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, new String[] { Email.CONTACT_ID, Email.DATA1 }, Email.DATA1 + "= ?", new String[] { account }, null);
+        if (mAccount != null) {
+            Cursor me = getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, new String[] { Email.CONTACT_ID, Email.DATA1 }, Email.DATA1 + "= ?", new String[] { mAccount }, null);
             if (me.moveToNext()) {
                 long userId = me.getLong(me.getColumnIndex(Email.CONTACT_ID));
                 Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, userId);
@@ -293,7 +264,7 @@ public class MainActivity extends SherlockFragmentActivity {
                 TextView name = (TextView)v.findViewById(R.id.name);
                 TextView text = (TextView)v.findViewById(R.id.last_message);
                 text.setText(conversation.lastMessageText);
-                CachedPhoneLookup lookup = getPhoneLookup(conversation.number);
+                CachedPhoneLookup lookup = Helper.getPhoneLookup(MainActivity.this, mLookup, conversation.number);
                 if (lookup != null) {
                     name.setText(lookup.displayName);
                     UrlImageViewHelper.setUrlDrawable(iv, lookup.photoUri, R.drawable.desksms);
@@ -318,7 +289,7 @@ public class MainActivity extends SherlockFragmentActivity {
                 View v = (convertView == null) ? getLayoutInflater().inflate(R.layout.message, null) : convertView;
 
                 Message message = getItem(position);
-                CachedPhoneLookup lookup = getPhoneLookup(message.number);
+                CachedPhoneLookup lookup = Helper.getPhoneLookup(MainActivity.this, mLookup, message.number);
 
                 ImageView iv = (ImageView)v.findViewById(R.id.image);
                 ImageView ipic = (ImageView)v.findViewById(R.id.incoming_image);
@@ -384,14 +355,14 @@ public class MainActivity extends SherlockFragmentActivity {
             }
         };
         
-        switcher = (ViewSwitcher)findViewById(R.id.switcher);
+        mSwitcher = (ViewSwitcher)findViewById(R.id.switcher);
         final GestureDetector detector = new GestureDetector(this, new SimpleOnGestureListener() {
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 if (Math.abs(velocityX) < Math.abs(velocityY))
                     return false;
 
-                if (switcher.getCurrentView() == switcher.getChildAt(0)) {
+                if (mSwitcher.getCurrentView() == mSwitcher.getChildAt(0)) {
                     if (velocityX > 0)
                         return false;
                     forward();
@@ -407,7 +378,7 @@ public class MainActivity extends SherlockFragmentActivity {
         });
         
         sendText = (EditText)findViewById(R.id.send_text);
-        Button send = (Button)findViewById(R.id.send);
+        ImageButton send = (ImageButton)findViewById(R.id.send);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -452,10 +423,10 @@ public class MainActivity extends SherlockFragmentActivity {
         };
         listView.setOnTouchListener(listener);
         
-        messages = (ListView)findViewById(R.id.messages);
-        messages.setOnTouchListener(listener);
-        messages.setAdapter(mConversation);
-        messages.setOnItemLongClickListener(new OnItemLongClickListener() {
+        mMessages = (ListView)findViewById(R.id.messages);
+        mMessages.setOnTouchListener(listener);
+        mMessages.setAdapter(mConversation);
+        mMessages.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 final Message message = mConversation.getItem(position);
@@ -476,7 +447,7 @@ public class MainActivity extends SherlockFragmentActivity {
                                 public void run() {
                                     try {
                                         String delete = ServiceHelper.SMS_URL + "?operation=DELETE&key=" + URLEncoder.encode(message.key);
-                                        ServiceHelper.retryExecuteAndDisconnect(MainActivity.this, account, new URL(delete), null);
+                                        ServiceHelper.retryExecuteAndDisconnect(MainActivity.this, mAccount, new URL(delete), null);
                                     }
                                     catch (Exception e) {
                                         e.printStackTrace();
@@ -502,7 +473,7 @@ public class MainActivity extends SherlockFragmentActivity {
         IntentFilter filter = new IntentFilter("com.koushikdutta.tabletsms.SYNC_COMPLETE");
         registerReceiver(mReceiver, filter);
         
-        if (Helper.isJavaScriptNullOrEmpty(account)) {
+        if (Helper.isJavaScriptNullOrEmpty(mAccount)) {
             doLogin();
             return;
         }
@@ -511,25 +482,25 @@ public class MainActivity extends SherlockFragmentActivity {
     }
     
     private void back() {
-        if (switcher.getCurrentView() == switcher.getChildAt(0))
+        if (mSwitcher.getCurrentView() == mSwitcher.getChildAt(0))
             return;
         mMenuTrash.setVisible(false);
-        switcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_out));
-        switcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_out_fast));
-        switcher.showPrevious();
+        mSwitcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_out));
+        mSwitcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_out_fast));
+        mSwitcher.showPrevious();
     }
     
     private void forward() {
-        if (switcher.getCurrentView() == switcher.getChildAt(1))
+        if (mSwitcher.getCurrentView() == mSwitcher.getChildAt(1))
             return;
         mMenuTrash.setVisible(true);
-        switcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in));
-        switcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in_fast));
-        switcher.showNext();
+        mSwitcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in));
+        mSwitcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in_fast));
+        mSwitcher.showNext();
     }
     
     public void onBackPressed() {
-        if (switcher.getCurrentView() == switcher.getChildAt(1)) {
+        if (mSwitcher.getCurrentView() == mSwitcher.getChildAt(1)) {
             back();
             return;
         }
@@ -543,17 +514,37 @@ public class MainActivity extends SherlockFragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getSupportMenuInflater();
         inflater.inflate(R.menu.activity_main, menu);
-        
-        menu.getItem(2).setOnMenuItemClickListener(new OnMenuItemClickListener() {
+
+        mMenuMarkAsRead = menu.getItem(0);
+        mMenuMarkAsRead.setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                for (int i = 0; i < mConversations.getCount(); i++) {
+                    Conversation conversation = mConversations.getItem(i);
+                    markRead(conversation);
+                    mConversations.notifyDataSetChanged();
+                }
+                return true;
+            }
+        });
+
+        menu.getItem(3).setOnMenuItemClickListener(new OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                mAccount = null;
                 mSettings.setString("account", null);
+                mDatabase.delete("sms", null, null);
+                mSettings.setLong("last_sync_timestamp", 0);
+                mLastLoaded = System.currentTimeMillis() - 14L * 24L * 60L * 60L * 1000L;
+                mConversations.clear();
+                mConversation.clear();
+                setCurrentConversation(null);
                 doLogin();
                 return true;
             }
         });
 
-        menu.getItem(0).setOnMenuItemClickListener(new OnMenuItemClickListener() {
+        menu.getItem(1).setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -563,7 +554,7 @@ public class MainActivity extends SherlockFragmentActivity {
             }
         });
 
-        mMenuTrash = menu.getItem(1);
+        mMenuTrash = menu.getItem(2);
         mMenuTrash.setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -578,6 +569,7 @@ public class MainActivity extends SherlockFragmentActivity {
         return super.onCreateOptionsMenu(menu);
     }
     
+    MenuItem mMenuMarkAsRead;
     MenuItem mMenuTrash;
     
     private static final int PICK_CONTACT = 10004;
@@ -616,7 +608,11 @@ public class MainActivity extends SherlockFragmentActivity {
         TickleServiceHelper.login(MainActivity.this, new com.koushikdutta.tabletsms.Callback<Boolean>() {
             @Override
             public void onCallback(Boolean result) {
-                account = mSettings.getString("account", null);
+                if (!result) {
+                    doLogin();
+                    return;
+                }
+                mAccount = mSettings.getString("account", null);
                 Helper.startSync(MainActivity.this);
                 System.out.println(result);
             }
@@ -633,8 +629,8 @@ public class MainActivity extends SherlockFragmentActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                messages.smoothScrollToPosition(mConversation.getCount());
-                messages.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+                mMessages.smoothScrollToPosition(mConversation.getCount());
+                mMessages.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
             }
         }, 100);
     }
@@ -655,7 +651,7 @@ public class MainActivity extends SherlockFragmentActivity {
         message.unread = false;
         
         mCurrentConversation.messages.put(message.key, message);
-        messages.setTranscriptMode(ListView.TRANSCRIPT_MODE_DISABLED);
+        mMessages.setTranscriptMode(ListView.TRANSCRIPT_MODE_DISABLED);
         mConversation.add(message);
         scrollToEnd();
 
@@ -708,7 +704,7 @@ public class MainActivity extends SherlockFragmentActivity {
         for (Message message: messages.values()) {
             mConversation.add(message);
         }
-        CachedPhoneLookup lookup = getPhoneLookup(conversation.number);
+        CachedPhoneLookup lookup = Helper.getPhoneLookup(MainActivity.this, mLookup, conversation.number);
         if (lookup != null)
             mCurrentConversationName.setText(lookup.displayName);
         else
@@ -747,7 +743,7 @@ public class MainActivity extends SherlockFragmentActivity {
             void doDelete(String u) {
                 try {
                     delete += "0]"; // append a dummy zero to fix the trailing comma
-                    ServiceHelper.retryExecuteAndDisconnect(MainActivity.this, account, new URL(delete), null);
+                    ServiceHelper.retryExecuteAndDisconnect(MainActivity.this, mAccount, new URL(delete), null);
                 }
                 catch (Exception e) {
                     e.printStackTrace();

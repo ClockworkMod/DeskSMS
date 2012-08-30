@@ -48,7 +48,8 @@ public class C2DMReceiver extends BroadcastReceiver {
                     JSONArray names = r.names();
                     for (int i = 0; i < names.length(); i++) {
                         try {
-                            String registration = names.getString(i);
+                            String name = names.getString(i);
+                            String registration = r.getString(name);
                             URL url = new URL(ServiceHelper.PUSH_URL + "?type=ping&registration=" + URLEncoder.encode(registration));
                             JSONObject result = ServiceHelper.retryExecuteAsJSONObject(context, account, url, null);
                             if (!result.optBoolean("success", false)) {
@@ -135,6 +136,7 @@ public class C2DMReceiver extends BroadcastReceiver {
             else if ("register-device".equals(type)) {
                 String registrations = settings.getString("registrations");
                 String registration = intent.getStringExtra("registration");
+                String device = intent.getStringExtra("device");
                 JSONObject r = null;
                 try {
                     r = new JSONObject(registrations);
@@ -144,7 +146,7 @@ public class C2DMReceiver extends BroadcastReceiver {
                 if (r == null) {
                     r = new JSONObject();
                 }
-                r.put(registration, true);
+                r.put(device, registration);
                 settings.setString("registrations", r.toString());
                 Log.i(LOGTAG, "Registered device! " + registration);
             }
@@ -158,7 +160,13 @@ public class C2DMReceiver extends BroadcastReceiver {
                         String registrations = settings.getString("registrations");
                         JSONObject r = new JSONObject(registrations);
                         JSONArray names = r.names();
-                        envelope.put("registrations", names);
+                        JSONArray values = new JSONArray();
+                        for (int i = 0; i < names.length(); i++) {
+                            String name = names.getString(i);
+                            String value = r.getString(name);
+                            values.put(value);
+                        }
+                        envelope.put("registrations", values);
                     }
                     catch (Exception ex) {
                     }

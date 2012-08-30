@@ -1832,20 +1832,17 @@ com.koushikdutta.desktopsms.MainActivity -> com.koushikdutta.desktopsms.MainActi
     android.os.Handler mHandler -> h
     com.koushikdutta.desktopsms.ListItem mAccountItem -> f
     void doLogin() -> e
-    void addDeskSmsContactInfo(boolean) -> a
-    void removeDeskSmsContactInfo() -> f
     void onCreate(android.os.Bundle) -> onCreate
     java.lang.String getAdjustmentString() -> c
     java.lang.String getAdjustmentString(int) -> b
     void onActivityResult(int,int,android.content.Intent) -> onActivityResult
     void refreshAccount(long) -> a
-    void refreshAccount() -> g
+    void refreshAccount() -> f
     void startBuy() -> d
     boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
     void access$0(com.koushikdutta.desktopsms.MainActivity) -> a
     void access$1(com.koushikdutta.desktopsms.MainActivity) -> b
-    void access$2(com.koushikdutta.desktopsms.MainActivity) -> c
-    void access$3(com.koushikdutta.desktopsms.MainActivity,long) -> a
+    void access$2(com.koushikdutta.desktopsms.MainActivity,long) -> a
 com.koushikdutta.desktopsms.MainActivity$1 -> com.koushikdutta.desktopsms.u:
     com.koushikdutta.desktopsms.MainActivity this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
@@ -1860,91 +1857,77 @@ com.koushikdutta.desktopsms.MainActivity$10 -> com.koushikdutta.desktopsms.w:
     com.koushikdutta.desktopsms.MainActivity access$0(com.koushikdutta.desktopsms.MainActivity$10) -> a
 com.koushikdutta.desktopsms.MainActivity$10$1 -> com.koushikdutta.desktopsms.x:
     com.koushikdutta.desktopsms.MainActivity$10 this$1 -> a
-    java.lang.String val$number -> b
     void onClick(android.content.DialogInterface,int) -> onClick
-com.koushikdutta.desktopsms.MainActivity$11 -> com.koushikdutta.desktopsms.y:
-    com.koushikdutta.desktopsms.MainActivity this$0 -> a
-    void onClick(android.view.View) -> a
-    com.koushikdutta.desktopsms.MainActivity access$0(com.koushikdutta.desktopsms.MainActivity$11) -> a
-com.koushikdutta.desktopsms.MainActivity$11$1 -> com.koushikdutta.desktopsms.z:
-    com.koushikdutta.desktopsms.MainActivity$11 this$1 -> a
-    void onClick(android.content.DialogInterface,int) -> onClick
-    com.koushikdutta.desktopsms.MainActivity$11 access$0(com.koushikdutta.desktopsms.MainActivity$11$1) -> a
-com.koushikdutta.desktopsms.MainActivity$11$1$1 -> com.koushikdutta.desktopsms.aa:
-    com.koushikdutta.desktopsms.MainActivity$11$1 this$2 -> a
+    com.koushikdutta.desktopsms.MainActivity$10 access$0(com.koushikdutta.desktopsms.MainActivity$10$1) -> a
+com.koushikdutta.desktopsms.MainActivity$10$1$1 -> com.koushikdutta.desktopsms.y:
+    com.koushikdutta.desktopsms.MainActivity$10$1 this$2 -> a
     android.app.ProgressDialog val$dlg -> b
     int val$which -> c
     void run() -> a
-    com.koushikdutta.desktopsms.MainActivity$11$1 access$0(com.koushikdutta.desktopsms.MainActivity$11$1$1) -> a
-com.koushikdutta.desktopsms.MainActivity$11$1$1$1 -> com.koushikdutta.desktopsms.ab:
-    com.koushikdutta.desktopsms.MainActivity$11$1$1 this$3 -> a
+    com.koushikdutta.desktopsms.MainActivity$10$1 access$0(com.koushikdutta.desktopsms.MainActivity$10$1$1) -> a
+com.koushikdutta.desktopsms.MainActivity$10$1$1$1 -> com.koushikdutta.desktopsms.z:
+    com.koushikdutta.desktopsms.MainActivity$10$1$1 this$3 -> a
     android.app.ProgressDialog val$dlg -> b
     int val$which -> c
     void run() -> run
-com.koushikdutta.desktopsms.MainActivity$11$1$1$2 -> com.koushikdutta.desktopsms.ac:
-    com.koushikdutta.desktopsms.MainActivity$11$1$1 this$3 -> a
+com.koushikdutta.desktopsms.MainActivity$10$1$1$2 -> com.koushikdutta.desktopsms.aa:
+    com.koushikdutta.desktopsms.MainActivity$10$1$1 this$3 -> a
     android.app.ProgressDialog val$dlg -> b
     void run() -> run
-com.koushikdutta.desktopsms.MainActivity$12 -> com.koushikdutta.desktopsms.ad:
+com.koushikdutta.desktopsms.MainActivity$11 -> com.koushikdutta.desktopsms.ab:
     com.koushikdutta.desktopsms.MainActivity this$0 -> a
     void onCallback(org.json.JSONObject) -> a
     void onCallback(java.lang.Object) -> a
-    com.koushikdutta.desktopsms.MainActivity access$1(com.koushikdutta.desktopsms.MainActivity$12) -> a
-com.koushikdutta.desktopsms.MainActivity$12$1 -> com.koushikdutta.desktopsms.ae:
-    com.koushikdutta.desktopsms.MainActivity$12 this$1 -> a
+    com.koushikdutta.desktopsms.MainActivity access$1(com.koushikdutta.desktopsms.MainActivity$11) -> a
+com.koushikdutta.desktopsms.MainActivity$11$1 -> com.koushikdutta.desktopsms.ac:
+    com.koushikdutta.desktopsms.MainActivity$11 this$1 -> a
     boolean val$forward_email -> b
     boolean val$forward_xmpp -> c
     void run() -> run
-com.koushikdutta.desktopsms.MainActivity$13 -> com.koushikdutta.desktopsms.af:
+com.koushikdutta.desktopsms.MainActivity$12 -> com.koushikdutta.desktopsms.ad:
     com.koushikdutta.desktopsms.MainActivity this$0 -> a
     void run() -> run
-com.koushikdutta.desktopsms.MainActivity$14 -> com.koushikdutta.desktopsms.ag:
+com.koushikdutta.desktopsms.MainActivity$13 -> com.koushikdutta.desktopsms.ae:
     com.koushikdutta.desktopsms.MainActivity this$0 -> a
     void run() -> a
-    com.koushikdutta.desktopsms.MainActivity access$0(com.koushikdutta.desktopsms.MainActivity$14) -> a
-com.koushikdutta.desktopsms.MainActivity$14$1 -> com.koushikdutta.desktopsms.ah:
-    com.koushikdutta.desktopsms.MainActivity$14 this$1 -> a
+    com.koushikdutta.desktopsms.MainActivity access$0(com.koushikdutta.desktopsms.MainActivity$13) -> a
+com.koushikdutta.desktopsms.MainActivity$13$1 -> com.koushikdutta.desktopsms.af:
+    com.koushikdutta.desktopsms.MainActivity$13 this$1 -> a
     long val$expiration -> b
     void run() -> run
-com.koushikdutta.desktopsms.MainActivity$14$2 -> com.koushikdutta.desktopsms.ai:
-    com.koushikdutta.desktopsms.MainActivity$14 this$1 -> a
+com.koushikdutta.desktopsms.MainActivity$13$2 -> com.koushikdutta.desktopsms.ag:
+    com.koushikdutta.desktopsms.MainActivity$13 this$1 -> a
     void run() -> run
-com.koushikdutta.desktopsms.MainActivity$15 -> com.koushikdutta.desktopsms.aj:
+com.koushikdutta.desktopsms.MainActivity$14 -> com.koushikdutta.desktopsms.ah:
     com.koushikdutta.desktopsms.MainActivity this$0 -> a
     android.app.ProgressDialog val$dlg -> b
     void run() -> a
-    com.koushikdutta.desktopsms.MainActivity access$0(com.koushikdutta.desktopsms.MainActivity$15) -> a
-com.koushikdutta.desktopsms.MainActivity$15$1 -> com.koushikdutta.desktopsms.ak:
-    com.koushikdutta.desktopsms.MainActivity$15 this$1 -> a
+    com.koushikdutta.desktopsms.MainActivity access$0(com.koushikdutta.desktopsms.MainActivity$14) -> a
+com.koushikdutta.desktopsms.MainActivity$14$1 -> com.koushikdutta.desktopsms.ai:
+    com.koushikdutta.desktopsms.MainActivity$14 this$1 -> a
     long val$expiration -> b
     android.app.ProgressDialog val$dlg -> c
     org.json.JSONObject val$payload -> d
     void run() -> run
-com.koushikdutta.desktopsms.MainActivity$15$2 -> com.koushikdutta.desktopsms.al:
-    com.koushikdutta.desktopsms.MainActivity$15 this$1 -> a
+com.koushikdutta.desktopsms.MainActivity$14$2 -> com.koushikdutta.desktopsms.aj:
+    com.koushikdutta.desktopsms.MainActivity$14 this$1 -> a
     android.app.ProgressDialog val$dlg -> b
     void run() -> run
-com.koushikdutta.desktopsms.MainActivity$16 -> com.koushikdutta.desktopsms.am:
+com.koushikdutta.desktopsms.MainActivity$15 -> com.koushikdutta.desktopsms.ak:
     com.koushikdutta.desktopsms.MainActivity this$0 -> a
     boolean onMenuItemClick(android.view.MenuItem) -> onMenuItemClick
-com.koushikdutta.desktopsms.MainActivity$2 -> com.koushikdutta.desktopsms.an:
-    com.koushikdutta.desktopsms.MainActivity this$0 -> a
-    android.app.ProgressDialog val$dlg -> b
-    boolean val$onlyRemove -> c
-    java.lang.String val$account -> d
-    void run() -> run
-com.koushikdutta.desktopsms.MainActivity$3 -> com.koushikdutta.desktopsms.ao:
+com.koushikdutta.desktopsms.MainActivity$3 -> com.koushikdutta.desktopsms.al:
     com.koushikdutta.desktopsms.MainActivity this$0 -> a
     void onClick(android.view.View) -> a
     com.koushikdutta.desktopsms.MainActivity access$0(com.koushikdutta.desktopsms.MainActivity$3) -> a
-com.koushikdutta.desktopsms.MainActivity$3$1 -> com.koushikdutta.desktopsms.ap:
+com.koushikdutta.desktopsms.MainActivity$3$1 -> com.koushikdutta.desktopsms.am:
     com.koushikdutta.desktopsms.MainActivity$3 this$1 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.koushikdutta.desktopsms.MainActivity$4 -> com.koushikdutta.desktopsms.aq:
+com.koushikdutta.desktopsms.MainActivity$4 -> com.koushikdutta.desktopsms.an:
     com.koushikdutta.desktopsms.MainActivity this$0 -> a
     void run() -> run
     com.koushikdutta.desktopsms.MainActivity access$0(com.koushikdutta.desktopsms.MainActivity$4) -> a
-com.koushikdutta.desktopsms.MainActivity$4$1 -> com.koushikdutta.desktopsms.ar:
+com.koushikdutta.desktopsms.MainActivity$4$1 -> com.koushikdutta.desktopsms.ao:
     com.koushikdutta.desktopsms.MainActivity$4 this$1 -> a
     android.app.ProgressDialog val$dialog -> b
     com.koushikdutta.desktopsms.ListItem val$gmail -> c
@@ -1953,7 +1936,7 @@ com.koushikdutta.desktopsms.MainActivity$4$1 -> com.koushikdutta.desktopsms.ar:
     void onCallback(java.lang.Boolean) -> a
     void onCallback(java.lang.Object) -> a
     com.koushikdutta.desktopsms.MainActivity$4 access$1(com.koushikdutta.desktopsms.MainActivity$4$1) -> a
-com.koushikdutta.desktopsms.MainActivity$4$1$1 -> com.koushikdutta.desktopsms.as:
+com.koushikdutta.desktopsms.MainActivity$4$1$1 -> com.koushikdutta.desktopsms.ap:
     com.koushikdutta.desktopsms.MainActivity$4$1 this$2 -> a
     android.app.ProgressDialog val$dialog -> b
     java.lang.Boolean val$result -> c
@@ -1961,28 +1944,33 @@ com.koushikdutta.desktopsms.MainActivity$4$1$1 -> com.koushikdutta.desktopsms.as
     com.koushikdutta.desktopsms.ListItem val$gtalk -> e
     com.koushikdutta.desktopsms.ListItem val$web -> f
     void run() -> run
-com.koushikdutta.desktopsms.MainActivity$5 -> com.koushikdutta.desktopsms.at:
+com.koushikdutta.desktopsms.MainActivity$5 -> com.koushikdutta.desktopsms.aq:
     com.koushikdutta.desktopsms.MainActivity this$0 -> a
     java.lang.Runnable val$updateSettings -> i
     void onClick(android.view.View) -> a
-com.koushikdutta.desktopsms.MainActivity$6 -> com.koushikdutta.desktopsms.au:
+com.koushikdutta.desktopsms.MainActivity$6 -> com.koushikdutta.desktopsms.ar:
     com.koushikdutta.desktopsms.MainActivity this$0 -> a
     java.lang.Runnable val$updateSettings -> i
     void onClick(android.view.View) -> a
-com.koushikdutta.desktopsms.MainActivity$7 -> com.koushikdutta.desktopsms.av:
+com.koushikdutta.desktopsms.MainActivity$7 -> com.koushikdutta.desktopsms.as:
     com.koushikdutta.desktopsms.MainActivity this$0 -> a
     java.lang.Runnable val$updateSettings -> i
     void onClick(android.view.View) -> a
-com.koushikdutta.desktopsms.MainActivity$8 -> com.koushikdutta.desktopsms.aw:
+com.koushikdutta.desktopsms.MainActivity$8 -> com.koushikdutta.desktopsms.at:
     com.koushikdutta.desktopsms.MainActivity this$0 -> a
     void onClick(android.view.View) -> a
-com.koushikdutta.desktopsms.MainActivity$9 -> com.koushikdutta.desktopsms.ax:
+com.koushikdutta.desktopsms.MainActivity$9 -> com.koushikdutta.desktopsms.au:
     com.koushikdutta.desktopsms.MainActivity this$0 -> a
     void onClick(android.view.View) -> a
+    com.koushikdutta.desktopsms.MainActivity access$0(com.koushikdutta.desktopsms.MainActivity$9) -> a
+com.koushikdutta.desktopsms.MainActivity$9$1 -> com.koushikdutta.desktopsms.av:
+    com.koushikdutta.desktopsms.MainActivity$9 this$1 -> a
+    java.lang.String val$number -> b
+    void onClick(android.content.DialogInterface,int) -> onClick
 com.koushikdutta.desktopsms.PhoneStateChangedReceiver -> com.koushikdutta.desktopsms.PhoneStateChangedReceiver:
     java.lang.String LOGTAG -> a
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.koushikdutta.desktopsms.SeparatedListAdapter -> com.koushikdutta.desktopsms.ay:
+com.koushikdutta.desktopsms.SeparatedListAdapter -> com.koushikdutta.desktopsms.aw:
     java.util.Map sections -> b
     android.widget.ArrayAdapter headers -> c
     void addSection(java.lang.String,android.widget.Adapter) -> a
@@ -1993,7 +1981,7 @@ com.koushikdutta.desktopsms.SeparatedListAdapter -> com.koushikdutta.desktopsms.
     boolean isEnabled(int) -> isEnabled
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
     long getItemId(int) -> getItemId
-com.koushikdutta.desktopsms.ServiceHelper -> com.koushikdutta.desktopsms.az:
+com.koushikdutta.desktopsms.ServiceHelper -> com.koushikdutta.desktopsms.ax:
     java.lang.String LOGTAG -> a
     java.lang.String numbersOnly(java.lang.String,boolean) -> a
     org.json.JSONObject retryExecuteAsJSONObject(android.content.Context,java.lang.String,java.net.URL,com.koushikdutta.desktopsms.ServiceHelper$ConnectionCallback) -> a
@@ -2006,30 +1994,30 @@ com.koushikdutta.desktopsms.ServiceHelper -> com.koushikdutta.desktopsms.az:
     void updateSettings(android.content.Context,boolean,boolean,boolean,com.koushikdutta.desktopsms.Callback) -> a
     void getSettings(android.content.Context,com.koushikdutta.desktopsms.Callback) -> a
     java.lang.String access$0() -> a
-com.koushikdutta.desktopsms.ServiceHelper$1 -> com.koushikdutta.desktopsms.ba:
+com.koushikdutta.desktopsms.ServiceHelper$1 -> com.koushikdutta.desktopsms.ay:
     android.content.Context val$context -> a
     boolean val$xmpp -> b
     boolean val$mail -> c
     boolean val$web -> d
     com.koushikdutta.desktopsms.Callback val$callback -> e
     void run() -> run
-com.koushikdutta.desktopsms.ServiceHelper$1$1 -> com.koushikdutta.desktopsms.bb:
+com.koushikdutta.desktopsms.ServiceHelper$1$1 -> com.koushikdutta.desktopsms.az:
     com.koushikdutta.desktopsms.ServiceHelper$1 this$1 -> a
     java.util.ArrayList val$params -> b
     void manage(java.net.HttpURLConnection) -> a
-com.koushikdutta.desktopsms.ServiceHelper$2 -> com.koushikdutta.desktopsms.bc:
+com.koushikdutta.desktopsms.ServiceHelper$2 -> com.koushikdutta.desktopsms.ba:
     android.content.Context val$context -> a
     com.koushikdutta.desktopsms.Callback val$callback -> b
     void run() -> run
-com.koushikdutta.desktopsms.ServiceHelper$ConnectionCallback -> com.koushikdutta.desktopsms.bd:
+com.koushikdutta.desktopsms.ServiceHelper$ConnectionCallback -> com.koushikdutta.desktopsms.bb:
     void manage(java.net.HttpURLConnection) -> a
-com.koushikdutta.desktopsms.ServiceHelper$FilePoster -> com.koushikdutta.desktopsms.be:
+com.koushikdutta.desktopsms.ServiceHelper$FilePoster -> com.koushikdutta.desktopsms.bc:
     java.io.File file -> a
     void manage(java.net.HttpURLConnection) -> a
-com.koushikdutta.desktopsms.ServiceHelper$JSONPoster -> com.koushikdutta.desktopsms.bf:
+com.koushikdutta.desktopsms.ServiceHelper$JSONPoster -> com.koushikdutta.desktopsms.bd:
     org.json.JSONObject json -> a
     void manage(java.net.HttpURLConnection) -> a
-com.koushikdutta.desktopsms.Settings -> com.koushikdutta.desktopsms.bg:
+com.koushikdutta.desktopsms.Settings -> com.koushikdutta.desktopsms.be:
     android.database.sqlite.SQLiteDatabase mDatabase -> a
     android.content.Context mContext -> b
     com.koushikdutta.desktopsms.Settings mInstance -> c
@@ -2044,7 +2032,7 @@ com.koushikdutta.desktopsms.Settings -> com.koushikdutta.desktopsms.bg:
     long getLong(java.lang.String,long) -> b
     void setBoolean(java.lang.String,boolean) -> a
     boolean getBoolean(java.lang.String,boolean) -> b
-com.koushikdutta.desktopsms.Settings$1 -> com.koushikdutta.desktopsms.bh:
+com.koushikdutta.desktopsms.Settings$1 -> com.koushikdutta.desktopsms.bf:
     com.koushikdutta.desktopsms.Settings this$0 -> a
     void onUpgrade(android.database.sqlite.SQLiteDatabase,int,int) -> onUpgrade
     void onCreate(android.database.sqlite.SQLiteDatabase) -> onCreate
@@ -2052,14 +2040,14 @@ com.koushikdutta.desktopsms.SettingsReceiver -> com.koushikdutta.desktopsms.Sett
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.koushikdutta.desktopsms.SmsReceiver -> com.koushikdutta.desktopsms.SmsReceiver:
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.koushikdutta.desktopsms.StreamUtility -> com.koushikdutta.desktopsms.bi:
+com.koushikdutta.desktopsms.StreamUtility -> com.koushikdutta.desktopsms.bg:
     java.lang.String LOGTAG -> a
     int copyStream(java.io.InputStream,java.io.OutputStream) -> a
     org.json.JSONObject downloadUriAsJSONObject(java.net.HttpURLConnection) -> a
     java.lang.String downloadUriAsString(java.net.HttpURLConnection) -> b
     byte[] readToEndAsArray(java.io.InputStream) -> a
     java.lang.String readToEnd(java.io.InputStream) -> b
-com.koushikdutta.desktopsms.SyncHelper -> com.koushikdutta.desktopsms.bj:
+com.koushikdutta.desktopsms.SyncHelper -> com.koushikdutta.desktopsms.bh:
     java.lang.String LINE_SEPARATOR -> a
     void startSyncService(android.content.Context) -> a
     void startSyncService(android.content.Context,java.lang.String) -> a
@@ -2105,79 +2093,79 @@ com.koushikdutta.desktopsms.SyncService -> com.koushikdutta.desktopsms.SyncServi
     com.koushikdutta.desktopsms.Settings access$1(com.koushikdutta.desktopsms.SyncService) -> a
     java.lang.String access$2() -> a
     void access$3(com.koushikdutta.desktopsms.SyncService,java.lang.String) -> a
-com.koushikdutta.desktopsms.SyncService$1 -> com.koushikdutta.desktopsms.bk:
+com.koushikdutta.desktopsms.SyncService$1 -> com.koushikdutta.desktopsms.bi:
     com.koushikdutta.desktopsms.SyncService this$0 -> a
     com.koushikdutta.desktopsms.SyncService access$0(com.koushikdutta.desktopsms.SyncService$1) -> a
-com.koushikdutta.desktopsms.SyncService$1$1 -> com.koushikdutta.desktopsms.bl:
+com.koushikdutta.desktopsms.SyncService$1$1 -> com.koushikdutta.desktopsms.bj:
     com.koushikdutta.desktopsms.SyncService$1 this$1 -> a
     void get(android.database.Cursor,org.json.JSONObject,java.lang.String,int) -> a
-com.koushikdutta.desktopsms.SyncService$1$2 -> com.koushikdutta.desktopsms.bm:
+com.koushikdutta.desktopsms.SyncService$1$2 -> com.koushikdutta.desktopsms.bk:
     com.koushikdutta.desktopsms.SyncService$1 this$1 -> a
     void get(android.database.Cursor,org.json.JSONObject,java.lang.String,int) -> a
-com.koushikdutta.desktopsms.SyncService$1$3 -> com.koushikdutta.desktopsms.bn:
+com.koushikdutta.desktopsms.SyncService$1$3 -> com.koushikdutta.desktopsms.bl:
     com.koushikdutta.desktopsms.SyncService$1 this$1 -> a
     void get(android.database.Cursor,org.json.JSONObject,java.lang.String,int) -> a
-com.koushikdutta.desktopsms.SyncService$1$4 -> com.koushikdutta.desktopsms.bo:
+com.koushikdutta.desktopsms.SyncService$1$4 -> com.koushikdutta.desktopsms.bm:
     com.koushikdutta.desktopsms.SyncService$1 this$1 -> a
     void get(android.database.Cursor,org.json.JSONObject,java.lang.String,int) -> a
-com.koushikdutta.desktopsms.SyncService$1$5 -> com.koushikdutta.desktopsms.bp:
+com.koushikdutta.desktopsms.SyncService$1$5 -> com.koushikdutta.desktopsms.bn:
     com.koushikdutta.desktopsms.SyncService$1 this$1 -> a
     void get(android.database.Cursor,org.json.JSONObject,java.lang.String,int) -> a
-com.koushikdutta.desktopsms.SyncService$1$6 -> com.koushikdutta.desktopsms.bq:
+com.koushikdutta.desktopsms.SyncService$1$6 -> com.koushikdutta.desktopsms.bo:
     com.koushikdutta.desktopsms.SyncService$1 this$1 -> a
     void get(android.database.Cursor,org.json.JSONObject,java.lang.String,int) -> a
-com.koushikdutta.desktopsms.SyncService$1$7 -> com.koushikdutta.desktopsms.br:
+com.koushikdutta.desktopsms.SyncService$1$7 -> com.koushikdutta.desktopsms.bp:
     com.koushikdutta.desktopsms.SyncService$1 this$1 -> a
     void get(android.database.Cursor,org.json.JSONObject,java.lang.String,int) -> a
-com.koushikdutta.desktopsms.SyncService$2 -> com.koushikdutta.desktopsms.bs:
+com.koushikdutta.desktopsms.SyncService$2 -> com.koushikdutta.desktopsms.bq:
     com.koushikdutta.desktopsms.SyncService this$0 -> a
-com.koushikdutta.desktopsms.SyncService$3 -> com.koushikdutta.desktopsms.bt:
+com.koushikdutta.desktopsms.SyncService$3 -> com.koushikdutta.desktopsms.br:
     com.koushikdutta.desktopsms.SyncService this$0 -> a
-com.koushikdutta.desktopsms.SyncService$4 -> com.koushikdutta.desktopsms.bu:
+com.koushikdutta.desktopsms.SyncService$4 -> com.koushikdutta.desktopsms.bs:
     com.koushikdutta.desktopsms.SyncService this$0 -> a
-com.koushikdutta.desktopsms.SyncService$5 -> com.koushikdutta.desktopsms.bv:
-    com.koushikdutta.desktopsms.SyncService this$0 -> a
-    void onChange(boolean) -> onChange
-com.koushikdutta.desktopsms.SyncService$6 -> com.koushikdutta.desktopsms.bw:
+com.koushikdutta.desktopsms.SyncService$5 -> com.koushikdutta.desktopsms.bt:
     com.koushikdutta.desktopsms.SyncService this$0 -> a
     void onChange(boolean) -> onChange
-com.koushikdutta.desktopsms.SyncService$7 -> com.koushikdutta.desktopsms.bx:
+com.koushikdutta.desktopsms.SyncService$6 -> com.koushikdutta.desktopsms.bu:
     com.koushikdutta.desktopsms.SyncService this$0 -> a
     void onChange(boolean) -> onChange
-com.koushikdutta.desktopsms.SyncService$8 -> com.koushikdutta.desktopsms.by:
+com.koushikdutta.desktopsms.SyncService$7 -> com.koushikdutta.desktopsms.bv:
+    com.koushikdutta.desktopsms.SyncService this$0 -> a
+    void onChange(boolean) -> onChange
+com.koushikdutta.desktopsms.SyncService$8 -> com.koushikdutta.desktopsms.bw:
     com.koushikdutta.desktopsms.SyncService this$0 -> a
     java.lang.String val$reason -> b
     void run() -> run
     com.koushikdutta.desktopsms.SyncService access$0(com.koushikdutta.desktopsms.SyncService$8) -> a
-com.koushikdutta.desktopsms.SyncService$8$1 -> com.koushikdutta.desktopsms.bz:
+com.koushikdutta.desktopsms.SyncService$8$1 -> com.koushikdutta.desktopsms.bx:
     com.koushikdutta.desktopsms.SyncService$8 this$1 -> a
     void run() -> run
-com.koushikdutta.desktopsms.SyncService$CachedPhoneLookup -> com.koushikdutta.desktopsms.ca:
+com.koushikdutta.desktopsms.SyncService$CachedPhoneLookup -> com.koushikdutta.desktopsms.by:
     java.lang.String displayName -> a
     java.lang.String enteredNumber -> b
     boolean hasDeskSMSContact -> c
-com.koushikdutta.desktopsms.SyncService$CallSync -> com.koushikdutta.desktopsms.cb:
+com.koushikdutta.desktopsms.SyncService$CallSync -> com.koushikdutta.desktopsms.bz:
     com.koushikdutta.desktopsms.SyncService this$0 -> a
     void setSubject(org.json.JSONObject,java.lang.String,android.database.Cursor) -> a
     void setMessage(org.json.JSONObject,java.lang.String,android.database.Cursor) -> b
-com.koushikdutta.desktopsms.SyncService$CallTypeMapper -> com.koushikdutta.desktopsms.cc:
+com.koushikdutta.desktopsms.SyncService$CallTypeMapper -> com.koushikdutta.desktopsms.ca:
     com.koushikdutta.desktopsms.SyncService$CallTypeMapper Instance -> a
-com.koushikdutta.desktopsms.SyncService$CursorGetter -> com.koushikdutta.desktopsms.cd:
+com.koushikdutta.desktopsms.SyncService$CursorGetter -> com.koushikdutta.desktopsms.cb:
     void get(android.database.Cursor,org.json.JSONObject,java.lang.String,int) -> a
-com.koushikdutta.desktopsms.SyncService$MmsImageType -> com.koushikdutta.desktopsms.ce:
-com.koushikdutta.desktopsms.SyncService$MmsSync -> com.koushikdutta.desktopsms.cf:
+com.koushikdutta.desktopsms.SyncService$MmsImageType -> com.koushikdutta.desktopsms.cc:
+com.koushikdutta.desktopsms.SyncService$MmsSync -> com.koushikdutta.desktopsms.cd:
     com.koushikdutta.desktopsms.SyncService this$0 -> a
     void setSubject(org.json.JSONObject,java.lang.String,android.database.Cursor) -> a
     void setMessage(org.json.JSONObject,java.lang.String,android.database.Cursor) -> b
     void logEvent(org.json.JSONObject) -> a
-com.koushikdutta.desktopsms.SyncService$SmsSync -> com.koushikdutta.desktopsms.cg:
+com.koushikdutta.desktopsms.SyncService$SmsSync -> com.koushikdutta.desktopsms.ce:
     com.koushikdutta.desktopsms.SyncService this$0 -> a
     void setSubject(org.json.JSONObject,java.lang.String,android.database.Cursor) -> a
     void setMessage(org.json.JSONObject,java.lang.String,android.database.Cursor) -> b
     long getDate(android.database.Cursor,org.json.JSONObject,int) -> a
-com.koushikdutta.desktopsms.SyncService$SmsTypeMapper -> com.koushikdutta.desktopsms.ch:
+com.koushikdutta.desktopsms.SyncService$SmsTypeMapper -> com.koushikdutta.desktopsms.cf:
     com.koushikdutta.desktopsms.SyncService$SmsTypeMapper Instance -> a
-com.koushikdutta.desktopsms.SyncService$SyncBase -> com.koushikdutta.desktopsms.ci:
+com.koushikdutta.desktopsms.SyncService$SyncBase -> com.koushikdutta.desktopsms.cg:
     android.net.Uri contentProviderUri -> b
     java.lang.String postUrl -> c
     java.lang.String lastSyncSetting -> d
@@ -2190,7 +2178,7 @@ com.koushikdutta.desktopsms.SyncService$SyncBase -> com.koushikdutta.desktopsms.
     void logEvent(org.json.JSONObject) -> a
     long getDate(android.database.Cursor,org.json.JSONObject,int) -> a
     void sync() -> a
-com.koushikdutta.desktopsms.TickleServiceHelper -> com.koushikdutta.desktopsms.cj:
+com.koushikdutta.desktopsms.TickleServiceHelper -> com.koushikdutta.desktopsms.ch:
     java.lang.String LOGTAG -> a
     java.lang.String getCookie(android.content.Context) -> a
     void registerWithServer(android.content.Context) -> b
@@ -2201,12 +2189,12 @@ com.koushikdutta.desktopsms.TickleServiceHelper -> com.koushikdutta.desktopsms.c
     void tryAuth(android.app.Activity,java.lang.String,com.koushikdutta.desktopsms.Callback) -> b
     java.lang.String access$0() -> a
     void access$1(android.app.Activity,java.lang.String,com.koushikdutta.desktopsms.Callback) -> a
-com.koushikdutta.desktopsms.TickleServiceHelper$1 -> com.koushikdutta.desktopsms.ck:
+com.koushikdutta.desktopsms.TickleServiceHelper$1 -> com.koushikdutta.desktopsms.ci:
     java.lang.String[] val$accounts -> a
     android.app.Activity val$context -> b
     com.koushikdutta.desktopsms.Callback val$callback -> c
     void onClick(android.content.DialogInterface,int) -> onClick
-com.koushikdutta.desktopsms.TickleServiceHelper$1$1 -> com.koushikdutta.desktopsms.cl:
+com.koushikdutta.desktopsms.TickleServiceHelper$1$1 -> com.koushikdutta.desktopsms.cj:
     com.koushikdutta.desktopsms.TickleServiceHelper$1 this$1 -> a
     android.app.ProgressDialog val$dlg -> b
     android.app.Activity val$context -> c
@@ -2214,7 +2202,7 @@ com.koushikdutta.desktopsms.TickleServiceHelper$1$1 -> com.koushikdutta.desktops
     com.koushikdutta.desktopsms.Callback val$callback -> e
     void onCallback(java.lang.Void) -> a
     void onCallback(java.lang.Object) -> a
-com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1 -> com.koushikdutta.desktopsms.cm:
+com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1 -> com.koushikdutta.desktopsms.ck:
     com.koushikdutta.desktopsms.TickleServiceHelper$1$1 this$2 -> a
     android.app.ProgressDialog val$dlg -> b
     android.app.Activity val$context -> c
@@ -2222,7 +2210,7 @@ com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1 -> com.koushikdutta.deskto
     java.lang.String val$accountName -> e
     void onCallback(java.lang.String) -> a
     void onCallback(java.lang.Object) -> a
-com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1 -> com.koushikdutta.desktopsms.cn:
+com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1 -> com.koushikdutta.desktopsms.cl:
     boolean pushReceived -> a
     com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1 this$3 -> b
     android.app.Activity val$context -> c
@@ -2230,61 +2218,61 @@ com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1 -> com.koushikdutta.desk
     android.app.ProgressDialog val$dlg -> e
     com.koushikdutta.desktopsms.Callback val$callback -> f
     void run() -> run
-com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$1 -> com.koushikdutta.desktopsms.co:
+com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$1 -> com.koushikdutta.desktopsms.cm:
     com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1 this$4 -> a
     android.app.ProgressDialog val$dlg -> b
     android.app.Activity val$context -> c
     void run() -> run
-com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$2 -> com.koushikdutta.desktopsms.cp:
+com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$2 -> com.koushikdutta.desktopsms.cn:
     com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1 this$4 -> a
     android.app.Activity val$context -> b
     com.koushikdutta.desktopsms.Callback val$callback -> c
     void run() -> run
-com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$2$1 -> com.koushikdutta.desktopsms.cq:
+com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$2$1 -> com.koushikdutta.desktopsms.co:
     com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$2 this$5 -> a
     com.koushikdutta.desktopsms.Callback val$callback -> b
     void onClick(android.content.DialogInterface,int) -> onClick
-com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$3 -> com.koushikdutta.desktopsms.cr:
+com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$3 -> com.koushikdutta.desktopsms.cp:
     com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1 this$4 -> a
     android.app.ProgressDialog val$dlg -> b
     java.lang.Runnable val$emailSent -> c
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$3$1 -> com.koushikdutta.desktopsms.cs:
+com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$3$1 -> com.koushikdutta.desktopsms.cq:
     com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$3 this$5 -> a
     java.lang.Runnable val$emailSent -> b
     void onClick(android.content.DialogInterface,int) -> onClick
-com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$4 -> com.koushikdutta.desktopsms.ct:
+com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$4 -> com.koushikdutta.desktopsms.cr:
     com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1 this$4 -> a
     android.app.ProgressDialog val$dlg -> b
     android.app.Activity val$context -> c
     java.lang.Runnable val$emailSent -> d
     void run() -> run
-com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$4$1 -> com.koushikdutta.desktopsms.cu:
+com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$4$1 -> com.koushikdutta.desktopsms.cs:
     com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$4 this$5 -> a
     java.lang.Runnable val$emailSent -> b
     void onClick(android.content.DialogInterface,int) -> onClick
-com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$5 -> com.koushikdutta.desktopsms.cv:
+com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$5 -> com.koushikdutta.desktopsms.ct:
     com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1 this$4 -> a
     android.app.ProgressDialog val$dlg -> b
     android.app.Activity val$context -> c
     com.koushikdutta.desktopsms.Callback val$callback -> d
     void run() -> run
-com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$5$1 -> com.koushikdutta.desktopsms.cw:
+com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$5$1 -> com.koushikdutta.desktopsms.cu:
     com.koushikdutta.desktopsms.TickleServiceHelper$1$1$1$1$5 this$5 -> a
     com.koushikdutta.desktopsms.Callback val$callback -> b
     void onClick(android.content.DialogInterface,int) -> onClick
-com.koushikdutta.desktopsms.TickleServiceHelper$2 -> com.koushikdutta.desktopsms.cx:
+com.koushikdutta.desktopsms.TickleServiceHelper$2 -> com.koushikdutta.desktopsms.cv:
     com.koushikdutta.desktopsms.Callback val$callback -> a
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.koushikdutta.desktopsms.TickleServiceHelper$3 -> com.koushikdutta.desktopsms.cy:
+com.koushikdutta.desktopsms.TickleServiceHelper$3 -> com.koushikdutta.desktopsms.cw:
     android.app.Activity val$context -> a
     java.lang.String val$accountName -> b
     com.koushikdutta.desktopsms.Callback val$callback -> c
     void run(android.accounts.AccountManagerFuture) -> run
-com.koushikdutta.desktopsms.Tuple -> com.koushikdutta.desktopsms.cz:
+com.koushikdutta.desktopsms.Tuple -> com.koushikdutta.desktopsms.cx:
     java.lang.Object First -> a
     java.lang.Object Second -> b
-com.koushikdutta.desktopsms.WakeLock -> com.koushikdutta.desktopsms.da:
+com.koushikdutta.desktopsms.WakeLock -> com.koushikdutta.desktopsms.cy:
     android.os.PowerManager$WakeLock sWakeLock -> a
     void acquirePartial(android.content.Context) -> a
     void release() -> a
