@@ -22,6 +22,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -33,11 +34,13 @@ import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -47,6 +50,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
@@ -143,8 +147,18 @@ public class MainActivity extends SherlockFragmentActivity {
         mConversations.notifyDataSetChanged();
         // if the conversation is currently being viewed at the time the messages come in
         // mark them as read
-        if (mCurrentConversation != null && mSwitcher.getCurrentView() == mSwitcher.getChildAt(1))
+        if (isConversationShowing())
             markRead(mCurrentConversation);
+        
+        if (mCurrentConversation == null && mConversations.getCount() > 0 && getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setCurrentConversation(mConversations.getItem(0));
+        }
+    }
+    
+    private boolean isConversationShowing() {
+        if (mSwitcher.getCurrentView() == null)
+            return true;
+        return mSwitcher.getCurrentView() == mSwitcher.getChildAt(1);
     }
     
     private boolean loading = false;
@@ -193,6 +207,8 @@ public class MainActivity extends SherlockFragmentActivity {
     Hashtable<String, CachedPhoneLookup> mLookup = new Hashtable<String, CachedPhoneLookup>();
 
     private void markRead(Conversation conversation) {
+        if (conversation == null)
+            return;
         conversation.unread = false;
         ContentValues vals = new ContentValues();
         vals.put("unread", 0);
@@ -371,7 +387,7 @@ public class MainActivity extends SherlockFragmentActivity {
                 if (Math.abs(velocityX) < Math.abs(velocityY))
                     return false;
 
-                if (mSwitcher.getCurrentView() == mSwitcher.getChildAt(0)) {
+                if (!isConversationShowing()) {
                     if (velocityX > 0)
                         return false;
                     forward();
@@ -392,6 +408,13 @@ public class MainActivity extends SherlockFragmentActivity {
             @Override
             public void onClick(View v) {
                 sendSms();
+            }
+        });
+        sendText.setOnEditorActionListener(new OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                sendSms();
+                return true;
             }
         });
 
@@ -491,25 +514,27 @@ public class MainActivity extends SherlockFragmentActivity {
     }
     
     private void back() {
-        if (mSwitcher.getCurrentView() == mSwitcher.getChildAt(0))
+        if (!isConversationShowing())
             return;
-        mMenuTrash.setVisible(false);
+        if (mMenuTrash != null)
+            mMenuTrash.setVisible(false);
         mSwitcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_out));
         mSwitcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_out_fast));
         mSwitcher.showPrevious();
     }
     
     private void forward() {
-        if (mSwitcher.getCurrentView() == mSwitcher.getChildAt(1))
+        if (isConversationShowing())
             return;
-        mMenuTrash.setVisible(true);
+        if (mMenuTrash != null)
+            mMenuTrash.setVisible(true);
         mSwitcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in));
         mSwitcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in_fast));
         mSwitcher.showNext();
     }
     
     public void onBackPressed() {
-        if (mSwitcher.getCurrentView() == mSwitcher.getChildAt(1)) {
+        if (isConversationShowing()) {
             back();
             return;
         }
@@ -629,7 +654,9 @@ public class MainActivity extends SherlockFragmentActivity {
                 return true;
             }
         });
-        mMenuTrash.setVisible(false);
+        
+        mMenuTrash.setVisible(isConversationShowing());
+
         return super.onCreateOptionsMenu(menu);
     }
     
@@ -717,6 +744,8 @@ public class MainActivity extends SherlockFragmentActivity {
         if (text == null || text.length() == 0)
             return;
         sendText.setText("");
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         
         final Message message = new Message();
         message.date = System.currentTimeMillis();

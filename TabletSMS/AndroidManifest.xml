@@ -45,6 +45,7 @@
             android:screenOrientation="sensor"
             android:name=".MainActivity"
             android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden"
             android:configChanges="orientation|keyboard|keyboardHidden"
             android:label="@string/app_name" >
             <intent-filter>

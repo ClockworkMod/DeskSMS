@@ -948,6 +948,7 @@ containing a value of this type.
         public static final int menu_settings=0x7f0a000d;
         public static final int name=0x7f0a000c;
         public static final int new_messages=0x7f0a001e;
+        public static final int no_accounts=0x7f0a0026;
         public static final int notifications=0x7f0a0024;
         public static final int push_failed=0x7f0a0014;
         public static final int registering_with_server=0x7f0a0012;

@@ -7,17 +7,32 @@
     <ViewSwitcher
         android:id="@+id/switcher"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:visibility="gone" >
+    </ViewSwitcher>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
 
         <ListView
             android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="4" >
+            <requestFocus />
         </ListView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <View
+            android:layout_width="1dp"
             android:layout_height="match_parent"
+            android:background="#DADADA" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical" >
 
             <TextView
@@ -70,6 +85,6 @@
                     android:text="@string/send" />
             </LinearLayout>
         </LinearLayout>
-    </ViewSwitcher>
+    </LinearLayout>
 
 </LinearLayout>

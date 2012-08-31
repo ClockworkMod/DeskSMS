@@ -105,6 +105,18 @@ public class TickleServiceHelper {
     public static void login(final Activity context, final Callback<Boolean> callback) {
         final Settings settings = Settings.getInstance(context);
         final String[] accounts = getGoogleAccounts(context);
+        if (accounts.length == 0) {
+            Helper.showAlertDialog(context, R.string.no_accounts, new OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    context.startActivity(new Intent(android.provider.Settings.ACTION_SYNC_SETTINGS));
+                    callback.onCallback(false);
+                }
+            });
+            return;
+        }
+        
+        
         AlertDialog.Builder builder = new Builder(context);
         builder.setCancelable(false);
         builder.setTitle(R.string.accounts);
@@ -262,7 +274,6 @@ public class TickleServiceHelper {
                 });
             }
         });
-        builder.setCancelable(true);
         builder.create().show();
     }
 
