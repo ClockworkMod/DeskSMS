@@ -946,6 +946,7 @@ containing a value of this type.
         public static final int logout=0x7f0a0018;
         public static final int mark_as_read=0x7f0a0020;
         public static final int menu_settings=0x7f0a000d;
+        public static final int messages=0x7f0a0027;
         public static final int name=0x7f0a000c;
         public static final int new_messages=0x7f0a001e;
         public static final int no_accounts=0x7f0a0026;

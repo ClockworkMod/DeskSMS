@@ -27,4 +27,5 @@
 	<string name="notifications">Notifications</string>
 	<string name="all_messages_read">All messages have been marked as read.</string>
 	<string name="no_accounts">You do not have any Google accounts set up on this device. Please log into a Google account on your phone before continuing.</string>
+	<string name="messages">Messages</string>
 </resources>
