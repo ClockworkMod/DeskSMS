@@ -935,6 +935,7 @@ containing a value of this type.
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f0a0009;
         public static final int accounts=0x7f0a0016;
+        public static final int all_messages_read=0x7f0a0025;
         public static final int app_name=0x7f0a000b;
         public static final int authentification_notification=0x7f0a0017;
         public static final int checking_desksms=0x7f0a001f;

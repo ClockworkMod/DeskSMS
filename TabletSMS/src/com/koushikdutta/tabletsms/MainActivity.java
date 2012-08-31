@@ -47,6 +47,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -217,6 +218,13 @@ public class MainActivity extends SherlockFragmentActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        
+        clearNotifications();
+    }
+    
+    private void clearNotifications() {
+        if (!mVisible)
+            return;
 
         NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         nm.cancel(SyncService.NOTIFICATION_ID);
@@ -231,6 +239,8 @@ public class MainActivity extends SherlockFragmentActivity {
         mDatabase = Database.open(this);
         mSettings = Settings.getInstance(MainActivity.this);
         mAccount = mSettings.getString("account", null);
+
+        clearNotifications();
 
         final String myPhotoUri;
         if (mAccount != null) {
@@ -466,9 +476,7 @@ public class MainActivity extends SherlockFragmentActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 load();
-                NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-                nm.cancel(SyncService.NOTIFICATION_ID);
-                mSettings.setInt("new_message_count", 0);
+                clearNotifications();
             }
         };
         IntentFilter filter = new IntentFilter("com.koushikdutta.tabletsms.SYNC_COMPLETE");
@@ -509,8 +517,27 @@ public class MainActivity extends SherlockFragmentActivity {
         super.onBackPressed();
     };
     
+    boolean mVisible = true;
+    protected void onResume() {
+        super.onResume();
+        mVisible = true;
+    };
+    protected void onPause() {
+        super.onPause();
+        mVisible = false;
+    };
+    
     BroadcastReceiver mReceiver;
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            back();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getSupportMenuInflater();
@@ -525,6 +552,7 @@ public class MainActivity extends SherlockFragmentActivity {
                     markRead(conversation);
                     mConversations.notifyDataSetChanged();
                 }
+                Toast.makeText(MainActivity.this, R.string.all_messages_read, Toast.LENGTH_SHORT).show();
                 ThreadingRunnable.background(new ThreadingRunnable() {
                     @Override
                     public void run() {
@@ -668,6 +696,7 @@ public class MainActivity extends SherlockFragmentActivity {
     
     @Override
     protected void onDestroy() {
+        mVisible = false;
         unregisterReceiver(mReceiver);
         super.onDestroy();
     }

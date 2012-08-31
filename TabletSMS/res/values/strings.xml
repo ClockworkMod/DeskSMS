@@ -25,4 +25,5 @@
 	<string name="welcome_info">TabletSMS lets you send text messages from your tablet through your phone.\n\nBefore starting, please make sure that:\n1) You have set up <b>DeskSMS</b> on your <b>phone</b>.\n2) You installed <b>TabletSMS</b> on your <b>tablet</b>.\n\nDone? Great! Now, let\'s log in with the Google account you used for DeskSMS.</string>
 	<string name="settings">Settings</string>
 	<string name="notifications">Notifications</string>
+	<string name="all_messages_read">All messages have been marked as read.</string>
 </resources>
