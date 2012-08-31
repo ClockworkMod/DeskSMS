@@ -1,21 +1,17 @@
 <resources>
 
-    <string name="app_name">TabletSms</string>
+    <string name="app_name">TabletSMS</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">TabletSMS by DeskSMS</string>
     <string name="signin_success">You have successfully signed in!</string>
     <string name="signin_failure">Login failed. Please verify your internet connection and try again. Logging in with a Google Apps email address may not work. If the error persists, please send a log to the developer.</string>
-    <string name="login_with_google">Login with Google Account</string>
-    <string name="requesting_permissions">DeskSMS will now ask you for permission to use your Google Account authentication for the purposes of push notifications and registration with our server. DeskSMS will not have access to your passwords or personal data.</string>
-    <string name="permission_request">Permissions Request</string>
     <string name="setting_up_push">Setting up push notifications...</string>
     <string name="retrieving_authentication">Retrieving Google authentication tokens...</string>
     <string name="registering_with_server">Registering with push server...</string>
     <string name="testing_push">Testing push notifications...</string>
-    <string name="push_failed">You have successfully signed in!\n\nWarning: Push notifications were set up successfully, but the test push notification failed. There may be issues receiving messages via DeskSMS.</string>
+    <string name="push_failed">The test push notification from your tablet to your phone failed.\n\nPlease make sure the latest version of <b>DeskSMS</b> is installed and running on your <b>phone</b>.</string>
     <string name="signin_complete">Your DeskSMS inbox is now loading.</string>
     <string name="accounts">Accounts</string>
-    <string name="authentification_notification">DeskSMS was unable to log into your account. Please click to reauthenticate.</string>
+    <string name="authentification_notification">TabletSMS was unable to log into your account. Please click to reauthenticate.</string>
     <string name="logout">Logout</string>
     <string name="send_hint">Type your message here.</string>
     <string name="send">Send</string>
@@ -24,8 +20,9 @@
 	<string name="compose">Compose</string>
 	<string name="new_messages">You have new messages.</string>
 	<string name="checking_desksms">Checking DeskSMS phone version...</string>
-	<string name="desksms_outdated">The DeskSMS app installed on your phone is outdated. Please upgrade the DeskSMS phone app!</string>
 	<string name="mark_as_read">Mark As Read</string>
 	<string name="welcome">Welcome to TabletSMS by DeskSMS</string>
 	<string name="welcome_info">TabletSMS lets you send text messages from your tablet through your phone.\n\nBefore starting, please make sure that:\n1) You have set up <b>DeskSMS</b> on your <b>phone</b>.\n2) You installed <b>TabletSMS</b> on your <b>tablet</b>.\n\nDone? Great! Now, let\'s log in with the Google account you used for DeskSMS.</string>
+	<string name="settings">Settings</string>
+	<string name="notifications">Notifications</string>
 </resources>

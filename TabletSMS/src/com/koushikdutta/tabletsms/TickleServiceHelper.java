@@ -129,26 +129,14 @@ public class TickleServiceHelper {
 
                                     dlg.setMessage(context.getString(R.string.checking_desksms));
                                     ThreadingRunnable.background(new ThreadingRunnable() {
+                                        boolean mOutDated;
                                         public void run() {
                                             try {
+                                                // check to see what version of the client app is running... if push fails,
+                                                // we can provide this as a possible reason.
                                                 JSONObject result = ServiceHelper.retryExecuteAsJSONObject(context, accountName, new URL(ServiceHelper.WHOAMI_URL), null);
-                                                if (result.optInt("version_code", 0) < 1110) {
-                                                    foreground(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            dlg.dismiss();
-                                                            settings.setString("account", null);
-                                                            Helper.showAlertDialog(context, R.string.desksms_outdated,
-                                                                    new DialogInterface.OnClickListener() {
-                                                                        @Override
-                                                                        public void onClick(DialogInterface dialog, int which) {
-                                                                            callback.onCallback(false);
-                                                                        }
-                                                                    });
-                                                        }
-                                                    });
-                                                    return;
-                                                }
+                                                mOutDated = result.optInt("version_code", 0) < 1110;
+                                                Log.i(LOGTAG, "DeskSMS may be outdated... " + mOutDated);
                                                 
                                                 foreground(new Runnable() {
                                                     @Override
@@ -206,8 +194,9 @@ public class TickleServiceHelper {
                                                                     ServiceHelper.retryExecuteAndDisconnect(context, accountName, new URL(
                                                                             ServiceHelper.PUSH_URL + "?type=echo"), null);
 
-                                                                    Thread.sleep(10000);
+                                                                    Thread.sleep(15000);
                                                                     if (!pushReceived) {
+                                                                        settings.setString("account", null);
                                                                         foreground(new Runnable() {
                                                                             @Override
                                                                             public void run() {
@@ -216,7 +205,7 @@ public class TickleServiceHelper {
                                                                                         new DialogInterface.OnClickListener() {
                                                                                             @Override
                                                                                             public void onClick(DialogInterface dialog, int which) {
-                                                                                                emailSent.run();
+                                                                                                callback.onCallback(false);
                                                                                             }
                                                                                         });
                                                                             }
@@ -224,6 +213,7 @@ public class TickleServiceHelper {
                                                                     }
                                                                 }
                                                                 catch (Exception ex) {
+                                                                    settings.setString("account", null);
                                                                     ex.printStackTrace();
                                                                     foreground(new Runnable() {
                                                                         @Override
@@ -245,6 +235,7 @@ public class TickleServiceHelper {
                                                 });
                                             }
                                             catch (Exception ex) {
+                                                settings.setString("account", null);
                                                 ex.printStackTrace();
                                                 foreground(new Runnable() {
                                                     @Override
@@ -259,6 +250,7 @@ public class TickleServiceHelper {
                                     });
                                 }
                                 catch (Exception e) {
+                                    settings.setString("account", null);
                                     e.printStackTrace();
                                     dlg.dismiss();
                                     Helper.showAlertDialog(context, R.string.signin_failure);

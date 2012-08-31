@@ -6,6 +6,7 @@
     android:padding="4dp" >
 
     <TextView
+        android:autoLink="web"
         android:id="@+id/outgoing_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,6 +34,7 @@
         android:scaleType="fitCenter" />
 
     <TextView
+        android:autoLink="web"
         android:id="@+id/incoming_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

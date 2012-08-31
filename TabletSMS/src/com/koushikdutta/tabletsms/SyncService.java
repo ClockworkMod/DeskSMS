@@ -219,6 +219,9 @@ public class SyncService extends Service {
 
     public static final int NOTIFICATION_ID = 3948934;
     private void doNotifications() {
+        if (!mSettings.getBoolean("notifications", true))
+            return;
+        
         NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         if (mNewMessageCount == 0) {
             nm.cancel(NOTIFICATION_ID);

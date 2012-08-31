@@ -1,8 +1,5 @@
 package com.koushikdutta.tabletsms;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -11,12 +8,9 @@ import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
-import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.NotificationManager;
@@ -25,6 +19,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
@@ -47,7 +42,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -546,7 +540,31 @@ public class MainActivity extends SherlockFragmentActivity {
             }
         });
 
+
         menu.getItem(3).setOnMenuItemClickListener(new OnMenuItemClickListener() {
+            boolean[] options = new boolean[] { mSettings.getBoolean("notifications", true) };
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMultiChoiceItems(new CharSequence[] { getString(R.string.notifications) }, options, new OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        options[which] = isChecked;
+                    }
+                });
+                builder.setTitle(R.string.settings);
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mSettings.setBoolean("notifications", options[0]);
+                    }
+                });
+                builder.create().show();
+                return true;
+            }
+        });
+
+        menu.getItem(4).setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 mAccount = null;
