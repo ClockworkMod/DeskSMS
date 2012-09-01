@@ -14,10 +14,18 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
+            <TextView
+                android:id="@+id/messages_header"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" >
+            </TextView>
+
             <ListView
                 android:id="@+id/list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true" >
             </ListView>
 
             <LinearLayout
@@ -64,6 +72,7 @@
             </ListView>
 
             <LinearLayout
+                android:id="@+id/send_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/background_dark"

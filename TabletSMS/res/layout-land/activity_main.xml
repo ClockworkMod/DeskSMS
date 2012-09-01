@@ -23,6 +23,7 @@
             android:orientation="vertical" >
 
             <TextView
+                android:id="@+id/messages_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/background_dark"
@@ -32,8 +33,11 @@
 
             <ListView
                 android:id="@+id/list"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:background="@android:color/background_dark" >
+
             </ListView>
         </LinearLayout>
 
@@ -92,6 +96,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/send_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/background_dark"
@@ -101,6 +106,7 @@
                     android:id="@+id/send_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:hint="@string/send_hint"
                     android:imeActionLabel="@string/send"

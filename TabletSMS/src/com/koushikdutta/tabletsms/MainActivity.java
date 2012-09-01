@@ -25,6 +25,7 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Shader.TileMode;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,6 +35,7 @@ import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -523,7 +525,14 @@ public class MainActivity extends SherlockFragmentActivity {
             listView.setEmptyView(c);
         }
         c.setId(android.R.id.empty);
-
+        
+        TileableBackgroundDrawable tile = new TileableBackgroundDrawable(getResources(), R.drawable.stitch);
+        mCurrentConversationName.setBackgroundDrawable(tile);
+        findViewById(R.id.send_container).setBackgroundDrawable(tile);
+        findViewById(R.id.messages_header).setBackgroundDrawable(tile);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            listView.setBackgroundDrawable(tile);
+        }
 
         if (Helper.isJavaScriptNullOrEmpty(mAccount)) {
             doLogin();
