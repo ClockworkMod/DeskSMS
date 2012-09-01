@@ -196,16 +196,10 @@ public class SyncService extends Service {
         }
     }
     
-    private void restoreMessageCount() {
-        mNewMessageCount = mSettings.getInt("new_message_count", 0);
-        mLastMessageNumber = mSettings.getString("last_message_number", null);
-        mLastMessageText = mSettings.getString("last_message_text", null);
-    }
-    
     private void startSync() {
         if (mSyncing)
             return;
-        restoreMessageCount();
+        mNewMessageCount = 0;
         if (Helper.isJavaScriptNullOrEmpty(mAccount)) {
             finishSync();
             return;
@@ -222,8 +216,9 @@ public class SyncService extends Service {
         if (!mSettings.getBoolean("notifications", true))
             return;
         
+        int totalPendingMessages = mSettings.getInt("new_message_count", 0);
         NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        if (mNewMessageCount == 0) {
+        if (totalPendingMessages == 0) {
             nm.cancel(NOTIFICATION_ID);
             return;
         }
@@ -231,27 +226,29 @@ public class SyncService extends Service {
         PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
         n.icon = R.drawable.ic_stat_message_notification;
         n.defaults = Notification.DEFAULT_ALL;
-        if (mNewMessageCount == 1) {
-            CachedPhoneLookup lookup = Helper.getPhoneLookup(this, mLookup, mLastMessageNumber);
-            String name = mLastMessageNumber;
-            if (lookup != null)
-                name = lookup.displayName;
-            n.tickerText = name + ": " + mLastMessageText;
+        CachedPhoneLookup lookup = Helper.getPhoneLookup(this, mLookup, mLastMessageNumber);
+        String name = mLastMessageNumber;
+        if (lookup != null)
+            name = lookup.displayName;
+        n.tickerText = name + ": " + mLastMessageText;
+        if (totalPendingMessages == 1) {
             n.setLatestEventInfo(this, name, mLastMessageText, pi);
         }
         else {
-            n.tickerText = getString(R.string.new_messages);
-            n.setLatestEventInfo(this, getString(R.string.new_messages), null, pi);
+            n.setLatestEventInfo(this, getString(R.string.app_name), getString(R.string.new_messages), pi);
         }
         nm.notify(NOTIFICATION_ID, n);
     }
     
     private void finishSync() {
         Log.i(LOGTAG, "Finishing sync.");
-        mSettings.setInt("new_message_count", mNewMessageCount);
-        mSettings.setString("last_message_text", mLastMessageText);
-        mSettings.setString("last_message_number", mLastMessageNumber);
-        doNotifications();
+        int previousMessageCount = mSettings.getInt("new_message_count", 0);
+        if (mNewMessageCount != 0) {
+            mSettings.setInt("new_message_count", previousMessageCount + mNewMessageCount);
+            mSettings.setString("last_message_text", mLastMessageText);
+            mSettings.setString("last_message_number", mLastMessageNumber);
+            doNotifications();
+        }
         mSettings.setInt("sync_counter", mSyncCounter);
         Intent syncComplete = new Intent();
         syncComplete.setAction("com.koushikdutta.tabletsms.SYNC_COMPLETE");
@@ -275,7 +272,7 @@ public class SyncService extends Service {
                         return super.onStartCommand(intent, flags, startId);
                     }
                     JSONObject envelope = new JSONObject(intent.getStringExtra("envelope"));
-                    restoreMessageCount();
+                    mNewMessageCount = 0;
                     if (handleResult(envelope, true))
                         startSync();
                     else
