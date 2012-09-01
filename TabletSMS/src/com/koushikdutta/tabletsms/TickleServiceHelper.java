@@ -159,7 +159,7 @@ public class TickleServiceHelper {
                                                         Log.i(LOGTAG, "forward result:");
                                                         Log.i(LOGTAG, forwardResult.toString());
 //                                                        // this will reset the sync counter
-                                                        JSONObject resetResult = ServiceHelper.retryExecuteAsJSONObject(context, accountName, new URL(ServiceHelper.PUSH_URL + "?type=settings&data.last_sms_sync=0&forward_web=true"), null);
+                                                        JSONObject resetResult = ServiceHelper.retryExecuteAsJSONObject(context, accountName, new URL(ServiceHelper.PUSH_URL + "?type=settings&data.last_sms_sync=0&data.last_mms_sync=0&forward_web=true"), null);
                                                         Log.i(LOGTAG, "reset result:");
                                                         Log.i(LOGTAG, resetResult.toString());
                                                         // and this will trigger the sync
