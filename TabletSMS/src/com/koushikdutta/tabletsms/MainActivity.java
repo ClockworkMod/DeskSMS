@@ -27,6 +27,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Shader.TileMode;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
@@ -129,6 +130,7 @@ public class MainActivity extends SherlockFragmentActivity {
     }
     
     private void merge(LinkedHashMap<String, Message> newMessages) {
+        boolean addedToCurrent = false;
         for (Entry<String, Message> entry: newMessages.entrySet()) {
             String key = entry.getKey();
             Message message = entry.getValue();
@@ -139,11 +141,15 @@ public class MainActivity extends SherlockFragmentActivity {
             found.unread |= entry.getValue().unread;
             
             if (found == mCurrentConversation) {
-                mMessages.setTranscriptMode(ListView.TRANSCRIPT_MODE_DISABLED);
+                addedToCurrent = true;
                 if (existing != null) {
                     mConversation.remove(existing);
                 }
                 mConversation.add(message);
+            }
+        }
+        if (addedToCurrent) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 scrollToEnd();
             }
         }
@@ -161,6 +167,10 @@ public class MainActivity extends SherlockFragmentActivity {
             setEmptyText(R.string.no_messages);
         else
             clearEmptyText();
+        
+        if (newMessages.size() == 1) {
+            ratingPester();
+        }
     }
     
     private boolean isConversationShowing() {
@@ -263,6 +273,7 @@ public class MainActivity extends SherlockFragmentActivity {
         mDatabase = Database.open(this);
         mSettings = Settings.getInstance(MainActivity.this);
         mAccount = mSettings.getString("account", null);
+        mVisible = true;
 
         clearNotifications();
 
@@ -571,7 +582,7 @@ public class MainActivity extends SherlockFragmentActivity {
         super.onBackPressed();
     };
     
-    boolean mVisible = true;
+    static boolean mVisible = false;
     protected void onResume() {
         super.onResume();
         mVisible = true;
@@ -759,13 +770,38 @@ public class MainActivity extends SherlockFragmentActivity {
     }
     
     private void scrollToEnd() {
+        mMessages.setTranscriptMode(ListView.TRANSCRIPT_MODE_DISABLED);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mMessages.smoothScrollToPosition(mConversation.getCount());
+                mMessages.smoothScrollToPosition(mConversation.getCount() - 1);
+//                mMessages.setSelected(mConversation.getCount() - 1);
+//                mMessages.smoothScrollToPosition(mConversation.getCount() + 1);
                 mMessages.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
             }
         }, 100);
+    }
+
+    private void ratingPester() {
+        boolean pestered = mSettings.getBoolean("ratings_pestered", false);
+        if (pestered)
+            return;
+        int o = mSettings.getInt("usage_single_outgoing", 0);
+        int i = mSettings.getInt("usage_single_incoming", 0);
+        if (o < 3 || i < 3)
+            return;
+        pestered = true;
+        mSettings.setBoolean("ratings_pestered", true);
+        Message message = new Message();
+        message.number = "DeskSMS";
+        message.date = System.currentTimeMillis();
+        message.key = message.number + "/" + message.date;
+        message.type = "incoming";
+        message.unread = true;
+        message.message = getString(R.string.rate_me);
+        LinkedHashMap<String, Message> newMessages = new LinkedHashMap<String, MainActivity.Message>();
+        newMessages.put(message.key, message);
+        merge(newMessages);
     }
     
     EditText sendText;
@@ -773,6 +809,12 @@ public class MainActivity extends SherlockFragmentActivity {
         String text = sendText.getText().toString();
         if (text == null || text.length() == 0)
             return;
+        
+        int prevCounter = mSettings.getInt("usage_single_outgoing", 0);
+        mSettings.setInt("usage_single_outgoing", prevCounter + 1);
+
+        ratingPester();
+        
         sendText.setText("");
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
@@ -786,9 +828,12 @@ public class MainActivity extends SherlockFragmentActivity {
         message.unread = false;
         
         mCurrentConversation.messages.put(message.key, message);
-        mMessages.setTranscriptMode(ListView.TRANSCRIPT_MODE_DISABLED);
+
         mConversation.add(message);
-        scrollToEnd();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            scrollToEnd();
+        }
+
 
         ContentValues insert = new ContentValues();
         insert.put("date", message.date);

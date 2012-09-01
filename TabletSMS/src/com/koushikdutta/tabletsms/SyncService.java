@@ -216,6 +216,9 @@ public class SyncService extends Service {
         if (!mSettings.getBoolean("notifications", true))
             return;
         
+        if (MainActivity.mVisible)
+            return;
+        
         int totalPendingMessages = mSettings.getInt("new_message_count", 0);
         NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         if (totalPendingMessages == 0) {
@@ -244,6 +247,12 @@ public class SyncService extends Service {
         Log.i(LOGTAG, "Finishing sync.");
         int previousMessageCount = mSettings.getInt("new_message_count", 0);
         if (mNewMessageCount != 0) {
+            if (mNewMessageCount == 1) {
+                // use this to track how many messages a user has gotten after initial sync.
+                // show a "rate me!" dialog at a certain point.
+                int prevCounter = mSettings.getInt("usage_single_incoming", 0);
+                mSettings.setInt("usage_single_incoming", prevCounter + 1);
+            }
             mSettings.setInt("new_message_count", previousMessageCount + mNewMessageCount);
             mSettings.setString("last_message_text", mLastMessageText);
             mSettings.setString("last_message_number", mLastMessageNumber);

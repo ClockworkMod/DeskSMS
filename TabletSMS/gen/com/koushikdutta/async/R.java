@@ -958,6 +958,7 @@ containing a value of this type.
         public static final int no_messages=0x7f0a0029;
         public static final int notifications=0x7f0a0024;
         public static final int push_failed=0x7f0a0014;
+        public static final int rate_me=0x7f0a002a;
         public static final int registering_with_server=0x7f0a0012;
         public static final int retrieving_authentication=0x7f0a0011;
         public static final int send=0x7f0a001a;
