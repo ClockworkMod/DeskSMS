@@ -309,7 +309,6 @@ public class MainActivity extends ActivityBase {
         });
         */
         
-        /*
         addItem(R.string.contacts, new ListItem(this, R.string.remove_desksms_contact_info, 0) {
             @Override
             public void onClick(View view) {
@@ -317,7 +316,6 @@ public class MainActivity extends ActivityBase {
                 removeDeskSmsContactInfo();
             }
         });
-        */
 
         addItem(R.string.troubleshooting, new ListItem(this, R.string.test_message, 0) {
             @Override

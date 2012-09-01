@@ -17,9 +17,9 @@
         android:orientation="horizontal" >
 
         <LinearLayout
-        android:layout_weight="5"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="5"
             android:orientation="vertical" >
 
             <TextView
@@ -33,7 +33,7 @@
             <ListView
                 android:id="@+id/list"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent" >
             </ListView>
         </LinearLayout>
 
@@ -43,7 +43,7 @@
             android:background="#DADADA" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:orientation="vertical" >
@@ -56,17 +56,40 @@
                 android:gravity="center"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large.Inverse" />
 
-            <ListView
-                android:id="@+id/messages"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:animateLayoutChanges="true"
-                android:divider="@null"
-                android:dividerHeight="0dp"
-                android:stackFromBottom="true"
-                android:transcriptMode="alwaysScroll" >
-            </ListView>
+                android:orientation="vertical" >
+
+                <ListView
+                    android:id="@+id/messages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:stackFromBottom="true"
+                    android:transcriptMode="alwaysScroll" >
+                </ListView>
+
+                <LinearLayout
+                    android:id="@android:id/empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/empty"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

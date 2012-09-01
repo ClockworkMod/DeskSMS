@@ -146,9 +146,31 @@ public class TickleServiceHelper {
                                             try {
                                                 // check to see what version of the client app is running... if push fails,
                                                 // we can provide this as a possible reason.
-                                                JSONObject result = ServiceHelper.retryExecuteAsJSONObject(context, accountName, new URL(ServiceHelper.WHOAMI_URL), null);
-                                                mOutDated = result.optInt("version_code", 0) < 1110;
+                                                JSONObject whoami = ServiceHelper.retryExecuteAsJSONObject(context, accountName, new URL(ServiceHelper.WHOAMI_URL), null);
+                                                mOutDated = whoami.optInt("version_code", 0) < 1110;
                                                 Log.i(LOGTAG, "DeskSMS may be outdated... " + mOutDated);
+                                                
+                                                try {
+                                                    // check to see if web forwarding is enabled, if not, enable it and force a sync.
+                                                    JSONObject settings = ServiceHelper.retryExecuteAsJSONObject(context, accountName, new URL(ServiceHelper.SETTINGS_URL), null);
+                                                    if (!settings.optBoolean("forward_web", false)) {
+                                                        // enable web forwarding
+                                                        JSONObject forwardResult = ServiceHelper.retryExecuteAsJSONObject(context, accountName, new URL(ServiceHelper.SETTINGS_URL), new ServiceHelper.StringPoster("forward_web=true&tickle=true"));
+                                                        Log.i(LOGTAG, "forward result:");
+                                                        Log.i(LOGTAG, forwardResult.toString());
+//                                                        // this will reset the sync counter
+                                                        JSONObject resetResult = ServiceHelper.retryExecuteAsJSONObject(context, accountName, new URL(ServiceHelper.PUSH_URL + "?type=settings&data.last_sms_sync=0&forward_web=true"), null);
+                                                        Log.i(LOGTAG, "reset result:");
+                                                        Log.i(LOGTAG, resetResult.toString());
+                                                        // and this will trigger the sync
+                                                        JSONObject syncResult = ServiceHelper.retryExecuteAsJSONObject(context, accountName, new URL(ServiceHelper.PUSH_URL + "?type=outbox"), null);
+                                                        Log.i(LOGTAG, "forced sync result:");
+                                                        Log.i(LOGTAG, syncResult.toString());
+                                                    }
+                                                }
+                                                catch (Exception ex) {
+                                                    ex.printStackTrace();
+                                                }
                                                 
                                                 foreground(new Runnable() {
                                                     @Override
@@ -286,7 +308,7 @@ public class TickleServiceHelper {
                     callback.onCallback(null);
                 }
             };
-        
+
             IntentFilter filter = new IntentFilter(GCMIntentService.ACTION_REGISTRATION_RECEIVED);
             context.registerReceiver(receiver, filter);
         }

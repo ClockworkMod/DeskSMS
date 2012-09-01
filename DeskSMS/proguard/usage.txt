@@ -473,10 +473,6 @@ com.koushikdutta.desktopsms.Helper:
 com.koushikdutta.desktopsms.ListItem:
     27:31:public void setTitle(int)
     70:72:public ListItem(com.koushikdutta.desktopsms.ActivityBase,java.lang.String,java.lang.String,int)
-com.koushikdutta.desktopsms.MainActivity:
-    93:170:private void addDeskSmsContactInfo(boolean)
-    173:174:private void removeDeskSmsContactInfo()
-com.koushikdutta.desktopsms.MainActivity$2
 com.koushikdutta.desktopsms.Manifest
 com.koushikdutta.desktopsms.Manifest$permission
 com.koushikdutta.desktopsms.R

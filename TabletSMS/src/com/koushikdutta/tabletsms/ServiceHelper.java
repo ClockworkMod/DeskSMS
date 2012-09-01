@@ -40,10 +40,9 @@ public class ServiceHelper {
     public static final String SMS_URL = USER_URL + "/sms";
     public static final String READ_URL = USER_URL + "/read";
     public static final String DELETE_CONVERSATION_URL = USER_URL + "/delete/conversation";
-    public static final String CALL_URL = USER_URL + "/call";
     public static final String WHOAMI_URL = USER_URL + "/whoami";
-    public static final String STATUS_URL = USER_URL + "/status";
     public static final String OUTBOX_URL = USER_URL + "/outbox";
+    public static final String TICKLE_URL = USER_URL + "/tickle";
     
     static String numbersOnly(String number, boolean allowPlus) {
         StringBuilder ret = new StringBuilder();

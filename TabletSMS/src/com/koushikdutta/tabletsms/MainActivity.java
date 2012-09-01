@@ -39,6 +39,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -153,6 +154,11 @@ public class MainActivity extends SherlockFragmentActivity {
         if (mCurrentConversation == null && mConversations.getCount() > 0 && getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setCurrentConversation(mConversations.getItem(0));
         }
+        
+        if (mConversations.getCount() == 0)
+            setEmptyText(R.string.no_messages);
+        else
+            clearEmptyText();
     }
     
     private boolean isConversationShowing() {
@@ -498,6 +504,8 @@ public class MainActivity extends SherlockFragmentActivity {
         mReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                if (mAccount == null)
+                    return;
                 load();
                 clearNotifications();
             }
@@ -505,36 +513,48 @@ public class MainActivity extends SherlockFragmentActivity {
         IntentFilter filter = new IntentFilter("com.koushikdutta.tabletsms.SYNC_COMPLETE");
         registerReceiver(mReceiver, filter);
         
+        
+        View c = findViewById(android.R.id.empty);
+        mEmptyView = (TextView)c.findViewById(R.id.empty);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mMessages.setEmptyView(c);
+        }
+        else {
+            listView.setEmptyView(c);
+        }
+        c.setId(android.R.id.empty);
+
+
         if (Helper.isJavaScriptNullOrEmpty(mAccount)) {
             doLogin();
-            return;
         }
-        
-        load();
+        else {
+            load();
+        }
     }
     
     private void back() {
-        if (!isConversationShowing())
-            return;
         if (mMenuTrash != null)
             mMenuTrash.setVisible(false);
+        if (!isConversationShowing())
+            return;
         mSwitcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_out));
         mSwitcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_out_fast));
         mSwitcher.showPrevious();
     }
     
     private void forward() {
-        if (isConversationShowing())
-            return;
         if (mMenuTrash != null)
             mMenuTrash.setVisible(true);
+        if (isConversationShowing())
+            return;
         mSwitcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in));
         mSwitcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in_fast));
         mSwitcher.showNext();
     }
     
     public void onBackPressed() {
-        if (isConversationShowing()) {
+        if (isConversationShowing() && getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
             back();
             return;
         }
@@ -711,6 +731,7 @@ public class MainActivity extends SherlockFragmentActivity {
                             doLogin();
                             return;
                         }
+                        setEmptyText(R.string.messages_loading);
                         mAccount = mSettings.getString("account", null);
                         Helper.startSync(MainActivity.this);
                         System.out.println(result);
@@ -802,8 +823,10 @@ public class MainActivity extends SherlockFragmentActivity {
     private void setCurrentConversation(Conversation conversation) {
         mConversation.clear();
         mCurrentConversation = conversation;
-        if (conversation == null)
+        if (conversation == null) {
+            mCurrentConversationName.setText(null);
             return;
+        }
         markRead(conversation);
         LinkedHashMap<String, Message> messages = conversation.messages;
         for (Message message: messages.values()) {
@@ -878,5 +901,14 @@ public class MainActivity extends SherlockFragmentActivity {
                 }
             }
         });
+    }
+    
+    TextView mEmptyView;
+    private void setEmptyText(int resid) {
+        mEmptyView.setText(resid);
+    }
+    
+    private void clearEmptyText() {
+        mEmptyView.setText(null);
     }
 }

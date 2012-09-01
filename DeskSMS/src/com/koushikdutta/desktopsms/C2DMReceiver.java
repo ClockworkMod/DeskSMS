@@ -77,6 +77,7 @@ public class C2DMReceiver extends BroadcastReceiver {
         Settings settings = Settings.getInstance(context);
         try {
             String type = intent.getStringExtra("type");
+            Log.i(LOGTAG, "Tickle type: " + type);
             if ("notification".equals(type)) {
                 String ticker = intent.getStringExtra("ticker");
                 String title = intent.getStringExtra("title");
@@ -103,6 +104,7 @@ public class C2DMReceiver extends BroadcastReceiver {
                     if ("type".equals(key))
                         continue;
                     String value = extras.getString(key);
+                    Log.i(LOGTAG, key + "=" + value);
                     settings.setString(key, value);
                 }
                 Intent i = new Intent(WidgetProvider.UPDATE);
