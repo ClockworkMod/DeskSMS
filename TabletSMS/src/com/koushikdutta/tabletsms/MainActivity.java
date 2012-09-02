@@ -585,6 +585,8 @@ public class MainActivity extends SherlockFragmentActivity {
     }
     
     private void forward() {
+        if (mCurrentConversation == null)
+            return;
         if (mMenuTrash != null)
             mMenuTrash.setVisible(true);
         if (isConversationShowing())
