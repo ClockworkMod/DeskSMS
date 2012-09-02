@@ -37,7 +37,6 @@
                 android:layout_height="match_parent"
                 android:animateLayoutChanges="true"
                 android:background="@android:color/background_dark" >
-
             </ListView>
         </LinearLayout>
 
@@ -110,6 +109,7 @@
                     android:layout_weight="1"
                     android:hint="@string/send_hint"
                     android:imeActionLabel="@string/send"
+                    android:inputType="textShortMessage|textAutoCorrect|textCapSentences|textMultiLine"
                     android:singleLine="true"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
                     android:textColor="@android:color/primary_text_dark"
