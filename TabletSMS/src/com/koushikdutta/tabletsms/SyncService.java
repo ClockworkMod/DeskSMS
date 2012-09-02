@@ -59,17 +59,17 @@ public class SyncService extends Service {
         JSONArray data = result.optJSONArray("data");
         if (data == null) {
             Log.i(LOGTAG, "No data?");
-            finishSync();
             if (isPush)
                 return needsSync;
+            finishSync();
             return false;
         }
         
         if (data.length() == 0) {
             Log.i(LOGTAG, "Done syncing.");
-            finishSync();
             if (isPush)
                 return needsSync;
+            finishSync();
             return false;
         }
 
@@ -287,14 +287,17 @@ public class SyncService extends Service {
                     }
                     JSONObject envelope = new JSONObject(intent.getStringExtra("envelope"));
                     mNewMessageCount = 0;
-                    if (handleResult(envelope, true))
+                    if (handleResult(envelope, true)) {
                         startSync();
+                        return START_STICKY;
+                    }
                     else
                         finishSync();
                 }
             }
             catch (Exception ex) {
                 startSync();
+                return START_STICKY;
             }
         }
         
@@ -308,8 +311,9 @@ public class SyncService extends Service {
     
     @Override
     public void onDestroy() {
-        mDatabase.close();
         super.onDestroy();
+        Log.i(LOGTAG, "Destroyed sync service.");
+        mDatabase.close();
     }
     
     @Override
