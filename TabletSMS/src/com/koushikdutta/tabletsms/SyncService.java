@@ -167,7 +167,7 @@ public class SyncService extends Service {
             AsyncHttpClient.download(get, new AsyncHttpClient.JSONObjectCallback() {
                 @Override
                 public void onCompleted(Exception e, AsyncHttpResponse response, JSONObject result) {
-                    if (response != null && response.getHeaders().getHeaders().getResponseCode() == 302) {
+                    if (response != null && response.getHeaders() != null && response.getHeaders().getHeaders() != null && response.getHeaders().getHeaders().getResponseCode() == 302) {
                         if (mHasAuthFailed) {
                             finishSync();
                             return;
