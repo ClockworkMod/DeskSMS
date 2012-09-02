@@ -5,15 +5,32 @@
     android:orientation="horizontal"
     android:padding="4dp" >
 
-    <TextView
-        android:autoLink="web"
-        android:id="@+id/outgoing_message"
+    <LinearLayout
+        android:id="@+id/outgoing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:gravity="right|center_vertical"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/outgoing_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:autoLink="web"
+            android:gravity="right|center_vertical"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
+
+        <TextView
+            android:id="@+id/outgoing_timestamp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="right|center_vertical"
+            android:textColor="@android:color/tertiary_text_dark" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/outgoing_image"
@@ -22,10 +39,10 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_weight="0"
         android:maxHeight="64dp"
         android:maxWidth="64dp"
@@ -33,15 +50,32 @@
         android:minWidth="64dp"
         android:scaleType="fitCenter" />
 
-    <TextView
-        android:autoLink="web"
-        android:id="@+id/incoming_message"
+    <LinearLayout
+        android:id="@+id/incoming"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:gravity="left|center_vertical"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/incoming_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:autoLink="web"
+            android:gravity="left|center_vertical"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
+
+        <TextView
+            android:id="@+id/incoming_timestamp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="left|center_vertical"
+            android:textColor="@android:color/tertiary_text_dark" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/incoming_image"

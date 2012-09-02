@@ -21,6 +21,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -34,11 +35,6 @@ import android.os.Handler;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.text.ClipboardManager;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
-import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -83,7 +79,6 @@ public class MainActivity extends SherlockFragmentActivity {
         public int compareTo(Message another) {
             return new Long(date).compareTo(another.date);
         }
-        Spannable spannable;
     }
     
     public static class Conversation implements Comparable<Conversation> {
@@ -345,6 +340,8 @@ public class MainActivity extends SherlockFragmentActivity {
                 ImageView opic = (ImageView)v.findViewById(R.id.outgoing_image);
                 TextView otext = (TextView)v.findViewById(R.id.outgoing_message);
                 TextView itext = (TextView)v.findViewById(R.id.incoming_message);
+                TextView otime = (TextView)v.findViewById(R.id.outgoing_timestamp);
+                TextView itime = (TextView)v.findViewById(R.id.incoming_timestamp);
                 ImageView pending = (ImageView)v.findViewById(R.id.pending);
                 DateFormat df;
                 if (message.date < System.currentTimeMillis() - 24L * 60L * 60L * 1000L)
@@ -352,21 +349,15 @@ public class MainActivity extends SherlockFragmentActivity {
                 else
                     df = android.text.format.DateFormat.getTimeFormat(MainActivity.this);
                 String date = df.format(new Date(message.date));
-                if (message.spannable == null) {
-                    SpannableStringBuilder builder = new SpannableStringBuilder(message.message);
-                    builder.append("\n");
-                    int start = builder.length();
-                    builder.append(date);
-                    int end = builder.length();
-                    builder.setSpan(new TextAppearanceSpan(MainActivity.this, android.R.style.TextAppearance_DeviceDefault), start, end, 0);
-                    builder.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color.tertiary_text_dark)), start, end, 0);
-                    message.spannable = builder;
-                }
                 if ("incoming".equals(message.type)) {
-//                    filler.setVisibility(View.GONE);
-                    itext.setText(message.spannable);
+                    itext.setText(message.message);
                     otext.setVisibility(View.GONE);
                     itext.setVisibility(View.VISIBLE);
+                    otime.setVisibility(View.GONE);
+                    itime.setVisibility(View.VISIBLE);
+                    v.findViewById(R.id.outgoing).setVisibility(View.GONE);
+                    v.findViewById(R.id.incoming).setVisibility(View.VISIBLE);
+                    itime.setText(date);
                     if (lookup != null) {
                         UrlImageViewHelper.setUrlDrawable(iv, lookup.photoUri, R.drawable.desksms);
                     }
@@ -375,10 +366,14 @@ public class MainActivity extends SherlockFragmentActivity {
                     }
                 }
                 else {
-//                    filler.setVisibility(View.VISIBLE);
-                    otext.setText(message.spannable);
+                    otext.setText(message.message);
                     itext.setVisibility(View.GONE);
                     otext.setVisibility(View.VISIBLE);
+                    itime.setVisibility(View.GONE);
+                    otime.setVisibility(View.VISIBLE);
+                    v.findViewById(R.id.incoming).setVisibility(View.GONE);
+                    v.findViewById(R.id.outgoing).setVisibility(View.VISIBLE);
+                    otime.setText(date);
                     UrlImageViewHelper.setUrlDrawable(iv, myPhotoUri, R.drawable.contact);
                 }
 
@@ -710,10 +705,7 @@ public class MainActivity extends SherlockFragmentActivity {
         mMenuTrash.setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                back();
-                if (mCurrentConversation != null)
-                    deleteConversation(mCurrentConversation);
-                setCurrentConversation(null);
+                deleteConversation(mCurrentConversation);
                 return true;
             }
         });
@@ -847,7 +839,7 @@ public class MainActivity extends SherlockFragmentActivity {
         message.message = text;
         message.type = "pending";
         message.number = mCurrentConversation.number;
-        message.key = message.number + "/" + message.date;
+        message.key = "" + message.number + "/" + message.date;
         message.unread = false;
         
         mCurrentConversation.messages.put(message.key, message);
@@ -920,9 +912,37 @@ public class MainActivity extends SherlockFragmentActivity {
     
     TextView mCurrentConversationName;
 
-    private void deleteConversation(Conversation conversation) {
+    private void deleteConversation(final Conversation conversation) {
+        if (conversation == null)
+            return;
+        confirmDelete(R.string.confirm_delete_conversation, new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteConversationInternal(conversation);
+            }
+        });
+    }
+    
+    private void setFirstAvailableConversation() {
+        if (mConversations.getCount() == 0) {
+            setCurrentConversation(null);
+            return;
+        }
+        
+        setCurrentConversation(mConversations.getItem(0));
+    }
+    
+    private void deleteConversationInternal(Conversation conversation) {
         final HashMap<String, ArrayList<Long>> numbers = new HashMap<String, ArrayList<Long>>();
         mConversations.remove(conversation);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            if (mCurrentConversation == conversation)
+                setFirstAvailableConversation();
+        }
+        else {
+            back();
+        }
+
         try {
             mDatabase.beginTransaction();
             for (Message message: conversation.messages.values()) {
@@ -987,5 +1007,13 @@ public class MainActivity extends SherlockFragmentActivity {
     
     private void clearEmptyText() {
         mEmptyView.setText(null);
+    }
+    
+    private void confirmDelete(int resId, DialogInterface.OnClickListener listener) {
+        new Builder(this)
+        .setMessage(resId)
+        .setPositiveButton(android.R.string.ok, listener)
+        .setNegativeButton(android.R.string.cancel, null)
+        .create().show();
     }
 }

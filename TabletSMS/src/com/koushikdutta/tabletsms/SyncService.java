@@ -36,6 +36,11 @@ public class SyncService extends Service {
     private String mLastMessageText;
 
     private boolean handleResult(JSONObject result, boolean isPush) {
+        if (result == null) {
+            Log.i(LOGTAG, "null result? push limit? bailing...");
+            return false;
+        }
+        
         int newCounter = 0;
         boolean needsSync = false;
         if (isPush) {
