@@ -2,7 +2,9 @@ package com.koushikdutta.tabletsms;
 
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
@@ -25,7 +27,6 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Shader.TileMode;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,16 +34,19 @@ import android.os.Handler;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.text.ClipboardManager;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -79,6 +83,7 @@ public class MainActivity extends SherlockFragmentActivity {
         public int compareTo(Message another) {
             return new Long(date).compareTo(another.date);
         }
+        Spannable spannable;
     }
     
     public static class Conversation implements Comparable<Conversation> {
@@ -341,9 +346,25 @@ public class MainActivity extends SherlockFragmentActivity {
                 TextView otext = (TextView)v.findViewById(R.id.outgoing_message);
                 TextView itext = (TextView)v.findViewById(R.id.incoming_message);
                 ImageView pending = (ImageView)v.findViewById(R.id.pending);
+                DateFormat df;
+                if (message.date < System.currentTimeMillis() - 24L * 60L * 60L * 1000L)
+                    df = android.text.format.DateFormat.getMediumDateFormat(MainActivity.this);
+                else
+                    df = android.text.format.DateFormat.getTimeFormat(MainActivity.this);
+                String date = df.format(new Date(message.date));
+                if (message.spannable == null) {
+                    SpannableStringBuilder builder = new SpannableStringBuilder(message.message);
+                    builder.append("\n");
+                    int start = builder.length();
+                    builder.append(date);
+                    int end = builder.length();
+                    builder.setSpan(new TextAppearanceSpan(MainActivity.this, android.R.style.TextAppearance_DeviceDefault), start, end, 0);
+                    builder.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color.tertiary_text_dark)), start, end, 0);
+                    message.spannable = builder;
+                }
                 if ("incoming".equals(message.type)) {
 //                    filler.setVisibility(View.GONE);
-                    itext.setText(message.message);
+                    itext.setText(message.spannable);
                     otext.setVisibility(View.GONE);
                     itext.setVisibility(View.VISIBLE);
                     if (lookup != null) {
@@ -355,7 +376,7 @@ public class MainActivity extends SherlockFragmentActivity {
                 }
                 else {
 //                    filler.setVisibility(View.VISIBLE);
-                    otext.setText(message.message);
+                    otext.setText(message.spannable);
                     itext.setVisibility(View.GONE);
                     otext.setVisibility(View.VISIBLE);
                     UrlImageViewHelper.setUrlDrawable(iv, myPhotoUri, R.drawable.contact);
