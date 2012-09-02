@@ -587,10 +587,10 @@ public class MainActivity extends SherlockFragmentActivity {
     private void forward() {
         if (mCurrentConversation == null)
             return;
-        if (mMenuTrash != null)
-            mMenuTrash.setVisible(true);
         if (isConversationShowing())
             return;
+        if (mMenuTrash != null)
+            mMenuTrash.setVisible(true);
         mSwitcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in));
         mSwitcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in_fast));
         mSwitcher.showNext();
