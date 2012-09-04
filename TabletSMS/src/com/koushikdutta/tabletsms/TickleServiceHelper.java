@@ -84,7 +84,7 @@ public class TickleServiceHelper {
         final String registration = settings.getString("registration_id");
         final String account = settings.getString("account");
 
-        URL url = new URL(ServiceHelper.PUSH_URL + "?type=register-device&data.registration=gcm:" + URLEncoder.encode(registration) + "&data.device=" + Helper.getSafeDeviceId(context));
+        URL url = new URL(ServiceHelper.PUSH_URL + "?type=register-device&data.registration=" + URLEncoder.encode("gcm:" + registration) + "&data.device=" + Helper.getSafeDeviceId(context));
         ServiceHelper.retryExecuteAndDisconnect(context, account, url, null);
     }
 

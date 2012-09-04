@@ -23,6 +23,11 @@
             android:gravity="right|center_vertical"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
 
+        <ImageView
+            android:id="@+id/outgoing_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/outgoing_timestamp"
             android:layout_width="match_parent"
@@ -31,11 +36,6 @@
             android:gravity="right|center_vertical"
             android:textColor="@android:color/tertiary_text_dark" />
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/outgoing_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/image"
@@ -68,6 +68,11 @@
             android:gravity="left|center_vertical"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
 
+        <ImageView
+            android:id="@+id/incoming_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/incoming_timestamp"
             android:layout_width="match_parent"
@@ -76,11 +81,6 @@
             android:gravity="left|center_vertical"
             android:textColor="@android:color/tertiary_text_dark" />
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/incoming_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/pending"
