@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">TabletSMS</string>
+    <string name="menu_settings">Impostazioni</string>
+    <string name="signin_success">Ti sei connesso con successo!</string>
+    <string name="signin_failure">Login fallito. Verifica la tua connessione internet e riprova. Connettersi con una email Google Apps potrebbe non funzionare. Se l\'errore persiste, invia un log allo sviluppatore.</string>
+    <string name="setting_up_push">Impostazione delle notifiche push…</string>
+    <string name="retrieving_authentication">Recupero il token di autenticazione Google…</string>
+    <string name="registering_with_server">Registro il dispositivo sul server push…</string>
+    <string name="testing_push">Test delle notifiche push in corso…</string>
+    <string name="push_failed">Il push della notifica di test dal tablet al tuo telefono è fallito.\n\nAssicurati che sul tuo <b>telefono</b> sia installata l'ultima versione di <b>DeskSMS</b> e che questa sia in esecuzione.</string>
+    <string name="signin_complete">La lista dei messaggi di DeskSMS si sta caricando.</string>
+    <string name="accounts">Account</string>
+    <string name="authentification_notification">TabletSMS non è stato in grado di accedere al tuo account. Clicca per effettuare nuovamente l'accesso.</string>
+    <string name="logout">Logout</string>
+    <string name="send_hint">Scrivi il tuo messaggio qui.</string>
+    <string name="send">Invia</string>
+    <string name="copy_text">Copia testo</string>
+    <string name="delete">Elimina</string>
+    <string name="compose">Scrivi nuovo</string>
+    <string name="new_messages">Hai nuovi messaggi.</string>
+    <string name="checking_desksms">Controllo la versione di DeskSMS sul telefono…</string>
+    <string name="mark_as_read">Segna come già letto</string>
+    <string name="welcome">Benvenuto in TabletSMS di DeskSMS</string>
+    <string name="welcome_info">TabletSMS di inviare messaggi dal tuo tablet attraverso il tuo telefono.\n\nPrima di iniziare, assicurati che:\n1) <b>DeskSMS</b> sia installato e configurato sul tuo <b>telefono</b>.\n2) <b>TabletSMS</b> sia installato sul tuo <b>tablet</b>.\n\nFatto? Ottimo! Adesso colleghiamoci allo stesso account Google che hai usato per DeskSMS.</string>
+    <string name="settings">Impostazioni</string>
+    <string name="notifications">Notifiche</string>
+    <string name="all_messages_read">Tutti i messaggi sono stati segnati come già letti.</string>
+    <string name="no_accounts">Non hai alcun account Google impostato su questo dispositivo. Collegati ad un account Google sul tuo dispositivo prima di continuare.</string>
+    <string name="messages">Messaggi</string>
+    <string name="messages_loading">I tuoi messaggi si stanno caricando. Ci vorrà qualche secondo…</string>
+    <string name="no_messages">Non hai messaggi!</string>
+    <string name="rate_me">Spero ti stia piacendo TabletSMS! :) Se hai un po\' di tempo, un voto positivo su Google Play significherebbe molto!\n\nhttp://market.android.com/details?id=com.koushikdutta.tabletsms\n\nE non dimenticare di votare anche DeskSMS!\n\nhttp://market.android.com/details?id=com.koushikdutta.desktopsms\n\nBuona messaggiata!</string>
+    <string name="confirm_delete_conversation">Sei sicuro di voler eliminare questa conversazione? Non.</string>
+</resources>
