@@ -104,8 +104,8 @@
     
     <string name="authentification_notification">DeskSMS non è stato in grado di accedere al tuo account. Clicca per effettuare nuovamente l'accesso.</string>
 
-    <string name="manage_blacklist">Manage Blacklist</string>
-    <string name="blacklist_summary">Use the blacklist to prevent notifications from specific numbers.</string>
-    <string name="add_to_blacklist">Add To Blacklist</string>
-    <string name="blacklist_remove_number">Remove %s from the blacklist?</string>
+    <string name="manage_blacklist">Gestisci Blacklist</string>
+    <string name="blacklist_summary">Usa la blacklist per evitare notifiche da certi numeri.</string>
+    <string name="add_to_blacklist">Aggiungi a Blacklist</string>
+    <string name="blacklist_remove_number">Rimuovere %s dalla blacklist?</string>
 </resources>
