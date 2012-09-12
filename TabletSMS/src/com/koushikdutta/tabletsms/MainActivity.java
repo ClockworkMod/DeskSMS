@@ -274,7 +274,7 @@ public class MainActivity extends SherlockFragmentActivity {
         mSettings = Settings.getInstance(MainActivity.this);
         mAccount = mSettings.getString("account", null);
         mVisible = true;
-
+        
         clearNotifications();
 
         final String myPhotoUri;
@@ -577,6 +577,7 @@ public class MainActivity extends SherlockFragmentActivity {
         mSwitcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_out));
         mSwitcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_out_fast));
         mSwitcher.showPrevious();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
     
     private void forward() {
@@ -589,6 +590,7 @@ public class MainActivity extends SherlockFragmentActivity {
         mSwitcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in));
         mSwitcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.flipper_in_fast));
         mSwitcher.showNext();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     
     public void onBackPressed() {
@@ -604,6 +606,7 @@ public class MainActivity extends SherlockFragmentActivity {
     protected void onResume() {
         super.onResume();
         mVisible = true;
+        clearNotifications();
     };
     protected void onPause() {
         super.onPause();

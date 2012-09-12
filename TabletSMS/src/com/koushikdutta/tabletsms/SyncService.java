@@ -239,6 +239,7 @@ public class SyncService extends Service {
         if (lookup != null)
             name = lookup.displayName;
         n.tickerText = name + ": " + mLastMessageText;
+        n.flags |= Notification.FLAG_AUTO_CANCEL;
         if (totalPendingMessages == 1) {
             n.setLatestEventInfo(this, name, mLastMessageText, pi);
         }
