@@ -47,6 +47,7 @@ public class Helper {
                         c.close();
                         lookup = new CachedPhoneLookup();
                         lookup.displayName = displayName;
+                        lookup.contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(userId));
                         if (photoUri != null)
                             lookup.photoUri = photoUri.toString();
                         mLookup.put(number, lookup);

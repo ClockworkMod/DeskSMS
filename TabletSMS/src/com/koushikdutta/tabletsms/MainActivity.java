@@ -333,7 +333,7 @@ public class MainActivity extends SherlockFragmentActivity {
                 View v = (convertView == null) ? getLayoutInflater().inflate(R.layout.message, null) : convertView;
 
                 Message message = getItem(position);
-                CachedPhoneLookup lookup = Helper.getPhoneLookup(MainActivity.this, mLookup, message.number);
+                final CachedPhoneLookup lookup = Helper.getPhoneLookup(MainActivity.this, mLookup, message.number);
 
                 ImageView iv = (ImageView)v.findViewById(R.id.image);
                 ImageView ipic = (ImageView)v.findViewById(R.id.incoming_image);
@@ -360,9 +360,19 @@ public class MainActivity extends SherlockFragmentActivity {
                     itime.setText(date);
                     if (lookup != null) {
                         UrlImageViewHelper.setUrlDrawable(iv, lookup.photoUri, R.drawable.desksms);
+                        iv.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setData(lookup.contactUri);
+                                // BUG: Why does pressing back in the contact app not take me back to TabletSMS? Annoying.
+                                startActivity(intent);
+                            }
+                        });
                     }
                     else {
                         iv.setImageResource(R.drawable.desksms);
+                        iv.setOnClickListener(null);
                     }
                 }
                 else {
