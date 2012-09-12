@@ -75,7 +75,6 @@
                 android:id="@+id/send_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/background_dark"
                 android:orientation="horizontal" >
 
                 <EditText
@@ -86,10 +85,7 @@
                     android:hint="@string/send_hint"
                     android:imeActionLabel="@string/send"
                     android:inputType="textShortMessage|textAutoCorrect|textCapSentences|textMultiLine"
-                    android:singleLine="true"
-                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
-                    android:textColor="@android:color/primary_text_dark"
-                    android:textCursorDrawable="@null" />
+                    android:singleLine="true" />
 
                 <ImageButton
                     android:id="@+id/send"

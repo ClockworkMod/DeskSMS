@@ -555,7 +555,7 @@ public class MainActivity extends SherlockFragmentActivity {
         
         TileableBackgroundDrawable tile = new TileableBackgroundDrawable(getResources(), R.drawable.stitch);
         mCurrentConversationName.setBackgroundDrawable(tile);
-        findViewById(R.id.send_container).setBackgroundDrawable(tile);
+//        findViewById(R.id.send_container).setBackgroundDrawable(tile);
         findViewById(R.id.messages_header).setBackgroundDrawable(tile);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             listView.setBackgroundDrawable(tile);
@@ -825,7 +825,7 @@ public class MainActivity extends SherlockFragmentActivity {
     EditText sendText;
     private void sendSms() {
         String text = sendText.getText().toString();
-        if (text == null || text.length() == 0)
+        if (text == null || text.length() == 0 || mCurrentConversation == null)
             return;
         
         int prevCounter = mSettings.getInt("usage_single_outgoing", 0);
