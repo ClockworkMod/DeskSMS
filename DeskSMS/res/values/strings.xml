@@ -64,28 +64,28 @@
     <string name="remove_desksms_contact_info">Remove DeskSMS Contacts</string>
     <string name="please_wait_contact_list">Please wait while your contact list is updated...</string>
 
-	<string name="sync_calls">Sync Calls</string>
-	<string name="sync_calls_summary">Sync your Call history to the DeskSMS server for online viewing.</string>
-	
-	<string name="web">Browser and Extensions</string>
+    <string name="sync_calls">Sync Calls</string>
+    <string name="sync_calls_summary">Sync your Call history to the DeskSMS server for online viewing.</string>
+    
+    <string name="web">Browser and Extensions</string>
 
-	<string name="testing_push">Testing push notifications...</string>
-	<string name="push_failed">You have successfully signed in!\n\nWarning: Push notifications were set up successfully, but the test push notification failed. There may be issues when sending messages via DeskSMS.</string>
-	
-	<string name="buy_desksms">Buy DeskSMS</string>
-	
-	<string name="retrieving_status">Retrieving Account Status...</string>
-	
-	<string name="paypal">PayPal</string>
-	<string name="android_market_inapp">Android Market In-App</string>
-	<string name="payment_options">Payment Options</string>
-	<string name="account_status">Account Status</string>
-	<string name="days_left">%s days left</string>
-	<string name="status_error">Unable to retrieve account status! Please try again later.</string>
-	<string name="desksms_one_year_license">DeskSMS One Year License</string>
-	<string name="purchase_thanks">Thanks! Your purchase will be processed on the DeskSMS servers shortly.</string>
-	
-	<string name="switch_account">Switch Account</string>
+    <string name="testing_push">Testing push notifications...</string>
+    <string name="push_failed">You have successfully signed in!\n\nWarning: Push notifications were set up successfully, but the test push notification failed. There may be issues when sending messages via DeskSMS.</string>
+    
+    <string name="buy_desksms">Buy DeskSMS</string>
+    
+    <string name="retrieving_status">Retrieving Account Status...</string>
+    
+    <string name="paypal">PayPal</string>
+    <string name="android_market_inapp">Android Market In-App</string>
+    <string name="payment_options">Payment Options</string>
+    <string name="account_status">Account Status</string>
+    <string name="days_left">%s days left</string>
+    <string name="status_error">Unable to retrieve account status! Please try again later.</string>
+    <string name="desksms_one_year_license">DeskSMS One Year License</string>
+    <string name="purchase_thanks">Thanks! Your purchase will be processed on the DeskSMS servers shortly.</string>
+    
+    <string name="switch_account">Switch Account</string>
 
     <string name="mms_received">MMS Received from %s</string>
     
