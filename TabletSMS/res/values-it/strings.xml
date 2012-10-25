@@ -30,5 +30,5 @@
     <string name="messages_loading">I tuoi messaggi si stanno caricando. Ci vorrà qualche secondo…</string>
     <string name="no_messages">Non hai messaggi!</string>
     <string name="rate_me">Spero ti stia piacendo TabletSMS! :) Se hai un po\' di tempo, un voto positivo su Google Play significherebbe molto!\n\nhttp://market.android.com/details?id=com.koushikdutta.tabletsms\n\nE non dimenticare di votare anche DeskSMS!\n\nhttp://market.android.com/details?id=com.koushikdutta.desktopsms\n\nBuona messaggiata!</string>
-    <string name="confirm_delete_conversation">Sei sicuro di voler eliminare questa conversazione? Non.</string>
+    <string name="confirm_delete_conversation">Sei sicuro di voler eliminare questa conversazione? Non sarà possibile annullare l'operazione.</string>
 </resources>
