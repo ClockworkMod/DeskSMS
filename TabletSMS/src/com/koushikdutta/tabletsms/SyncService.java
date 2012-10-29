@@ -169,7 +169,7 @@ public class SyncService extends Service {
             get.getHeaders().getHeaders().add("Cookie", ascidCookie);
             get.getHeaders().getHeaders().add("X-Same-Domain", "1");
             get.setFollowRedirect(false);
-            AsyncHttpClient.download(get, new AsyncHttpClient.JSONObjectCallback() {
+            AsyncHttpClient.execute(get, new AsyncHttpClient.JSONObjectCallback() {
                 @Override
                 public void onCompleted(Exception e, AsyncHttpResponse response, JSONObject result) {
                     if (response != null && response.getHeaders() != null && response.getHeaders().getHeaders() != null && response.getHeaders().getHeaders().getResponseCode() == 302) {
@@ -204,6 +204,8 @@ public class SyncService extends Service {
     private void startSync() {
         if (mSyncing)
             return;
+        long oldPurge = System.currentTimeMillis() - 21L * 24L * 60L * 60L * 1000L;
+        mDatabase.delete("sms", "date < ?", new String[] { String.valueOf(oldPurge) });
         mNewMessageCount = 0;
         if (Helper.isJavaScriptNullOrEmpty(mAccount)) {
             finishSync();

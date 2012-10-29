@@ -724,7 +724,6 @@ public class SyncService extends Service {
             mSyncThread = new Thread() {
                 @Override
                 public void run() {
-                    WakeLock.acquirePartial(SyncService.this);
                     try {
                         // if we are starting for the outbox, do that immediately
                         boolean startedForOutbox = mPendingOutboxSync;
@@ -770,7 +769,6 @@ public class SyncService extends Service {
                                mSyncThread = null;
                             }
                         });
-                        WakeLock.release();
                     }
                 }
             };
@@ -833,8 +831,10 @@ public class SyncService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(LOGTAG, "Service starting");
-        if (intent != null)
+        if (intent != null) {
             sync(intent);
+            return START_STICKY;
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 }

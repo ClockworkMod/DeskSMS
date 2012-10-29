@@ -1,59 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.koushikdutta.desktopsms" android:versionCode="1110"
-	android:versionName="1.1.1.0">
+    package="com.koushikdutta.desktopsms"
+    android:versionCode="1110"
+    android:versionName="1.1.1.0" >
 
-	<uses-sdk android:minSdkVersion="8" />
-	<application android:icon="@drawable/icon" android:label="@string/app_name" android:name=".DesktopSMSApplication" android:theme="@android:style/Theme.Light">
-		<activity android:name=".MainActivity" android:label="@string/app_name"
-			android:configChanges="orientation|keyboard|keyboardHidden"
-			android:screenOrientation="portrait">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
-		<receiver android:name=".SmsReceiver" android:permission="android.permission.BROADCAST_SMS">
-			<intent-filter android:priority="2147483646">
-				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
-			</intent-filter>
-		</receiver>
-		<receiver android:name=".PhoneStateChangedReceiver">
-			<intent-filter>
-				<action android:name="android.intent.action.PHONE_STATE" />
-			</intent-filter>
-		</receiver>
-		<receiver android:name=".C2DMReceiver"
-			android:permission="com.google.android.c2dm.permission.SEND">
-			<!-- Receive the actual message -->
-			<intent-filter>
-				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
-				<category android:name="com.koushikdutta.desktopsms" />
-			</intent-filter>
-			<!-- Receive the registration id -->
-			<intent-filter>
-				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-				<category android:name="com.koushikdutta.desktopsms" />
-			</intent-filter>
-		</receiver>
-		<receiver android:name=".DateChangedReceiver">
+    <uses-sdk android:minSdkVersion="8" />
+
+    <application
+        android:name=".DesktopSMSApplication"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Light" >
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".SmsReceiver"
+            android:permission="android.permission.BROADCAST_SMS" >
+            <intent-filter android:priority="2147483646" >
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".PhoneStateChangedReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".C2DMReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+
+            <!-- Receive the actual message -->
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.koushikdutta.desktopsms" />
+            </intent-filter>
+            <!-- Receive the registration id -->
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.koushikdutta.desktopsms" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".DateChangedReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.DATE_CHANGED" />
             </intent-filter>
-		</receiver>
-		<receiver android:name=".BootReceiver">
+        </receiver>
+        <receiver android:name=".BootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-		</receiver>
-		<service android:name=".SyncService" />
-		<activity android:theme="@style/Dialog"
-			android:configChanges="orientation|keyboard|keyboardHidden"
-			android:screenOrientation="portrait" android:name=".BuyActivity" android:label="@string/desksms_one_year_license">
-		</activity>
-		
-        <receiver android:name=".WidgetProvider"
-                android:label="@string/widget_name">
+        </receiver>
+
+        <service android:name=".SyncService" />
+
+        <activity
+            android:name=".BuyActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden"
+            android:label="@string/desksms_one_year_license"
+            android:screenOrientation="portrait"
+            android:theme="@style/Dialog" >
+        </activity>
+
+        <receiver
+            android:name=".WidgetProvider"
+            android:label="@string/widget_name" >
             <intent-filter>
                 <action android:name="com.koushikdutta.desktopsms.TOGGLE_EMAIL" />
                 <action android:name="com.koushikdutta.desktopsms.TOGGLE_XMPP" />
@@ -61,93 +83,113 @@
                 <action android:name="com.koushikdutta.desktopsms.APPWIDGET_UPDATE" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider" android:resource="@xml/appwidget_info" />
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_info" />
         </receiver>
 
         <service android:name="com.clockworkmod.billing.BillingService" />
-        <activity android:name="com.paypal.android.MEP.PayPalActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:configChanges="keyboardHidden|orientation" />
-        <receiver android:name="com.clockworkmod.billing.BillingReceiver">
+
+        <activity
+            android:name="com.paypal.android.MEP.PayPalActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <receiver android:name="com.clockworkmod.billing.BillingReceiver" >
             <intent-filter>
                 <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
                 <action android:name="com.android.vending.billing.RESPONSE_CODE" />
                 <action android:name="com.android.vending.billing.PURCHASE_STATE_CHANGED" />
             </intent-filter>
         </receiver>
-        
-        <receiver android:name=".SettingsReceiver">
+        <receiver android:name=".SettingsReceiver" >
             <intent-filter>
                 <action android:name="com.koushikdutta.desktopsms.SET_SETTINGS" />
             </intent-filter>
         </receiver>
-        
-        
-        <!-- This is the "edit" Activity. Note that Locale will reject plug-in Activities for the following reasons: 
+
+        <!--
+             This is the "edit" Activity. Note that Locale will reject plug-in Activities for the following reasons: 
                  - Missing "android:label=[...]"
                  - Missing "android:icon=[...]"
                  - The Activity isn't exported (e.g. android:exported="false")
                  - The Activity isn't enabled (e.g. android:enabled="false")
-                 - The Activity requires permissions not available to Locale -->
+                 - The Activity requires permissions not available to Locale
+        -->
         <activity
-            android:label="@string/plugin_name"
-            android:icon="@drawable/icon"
-            android:theme="@style/Theme.Locale.Dark"
+            android:name=".plugin.EditActivity"
+            android:enabled="true"
             android:exported="true"
-        android:name=".plugin.EditActivity" android:enabled="true">
+            android:icon="@drawable/icon"
+            android:label="@string/plugin_name"
+            android:theme="@style/Theme.Locale.Dark" >
+
             <!-- this Intent filter allows the plug-in to be discovered by Locale -->
             <intent-filter>
                 <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
             </intent-filter>
         </activity>
-        <!-- This is the "fire" BroadcastReceiver. Note that Locale will reject plug-in BroadcastReceivers for the following reasons:
+        <!--
+             This is the "fire" BroadcastReceiver. Note that Locale will reject plug-in BroadcastReceivers for the following reasons:
                 - The BroadcastReceiver isn't exported (e.g. android:exported="false")
                 - The BroadcastReceiver isn't enabled (e.g. android:enabled="false")
                 - The BroadcastReceiver requires permissions not available to Locale
-                - There are multiple BroadcastReceivers for com.twofortyfouram.locale.intent.action.FIRE_SETTING -->
+                - There are multiple BroadcastReceivers for com.twofortyfouram.locale.intent.action.FIRE_SETTING
+        -->
         <receiver
-            android:exported="true"
-        android:name=".plugin.FireReceiver" android:enabled="true">
+            android:name=".plugin.FireReceiver"
+            android:enabled="true"
+            android:exported="true" >
+
             <!-- this Intent filter allows the plug-in to discovered by Locale -->
             <intent-filter>
                 <action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING" />
             </intent-filter>
         </receiver>
-        <activity android:name="BlackListActivity" android:configChanges="orientation|keyboard|keyboardHidden" android:windowSoftInputMode="adjustPan"></activity>
-	</application>
 
-	<uses-permission android:name="android.permission.READ_LOGS" />
+        <activity
+            android:name="BlackListActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+    </application>
 
-	<!-- SMS related -->
-	<uses-permission android:name="android.permission.SEND_SMS" />
-	<uses-permission android:name="android.permission.RECEIVE_SMS" />
-	<uses-permission android:name="android.permission.READ_SMS" />
-	<uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
-	<!-- Contacts -->
-	<uses-permission android:name="android.permission.READ_CONTACTS" />
-	<uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <!-- SMS related -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
 
-	<!-- Obvious stuff -->
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Contacts -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
-	<!-- Web Connect account manager permissions -->
-	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
-	<uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <!-- Obvious stuff -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-	<!-- Push -->
-	<!-- Only this application can receive the messages and registration result -->
-	<permission android:name="com.koushikdutta.desktopsms.permission.C2D_MESSAGE"
-		android:protectionLevel="signature" />
-	<uses-permission android:name="com.koushikdutta.desktopsms.permission.C2D_MESSAGE" />
+    <!-- Web Connect account manager permissions -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
-	<!-- This app has permission to register and receive message -->
-	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <!-- Push -->
+    <!-- Only this application can receive the messages and registration result -->
+    <permission
+        android:name="com.koushikdutta.desktopsms.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
 
-	<uses-permission android:name="com.android.vending.BILLING" />
-	
-	<uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="com.koushikdutta.desktopsms.permission.C2D_MESSAGE" />
+
+    <!-- This app has permission to register and receive message -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
 </manifest>
