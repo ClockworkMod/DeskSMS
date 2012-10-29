@@ -100,9 +100,9 @@
     <string name="adjust_hours">%s ore</string>
     <string name="disabled">Disabilitato</string>
     
-    <string name="signin_complete">Sono stati inviati al tuo indirizzo email i link al sito web di DeskSMS, all'estensione per Chrome, e suggerimenti per l'uso.</string>
+    <string name="signin_complete">Sono stati inviati al tuo indirizzo email i link al sito web di DeskSMS, all\'estensione per Chrome, e suggerimenti per l\'uso.</string>
     
-    <string name="authentification_notification">DeskSMS non è stato in grado di accedere al tuo account. Clicca per effettuare nuovamente l'accesso.</string>
+    <string name="authentification_notification">DeskSMS non è stato in grado di accedere al tuo account. Clicca per effettuare nuovamente l\'accesso.</string>
 
     <string name="manage_blacklist">Gestisci Blacklist</string>
     <string name="blacklist_summary">Usa la blacklist per evitare notifiche da certi numeri.</string>

@@ -7,10 +7,10 @@
     <string name="retrieving_authentication">Recupero il token di autenticazione Google…</string>
     <string name="registering_with_server">Registro il dispositivo sul server push…</string>
     <string name="testing_push">Test delle notifiche push in corso…</string>
-    <string name="push_failed">Il push della notifica di test dal tablet al tuo telefono è fallito.\n\nAssicurati che sul tuo <b>telefono</b> sia installata l'ultima versione di <b>DeskSMS</b> e che questa sia in esecuzione.</string>
+    <string name="push_failed">Il push della notifica di test dal tablet al tuo telefono è fallito.\n\nAssicurati che sul tuo <b>telefono</b> sia installata l\'ultima versione di <b>DeskSMS</b> e che questa sia in esecuzione.</string>
     <string name="signin_complete">La lista dei messaggi di DeskSMS si sta caricando.</string>
     <string name="accounts">Account</string>
-    <string name="authentification_notification">TabletSMS non è stato in grado di accedere al tuo account. Clicca per effettuare nuovamente l'accesso.</string>
+    <string name="authentification_notification">TabletSMS non è stato in grado di accedere al tuo account. Clicca per effettuare nuovamente l\'accesso.</string>
     <string name="logout">Logout</string>
     <string name="send_hint">Scrivi il tuo messaggio qui.</string>
     <string name="send">Invia</string>
@@ -30,5 +30,5 @@
     <string name="messages_loading">I tuoi messaggi si stanno caricando. Ci vorrà qualche secondo…</string>
     <string name="no_messages">Non hai messaggi!</string>
     <string name="rate_me">Spero ti stia piacendo TabletSMS! :) Se hai un po\' di tempo, un voto positivo su Google Play significherebbe molto!\n\nhttp://market.android.com/details?id=com.koushikdutta.tabletsms\n\nE non dimenticare di votare anche DeskSMS!\n\nhttp://market.android.com/details?id=com.koushikdutta.desktopsms\n\nBuona messaggiata!</string>
-    <string name="confirm_delete_conversation">Sei sicuro di voler eliminare questa conversazione? Non sarà possibile annullare l'operazione.</string>
+    <string name="confirm_delete_conversation">Sei sicuro di voler eliminare questa conversazione? Non sarà possibile annullare l\'operazione.</string>
 </resources>
