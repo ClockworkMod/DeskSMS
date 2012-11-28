@@ -563,600 +563,6 @@ android.support.v4.view.ViewPager$SavedState$1 -> android.support.v4.view.n:
     android.support.v4.view.ViewPager$SavedState[] newArray(int) -> b
     java.lang.Object[] newArray(int) -> a
     java.lang.Object createFromParcel(android.os.Parcel,java.lang.ClassLoader) -> a
-com.amazon.inapp.purchasing.BasePurchasingObserver -> com.amazon.inapp.purchasing.BasePurchasingObserver:
-    void onSdkAvailable(boolean) -> onSdkAvailable
-    void onGetUserIdResponse(com.amazon.inapp.purchasing.GetUserIdResponse) -> onGetUserIdResponse
-    void onPurchaseResponse(com.amazon.inapp.purchasing.PurchaseResponse) -> onPurchaseResponse
-    void onItemDataResponse(com.amazon.inapp.purchasing.ItemDataResponse) -> onItemDataResponse
-    void onPurchaseUpdatesResponse(com.amazon.inapp.purchasing.PurchaseUpdatesResponse) -> onPurchaseUpdatesResponse
-com.amazon.inapp.purchasing.ContentDownloadRequest -> com.amazon.inapp.purchasing.ContentDownloadRequest:
-    java.lang.String _sku -> _sku
-    java.lang.String _location -> _location
-    java.lang.Runnable getRunnable() -> getRunnable
-    java.lang.String access$000(com.amazon.inapp.purchasing.ContentDownloadRequest) -> access$000
-    java.lang.String access$100(com.amazon.inapp.purchasing.ContentDownloadRequest) -> access$100
-com.amazon.inapp.purchasing.ContentDownloadRequest$1 -> com.amazon.inapp.purchasing.ContentDownloadRequest$1:
-    com.amazon.inapp.purchasing.ContentDownloadRequest this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.ContentDownloadResponse -> com.amazon.inapp.purchasing.ContentDownloadResponse:
-    java.lang.String _requestId -> _requestId
-    int _percentComplete -> _percentComplete
-    com.amazon.inapp.purchasing.ContentDownloadResponse$ContentDownloadRequestStatus _contentDownloadRequestStatus -> _contentDownloadRequestStatus
-    java.lang.String getRequestId() -> getRequestId
-    int getPercentComplete() -> getPercentComplete
-    com.amazon.inapp.purchasing.ContentDownloadResponse$ContentDownloadRequestStatus getContentDownloadRequestStatus() -> getContentDownloadRequestStatus
-com.amazon.inapp.purchasing.ContentDownloadResponse$ContentDownloadRequestStatus -> com.amazon.inapp.purchasing.ContentDownloadResponse$ContentDownloadRequestStatus:
-    com.amazon.inapp.purchasing.ContentDownloadResponse$ContentDownloadRequestStatus IN_PROGRESS -> IN_PROGRESS
-    com.amazon.inapp.purchasing.ContentDownloadResponse$ContentDownloadRequestStatus COMPLETE -> COMPLETE
-    com.amazon.inapp.purchasing.ContentDownloadResponse$ContentDownloadRequestStatus FAILED -> FAILED
-    com.amazon.inapp.purchasing.ContentDownloadResponse$ContentDownloadRequestStatus INVALID_LOCATION -> INVALID_LOCATION
-    com.amazon.inapp.purchasing.ContentDownloadResponse$ContentDownloadRequestStatus INVALID_SKU -> INVALID_SKU
-    com.amazon.inapp.purchasing.ContentDownloadResponse$ContentDownloadRequestStatus[] $VALUES -> $VALUES
-    com.amazon.inapp.purchasing.ContentDownloadResponse$ContentDownloadRequestStatus[] values() -> values
-    com.amazon.inapp.purchasing.ContentDownloadResponse$ContentDownloadRequestStatus valueOf(java.lang.String) -> valueOf
-com.amazon.inapp.purchasing.FailurePrompt -> com.amazon.inapp.purchasing.FailurePrompt:
-    java.lang.String TAG -> TAG
-    java.lang.String LINK -> LINK
-    java.lang.String PROMPT_TITLE1 -> PROMPT_TITLE1
-    java.lang.String PROMPT_TITLE2 -> PROMPT_TITLE2
-    com.amazon.android.framework.context.ContextManager contextMgr -> contextMgr
-    com.amazon.android.framework.prompt.PromptContent pContent -> pContent
-    long SHUTDOWN_EXP_TIME -> SHUTDOWN_EXP_TIME
-    void doAction() -> doAction
-    long getExpirationDurationInSeconds() -> getExpirationDurationInSeconds
-    java.lang.String toString() -> toString
-com.amazon.inapp.purchasing.GetUserIdRequest -> com.amazon.inapp.purchasing.GetUserIdRequest:
-    java.lang.Runnable getRunnable() -> getRunnable
-com.amazon.inapp.purchasing.GetUserIdRequest$1 -> com.amazon.inapp.purchasing.GetUserIdRequest$1:
-    com.amazon.inapp.purchasing.GetUserIdRequest this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.GetUserIdResponse -> com.amazon.inapp.purchasing.GetUserIdResponse:
-    java.lang.String TO_STRING_FORMAT -> TO_STRING_FORMAT
-    java.lang.String _requestId -> _requestId
-    com.amazon.inapp.purchasing.GetUserIdResponse$GetUserIdRequestStatus _getUserIdRequestStatus -> _getUserIdRequestStatus
-    java.lang.String _userId -> _userId
-    java.lang.String getRequestId() -> getRequestId
-    com.amazon.inapp.purchasing.GetUserIdResponse$GetUserIdRequestStatus getUserIdRequestStatus() -> getUserIdRequestStatus
-    java.lang.String getUserId() -> getUserId
-    java.lang.String toString() -> toString
-com.amazon.inapp.purchasing.GetUserIdResponse$GetUserIdRequestStatus -> com.amazon.inapp.purchasing.GetUserIdResponse$GetUserIdRequestStatus:
-    com.amazon.inapp.purchasing.GetUserIdResponse$GetUserIdRequestStatus SUCCESSFUL -> SUCCESSFUL
-    com.amazon.inapp.purchasing.GetUserIdResponse$GetUserIdRequestStatus FAILED -> FAILED
-    com.amazon.inapp.purchasing.GetUserIdResponse$GetUserIdRequestStatus[] $VALUES -> $VALUES
-    com.amazon.inapp.purchasing.GetUserIdResponse$GetUserIdRequestStatus[] values() -> values
-    com.amazon.inapp.purchasing.GetUserIdResponse$GetUserIdRequestStatus valueOf(java.lang.String) -> valueOf
-com.amazon.inapp.purchasing.HandlerAdapter -> com.amazon.inapp.purchasing.HandlerAdapter:
-    android.os.Handler _handler -> _handler
-    boolean post(java.lang.Runnable) -> post
-com.amazon.inapp.purchasing.HandlerManager -> com.amazon.inapp.purchasing.HandlerManager:
-    java.util.Map HANDLER_ADAPTERS -> HANDLER_ADAPTERS
-    com.amazon.inapp.purchasing.HandlerAdapter MAIN_HANDLER_ADAPTER -> MAIN_HANDLER_ADAPTER
-    com.amazon.inapp.purchasing.HandlerAdapter getHandlerAdapter(java.lang.String) -> getHandlerAdapter
-    void setHandlerAdapter(java.lang.String,com.amazon.inapp.purchasing.HandlerAdapter) -> setHandlerAdapter
-    com.amazon.inapp.purchasing.HandlerAdapter getMainHandlerAdapter() -> getMainHandlerAdapter
-    void setMainHandlerAdapter(com.amazon.inapp.purchasing.HandlerAdapter) -> setMainHandlerAdapter
-com.amazon.inapp.purchasing.ImplementationFactory -> com.amazon.inapp.purchasing.ImplementationFactory:
-    boolean IS_SANDBOX_MODE -> IS_SANDBOX_MODE
-    boolean IS_SANDBOX_MODE_CHECKED -> IS_SANDBOX_MODE_CHECKED
-    com.amazon.inapp.purchasing.RequestHandler REQUEST_HANDLER_INSTANCE -> REQUEST_HANDLER_INSTANCE
-    com.amazon.inapp.purchasing.ResponseHandler RESPONSE_HANDLER_INSTANCE -> RESPONSE_HANDLER_INSTANCE
-    com.amazon.inapp.purchasing.LogHandler LOG_HANDLER_INSTANCE -> LOG_HANDLER_INSTANCE
-    com.amazon.inapp.purchasing.ImplementationRegistry IMPLEMENTATION_REGISTRY -> IMPLEMENTATION_REGISTRY
-    com.amazon.inapp.purchasing.ImplementationRegistry getImplementationRegistry() -> getImplementationRegistry
-    boolean isSandboxMode() -> isSandboxMode
-    com.amazon.inapp.purchasing.RequestHandler getRequestHandler() -> getRequestHandler
-    com.amazon.inapp.purchasing.ResponseHandler getResponseHandler() -> getResponseHandler
-    com.amazon.inapp.purchasing.LogHandler getLogHandler() -> getLogHandler
-    java.lang.Object getInstance(java.lang.Class,java.lang.Object) -> getInstance
-com.amazon.inapp.purchasing.ImplementationRegistry -> com.amazon.inapp.purchasing.ImplementationRegistry:
-    java.lang.Class getImplementation(java.lang.Class) -> getImplementation
-com.amazon.inapp.purchasing.Item -> com.amazon.inapp.purchasing.Item:
-    java.lang.String TO_STRING_FORMAT -> TO_STRING_FORMAT
-    java.lang.String _sku -> _sku
-    com.amazon.inapp.purchasing.Item$ItemType _itemType -> _itemType
-    java.lang.String _price -> _price
-    java.lang.String _title -> _title
-    java.lang.String _description -> _description
-    java.lang.String _smallIconUrl -> _smallIconUrl
-    java.lang.String getSku() -> getSku
-    com.amazon.inapp.purchasing.Item$ItemType getItemType() -> getItemType
-    java.lang.String getPrice() -> getPrice
-    java.lang.String getTitle() -> getTitle
-    java.lang.String getDescription() -> getDescription
-    java.lang.String getSmallIconUrl() -> getSmallIconUrl
-    java.lang.String toString() -> toString
-com.amazon.inapp.purchasing.Item$ItemType -> com.amazon.inapp.purchasing.Item$ItemType:
-    com.amazon.inapp.purchasing.Item$ItemType CONSUMABLE -> CONSUMABLE
-    com.amazon.inapp.purchasing.Item$ItemType ENTITLED -> ENTITLED
-    com.amazon.inapp.purchasing.Item$ItemType SUBSCRIPTION -> SUBSCRIPTION
-    com.amazon.inapp.purchasing.Item$ItemType[] $VALUES -> $VALUES
-    com.amazon.inapp.purchasing.Item$ItemType[] values() -> values
-    com.amazon.inapp.purchasing.Item$ItemType valueOf(java.lang.String) -> valueOf
-com.amazon.inapp.purchasing.ItemDataRequest -> com.amazon.inapp.purchasing.ItemDataRequest:
-    java.util.Set _skus -> _skus
-    java.lang.Runnable getRunnable() -> getRunnable
-    java.util.Set access$000(com.amazon.inapp.purchasing.ItemDataRequest) -> access$000
-com.amazon.inapp.purchasing.ItemDataRequest$1 -> com.amazon.inapp.purchasing.ItemDataRequest$1:
-    com.amazon.inapp.purchasing.ItemDataRequest this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.ItemDataResponse -> com.amazon.inapp.purchasing.ItemDataResponse:
-    java.lang.String TO_STRING_FORMAT -> TO_STRING_FORMAT
-    java.lang.String _requestId -> _requestId
-    java.util.Set _unavailableSkus -> _unavailableSkus
-    com.amazon.inapp.purchasing.ItemDataResponse$ItemDataRequestStatus _itemDataRequestStatus -> _itemDataRequestStatus
-    java.util.Map _itemData -> _itemData
-    java.lang.String getRequestId() -> getRequestId
-    java.util.Set getUnavailableSkus() -> getUnavailableSkus
-    com.amazon.inapp.purchasing.ItemDataResponse$ItemDataRequestStatus getItemDataRequestStatus() -> getItemDataRequestStatus
-    java.util.Map getItemData() -> getItemData
-    java.lang.String toString() -> toString
-com.amazon.inapp.purchasing.ItemDataResponse$ItemDataRequestStatus -> com.amazon.inapp.purchasing.ItemDataResponse$ItemDataRequestStatus:
-    com.amazon.inapp.purchasing.ItemDataResponse$ItemDataRequestStatus SUCCESSFUL -> SUCCESSFUL
-    com.amazon.inapp.purchasing.ItemDataResponse$ItemDataRequestStatus FAILED -> FAILED
-    com.amazon.inapp.purchasing.ItemDataResponse$ItemDataRequestStatus SUCCESSFUL_WITH_UNAVAILABLE_SKUS -> SUCCESSFUL_WITH_UNAVAILABLE_SKUS
-    com.amazon.inapp.purchasing.ItemDataResponse$ItemDataRequestStatus[] $VALUES -> $VALUES
-    com.amazon.inapp.purchasing.ItemDataResponse$ItemDataRequestStatus[] values() -> values
-    com.amazon.inapp.purchasing.ItemDataResponse$ItemDataRequestStatus valueOf(java.lang.String) -> valueOf
-com.amazon.inapp.purchasing.KiwiBaseCommandTask -> com.amazon.inapp.purchasing.KiwiBaseCommandTask:
-    java.lang.String TAG -> TAG
-    java.lang.String KEY_CURSOR -> KEY_CURSOR
-    java.lang.String KEY_DESCRIPTION -> KEY_DESCRIPTION
-    java.lang.String KEY_ERROR_MESSAGE -> KEY_ERROR_MESSAGE
-    java.lang.String KEY_HAS_CONTENT -> KEY_HAS_CONTENT
-    java.lang.String KEY_HAS_MORE -> KEY_HAS_MORE
-    java.lang.String KEY_ICON_URL -> KEY_ICON_URL
-    java.lang.String KEY_ITEM_TYPE -> KEY_ITEM_TYPE
-    java.lang.String KEY_ORDER_STATUS -> KEY_ORDER_STATUS
-    java.lang.String KEY_PERIOD_DATE_START -> KEY_PERIOD_DATE_START
-    java.lang.String KEY_PERIOD_DATE_END -> KEY_PERIOD_DATE_END
-    java.lang.String KEY_PRICE -> KEY_PRICE
-    java.lang.String KEY_PURCHASE_ITEM_INTENT -> KEY_PURCHASE_ITEM_INTENT
-    java.lang.String KEY_REQUEST_ID -> KEY_REQUEST_ID
-    java.lang.String KEY_RECEIPT -> KEY_RECEIPT
-    java.lang.String KEY_RECEIPTS -> KEY_RECEIPTS
-    java.lang.String KEY_REVOCATIONS -> KEY_REVOCATIONS
-    java.lang.String KEY_SDK_VERSION -> KEY_SDK_VERSION
-    java.lang.String KEY_SIGNATURE -> KEY_SIGNATURE
-    java.lang.String KEY_SKU -> KEY_SKU
-    java.lang.String KEY_SKUS -> KEY_SKUS
-    java.lang.String KEY_TITLE -> KEY_TITLE
-    java.lang.String KEY_TOKEN -> KEY_TOKEN
-    java.lang.String KEY_USER_ID -> KEY_USER_ID
-    java.lang.String TRUE -> TRUE
-    java.lang.String FALSE -> FALSE
-    java.lang.String SDK_VERSION -> SDK_VERSION
-    java.lang.String DATE_FORMAT -> DATE_FORMAT
-    java.lang.String _commandName -> _commandName
-    java.lang.String _commandVersion -> _commandVersion
-    java.lang.String _requestId -> _requestId
-    java.util.Map _commandData -> _commandData
-    com.amazon.android.licensing.LicenseFailurePromptContentMapper mapper -> mapper
-    void addCommandData(java.lang.String,java.lang.Object) -> addCommandData
-    java.lang.String getRequestId() -> getRequestId
-    boolean isExecutionNeeded() -> isExecutionNeeded
-    java.lang.String getCommandName() -> getCommandName
-    java.lang.String getCommandVersion() -> getCommandVersion
-    java.util.Map getCommandData() -> getCommandData
-    void postRunnableToMainLooper(java.lang.Runnable) -> postRunnableToMainLooper
-    void onFailure(com.amazon.venezia.command.FailureResult) -> onFailure
-    void onException(com.amazon.android.framework.exception.KiwiException) -> onException
-    void sendFailedResponse() -> sendFailedResponse
-    boolean isNullOrEmpty(java.lang.String) -> isNullOrEmpty
-    java.util.Date getDateFromString(java.lang.String) -> getDateFromString
-    com.amazon.inapp.purchasing.SubscriptionPeriod getSubscriptionPeriodFromReceiptJson(org.json.JSONObject) -> getSubscriptionPeriodFromReceiptJson
-    com.amazon.inapp.purchasing.Receipt getReceiptFromReceiptJson(org.json.JSONObject) -> getReceiptFromReceiptJson
-    boolean verifySignature(java.lang.String,java.lang.String,java.lang.String) -> verifySignature
-    boolean verifyReceipt(java.lang.String,com.amazon.inapp.purchasing.Receipt,org.json.JSONObject) -> verifyReceipt
-com.amazon.inapp.purchasing.KiwiGetItemDataRequestCommandTask -> com.amazon.inapp.purchasing.KiwiGetItemDataRequestCommandTask:
-    java.lang.String TAG -> TAG
-    java.lang.String COMMAND_NAME -> COMMAND_NAME
-    java.lang.String COMMAND_VERSION -> COMMAND_VERSION
-    java.util.Set _skus -> _skus
-    void onSuccess(com.amazon.venezia.command.SuccessResult) -> onSuccess
-    com.amazon.inapp.purchasing.ItemDataResponse getFailedResponse() -> getFailedResponse
-    void sendFailedResponse() -> sendFailedResponse
-    void notifyObserver(com.amazon.inapp.purchasing.ItemDataResponse) -> notifyObserver
-com.amazon.inapp.purchasing.KiwiGetItemDataRequestCommandTask$1 -> com.amazon.inapp.purchasing.KiwiGetItemDataRequestCommandTask$1:
-    com.amazon.inapp.purchasing.ItemDataResponse val$itemDataResponse -> val$itemDataResponse
-    com.amazon.inapp.purchasing.KiwiGetItemDataRequestCommandTask this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.KiwiGetUserIdCommandTask -> com.amazon.inapp.purchasing.KiwiGetUserIdCommandTask:
-    java.lang.String TAG -> TAG
-    java.lang.String COMMAND_NAME -> COMMAND_NAME
-    java.lang.String COMMAND_VERSION -> COMMAND_VERSION
-    void onSuccess(com.amazon.venezia.command.SuccessResult) -> onSuccess
-    void sendFailedResponse() -> sendFailedResponse
-    void notifyObserver(com.amazon.inapp.purchasing.GetUserIdResponse) -> notifyObserver
-com.amazon.inapp.purchasing.KiwiGetUserIdCommandTask$1 -> com.amazon.inapp.purchasing.KiwiGetUserIdCommandTask$1:
-    com.amazon.inapp.purchasing.GetUserIdResponse val$getUserIdResponse -> val$getUserIdResponse
-    com.amazon.inapp.purchasing.KiwiGetUserIdCommandTask this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.KiwiImplementationRegistry -> com.amazon.inapp.purchasing.KiwiImplementationRegistry:
-    java.util.Map classMap -> classMap
-    java.lang.Class getImplementation(java.lang.Class) -> getImplementation
-com.amazon.inapp.purchasing.KiwiLogHandler -> com.amazon.inapp.purchasing.KiwiLogHandler:
-    com.amazon.android.framework.util.KiwiLogger LOGGER -> LOGGER
-    boolean isTraceOn() -> isTraceOn
-    boolean isErrorOn() -> isErrorOn
-    boolean isTestOn() -> isTestOn
-    void trace(java.lang.String,java.lang.String) -> trace
-    void error(java.lang.String,java.lang.String) -> error
-    void test(java.lang.String,java.lang.String) -> test
-    java.lang.String buildLogMessage(java.lang.String,java.lang.String) -> buildLogMessage
-com.amazon.inapp.purchasing.KiwiPurchaseRequestCommandTask -> com.amazon.inapp.purchasing.KiwiPurchaseRequestCommandTask:
-    java.lang.String TAG -> TAG
-    java.lang.String COMMAND_NAME -> COMMAND_NAME
-    java.lang.String COMMAND_VERSION -> COMMAND_VERSION
-    com.amazon.android.framework.task.TaskManager taskManager -> taskManager
-    com.amazon.android.framework.context.ContextManager contextMgr -> contextMgr
-    java.lang.String _sku -> _sku
-    void onSuccess(com.amazon.venezia.command.SuccessResult) -> onSuccess
-    void sendFailedResponse() -> sendFailedResponse
-    com.amazon.android.framework.context.ContextManager access$000(com.amazon.inapp.purchasing.KiwiPurchaseRequestCommandTask) -> access$000
-com.amazon.inapp.purchasing.KiwiPurchaseRequestCommandTask$1 -> com.amazon.inapp.purchasing.KiwiPurchaseRequestCommandTask$1:
-    android.content.Intent val$intent -> val$intent
-    com.amazon.inapp.purchasing.KiwiPurchaseRequestCommandTask this$0 -> this$0
-    void execute() -> execute
-com.amazon.inapp.purchasing.KiwiPurchaseRequestCommandTask$2 -> com.amazon.inapp.purchasing.KiwiPurchaseRequestCommandTask$2:
-    com.amazon.inapp.purchasing.KiwiPurchaseRequestCommandTask this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.KiwiPurchaseResponseCommandTask -> com.amazon.inapp.purchasing.KiwiPurchaseResponseCommandTask:
-    java.lang.String TAG -> TAG
-    java.lang.String COMMAND_NAME -> COMMAND_NAME
-    java.lang.String COMMAND_VERSION -> COMMAND_VERSION
-    void onSuccess(com.amazon.venezia.command.SuccessResult) -> onSuccess
-    void sendFailedResponse() -> sendFailedResponse
-com.amazon.inapp.purchasing.KiwiPurchaseResponseCommandTask$1 -> com.amazon.inapp.purchasing.KiwiPurchaseResponseCommandTask$1:
-    com.amazon.inapp.purchasing.PurchaseResponse val$purchaseResponse -> val$purchaseResponse
-    com.amazon.inapp.purchasing.KiwiPurchaseResponseCommandTask this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.KiwiPurchaseResponseCommandTask$2 -> com.amazon.inapp.purchasing.KiwiPurchaseResponseCommandTask$2:
-    com.amazon.inapp.purchasing.KiwiPurchaseResponseCommandTask this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.KiwiPurchaseUpdatesCommandTask -> com.amazon.inapp.purchasing.KiwiPurchaseUpdatesCommandTask:
-    java.lang.String TAG -> TAG
-    java.lang.String COMMAND_NAME -> COMMAND_NAME
-    java.lang.String COMMAND_VERSION -> COMMAND_VERSION
-    com.amazon.inapp.purchasing.Offset _offset -> _offset
-    void onSuccess(com.amazon.venezia.command.SuccessResult) -> onSuccess
-    com.amazon.inapp.purchasing.PurchaseUpdatesResponse getFailedResponse() -> getFailedResponse
-    void sendFailedResponse() -> sendFailedResponse
-    void notifyObserver(com.amazon.inapp.purchasing.PurchaseUpdatesResponse) -> notifyObserver
-com.amazon.inapp.purchasing.KiwiPurchaseUpdatesCommandTask$1 -> com.amazon.inapp.purchasing.KiwiPurchaseUpdatesCommandTask$1:
-    com.amazon.inapp.purchasing.PurchaseUpdatesResponse val$purchaseUpdatesResponse -> val$purchaseUpdatesResponse
-    com.amazon.inapp.purchasing.KiwiPurchaseUpdatesCommandTask this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.KiwiRequestHandler -> com.amazon.inapp.purchasing.KiwiRequestHandler:
-    java.lang.String TAG -> TAG
-    java.lang.String HANDLER_THREAD_NAME -> HANDLER_THREAD_NAME
-    com.amazon.inapp.purchasing.HandlerAdapter _handler -> _handler
-    void sendGetUserIdRequest(java.lang.String) -> sendGetUserIdRequest
-    void sendPurchaseRequest(java.lang.String,java.lang.String) -> sendPurchaseRequest
-    void sendItemDataRequest(java.util.Set,java.lang.String) -> sendItemDataRequest
-    void sendContentDownloadRequest(java.lang.String,java.lang.String,java.lang.String) -> sendContentDownloadRequest
-    void sendPurchaseUpdatesRequest(com.amazon.inapp.purchasing.Offset,java.lang.String) -> sendPurchaseUpdatesRequest
-    void sendPurchaseResponseReceivedRequest(java.lang.String) -> sendPurchaseResponseReceivedRequest
-com.amazon.inapp.purchasing.KiwiRequestHandler$1 -> com.amazon.inapp.purchasing.KiwiRequestHandler$1:
-    java.lang.String val$requestId -> val$requestId
-    com.amazon.inapp.purchasing.KiwiRequestHandler this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.KiwiRequestHandler$2 -> com.amazon.inapp.purchasing.KiwiRequestHandler$2:
-    java.lang.String val$sku -> val$sku
-    java.lang.String val$requestId -> val$requestId
-    com.amazon.inapp.purchasing.KiwiRequestHandler this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.KiwiRequestHandler$3 -> com.amazon.inapp.purchasing.KiwiRequestHandler$3:
-    java.util.Set val$skus -> val$skus
-    java.lang.String val$requestId -> val$requestId
-    com.amazon.inapp.purchasing.KiwiRequestHandler this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.KiwiRequestHandler$4 -> com.amazon.inapp.purchasing.KiwiRequestHandler$4:
-    com.amazon.inapp.purchasing.Offset val$offset -> val$offset
-    java.lang.String val$requestId -> val$requestId
-    com.amazon.inapp.purchasing.KiwiRequestHandler this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.KiwiRequestHandler$5 -> com.amazon.inapp.purchasing.KiwiRequestHandler$5:
-    java.lang.String val$requestId -> val$requestId
-    com.amazon.inapp.purchasing.KiwiRequestHandler this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.KiwiResponseHandler -> com.amazon.inapp.purchasing.KiwiResponseHandler:
-    java.lang.String TAG -> TAG
-    java.lang.String HANDLER_THREAD_NAME -> HANDLER_THREAD_NAME
-    java.lang.String KEY_RESPONSE_TYPE -> KEY_RESPONSE_TYPE
-    java.lang.String KEY_REQUEST_ID -> KEY_REQUEST_ID
-    com.amazon.inapp.purchasing.HandlerAdapter _handler -> _handler
-    void handleResponse(android.content.Context,android.content.Intent) -> handleResponse
-com.amazon.inapp.purchasing.KiwiResponseHandler$1 -> com.amazon.inapp.purchasing.KiwiResponseHandler$1:
-    int[] $SwitchMap$com$amazon$inapp$purchasing$KiwiResponseHandler$ResponseType -> $SwitchMap$com$amazon$inapp$purchasing$KiwiResponseHandler$ResponseType
-com.amazon.inapp.purchasing.KiwiResponseHandler$PurchaseResponseHandlerRunnable -> com.amazon.inapp.purchasing.KiwiResponseHandler$PurchaseResponseHandlerRunnable:
-    com.amazon.inapp.purchasing.KiwiResponseHandler this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.KiwiResponseHandler$ResponseHandlerRunnable -> com.amazon.inapp.purchasing.KiwiResponseHandler$ResponseHandlerRunnable:
-    android.content.Context _context -> _context
-    android.content.Intent _intent -> _intent
-    com.amazon.inapp.purchasing.KiwiResponseHandler this$0 -> this$0
-    android.content.Context getContext() -> getContext
-    android.content.Intent getIntent() -> getIntent
-com.amazon.inapp.purchasing.KiwiResponseHandler$ResponseType -> com.amazon.inapp.purchasing.KiwiResponseHandler$ResponseType:
-    com.amazon.inapp.purchasing.KiwiResponseHandler$ResponseType purchase_response -> purchase_response
-    com.amazon.inapp.purchasing.KiwiResponseHandler$ResponseType item_response -> item_response
-    com.amazon.inapp.purchasing.KiwiResponseHandler$ResponseType updates_response -> updates_response
-    com.amazon.inapp.purchasing.KiwiResponseHandler$ResponseType[] $VALUES -> $VALUES
-    com.amazon.inapp.purchasing.KiwiResponseHandler$ResponseType[] values() -> values
-    com.amazon.inapp.purchasing.KiwiResponseHandler$ResponseType valueOf(java.lang.String) -> valueOf
-com.amazon.inapp.purchasing.KiwiResponseReceivedCommandTask -> com.amazon.inapp.purchasing.KiwiResponseReceivedCommandTask:
-    java.lang.String TAG -> TAG
-    java.lang.String COMMAND_NAME -> COMMAND_NAME
-    java.lang.String COMMAND_VERSION -> COMMAND_VERSION
-    void onSuccess(com.amazon.venezia.command.SuccessResult) -> onSuccess
-    void sendFailedResponse() -> sendFailedResponse
-com.amazon.inapp.purchasing.LogHandler -> com.amazon.inapp.purchasing.LogHandler:
-    boolean isTraceOn() -> isTraceOn
-    boolean isErrorOn() -> isErrorOn
-    boolean isTestOn() -> isTestOn
-    void trace(java.lang.String,java.lang.String) -> trace
-    void error(java.lang.String,java.lang.String) -> error
-    void test(java.lang.String,java.lang.String) -> test
-com.amazon.inapp.purchasing.Logger -> com.amazon.inapp.purchasing.Logger:
-    boolean isTraceOn() -> isTraceOn
-    boolean isErrorOn() -> isErrorOn
-    boolean isTestOn() -> isTestOn
-    void trace(java.lang.String,java.lang.String) -> trace
-    void error(java.lang.String,java.lang.String) -> error
-    void test(java.lang.String,java.lang.String) -> test
-com.amazon.inapp.purchasing.Offset -> com.amazon.inapp.purchasing.Offset:
-    java.lang.String BEGINNING_ENCODED -> BEGINNING_ENCODED
-    com.amazon.inapp.purchasing.Offset BEGINNING -> BEGINNING
-    java.lang.String _encodedOffset -> _encodedOffset
-    com.amazon.inapp.purchasing.Offset fromString(java.lang.String) -> fromString
-    java.lang.String toString() -> toString
-com.amazon.inapp.purchasing.PurchaseRequest -> com.amazon.inapp.purchasing.PurchaseRequest:
-    java.lang.String _sku -> _sku
-    java.lang.Runnable getRunnable() -> getRunnable
-    java.lang.String access$000(com.amazon.inapp.purchasing.PurchaseRequest) -> access$000
-com.amazon.inapp.purchasing.PurchaseRequest$1 -> com.amazon.inapp.purchasing.PurchaseRequest$1:
-    com.amazon.inapp.purchasing.PurchaseRequest this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.PurchaseResponse -> com.amazon.inapp.purchasing.PurchaseResponse:
-    java.lang.String TO_STRING_FORMAT -> TO_STRING_FORMAT
-    java.lang.String _requestId -> _requestId
-    java.lang.String _userId -> _userId
-    com.amazon.inapp.purchasing.Receipt _receipt -> _receipt
-    com.amazon.inapp.purchasing.PurchaseResponse$PurchaseRequestStatus _purchaseRequestStatus -> _purchaseRequestStatus
-    java.lang.String getRequestId() -> getRequestId
-    java.lang.String getUserId() -> getUserId
-    com.amazon.inapp.purchasing.Receipt getReceipt() -> getReceipt
-    com.amazon.inapp.purchasing.PurchaseResponse$PurchaseRequestStatus getPurchaseRequestStatus() -> getPurchaseRequestStatus
-    java.lang.String toString() -> toString
-com.amazon.inapp.purchasing.PurchaseResponse$PurchaseRequestStatus -> com.amazon.inapp.purchasing.PurchaseResponse$PurchaseRequestStatus:
-    com.amazon.inapp.purchasing.PurchaseResponse$PurchaseRequestStatus SUCCESSFUL -> SUCCESSFUL
-    com.amazon.inapp.purchasing.PurchaseResponse$PurchaseRequestStatus FAILED -> FAILED
-    com.amazon.inapp.purchasing.PurchaseResponse$PurchaseRequestStatus INVALID_SKU -> INVALID_SKU
-    com.amazon.inapp.purchasing.PurchaseResponse$PurchaseRequestStatus ALREADY_ENTITLED -> ALREADY_ENTITLED
-    com.amazon.inapp.purchasing.PurchaseResponse$PurchaseRequestStatus[] $VALUES -> $VALUES
-    com.amazon.inapp.purchasing.PurchaseResponse$PurchaseRequestStatus[] values() -> values
-    com.amazon.inapp.purchasing.PurchaseResponse$PurchaseRequestStatus valueOf(java.lang.String) -> valueOf
-com.amazon.inapp.purchasing.PurchaseUpdatesRequest -> com.amazon.inapp.purchasing.PurchaseUpdatesRequest:
-    com.amazon.inapp.purchasing.Offset _offset -> _offset
-    java.lang.Runnable getRunnable() -> getRunnable
-    com.amazon.inapp.purchasing.Offset access$000(com.amazon.inapp.purchasing.PurchaseUpdatesRequest) -> access$000
-com.amazon.inapp.purchasing.PurchaseUpdatesRequest$1 -> com.amazon.inapp.purchasing.PurchaseUpdatesRequest$1:
-    com.amazon.inapp.purchasing.PurchaseUpdatesRequest this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.PurchaseUpdatesResponse -> com.amazon.inapp.purchasing.PurchaseUpdatesResponse:
-    java.lang.String TO_STRING_FORMAT -> TO_STRING_FORMAT
-    java.lang.String _requestId -> _requestId
-    java.lang.String _userId -> _userId
-    com.amazon.inapp.purchasing.PurchaseUpdatesResponse$PurchaseUpdatesRequestStatus _purchaseUpdatesRequestStatus -> _purchaseUpdatesRequestStatus
-    java.util.Set _receipts -> _receipts
-    java.util.Set _revokedSkus -> _revokedSkus
-    com.amazon.inapp.purchasing.Offset _offset -> _offset
-    boolean _isMore -> _isMore
-    java.lang.String getRequestId() -> getRequestId
-    java.lang.String getUserId() -> getUserId
-    com.amazon.inapp.purchasing.PurchaseUpdatesResponse$PurchaseUpdatesRequestStatus getPurchaseUpdatesRequestStatus() -> getPurchaseUpdatesRequestStatus
-    java.util.Set getReceipts() -> getReceipts
-    java.util.Set getRevokedSkus() -> getRevokedSkus
-    com.amazon.inapp.purchasing.Offset getOffset() -> getOffset
-    boolean isMore() -> isMore
-    java.lang.String toString() -> toString
-com.amazon.inapp.purchasing.PurchaseUpdatesResponse$PurchaseUpdatesRequestStatus -> com.amazon.inapp.purchasing.PurchaseUpdatesResponse$PurchaseUpdatesRequestStatus:
-    com.amazon.inapp.purchasing.PurchaseUpdatesResponse$PurchaseUpdatesRequestStatus SUCCESSFUL -> SUCCESSFUL
-    com.amazon.inapp.purchasing.PurchaseUpdatesResponse$PurchaseUpdatesRequestStatus FAILED -> FAILED
-    com.amazon.inapp.purchasing.PurchaseUpdatesResponse$PurchaseUpdatesRequestStatus[] $VALUES -> $VALUES
-    com.amazon.inapp.purchasing.PurchaseUpdatesResponse$PurchaseUpdatesRequestStatus[] values() -> values
-    com.amazon.inapp.purchasing.PurchaseUpdatesResponse$PurchaseUpdatesRequestStatus valueOf(java.lang.String) -> valueOf
-com.amazon.inapp.purchasing.PurchasingManager -> com.amazon.inapp.purchasing.PurchasingManager:
-    int ITEM_DATA_REQUEST_MAX_SKUS -> ITEM_DATA_REQUEST_MAX_SKUS
-    java.lang.String HANDLER_THREAD_NAME -> HANDLER_THREAD_NAME
-    java.lang.String TAG -> TAG
-    com.amazon.inapp.purchasing.HandlerAdapter HANDLER -> HANDLER
-    com.amazon.inapp.purchasing.PurchasingObserver registeredPurchasingObserver -> registeredPurchasingObserver
-    java.lang.String BUILD_ID -> BUILD_ID
-    com.amazon.inapp.purchasing.PurchasingObserver getPurchasingObserver() -> getPurchasingObserver
-    android.content.Context getObserverContext() -> getObserverContext
-    void checkObserverRegistered() -> checkObserverRegistered
-    void registerObserver(com.amazon.inapp.purchasing.PurchasingObserver) -> registerObserver
-    java.lang.String initiateRequest(com.amazon.inapp.purchasing.Request) -> initiateRequest
-    java.lang.String initiateGetUserIdRequest() -> initiateGetUserIdRequest
-    java.lang.String initiatePurchaseRequest(java.lang.String) -> initiatePurchaseRequest
-    java.lang.String initiateItemDataRequest(java.util.Set) -> initiateItemDataRequest
-    java.lang.String initiatePurchaseUpdatesRequest(com.amazon.inapp.purchasing.Offset) -> initiatePurchaseUpdatesRequest
-com.amazon.inapp.purchasing.PurchasingManager$1 -> com.amazon.inapp.purchasing.PurchasingManager$1:
-    void run() -> run
-com.amazon.inapp.purchasing.PurchasingManager$2 -> com.amazon.inapp.purchasing.PurchasingManager$2:
-    com.amazon.inapp.purchasing.PurchasingObserver val$purchasingObserver -> val$purchasingObserver
-    void run() -> run
-com.amazon.inapp.purchasing.PurchasingManager$2$1 -> com.amazon.inapp.purchasing.PurchasingManager$2$1:
-    com.amazon.inapp.purchasing.PurchasingManager$2 this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.PurchasingObserver -> com.amazon.inapp.purchasing.PurchasingObserver:
-    java.lang.ref.WeakReference _contextReference -> _contextReference
-    android.content.Context getContext() -> getContext
-    void onSdkAvailable(boolean) -> onSdkAvailable
-    void onGetUserIdResponse(com.amazon.inapp.purchasing.GetUserIdResponse) -> onGetUserIdResponse
-    void onPurchaseResponse(com.amazon.inapp.purchasing.PurchaseResponse) -> onPurchaseResponse
-    void onItemDataResponse(com.amazon.inapp.purchasing.ItemDataResponse) -> onItemDataResponse
-    void onPurchaseUpdatesResponse(com.amazon.inapp.purchasing.PurchaseUpdatesResponse) -> onPurchaseUpdatesResponse
-com.amazon.inapp.purchasing.Receipt -> com.amazon.inapp.purchasing.Receipt:
-    java.lang.String TO_STRING_FORMAT -> TO_STRING_FORMAT
-    java.lang.String _sku -> _sku
-    com.amazon.inapp.purchasing.Item$ItemType _itemType -> _itemType
-    boolean _isContentAvailable -> _isContentAvailable
-    com.amazon.inapp.purchasing.SubscriptionPeriod _subscriptionPeriod -> _subscriptionPeriod
-    java.lang.String _purchaseToken -> _purchaseToken
-    java.lang.String getSku() -> getSku
-    com.amazon.inapp.purchasing.Item$ItemType getItemType() -> getItemType
-    boolean isContentAvailable() -> isContentAvailable
-    com.amazon.inapp.purchasing.SubscriptionPeriod getSubscriptionPeriod() -> getSubscriptionPeriod
-    java.lang.String getPurchaseToken() -> getPurchaseToken
-    java.lang.String toString() -> toString
-com.amazon.inapp.purchasing.Request -> com.amazon.inapp.purchasing.Request:
-    java.lang.String _requestId -> _requestId
-    java.lang.String getRequestId() -> getRequestId
-    java.lang.Runnable getRunnable() -> getRunnable
-com.amazon.inapp.purchasing.RequestHandler -> com.amazon.inapp.purchasing.RequestHandler:
-    void sendGetUserIdRequest(java.lang.String) -> sendGetUserIdRequest
-    void sendPurchaseRequest(java.lang.String,java.lang.String) -> sendPurchaseRequest
-    void sendItemDataRequest(java.util.Set,java.lang.String) -> sendItemDataRequest
-    void sendContentDownloadRequest(java.lang.String,java.lang.String,java.lang.String) -> sendContentDownloadRequest
-    void sendPurchaseUpdatesRequest(com.amazon.inapp.purchasing.Offset,java.lang.String) -> sendPurchaseUpdatesRequest
-    void sendPurchaseResponseReceivedRequest(java.lang.String) -> sendPurchaseResponseReceivedRequest
-com.amazon.inapp.purchasing.ResponseHandler -> com.amazon.inapp.purchasing.ResponseHandler:
-    void handleResponse(android.content.Context,android.content.Intent) -> handleResponse
-com.amazon.inapp.purchasing.ResponseReceiver -> com.amazon.inapp.purchasing.ResponseReceiver:
-    void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.amazon.inapp.purchasing.SandboxConstants -> com.amazon.inapp.purchasing.SandboxConstants:
-    java.lang.String MM_DD_YYYY_HH_MM_SS -> MM_DD_YYYY_HH_MM_SS
-    java.lang.String PURCHASE_ACTION -> PURCHASE_ACTION
-    java.lang.String PURCHASE_INPUT -> PURCHASE_INPUT
-    java.lang.String PURCHASE_OUTPUT -> PURCHASE_OUTPUT
-    java.lang.String PURCHASE_STATUS -> PURCHASE_STATUS
-    java.lang.String USERID_ACTION -> USERID_ACTION
-    java.lang.String USERID_INPUT -> USERID_INPUT
-    java.lang.String USERID_OUTPUT -> USERID_OUTPUT
-    java.lang.String USERID_STATUS -> USERID_STATUS
-    java.lang.String ITEM_DATA_ACTION -> ITEM_DATA_ACTION
-    java.lang.String ITEM_DATA_INPUT -> ITEM_DATA_INPUT
-    java.lang.String ITEM_DATA_OUTPUT -> ITEM_DATA_OUTPUT
-    java.lang.String ITEM_DATA_STATUS -> ITEM_DATA_STATUS
-    java.lang.String PURCHASE_UPDATES_ACTION -> PURCHASE_UPDATES_ACTION
-    java.lang.String PURCHASE_UPDATES_INPUT -> PURCHASE_UPDATES_INPUT
-    java.lang.String PURCHASE_UPDATES_OUTPUT -> PURCHASE_UPDATES_OUTPUT
-    java.lang.String PURCHASE_UPDATES_STATUS -> PURCHASE_UPDATES_STATUS
-    java.lang.String PACKAGE_NAME -> PACKAGE_NAME
-    java.lang.String REQUEST_ID -> REQUEST_ID
-    java.lang.String TOKEN -> TOKEN
-    java.lang.String END_TIME -> END_TIME
-    java.lang.String START_TIME -> START_TIME
-    java.lang.String SUBSCRIPION_PERIOD -> SUBSCRIPION_PERIOD
-    java.lang.String ITEM_TYPE -> ITEM_TYPE
-    java.lang.String RESPONSE_TYPE -> RESPONSE_TYPE
-    java.lang.String SKU -> SKU
-    java.lang.String SKUS -> SKUS
-    java.lang.String RECEIPT -> RECEIPT
-    java.lang.String RECEIPTS -> RECEIPTS
-    java.lang.String USER_ID -> USER_ID
-    java.lang.String UNAVAILABLE_SKUS -> UNAVAILABLE_SKUS
-    java.lang.String ITEMS -> ITEMS
-    java.lang.String PRICE -> PRICE
-    java.lang.String TITLE -> TITLE
-    java.lang.String DESCRIPTION -> DESCRIPTION
-    java.lang.String SMALL_ICON_URL -> SMALL_ICON_URL
-    java.lang.String OFFSET -> OFFSET
-    java.lang.String IS_MORE -> IS_MORE
-    java.lang.String REVOKED_SKUS -> REVOKED_SKUS
-com.amazon.inapp.purchasing.SandboxException -> com.amazon.inapp.purchasing.SandboxException:
-    long serialVersionUID -> serialVersionUID
-com.amazon.inapp.purchasing.SandboxImplementationRegistry -> com.amazon.inapp.purchasing.SandboxImplementationRegistry:
-    java.util.Map classMap -> classMap
-    java.lang.Class getImplementation(java.lang.Class) -> getImplementation
-com.amazon.inapp.purchasing.SandboxLogHandler -> com.amazon.inapp.purchasing.SandboxLogHandler:
-    boolean TRACE_ON -> TRACE_ON
-    boolean ERROR_ON -> ERROR_ON
-    boolean TEST_ON -> TEST_ON
-    boolean isTraceOn() -> isTraceOn
-    boolean isErrorOn() -> isErrorOn
-    boolean isTestOn() -> isTestOn
-    void trace(java.lang.String,java.lang.String) -> trace
-    void error(java.lang.String,java.lang.String) -> error
-    void test(java.lang.String,java.lang.String) -> test
-    java.lang.String buildLogMessage(java.lang.String) -> buildLogMessage
-com.amazon.inapp.purchasing.SandboxRequestHandler -> com.amazon.inapp.purchasing.SandboxRequestHandler:
-    java.lang.String TAG -> TAG
-    void sendGetUserIdRequest(java.lang.String) -> sendGetUserIdRequest
-    void sendPurchaseRequest(java.lang.String,java.lang.String) -> sendPurchaseRequest
-    void sendItemDataRequest(java.util.Set,java.lang.String) -> sendItemDataRequest
-    void sendContentDownloadRequest(java.lang.String,java.lang.String,java.lang.String) -> sendContentDownloadRequest
-    void sendPurchaseUpdatesRequest(com.amazon.inapp.purchasing.Offset,java.lang.String) -> sendPurchaseUpdatesRequest
-    void sendPurchaseResponseReceivedRequest(java.lang.String) -> sendPurchaseResponseReceivedRequest
-com.amazon.inapp.purchasing.SandboxRequestHandler$1 -> com.amazon.inapp.purchasing.SandboxRequestHandler$1:
-    java.lang.String val$sku -> val$sku
-    java.lang.String val$location -> val$location
-    com.amazon.inapp.purchasing.SandboxRequestHandler this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.SandboxRequestHandler$2 -> com.amazon.inapp.purchasing.SandboxRequestHandler$2:
-    java.lang.String val$requestId -> val$requestId
-    java.lang.String val$sku -> val$sku
-    com.amazon.inapp.purchasing.PurchaseResponse val$response -> val$response
-    com.amazon.inapp.purchasing.SandboxRequestHandler this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.SandboxRequestHandler$3 -> com.amazon.inapp.purchasing.SandboxRequestHandler$3:
-    java.util.Set val$skus -> val$skus
-    com.amazon.inapp.purchasing.ItemDataResponse val$response -> val$response
-    com.amazon.inapp.purchasing.SandboxRequestHandler this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.SandboxRequestHandler$4 -> com.amazon.inapp.purchasing.SandboxRequestHandler$4:
-    java.lang.String val$sku -> val$sku
-    java.lang.String val$location -> val$location
-    com.amazon.inapp.purchasing.ContentDownloadResponse val$response -> val$response
-    com.amazon.inapp.purchasing.SandboxRequestHandler this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.SandboxRequestHandler$5 -> com.amazon.inapp.purchasing.SandboxRequestHandler$5:
-    com.amazon.inapp.purchasing.Offset val$offset -> val$offset
-    com.amazon.inapp.purchasing.PurchaseUpdatesResponse val$response -> val$response
-    com.amazon.inapp.purchasing.SandboxRequestHandler this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.SandboxResponseHandler -> com.amazon.inapp.purchasing.SandboxResponseHandler:
-    java.lang.String TAG -> TAG
-    com.amazon.inapp.purchasing.HandlerAdapter _handler -> _handler
-    void handleResponse(android.content.Context,android.content.Intent) -> handleResponse
-    void handlePurchaseUpdatesResponse(android.content.Intent) -> handlePurchaseUpdatesResponse
-    com.amazon.inapp.purchasing.PurchaseUpdatesResponse getPurchaseUpdatesResponse(android.content.Intent) -> getPurchaseUpdatesResponse
-    void handleItemDataResponse(android.content.Intent) -> handleItemDataResponse
-    com.amazon.inapp.purchasing.ItemDataResponse getItemDataResponse(android.content.Intent) -> getItemDataResponse
-    com.amazon.inapp.purchasing.Item getItem(java.lang.String,org.json.JSONObject) -> getItem
-    void handleUserIdResponse(android.content.Intent) -> handleUserIdResponse
-    com.amazon.inapp.purchasing.GetUserIdResponse getUserIdResponse(android.content.Intent) -> getUserIdResponse
-    void handlePurchaseResponse(android.content.Intent) -> handlePurchaseResponse
-    com.amazon.inapp.purchasing.PurchaseResponse getPurchaseResponse(android.content.Intent) -> getPurchaseResponse
-    com.amazon.inapp.purchasing.Receipt getReceipt(org.json.JSONObject) -> getReceipt
-com.amazon.inapp.purchasing.SandboxResponseHandler$1 -> com.amazon.inapp.purchasing.SandboxResponseHandler$1:
-    com.amazon.inapp.purchasing.PurchaseUpdatesResponse val$response -> val$response
-    com.amazon.inapp.purchasing.SandboxResponseHandler this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.SandboxResponseHandler$2 -> com.amazon.inapp.purchasing.SandboxResponseHandler$2:
-    com.amazon.inapp.purchasing.ItemDataResponse val$response -> val$response
-    com.amazon.inapp.purchasing.SandboxResponseHandler this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.SandboxResponseHandler$3 -> com.amazon.inapp.purchasing.SandboxResponseHandler$3:
-    com.amazon.inapp.purchasing.GetUserIdResponse val$response -> val$response
-    com.amazon.inapp.purchasing.SandboxResponseHandler this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.SandboxResponseHandler$4 -> com.amazon.inapp.purchasing.SandboxResponseHandler$4:
-    com.amazon.inapp.purchasing.PurchaseResponse val$response -> val$response
-    com.amazon.inapp.purchasing.SandboxResponseHandler this$0 -> this$0
-    void run() -> run
-com.amazon.inapp.purchasing.SubscriptionPeriod -> com.amazon.inapp.purchasing.SubscriptionPeriod:
-    java.lang.String TO_STRING_FORMAT -> TO_STRING_FORMAT
-    java.util.Date _startDate -> _startDate
-    java.util.Date _endDate -> _endDate
-    java.util.Date getStartDate() -> getStartDate
-    java.util.Date getEndDate() -> getEndDate
-    java.lang.String toString() -> toString
-com.amazon.inapp.purchasing.Validator -> com.amazon.inapp.purchasing.Validator:
-    void validateNotNull(java.lang.Object,java.lang.String) -> validateNotNull
-    void validateNotEmpty(java.util.Collection,java.lang.String) -> validateNotEmpty
 com.android.vending.billing.IMarketBillingService -> com.a.a.a.a:
     android.os.Bundle sendBillingRequest(android.os.Bundle) -> a
 com.android.vending.billing.IMarketBillingService$Stub -> com.a.a.a.b:
@@ -1166,30 +572,15 @@ com.android.vending.billing.IMarketBillingService$Stub$Proxy -> com.a.a.a.c:
     android.os.IBinder mRemote -> a
     android.os.IBinder asBinder() -> asBinder
     android.os.Bundle sendBillingRequest(android.os.Bundle) -> a
-com.clockworkmod.billing.AmazonHelper -> com.clockworkmod.billing.a:
-    java.lang.Boolean mIsSandbox -> c
-    java.lang.String mUserId -> a
-    com.clockworkmod.billing.WeakReferenceHashTable mCallbacks -> b
-    void invokeCallback(java.lang.String,java.lang.Object) -> b
-    void initialize(android.content.Context) -> a
-    void startPurchase(java.lang.String,com.clockworkmod.billing.Callback) -> a
-    void access$1(java.lang.Boolean) -> a
-    void access$2(java.lang.String,java.lang.Object) -> a
-com.clockworkmod.billing.AmazonHelper$1 -> com.clockworkmod.billing.b:
-    void onSdkAvailable(boolean) -> onSdkAvailable
-    void onPurchaseResponse(com.amazon.inapp.purchasing.PurchaseResponse) -> onPurchaseResponse
-    void onGetUserIdResponse(com.amazon.inapp.purchasing.GetUserIdResponse) -> onGetUserIdResponse
-    void onItemDataResponse(com.amazon.inapp.purchasing.ItemDataResponse) -> onItemDataResponse
-    void onPurchaseUpdatesResponse(com.amazon.inapp.purchasing.PurchaseUpdatesResponse) -> onPurchaseUpdatesResponse
-com.clockworkmod.billing.Base64 -> com.clockworkmod.billing.c:
+com.clockworkmod.billing.Base64 -> com.clockworkmod.billing.a:
     boolean $assertionsDisabled -> a
     byte[] decode(java.lang.String,int) -> a
     byte[] decode(byte[],int) -> a
     byte[] decode(byte[],int,int,int) -> a
-com.clockworkmod.billing.Base64$Coder -> com.clockworkmod.billing.d:
+com.clockworkmod.billing.Base64$Coder -> com.clockworkmod.billing.b:
     byte[] output -> a
     int op -> b
-com.clockworkmod.billing.Base64$Decoder -> com.clockworkmod.billing.e:
+com.clockworkmod.billing.Base64$Decoder -> com.clockworkmod.billing.c:
     int[] DECODE -> c
     int[] DECODE_WEBSAFE -> d
     int state -> e
@@ -1208,21 +599,21 @@ com.clockworkmod.billing.BillingActivity -> com.clockworkmod.billing.BillingActi
     void access$0(com.clockworkmod.billing.BillingActivity,java.lang.String) -> a
     void access$1(com.clockworkmod.billing.BillingActivity) -> a
     void access$2(com.clockworkmod.billing.BillingActivity) -> b
-com.clockworkmod.billing.BillingActivity$1 -> com.clockworkmod.billing.f:
+com.clockworkmod.billing.BillingActivity$1 -> com.clockworkmod.billing.d:
     com.clockworkmod.billing.BillingActivity this$0 -> a
     android.content.SharedPreferences$Editor val$editor -> b
     void run(android.accounts.AccountManagerFuture) -> run
     com.clockworkmod.billing.BillingActivity access$0(com.clockworkmod.billing.BillingActivity$1) -> a
-com.clockworkmod.billing.BillingActivity$1$1 -> com.clockworkmod.billing.g:
+com.clockworkmod.billing.BillingActivity$1$1 -> com.clockworkmod.billing.e:
     com.clockworkmod.billing.BillingActivity$1 this$1 -> a
     void onFinished(com.clockworkmod.billing.CheckPurchaseResult) -> a
-com.clockworkmod.billing.BillingActivity$2 -> com.clockworkmod.billing.h:
+com.clockworkmod.billing.BillingActivity$2 -> com.clockworkmod.billing.f:
     com.clockworkmod.billing.BillingActivity this$0 -> a
     java.lang.String val$payerEmail -> b
     android.app.ProgressDialog val$progress -> c
     void run() -> a
     com.clockworkmod.billing.BillingActivity access$0(com.clockworkmod.billing.BillingActivity$2) -> a
-com.clockworkmod.billing.BillingActivity$2$1 -> com.clockworkmod.billing.i:
+com.clockworkmod.billing.BillingActivity$2$1 -> com.clockworkmod.billing.g:
     com.clockworkmod.billing.BillingActivity$2 this$1 -> a
     android.app.ProgressDialog val$progress -> b
     java.lang.String val$message -> c
@@ -1230,40 +621,40 @@ com.clockworkmod.billing.BillingActivity$2$1 -> com.clockworkmod.billing.i:
     boolean val$success -> e
     void run() -> run
     com.clockworkmod.billing.BillingActivity$2 access$0(com.clockworkmod.billing.BillingActivity$2$1) -> a
-com.clockworkmod.billing.BillingActivity$2$1$1 -> com.clockworkmod.billing.j:
+com.clockworkmod.billing.BillingActivity$2$1$1 -> com.clockworkmod.billing.h:
     com.clockworkmod.billing.BillingActivity$2$1 this$2 -> a
     void onCancel(android.content.DialogInterface) -> onCancel
-com.clockworkmod.billing.BillingActivity$2$1$2 -> com.clockworkmod.billing.k:
+com.clockworkmod.billing.BillingActivity$2$1$2 -> com.clockworkmod.billing.i:
     com.clockworkmod.billing.BillingActivity$2$1 this$2 -> a
     boolean val$success -> b
     boolean val$wait -> c
     android.app.ProgressDialog val$progress -> d
     void onClick(android.content.DialogInterface,int) -> onClick
     com.clockworkmod.billing.BillingActivity$2$1 access$0(com.clockworkmod.billing.BillingActivity$2$1$2) -> a
-com.clockworkmod.billing.BillingActivity$2$1$2$1 -> com.clockworkmod.billing.l:
+com.clockworkmod.billing.BillingActivity$2$1$2$1 -> com.clockworkmod.billing.j:
     com.clockworkmod.billing.BillingActivity$2$1$2 this$3 -> a
     android.app.ProgressDialog val$progress -> b
     void onFinished(com.clockworkmod.billing.CheckPurchaseResult) -> a
-com.clockworkmod.billing.BillingActivity$2$1$3 -> com.clockworkmod.billing.m:
+com.clockworkmod.billing.BillingActivity$2$1$3 -> com.clockworkmod.billing.k:
     com.clockworkmod.billing.BillingActivity$2$1 this$2 -> a
     android.app.AlertDialog val$d -> b
     void run() -> run
-com.clockworkmod.billing.BillingActivity$2$2 -> com.clockworkmod.billing.n:
+com.clockworkmod.billing.BillingActivity$2$2 -> com.clockworkmod.billing.l:
     com.clockworkmod.billing.BillingActivity$2 this$1 -> a
     android.app.ProgressDialog val$progress -> b
     void run() -> run
-com.clockworkmod.billing.BillingActivity$3 -> com.clockworkmod.billing.o:
+com.clockworkmod.billing.BillingActivity$3 -> com.clockworkmod.billing.m:
     com.clockworkmod.billing.BillingActivity this$0 -> a
     android.widget.EditText val$ed -> b
     void onClick(android.content.DialogInterface,int) -> onClick
-com.clockworkmod.billing.BillingActivity$4 -> com.clockworkmod.billing.p:
+com.clockworkmod.billing.BillingActivity$4 -> com.clockworkmod.billing.n:
     com.clockworkmod.billing.BillingActivity this$0 -> a
     void onCancel(android.content.DialogInterface) -> onCancel
-com.clockworkmod.billing.BillingActivity$5 -> com.clockworkmod.billing.q:
+com.clockworkmod.billing.BillingActivity$5 -> com.clockworkmod.billing.o:
     com.clockworkmod.billing.BillingActivity this$0 -> a
     android.accounts.Account[] val$accounts -> b
     void onClick(android.content.DialogInterface,int) -> onClick
-com.clockworkmod.billing.BillingActivity$6 -> com.clockworkmod.billing.r:
+com.clockworkmod.billing.BillingActivity$6 -> com.clockworkmod.billing.p:
     com.clockworkmod.billing.BillingActivity this$0 -> a
     void onCancel(android.content.DialogInterface) -> onCancel
 com.clockworkmod.billing.BillingReceiver -> com.clockworkmod.billing.BillingReceiver:
@@ -1283,37 +674,35 @@ com.clockworkmod.billing.BillingService -> com.clockworkmod.billing.BillingServi
     android.os.IBinder onBind(android.content.Intent) -> onBind
     void reportAndroidPurchase(android.content.Context,java.lang.String,java.lang.String) -> a
     int onStartCommand(android.content.Intent,int,int) -> onStartCommand
-com.clockworkmod.billing.BillingService$1 -> com.clockworkmod.billing.s:
+com.clockworkmod.billing.BillingService$1 -> com.clockworkmod.billing.q:
     com.clockworkmod.billing.BillingService this$0 -> a
     void run() -> run
-com.clockworkmod.billing.BillingService$2 -> com.clockworkmod.billing.t:
+com.clockworkmod.billing.BillingService$2 -> com.clockworkmod.billing.r:
     com.clockworkmod.billing.BillingService this$0 -> a
     void onServiceDisconnected(android.content.ComponentName) -> onServiceDisconnected
     void onServiceConnected(android.content.ComponentName,android.os.IBinder) -> onServiceConnected
-com.clockworkmod.billing.BillingService$3 -> com.clockworkmod.billing.u:
+com.clockworkmod.billing.BillingService$3 -> com.clockworkmod.billing.s:
     com.clockworkmod.billing.BillingService this$0 -> a
     java.lang.String val$signedData -> b
     java.lang.String val$signature -> c
     void onServiceDisconnected(android.content.ComponentName) -> onServiceDisconnected
     void onServiceConnected(android.content.ComponentName,android.os.IBinder) -> onServiceConnected
     com.clockworkmod.billing.BillingService access$0(com.clockworkmod.billing.BillingService$3) -> a
-com.clockworkmod.billing.BillingService$3$1 -> com.clockworkmod.billing.v:
+com.clockworkmod.billing.BillingService$3$1 -> com.clockworkmod.billing.t:
     com.clockworkmod.billing.BillingService$3 this$1 -> a
     android.os.IBinder val$service -> b
     java.lang.String val$signedData -> c
     java.lang.String val$signature -> d
     android.content.ServiceConnection val$sc -> e
     void run() -> a
-com.clockworkmod.billing.BillingService$4 -> com.clockworkmod.billing.w:
+com.clockworkmod.billing.BillingService$4 -> com.clockworkmod.billing.u:
     com.clockworkmod.billing.BillingService this$0 -> a
     java.lang.String val$notifyId -> b
     void onServiceDisconnected(android.content.ComponentName) -> onServiceDisconnected
     void onServiceConnected(android.content.ComponentName,android.os.IBinder) -> onServiceConnected
-com.clockworkmod.billing.Callback -> com.clockworkmod.billing.x:
-    void onFinished(java.lang.Object) -> a
-com.clockworkmod.billing.CheckPurchaseCallback -> com.clockworkmod.billing.y:
+com.clockworkmod.billing.CheckPurchaseCallback -> com.clockworkmod.billing.v:
     void onFinished(com.clockworkmod.billing.CheckPurchaseResult) -> a
-com.clockworkmod.billing.CheckPurchaseResult -> com.clockworkmod.billing.z:
+com.clockworkmod.billing.CheckPurchaseResult -> com.clockworkmod.billing.w:
     int mState -> a
     com.clockworkmod.billing.Order mOrder -> b
     boolean isPurchased() -> a
@@ -1325,7 +714,7 @@ com.clockworkmod.billing.CheckPurchaseResult -> com.clockworkmod.billing.z:
     com.clockworkmod.billing.CheckPurchaseResult error() -> f
     com.clockworkmod.billing.CheckPurchaseResult pending() -> g
     com.clockworkmod.billing.CheckPurchaseResult stale() -> h
-com.clockworkmod.billing.ClockworkModBillingClient -> com.clockworkmod.billing.aa:
+com.clockworkmod.billing.ClockworkModBillingClient -> com.clockworkmod.billing.x:
     com.clockworkmod.billing.ClockworkModBillingClient mInstance -> a
     android.content.Context mContext -> b
     java.lang.String mSellerId -> c
@@ -1337,18 +726,16 @@ com.clockworkmod.billing.ClockworkModBillingClient -> com.clockworkmod.billing.a
     void showAlertDialog(android.content.Context,java.lang.String) -> b
     void invokeCallback(com.clockworkmod.billing.PurchaseCallback,com.clockworkmod.billing.PurchaseResult) -> a
     void invokeCallback(android.content.Context,com.clockworkmod.billing.PurchaseCallback,com.clockworkmod.billing.PurchaseResult) -> b
-    android.content.SharedPreferences getPendingAmazonPurchases() -> a
-    void startAmazonPurchase(android.content.Context,com.clockworkmod.billing.PurchaseCallback,org.json.JSONObject) -> a
-    void startPayPalPurchase(android.content.Context,com.clockworkmod.billing.PurchaseCallback,org.json.JSONObject) -> b
+    void startPayPalPurchase(android.content.Context,com.clockworkmod.billing.PurchaseCallback,org.json.JSONObject) -> a
     void startInAppPurchaseInternal(android.content.Context,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseCallback) -> a
     void startAndroidPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.PurchaseCallback,org.json.JSONObject) -> a
     void startRedeemCode(android.content.Context,java.lang.String,com.clockworkmod.billing.PurchaseCallback,org.json.JSONObject) -> b
     com.clockworkmod.billing.ClockworkModBillingClient init(android.content.Context,java.lang.String,java.lang.String,java.lang.String,boolean) -> a
-    com.clockworkmod.billing.ClockworkModBillingClient getInstance() -> b
-    android.content.SharedPreferences getCachedSettings() -> c
+    com.clockworkmod.billing.ClockworkModBillingClient getInstance() -> a
+    android.content.SharedPreferences getCachedSettings() -> b
     android.content.SharedPreferences getOrderData(android.content.Context) -> a
-    android.content.SharedPreferences getOrderData() -> d
-    void clearCachedPurchases() -> e
+    android.content.SharedPreferences getOrderData() -> c
+    void clearCachedPurchases() -> d
     void clearCachedPurchases(android.content.Context) -> b
     boolean checkSignature(java.lang.String,java.lang.String,java.lang.String) -> a
     long generateNonce(android.content.Context) -> c
@@ -1357,13 +744,13 @@ com.clockworkmod.billing.ClockworkModBillingClient -> com.clockworkmod.billing.a
     boolean checkNonce(android.content.Context,long,long) -> a
     com.clockworkmod.billing.CheckPurchaseResult[] checkCachedPurchases(android.content.Context,java.lang.String,java.lang.String,long,long,android.content.SharedPreferences) -> a
     com.clockworkmod.billing.CheckPurchaseResult checkPurchase(android.content.Context,java.lang.String,java.lang.String,long,long,com.clockworkmod.billing.CheckPurchaseCallback) -> a
-    void refreshMarketPurchases() -> f
+    void refreshMarketPurchases() -> e
     void startPurchase(android.content.Context,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback) -> a
     void startPurchaseInternal(android.content.Context,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback) -> b
     void startPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback) -> a
     void addAuthentication(org.apache.http.HttpMessage,java.lang.String) -> a
     java.lang.String getCookie(java.lang.String) -> a
-    java.lang.Object access$0() -> g
+    java.lang.Object access$0() -> f
     void access$1(com.clockworkmod.billing.ClockworkModBillingClient,com.clockworkmod.billing.PurchaseCallback,com.clockworkmod.billing.PurchaseResult) -> a
     void access$2(android.content.Context,java.lang.String) -> a
     void access$3(android.content.Context,com.clockworkmod.billing.PurchaseCallback,com.clockworkmod.billing.PurchaseResult) -> a
@@ -1371,98 +758,9 @@ com.clockworkmod.billing.ClockworkModBillingClient -> com.clockworkmod.billing.a
     void access$5(com.clockworkmod.billing.ClockworkModBillingClient,android.content.Context,com.clockworkmod.billing.PurchaseCallback,org.json.JSONObject) -> a
     void access$6(com.clockworkmod.billing.ClockworkModBillingClient,android.content.Context,java.lang.String,com.clockworkmod.billing.PurchaseCallback,org.json.JSONObject) -> a
     void access$7(com.clockworkmod.billing.ClockworkModBillingClient,android.content.Context,java.lang.String,com.clockworkmod.billing.PurchaseCallback,org.json.JSONObject) -> b
-    void access$8(com.clockworkmod.billing.ClockworkModBillingClient,android.content.Context,com.clockworkmod.billing.PurchaseCallback,org.json.JSONObject) -> b
-    void access$9(com.clockworkmod.billing.ClockworkModBillingClient,android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback) -> a
-    void access$10(com.clockworkmod.billing.ClockworkModBillingClient,android.content.Context,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback) -> a
-com.clockworkmod.billing.ClockworkModBillingClient$1 -> com.clockworkmod.billing.ab:
-    com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
-    com.clockworkmod.billing.PurchaseCallback val$callback -> b
-    java.lang.String val$purchaseRequestId -> c
-    void onFinished(com.amazon.inapp.purchasing.PurchaseResponse) -> a
-    void onFinished(java.lang.Object) -> a
-com.clockworkmod.billing.ClockworkModBillingClient$10 -> com.clockworkmod.billing.ac:
-    com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
-    com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState val$state -> b
-    java.lang.String val$buyerId -> c
-    android.content.Context val$context -> d
-    java.lang.String val$authToken -> e
-    android.content.SharedPreferences val$orderData -> f
-    java.lang.String val$productId -> g
-    java.lang.Runnable val$reportPurchase -> h
-    void run() -> a
-com.clockworkmod.billing.ClockworkModBillingClient$10$1 -> com.clockworkmod.billing.ad:
-    com.clockworkmod.billing.ClockworkModBillingClient$10 this$1 -> a
-    java.lang.Runnable val$reportPurchase -> b
-    void run() -> run
-com.clockworkmod.billing.ClockworkModBillingClient$11 -> com.clockworkmod.billing.ae:
-    com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
-    java.lang.Runnable val$reportPurchase -> b
-    void run() -> run
-com.clockworkmod.billing.ClockworkModBillingClient$12 -> com.clockworkmod.billing.af:
-    com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
-    com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState val$state -> b
-    java.lang.Runnable val$reportPurchase -> c
-    void run() -> a
-com.clockworkmod.billing.ClockworkModBillingClient$12$1 -> com.clockworkmod.billing.ag:
-    com.clockworkmod.billing.ClockworkModBillingClient$12 this$1 -> a
-    com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState val$state -> b
-    java.lang.Runnable val$reportPurchase -> c
-    void run() -> run
-com.clockworkmod.billing.ClockworkModBillingClient$13 -> com.clockworkmod.billing.ah:
-    com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
-    java.lang.String val$url -> b
-    android.app.ProgressDialog val$dlg -> c
-    com.clockworkmod.billing.PurchaseType val$type -> d
-    android.content.Context val$context -> e
-    com.clockworkmod.billing.PurchaseCallback val$callback -> f
-    java.lang.String val$buyerId -> g
-    void run() -> a
-    com.clockworkmod.billing.ClockworkModBillingClient access$0(com.clockworkmod.billing.ClockworkModBillingClient$13) -> a
-com.clockworkmod.billing.ClockworkModBillingClient$13$1 -> com.clockworkmod.billing.ai:
-    com.clockworkmod.billing.ClockworkModBillingClient$13 this$1 -> a
-    android.app.ProgressDialog val$dlg -> b
-    org.json.JSONObject val$payload -> c
-    com.clockworkmod.billing.PurchaseType val$type -> d
-    android.content.Context val$context -> e
-    com.clockworkmod.billing.PurchaseCallback val$callback -> f
-    java.lang.String val$buyerId -> g
-    void run() -> run
-    com.clockworkmod.billing.ClockworkModBillingClient$13 access$0(com.clockworkmod.billing.ClockworkModBillingClient$13$1) -> a
-com.clockworkmod.billing.ClockworkModBillingClient$13$1$1 -> com.clockworkmod.billing.aj:
-    com.clockworkmod.billing.ClockworkModBillingClient$13$1 this$2 -> a
-    com.clockworkmod.billing.PurchaseCallback val$callback -> b
-    void onClick(android.content.DialogInterface,int) -> onClick
-com.clockworkmod.billing.ClockworkModBillingClient$13$2 -> com.clockworkmod.billing.ak:
-    com.clockworkmod.billing.ClockworkModBillingClient$13 this$1 -> a
-    android.app.ProgressDialog val$dlg -> b
-    android.content.Context val$context -> c
-    void run() -> run
-com.clockworkmod.billing.ClockworkModBillingClient$14 -> com.clockworkmod.billing.al:
-    com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
-    android.content.Context val$context -> b
-    java.lang.String val$productId -> c
-    java.lang.String val$buyerId -> d
-    com.clockworkmod.billing.LinkPurchase val$linkOption -> e
-    boolean val$allowCachedEmail -> f
-    java.lang.String val$buyerEmail -> g
-    java.lang.String val$customPayload -> h
-    com.clockworkmod.billing.PurchaseCallback val$callback -> i
-    void onClick(android.content.DialogInterface,int) -> onClick
-com.clockworkmod.billing.ClockworkModBillingClient$15 -> com.clockworkmod.billing.am:
-    com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
-    android.accounts.Account[] val$accounts -> b
-    android.content.Context val$context -> c
-    java.lang.String val$productId -> d
-    java.lang.String val$buyerId -> e
-    java.lang.String val$customPayload -> f
-    com.clockworkmod.billing.PurchaseType val$type -> g
-    com.clockworkmod.billing.PurchaseCallback val$callback -> h
-    void onClick(android.content.DialogInterface,int) -> onClick
-com.clockworkmod.billing.ClockworkModBillingClient$16 -> com.clockworkmod.billing.an:
-    com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
-    com.clockworkmod.billing.PurchaseCallback val$callback -> b
-    void onCancel(android.content.DialogInterface) -> onCancel
-com.clockworkmod.billing.ClockworkModBillingClient$2 -> com.clockworkmod.billing.ao:
+    void access$8(com.clockworkmod.billing.ClockworkModBillingClient,android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback) -> a
+    void access$9(com.clockworkmod.billing.ClockworkModBillingClient,android.content.Context,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback) -> a
+com.clockworkmod.billing.ClockworkModBillingClient$1 -> com.clockworkmod.billing.y:
     com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
     java.lang.String val$paypalSandboxAppId -> b
     java.lang.String val$paypalLiveAppId -> c
@@ -1478,9 +776,9 @@ com.clockworkmod.billing.ClockworkModBillingClient$2 -> com.clockworkmod.billing
     java.lang.String val$description -> m
     com.clockworkmod.billing.PurchaseCallback val$callback -> n
     void run() -> a
-    com.clockworkmod.billing.ClockworkModBillingClient access$0(com.clockworkmod.billing.ClockworkModBillingClient$2) -> a
-com.clockworkmod.billing.ClockworkModBillingClient$2$1 -> com.clockworkmod.billing.ap:
-    com.clockworkmod.billing.ClockworkModBillingClient$2 this$1 -> a
+    com.clockworkmod.billing.ClockworkModBillingClient access$0(com.clockworkmod.billing.ClockworkModBillingClient$1) -> a
+com.clockworkmod.billing.ClockworkModBillingClient$1$1 -> com.clockworkmod.billing.z:
+    com.clockworkmod.billing.ClockworkModBillingClient$1 this$1 -> a
     android.app.ProgressDialog val$dlg -> b
     java.lang.String val$paypalIPNUrl -> c
     double val$price -> d
@@ -1493,17 +791,85 @@ com.clockworkmod.billing.ClockworkModBillingClient$2$1 -> com.clockworkmod.billi
     android.content.Context val$context -> k
     com.clockworkmod.billing.PurchaseCallback val$callback -> l
     void run() -> run
-    com.clockworkmod.billing.ClockworkModBillingClient$2 access$0(com.clockworkmod.billing.ClockworkModBillingClient$2$1) -> a
-com.clockworkmod.billing.ClockworkModBillingClient$2$1$1 -> com.clockworkmod.billing.aq:
-    com.clockworkmod.billing.ClockworkModBillingClient$2$1 this$2 -> a
+    com.clockworkmod.billing.ClockworkModBillingClient$1 access$0(com.clockworkmod.billing.ClockworkModBillingClient$1$1) -> a
+com.clockworkmod.billing.ClockworkModBillingClient$1$1$1 -> com.clockworkmod.billing.aa:
+    com.clockworkmod.billing.ClockworkModBillingClient$1$1 this$2 -> a
     com.clockworkmod.billing.PurchaseCallback val$callback -> b
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.clockworkmod.billing.ClockworkModBillingClient$2$2 -> com.clockworkmod.billing.ar:
-    com.clockworkmod.billing.ClockworkModBillingClient$2 this$1 -> a
+com.clockworkmod.billing.ClockworkModBillingClient$1$2 -> com.clockworkmod.billing.ab:
+    com.clockworkmod.billing.ClockworkModBillingClient$1 this$1 -> a
     android.app.ProgressDialog val$dlg -> b
     android.content.Context val$context -> c
     void run() -> run
-com.clockworkmod.billing.ClockworkModBillingClient$3 -> com.clockworkmod.billing.as:
+com.clockworkmod.billing.ClockworkModBillingClient$10 -> com.clockworkmod.billing.ac:
+    com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
+    java.lang.Runnable val$reportPurchase -> b
+    void run() -> run
+com.clockworkmod.billing.ClockworkModBillingClient$11 -> com.clockworkmod.billing.ad:
+    com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
+    com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState val$state -> b
+    java.lang.Runnable val$reportPurchase -> c
+    void run() -> a
+com.clockworkmod.billing.ClockworkModBillingClient$11$1 -> com.clockworkmod.billing.ae:
+    com.clockworkmod.billing.ClockworkModBillingClient$11 this$1 -> a
+    com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState val$state -> b
+    java.lang.Runnable val$reportPurchase -> c
+    void run() -> run
+com.clockworkmod.billing.ClockworkModBillingClient$12 -> com.clockworkmod.billing.af:
+    com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
+    java.lang.String val$url -> b
+    android.app.ProgressDialog val$dlg -> c
+    com.clockworkmod.billing.PurchaseType val$type -> d
+    android.content.Context val$context -> e
+    com.clockworkmod.billing.PurchaseCallback val$callback -> f
+    java.lang.String val$buyerId -> g
+    void run() -> a
+    com.clockworkmod.billing.ClockworkModBillingClient access$0(com.clockworkmod.billing.ClockworkModBillingClient$12) -> a
+com.clockworkmod.billing.ClockworkModBillingClient$12$1 -> com.clockworkmod.billing.ag:
+    com.clockworkmod.billing.ClockworkModBillingClient$12 this$1 -> a
+    android.app.ProgressDialog val$dlg -> b
+    org.json.JSONObject val$payload -> c
+    com.clockworkmod.billing.PurchaseType val$type -> d
+    android.content.Context val$context -> e
+    com.clockworkmod.billing.PurchaseCallback val$callback -> f
+    java.lang.String val$buyerId -> g
+    void run() -> run
+    com.clockworkmod.billing.ClockworkModBillingClient$12 access$0(com.clockworkmod.billing.ClockworkModBillingClient$12$1) -> a
+com.clockworkmod.billing.ClockworkModBillingClient$12$1$1 -> com.clockworkmod.billing.ah:
+    com.clockworkmod.billing.ClockworkModBillingClient$12$1 this$2 -> a
+    com.clockworkmod.billing.PurchaseCallback val$callback -> b
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.clockworkmod.billing.ClockworkModBillingClient$12$2 -> com.clockworkmod.billing.ai:
+    com.clockworkmod.billing.ClockworkModBillingClient$12 this$1 -> a
+    android.app.ProgressDialog val$dlg -> b
+    android.content.Context val$context -> c
+    void run() -> run
+com.clockworkmod.billing.ClockworkModBillingClient$13 -> com.clockworkmod.billing.aj:
+    com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
+    android.content.Context val$context -> b
+    java.lang.String val$productId -> c
+    java.lang.String val$buyerId -> d
+    com.clockworkmod.billing.LinkPurchase val$linkOption -> e
+    boolean val$allowCachedEmail -> f
+    java.lang.String val$buyerEmail -> g
+    java.lang.String val$customPayload -> h
+    com.clockworkmod.billing.PurchaseCallback val$callback -> i
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.clockworkmod.billing.ClockworkModBillingClient$14 -> com.clockworkmod.billing.ak:
+    com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
+    android.accounts.Account[] val$accounts -> b
+    android.content.Context val$context -> c
+    java.lang.String val$productId -> d
+    java.lang.String val$buyerId -> e
+    java.lang.String val$customPayload -> f
+    com.clockworkmod.billing.PurchaseType val$type -> g
+    com.clockworkmod.billing.PurchaseCallback val$callback -> h
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.clockworkmod.billing.ClockworkModBillingClient$15 -> com.clockworkmod.billing.al:
+    com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
+    com.clockworkmod.billing.PurchaseCallback val$callback -> b
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.clockworkmod.billing.ClockworkModBillingClient$2 -> com.clockworkmod.billing.am:
     java.lang.String mProductId -> a
     android.content.Context val$context -> b
     java.lang.String val$developerPayload -> c
@@ -1512,37 +878,37 @@ com.clockworkmod.billing.ClockworkModBillingClient$3 -> com.clockworkmod.billing
     java.lang.String val$productId -> f
     java.lang.String val$buyerId -> g
     void run() -> run
-com.clockworkmod.billing.ClockworkModBillingClient$3$1 -> com.clockworkmod.billing.at:
-    com.clockworkmod.billing.ClockworkModBillingClient$3 this$1 -> a
+com.clockworkmod.billing.ClockworkModBillingClient$2$1 -> com.clockworkmod.billing.an:
+    com.clockworkmod.billing.ClockworkModBillingClient$2 this$1 -> a
     android.content.Context val$context -> b
     java.lang.String val$developerPayload -> c
     com.clockworkmod.billing.PurchaseCallback val$callback -> d
     void run() -> run
-    com.clockworkmod.billing.ClockworkModBillingClient$3 access$0(com.clockworkmod.billing.ClockworkModBillingClient$3$1) -> a
-com.clockworkmod.billing.ClockworkModBillingClient$3$1$1 -> com.clockworkmod.billing.au:
-    com.clockworkmod.billing.ClockworkModBillingClient$3$1 this$2 -> a
+    com.clockworkmod.billing.ClockworkModBillingClient$2 access$0(com.clockworkmod.billing.ClockworkModBillingClient$2$1) -> a
+com.clockworkmod.billing.ClockworkModBillingClient$2$1$1 -> com.clockworkmod.billing.ao:
+    com.clockworkmod.billing.ClockworkModBillingClient$2$1 this$2 -> a
     android.content.Context val$context -> b
     java.lang.String val$developerPayload -> c
     com.clockworkmod.billing.PurchaseCallback val$callback -> d
     void onServiceDisconnected(android.content.ComponentName) -> onServiceDisconnected
     void onServiceConnected(android.content.ComponentName,android.os.IBinder) -> onServiceConnected
-com.clockworkmod.billing.ClockworkModBillingClient$3$1$1$1 -> com.clockworkmod.billing.av:
-    com.clockworkmod.billing.ClockworkModBillingClient$3$1$1 this$3 -> a
+com.clockworkmod.billing.ClockworkModBillingClient$2$1$1$1 -> com.clockworkmod.billing.ap:
+    com.clockworkmod.billing.ClockworkModBillingClient$2$1$1 this$3 -> a
     com.clockworkmod.billing.PurchaseCallback val$callback -> b
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.clockworkmod.billing.ClockworkModBillingClient$3$2 -> com.clockworkmod.billing.aw:
-    com.clockworkmod.billing.ClockworkModBillingClient$3 this$1 -> a
+com.clockworkmod.billing.ClockworkModBillingClient$2$2 -> com.clockworkmod.billing.aq:
+    com.clockworkmod.billing.ClockworkModBillingClient$2 this$1 -> a
     java.lang.String val$purchaseRequestId -> b
     java.lang.String val$productId -> c
     java.lang.String val$buyerId -> d
     java.lang.String[] val$results -> e
     java.lang.Runnable val$purchaseFlow -> f
     void onClick(android.content.DialogInterface,int) -> onClick
-com.clockworkmod.billing.ClockworkModBillingClient$4 -> com.clockworkmod.billing.ax:
+com.clockworkmod.billing.ClockworkModBillingClient$3 -> com.clockworkmod.billing.ar:
     com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
     com.clockworkmod.billing.PurchaseCallback val$callback -> b
     void onCancel(android.content.DialogInterface) -> onCancel
-com.clockworkmod.billing.ClockworkModBillingClient$5 -> com.clockworkmod.billing.ay:
+com.clockworkmod.billing.ClockworkModBillingClient$4 -> com.clockworkmod.billing.as:
     com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
     android.content.Context val$context -> b
     android.widget.EditText val$edit -> c
@@ -1551,9 +917,9 @@ com.clockworkmod.billing.ClockworkModBillingClient$5 -> com.clockworkmod.billing
     java.lang.String val$purchaseRequestId -> f
     com.clockworkmod.billing.PurchaseCallback val$callback -> g
     void onClick(android.content.DialogInterface,int) -> onClick
-    com.clockworkmod.billing.ClockworkModBillingClient access$0(com.clockworkmod.billing.ClockworkModBillingClient$5) -> a
-com.clockworkmod.billing.ClockworkModBillingClient$5$1 -> com.clockworkmod.billing.az:
-    com.clockworkmod.billing.ClockworkModBillingClient$5 this$1 -> a
+    com.clockworkmod.billing.ClockworkModBillingClient access$0(com.clockworkmod.billing.ClockworkModBillingClient$4) -> a
+com.clockworkmod.billing.ClockworkModBillingClient$4$1 -> com.clockworkmod.billing.at:
+    com.clockworkmod.billing.ClockworkModBillingClient$4 this$1 -> a
     java.lang.String val$sellerId -> b
     java.lang.String val$productId -> c
     java.lang.String val$purchaseRequestId -> d
@@ -1561,42 +927,42 @@ com.clockworkmod.billing.ClockworkModBillingClient$5$1 -> com.clockworkmod.billi
     com.clockworkmod.billing.PurchaseCallback val$callback -> f
     android.content.Context val$context -> g
     void run() -> a
-    com.clockworkmod.billing.ClockworkModBillingClient$5 access$0(com.clockworkmod.billing.ClockworkModBillingClient$5$1) -> a
-com.clockworkmod.billing.ClockworkModBillingClient$5$1$1 -> com.clockworkmod.billing.ba:
-    com.clockworkmod.billing.ClockworkModBillingClient$5$1 this$2 -> a
+    com.clockworkmod.billing.ClockworkModBillingClient$4 access$0(com.clockworkmod.billing.ClockworkModBillingClient$4$1) -> a
+com.clockworkmod.billing.ClockworkModBillingClient$4$1$1 -> com.clockworkmod.billing.au:
+    com.clockworkmod.billing.ClockworkModBillingClient$4$1 this$2 -> a
     com.clockworkmod.billing.PurchaseCallback val$callback -> b
     void run() -> run
-com.clockworkmod.billing.ClockworkModBillingClient$5$1$2 -> com.clockworkmod.billing.bb:
-    com.clockworkmod.billing.ClockworkModBillingClient$5$1 this$2 -> a
+com.clockworkmod.billing.ClockworkModBillingClient$4$1$2 -> com.clockworkmod.billing.av:
+    com.clockworkmod.billing.ClockworkModBillingClient$4$1 this$2 -> a
     android.content.Context val$context -> b
     com.clockworkmod.billing.PurchaseCallback val$callback -> c
     void run() -> run
-    com.clockworkmod.billing.ClockworkModBillingClient$5$1 access$0(com.clockworkmod.billing.ClockworkModBillingClient$5$1$2) -> a
-com.clockworkmod.billing.ClockworkModBillingClient$5$1$2$1 -> com.clockworkmod.billing.bc:
-    com.clockworkmod.billing.ClockworkModBillingClient$5$1$2 this$3 -> a
+    com.clockworkmod.billing.ClockworkModBillingClient$4$1 access$0(com.clockworkmod.billing.ClockworkModBillingClient$4$1$2) -> a
+com.clockworkmod.billing.ClockworkModBillingClient$4$1$2$1 -> com.clockworkmod.billing.aw:
+    com.clockworkmod.billing.ClockworkModBillingClient$4$1$2 this$3 -> a
     com.clockworkmod.billing.PurchaseCallback val$callback -> b
     void onClick(android.content.DialogInterface,int) -> onClick
-com.clockworkmod.billing.ClockworkModBillingClient$5$1$3 -> com.clockworkmod.billing.bd:
-    com.clockworkmod.billing.ClockworkModBillingClient$5$1 this$2 -> a
+com.clockworkmod.billing.ClockworkModBillingClient$4$1$3 -> com.clockworkmod.billing.ax:
+    com.clockworkmod.billing.ClockworkModBillingClient$4$1 this$2 -> a
     android.content.Context val$context -> b
     com.clockworkmod.billing.PurchaseCallback val$callback -> c
     void run() -> run
-    com.clockworkmod.billing.ClockworkModBillingClient$5$1 access$0(com.clockworkmod.billing.ClockworkModBillingClient$5$1$3) -> a
-com.clockworkmod.billing.ClockworkModBillingClient$5$1$3$1 -> com.clockworkmod.billing.be:
-    com.clockworkmod.billing.ClockworkModBillingClient$5$1$3 this$3 -> a
+    com.clockworkmod.billing.ClockworkModBillingClient$4$1 access$0(com.clockworkmod.billing.ClockworkModBillingClient$4$1$3) -> a
+com.clockworkmod.billing.ClockworkModBillingClient$4$1$3$1 -> com.clockworkmod.billing.ay:
+    com.clockworkmod.billing.ClockworkModBillingClient$4$1$3 this$3 -> a
     com.clockworkmod.billing.PurchaseCallback val$callback -> b
     void onClick(android.content.DialogInterface,int) -> onClick
-com.clockworkmod.billing.ClockworkModBillingClient$7 -> com.clockworkmod.billing.bf:
+com.clockworkmod.billing.ClockworkModBillingClient$6 -> com.clockworkmod.billing.az:
     com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
     com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState val$state -> b
     com.clockworkmod.billing.CheckPurchaseCallback val$callback -> c
     void run() -> run
-com.clockworkmod.billing.ClockworkModBillingClient$8 -> com.clockworkmod.billing.bg:
+com.clockworkmod.billing.ClockworkModBillingClient$7 -> com.clockworkmod.billing.ba:
     com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
     com.clockworkmod.billing.CheckPurchaseCallback val$callback -> b
     com.clockworkmod.billing.CheckPurchaseResult val$syncResult -> c
     void run() -> run
-com.clockworkmod.billing.ClockworkModBillingClient$9 -> com.clockworkmod.billing.bh:
+com.clockworkmod.billing.ClockworkModBillingClient$8 -> com.clockworkmod.billing.bb:
     com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
     com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState val$state -> b
     java.lang.String val$productId -> c
@@ -1604,18 +970,32 @@ com.clockworkmod.billing.ClockworkModBillingClient$9 -> com.clockworkmod.billing
     android.content.SharedPreferences val$orderData -> e
     java.lang.Runnable val$reportPurchase -> f
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState -> com.clockworkmod.billing.bi:
+com.clockworkmod.billing.ClockworkModBillingClient$9 -> com.clockworkmod.billing.bc:
+    com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
+    com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState val$state -> b
+    java.lang.String val$buyerId -> c
+    android.content.Context val$context -> d
+    java.lang.String val$authToken -> e
+    android.content.SharedPreferences val$orderData -> f
+    java.lang.String val$productId -> g
+    java.lang.Runnable val$reportPurchase -> h
+    void run() -> a
+com.clockworkmod.billing.ClockworkModBillingClient$9$1 -> com.clockworkmod.billing.bd:
+    com.clockworkmod.billing.ClockworkModBillingClient$9 this$1 -> a
+    java.lang.Runnable val$reportPurchase -> b
+    void run() -> run
+com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState -> com.clockworkmod.billing.be:
     boolean restoredMarket -> a
     boolean refreshedServer -> b
     com.clockworkmod.billing.CheckPurchaseResult serverResult -> c
     com.clockworkmod.billing.CheckPurchaseResult marketResult -> d
     boolean reportedPurchase -> e
     com.clockworkmod.billing.ClockworkModBillingClient this$0 -> f
-com.clockworkmod.billing.ClockworkOrder -> com.clockworkmod.billing.bj:
+com.clockworkmod.billing.ClockworkOrder -> com.clockworkmod.billing.bf:
     org.json.JSONObject mOrder -> a
-com.clockworkmod.billing.Consts -> com.clockworkmod.billing.bk:
+com.clockworkmod.billing.Consts -> com.clockworkmod.billing.bg:
     long BILLING_RESPONSE_INVALID_REQUEST_ID -> a
-com.clockworkmod.billing.Consts$ResponseCode -> com.clockworkmod.billing.bl:
+com.clockworkmod.billing.Consts$ResponseCode -> com.clockworkmod.billing.bh:
     com.clockworkmod.billing.Consts$ResponseCode RESULT_OK -> a
     com.clockworkmod.billing.Consts$ResponseCode RESULT_USER_CANCELED -> b
     com.clockworkmod.billing.Consts$ResponseCode RESULT_SERVICE_UNAVAILABLE -> c
@@ -1627,9 +1007,9 @@ com.clockworkmod.billing.Consts$ResponseCode -> com.clockworkmod.billing.bl:
     com.clockworkmod.billing.Consts$ResponseCode valueOf(int) -> a
     com.clockworkmod.billing.Consts$ResponseCode[] values() -> values
     com.clockworkmod.billing.Consts$ResponseCode valueOf(java.lang.String) -> valueOf
-com.clockworkmod.billing.InAppOrder -> com.clockworkmod.billing.bm:
+com.clockworkmod.billing.InAppOrder -> com.clockworkmod.billing.bi:
     org.json.JSONObject mOrder -> a
-com.clockworkmod.billing.LinkPurchase -> com.clockworkmod.billing.bn:
+com.clockworkmod.billing.LinkPurchase -> com.clockworkmod.billing.bj:
     com.clockworkmod.billing.LinkPurchase REQUIRE_EMAIL -> a
     com.clockworkmod.billing.LinkPurchase PROMPT_EMAIL -> b
     com.clockworkmod.billing.LinkPurchase PROMPT_EMAIL_INCLUDING_MARKET -> c
@@ -1637,26 +1017,25 @@ com.clockworkmod.billing.LinkPurchase -> com.clockworkmod.billing.bn:
     com.clockworkmod.billing.LinkPurchase[] ENUM$VALUES -> e
     com.clockworkmod.billing.LinkPurchase[] values() -> values
     com.clockworkmod.billing.LinkPurchase valueOf(java.lang.String) -> valueOf
-com.clockworkmod.billing.Order -> com.clockworkmod.billing.bo:
-com.clockworkmod.billing.PurchaseCallback -> com.clockworkmod.billing.bp:
+com.clockworkmod.billing.Order -> com.clockworkmod.billing.bk:
+com.clockworkmod.billing.PurchaseCallback -> com.clockworkmod.billing.bl:
     void onFinished(com.clockworkmod.billing.PurchaseResult) -> a
-com.clockworkmod.billing.PurchaseResult -> com.clockworkmod.billing.bq:
+com.clockworkmod.billing.PurchaseResult -> com.clockworkmod.billing.bm:
     com.clockworkmod.billing.PurchaseResult SUCCEEDED -> a
     com.clockworkmod.billing.PurchaseResult FAILED -> b
     com.clockworkmod.billing.PurchaseResult CANCELLED -> c
     com.clockworkmod.billing.PurchaseResult[] ENUM$VALUES -> d
     com.clockworkmod.billing.PurchaseResult[] values() -> values
     com.clockworkmod.billing.PurchaseResult valueOf(java.lang.String) -> valueOf
-com.clockworkmod.billing.PurchaseType -> com.clockworkmod.billing.br:
+com.clockworkmod.billing.PurchaseType -> com.clockworkmod.billing.bn:
     com.clockworkmod.billing.PurchaseType PAYPAL -> a
     com.clockworkmod.billing.PurchaseType REDEEM -> b
     com.clockworkmod.billing.PurchaseType MARKET_INAPP -> c
-    com.clockworkmod.billing.PurchaseType AMAZON -> d
-    com.clockworkmod.billing.PurchaseType ANY -> e
-    com.clockworkmod.billing.PurchaseType[] ENUM$VALUES -> f
+    com.clockworkmod.billing.PurchaseType ANY -> d
+    com.clockworkmod.billing.PurchaseType[] ENUM$VALUES -> e
     com.clockworkmod.billing.PurchaseType[] values() -> values
     com.clockworkmod.billing.PurchaseType valueOf(java.lang.String) -> valueOf
-com.clockworkmod.billing.ResultDelegate -> com.clockworkmod.billing.bs:
+com.clockworkmod.billing.ResultDelegate -> com.clockworkmod.billing.bo:
     java.lang.String SUCCEEDED -> a
     java.lang.String FAILED -> b
     java.lang.String CANCELLED -> c
@@ -1664,7 +1043,7 @@ com.clockworkmod.billing.ResultDelegate -> com.clockworkmod.billing.bs:
     void onPaymentSucceeded(java.lang.String,java.lang.String) -> a
     void onPaymentFailed(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String) -> a
     void onPaymentCanceled(java.lang.String) -> a
-com.clockworkmod.billing.StreamUtility -> com.clockworkmod.billing.bt:
+com.clockworkmod.billing.StreamUtility -> com.clockworkmod.billing.bp:
     java.lang.String LOGTAG -> a
     java.lang.String downloadUriAsString(java.lang.String) -> a
     java.lang.String downloadUriAsString(org.apache.http.client.methods.HttpUriRequest) -> a
@@ -1672,19 +1051,33 @@ com.clockworkmod.billing.StreamUtility -> com.clockworkmod.billing.bt:
     org.json.JSONObject downloadUriAsJSONObject(org.apache.http.client.methods.HttpUriRequest) -> b
     byte[] readToEndAsArray(java.io.InputStream) -> a
     java.lang.String readToEnd(java.io.InputStream) -> b
-com.clockworkmod.billing.ThreadingRunnable -> com.clockworkmod.billing.bu:
+com.clockworkmod.billing.ThreadingRunnable -> com.clockworkmod.billing.bq:
     android.os.Handler mHandler -> a
     void background(com.clockworkmod.billing.ThreadingRunnable) -> a
     void run() -> a
     android.os.Handler getHandler() -> b
     void foreground(java.lang.Runnable) -> a
-com.clockworkmod.billing.ThreadingRunnable$1 -> com.clockworkmod.billing.bv:
+com.clockworkmod.billing.ThreadingRunnable$1 -> com.clockworkmod.billing.br:
     com.clockworkmod.billing.ThreadingRunnable val$runnable -> a
     void run() -> run
-com.clockworkmod.billing.WeakReferenceHashTable -> com.clockworkmod.billing.bw:
-    java.util.Hashtable mTable -> a
-    java.lang.Object put(java.lang.Object,java.lang.Object) -> a
-    java.lang.Object get(java.lang.Object) -> a
+com.google.android.gcm.GCMBaseIntentService -> com.google.android.gcm.GCMBaseIntentService:
+    android.os.PowerManager$WakeLock sWakeLock -> a
+    java.lang.Object LOCK -> b
+    java.lang.String[] mSenderIds -> c
+    int sCounter -> d
+    java.util.Random sRandom -> e
+    int MAX_BACKOFF_MS -> f
+    java.lang.String TOKEN -> g
+    java.lang.String getName(java.lang.String) -> a
+    void runIntentInService(android.content.Context,android.content.Intent,java.lang.String) -> a
+com.google.android.gcm.GCMBroadcastReceiver -> com.google.android.gcm.GCMBroadcastReceiver:
+    boolean mReceiverSet -> a
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    java.lang.String getGCMIntentServiceClassName(android.content.Context) -> a
+    java.lang.String getDefaultIntentServiceClassName(android.content.Context) -> b
+com.google.android.gcm.GCMRegistrar -> com.google.android.gcm.a:
+    java.lang.String sRetryReceiverClassName -> a
+    void setRetryReceiverClassName(java.lang.String) -> a
 com.koushikdutta.desktopsms.ActivityBase -> com.koushikdutta.desktopsms.ActivityBase:
     com.koushikdutta.desktopsms.Settings mSettings -> a
     boolean mDestroyed -> b
@@ -2094,6 +1487,7 @@ com.koushikdutta.desktopsms.SyncService -> com.koushikdutta.desktopsms.SyncServi
     java.lang.String getMmsImage(java.lang.String) -> a
     com.koushikdutta.desktopsms.SyncService$CachedPhoneLookup getPhoneLookup(java.lang.String) -> b
     void sendUsingSmsManager(android.content.Context,java.lang.String,java.lang.String,long) -> a
+    void sendUsingContentProvider(android.content.Context,java.lang.String,java.lang.String,long) -> b
     int sendOutbox(java.lang.String) -> c
     void retrieveOutbox() -> b
     void syncOutbox(java.lang.String) -> d
@@ -2284,10 +1678,6 @@ com.koushikdutta.desktopsms.TickleServiceHelper$3 -> com.koushikdutta.desktopsms
 com.koushikdutta.desktopsms.Tuple -> com.koushikdutta.desktopsms.cz:
     java.lang.Object First -> a
     java.lang.Object Second -> b
-com.koushikdutta.desktopsms.WakeLock -> com.koushikdutta.desktopsms.da:
-    android.os.PowerManager$WakeLock sWakeLock -> a
-    void acquirePartial(android.content.Context) -> a
-    void release() -> a
 com.koushikdutta.desktopsms.WidgetProvider -> com.koushikdutta.desktopsms.WidgetProvider:
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
     void onUpdate(android.content.Context,android.appwidget.AppWidgetManager,int[]) -> onUpdate

@@ -293,8 +293,7 @@ public class SyncService extends Service {
         if (messageCount == 0)
             return;
 
-        //if (!mAccount.equals("koush@koushikdutta.com"))
-            sm.sendMultipartTextMessage(number, null, messages, null, null);
+        sm.sendMultipartTextMessage(number, null, messages, null, null);
         ContentValues values = new ContentValues();
         values.put("address", number);
         values.put("body", message);
@@ -304,12 +303,12 @@ public class SyncService extends Service {
         context.getContentResolver().insert(Uri.parse("content://sms/sent"), values);
     }
     
-    void sendUsingContentProvider(Context context, String number, String message) throws Exception {
+    void sendUsingContentProvider(Context context, String number, String message, long date) throws Exception {
         ContentResolver r = context.getContentResolver();
         //ContentProviderClient client = r.acquireContentProviderClient(Uri.parse("content://sms/queued"));
         ContentValues sv = new ContentValues();
         sv.put("address", number);
-        sv.put("date", System.currentTimeMillis());
+        sv.put("date", date);
         sv.put("read", 1);
         sv.put("body", message);
         sv.put("type", SyncService.OUTGOING_SMS);
@@ -357,7 +356,13 @@ public class SyncService extends Service {
                     continue;
 //                Log.i(LOGTAG, sms.toString(4));
                 maxOutboxSync = Math.max(maxOutboxSync, date);
-                sendUsingSmsManager(this, number, message, date);
+                try {
+                    sendUsingSmsManager(this, number, message, date);
+                }
+                catch (Exception ex) {
+                    Log.e(LOGTAG, "SMS send failed using SMS Manager. Retrying with content provider.");
+                    sendUsingContentProvider(this, number, message, date);
+                }
             }
             catch (Exception ex) {
                 ex.printStackTrace();

@@ -322,9 +322,6 @@ com.android.vending.billing.IMarketBillingService$Stub:
     34:34:public android.os.IBinder asBinder()
 com.android.vending.billing.IMarketBillingService$Stub$Proxy:
     82:82:public java.lang.String getInterfaceDescriptor()
-com.clockworkmod.billing.AmazonHelper:
-    27:27:public static java.lang.Boolean getIsSandbox()
-    76:77:public static void refreshPurchases(com.clockworkmod.billing.Callback)
 com.clockworkmod.billing.Base64:
     public static final int DEFAULT
     public static final int NO_PADDING
@@ -355,6 +352,7 @@ com.clockworkmod.billing.BillingReceiver:
     private static final java.lang.String TAG
 com.clockworkmod.billing.BillingService:
     private static final java.lang.String LOGTAG
+com.clockworkmod.billing.Callback
 com.clockworkmod.billing.CheckPurchaseResult:
     static final int _PURCHASED
     static final int _NOT_PURCHASED
@@ -375,24 +373,23 @@ com.clockworkmod.billing.ClockworkModBillingClient:
     static final java.lang.String TRANSFER_URL
     public static final long CACHE_DURATION_FOREVER
     private static final java.lang.String LOGTAG
-    126:126:private void reportPendingAmazonPurchases()
-    276:277:public static void startUnmanagedInAppPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
-    280:281:public static void startUnmanagedInAppPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
-    577:609:public java.util.List getCachedClockworkPurchases(java.lang.String)
-    613:644:public java.util.List getCachedInAppPurchases()
-    801:829:public void updateTrial(android.content.Context,java.lang.String,java.lang.String,int,int,com.clockworkmod.billing.UpdateTrialCallback)
-    832:832:public com.clockworkmod.billing.CheckPurchaseResult checkPurchase(android.content.Context,java.lang.String,java.lang.String,long,com.clockworkmod.billing.CheckPurchaseCallback)
-    1016:1021:public android.content.Intent getRecoverPurchasesActivityIntent(android.content.Context,java.lang.String,java.lang.String)
-    1032:1035:public void startPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,com.clockworkmod.billing.PurchaseCallback)
-    1039:1040:public void startPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
-    1043:1046:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
-    1049:1052:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
-    1055:1060:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
-    1063:1066:public void startPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
-    1069:1074:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
-com.clockworkmod.billing.ClockworkModBillingClient$6
-com.clockworkmod.billing.ClockworkModBillingClient$6$1
-com.clockworkmod.billing.ClockworkModBillingClient$6$2
+    241:242:public static void startUnmanagedInAppPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
+    245:246:public static void startUnmanagedInAppPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
+    542:574:public java.util.List getCachedClockworkPurchases(java.lang.String)
+    578:609:public java.util.List getCachedInAppPurchases()
+    766:794:public void updateTrial(android.content.Context,java.lang.String,java.lang.String,int,int,com.clockworkmod.billing.UpdateTrialCallback)
+    797:797:public com.clockworkmod.billing.CheckPurchaseResult checkPurchase(android.content.Context,java.lang.String,java.lang.String,long,com.clockworkmod.billing.CheckPurchaseCallback)
+    981:986:public android.content.Intent getRecoverPurchasesActivityIntent(android.content.Context,java.lang.String,java.lang.String)
+    997:1000:public void startPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,com.clockworkmod.billing.PurchaseCallback)
+    1004:1005:public void startPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
+    1008:1011:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
+    1014:1017:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
+    1020:1025:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
+    1028:1031:public void startPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
+    1034:1039:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
+com.clockworkmod.billing.ClockworkModBillingClient$5
+com.clockworkmod.billing.ClockworkModBillingClient$5$1
+com.clockworkmod.billing.ClockworkModBillingClient$5$2
 com.clockworkmod.billing.ClockworkOrder:
     7:7:public org.json.JSONObject getRawJSONObject()
     17:17:public java.lang.String getDeveloperPayload()
@@ -457,6 +454,62 @@ com.clockworkmod.billing.StreamUtility:
 com.clockworkmod.billing.ThreadingRunnable:
     25:26:public void background(java.lang.Runnable)
 com.clockworkmod.billing.UpdateTrialCallback
+com.clockworkmod.billing.WeakReferenceHashTable
+com.google.android.gcm.GCMBaseIntentService:
+    public static final java.lang.String TAG
+    private static final java.lang.String WAKELOCK_KEY
+    private static final java.lang.String EXTRA_TOKEN
+    96:97:protected varargs GCMBaseIntentService(java.lang.String[])
+    111:112:private static java.lang.String getName(java.lang.String[])
+    124:127:protected java.lang.String[] getSenderIds(android.content.Context)
+    protected abstract void onMessage(android.content.Context,android.content.Intent)
+    146:146:protected void onDeletedMessages(android.content.Context,int)
+    161:161:protected boolean onRecoverableError(android.content.Context,java.lang.String)
+    protected abstract void onError(android.content.Context,java.lang.String)
+    protected abstract void onRegistered(android.content.Context,java.lang.String)
+    protected abstract void onUnregistered(android.content.Context,java.lang.String)
+    193:259:public final void onHandleIntent(android.content.Intent)
+    286:342:private void handleRegistration(android.content.Context,android.content.Intent)
+com.google.android.gcm.GCMBroadcastReceiver:
+    private static final java.lang.String TAG
+com.google.android.gcm.GCMConstants
+com.google.android.gcm.GCMRegistrar:
+    public static final long DEFAULT_ON_SERVER_LIFESPAN_MS
+    private static final java.lang.String TAG
+    private static final java.lang.String BACKOFF_MS
+    private static final java.lang.String GSF_PACKAGE
+    private static final java.lang.String PREFERENCES
+    private static final int DEFAULT_BACKOFF_MS
+    private static final java.lang.String PROPERTY_REG_ID
+    private static final java.lang.String PROPERTY_APP_VERSION
+    private static final java.lang.String PROPERTY_ON_SERVER
+    private static final java.lang.String PROPERTY_ON_SERVER_EXPIRATION_TIME
+    private static final java.lang.String PROPERTY_ON_SERVER_LIFESPAN
+    private static com.google.android.gcm.GCMBroadcastReceiver sRetryReceiver
+    89:101:public static void checkDevice(android.content.Context)
+    129:173:public static void checkManifest(android.content.Context)
+    177:200:private static void checkReceiver(android.content.Context,java.util.Set,java.lang.String)
+    217:219:public static varargs void register(android.content.Context,java.lang.String[])
+    222:231:static varargs void internalRegister(android.content.Context,java.lang.String[])
+    234:241:static varargs java.lang.String getFlatSenderIds(java.lang.String[])
+    252:254:public static void unregister(android.content.Context)
+    264:269:public static synchronized void onDestroy(android.content.Context)
+    272:278:static void internalUnregister(android.content.Context)
+    284:311:static synchronized void setRetryBroadcastReceiver(android.content.Context)
+    330:342:public static java.lang.String getRegistrationId(android.content.Context)
+    350:350:public static boolean isRegistered(android.content.Context)
+    360:360:static java.lang.String clearRegistrationId(android.content.Context)
+    370:378:static java.lang.String setRegistrationId(android.content.Context,java.lang.String)
+    385:395:public static void setRegisteredOnServer(android.content.Context,boolean)
+    407:419:public static boolean isRegisteredOnServer(android.content.Context)
+    430:433:public static long getRegisterOnServerLifespan(android.content.Context)
+    442:446:public static void setRegisterOnServerLifespan(android.content.Context,long)
+    453:458:private static int getAppVersion(android.content.Context)
+    470:472:static void resetBackoff(android.content.Context)
+    481:482:static int getBackoff(android.content.Context)
+    495:499:static void setBackoff(android.content.Context,int)
+    502:502:private static android.content.SharedPreferences getGCMPreferences(android.content.Context)
+    505:506:private GCMRegistrar()
 com.koushikdutta.desktopsms.ActivityBase:
     73:81:protected com.koushikdutta.desktopsms.ActivityBase$MyListAdapter ensureHeader(int)
 com.koushikdutta.desktopsms.BuildConfig
@@ -525,13 +578,8 @@ com.koushikdutta.desktopsms.SyncService:
     public static final int INCOMING_CALL
     public static final int OUTGOING_CALL
     public static final int MISSED_CALL
-    308:326:void sendUsingContentProvider(android.content.Context,java.lang.String,java.lang.String)
 com.koushikdutta.desktopsms.TickleServiceHelper:
     static final java.lang.String AUTH_TOKEN_TYPE
-com.koushikdutta.desktopsms.WakeLock:
-    private static final java.lang.String LOGTAG
-    26:26:WakeLock()
-    33:39:static void acquire(android.content.Context)
 com.koushikdutta.desktopsms.WidgetProvider:
     private static final java.lang.String TOGGLE_EMAIL
     private static final java.lang.String TOGGLE_XMPP
