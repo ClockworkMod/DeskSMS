@@ -709,11 +709,12 @@ com.clockworkmod.billing.CheckPurchaseResult -> com.clockworkmod.billing.w:
     boolean isNotPurchased() -> b
     boolean isError() -> c
     boolean isStale() -> d
+    com.clockworkmod.billing.Order getOrder() -> e
     com.clockworkmod.billing.CheckPurchaseResult purchased(com.clockworkmod.billing.Order) -> a
-    com.clockworkmod.billing.CheckPurchaseResult notPurchased() -> e
-    com.clockworkmod.billing.CheckPurchaseResult error() -> f
-    com.clockworkmod.billing.CheckPurchaseResult pending() -> g
-    com.clockworkmod.billing.CheckPurchaseResult stale() -> h
+    com.clockworkmod.billing.CheckPurchaseResult notPurchased() -> f
+    com.clockworkmod.billing.CheckPurchaseResult error() -> g
+    com.clockworkmod.billing.CheckPurchaseResult pending() -> h
+    com.clockworkmod.billing.CheckPurchaseResult stale() -> i
 com.clockworkmod.billing.ClockworkModBillingClient -> com.clockworkmod.billing.x:
     com.clockworkmod.billing.ClockworkModBillingClient mInstance -> a
     android.content.Context mContext -> b
@@ -993,6 +994,7 @@ com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState -> com.clo
     com.clockworkmod.billing.ClockworkModBillingClient this$0 -> f
 com.clockworkmod.billing.ClockworkOrder -> com.clockworkmod.billing.bf:
     org.json.JSONObject mOrder -> a
+    long getPurchaseTime() -> a
 com.clockworkmod.billing.Consts -> com.clockworkmod.billing.bg:
     long BILLING_RESPONSE_INVALID_REQUEST_ID -> a
 com.clockworkmod.billing.Consts$ResponseCode -> com.clockworkmod.billing.bh:
@@ -1009,6 +1011,7 @@ com.clockworkmod.billing.Consts$ResponseCode -> com.clockworkmod.billing.bh:
     com.clockworkmod.billing.Consts$ResponseCode valueOf(java.lang.String) -> valueOf
 com.clockworkmod.billing.InAppOrder -> com.clockworkmod.billing.bi:
     org.json.JSONObject mOrder -> a
+    long getPurchaseTime() -> a
 com.clockworkmod.billing.LinkPurchase -> com.clockworkmod.billing.bj:
     com.clockworkmod.billing.LinkPurchase REQUIRE_EMAIL -> a
     com.clockworkmod.billing.LinkPurchase PROMPT_EMAIL -> b
@@ -1018,6 +1021,7 @@ com.clockworkmod.billing.LinkPurchase -> com.clockworkmod.billing.bj:
     com.clockworkmod.billing.LinkPurchase[] values() -> values
     com.clockworkmod.billing.LinkPurchase valueOf(java.lang.String) -> valueOf
 com.clockworkmod.billing.Order -> com.clockworkmod.billing.bk:
+    long getPurchaseTime() -> a
 com.clockworkmod.billing.PurchaseCallback -> com.clockworkmod.billing.bl:
     void onFinished(com.clockworkmod.billing.PurchaseResult) -> a
 com.clockworkmod.billing.PurchaseResult -> com.clockworkmod.billing.bm:
@@ -1487,7 +1491,6 @@ com.koushikdutta.desktopsms.SyncService -> com.koushikdutta.desktopsms.SyncServi
     java.lang.String getMmsImage(java.lang.String) -> a
     com.koushikdutta.desktopsms.SyncService$CachedPhoneLookup getPhoneLookup(java.lang.String) -> b
     void sendUsingSmsManager(android.content.Context,java.lang.String,java.lang.String,long) -> a
-    void sendUsingContentProvider(android.content.Context,java.lang.String,java.lang.String,long) -> b
     int sendOutbox(java.lang.String) -> c
     void retrieveOutbox() -> b
     void syncOutbox(java.lang.String) -> d
@@ -1678,6 +1681,10 @@ com.koushikdutta.desktopsms.TickleServiceHelper$3 -> com.koushikdutta.desktopsms
 com.koushikdutta.desktopsms.Tuple -> com.koushikdutta.desktopsms.cz:
     java.lang.Object First -> a
     java.lang.Object Second -> b
+com.koushikdutta.desktopsms.WakeLock -> com.koushikdutta.desktopsms.da:
+    android.os.PowerManager$WakeLock sWakeLock -> a
+    void acquirePartial(android.content.Context) -> a
+    void release() -> a
 com.koushikdutta.desktopsms.WidgetProvider -> com.koushikdutta.desktopsms.WidgetProvider:
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
     void onUpdate(android.content.Context,android.appwidget.AppWidgetManager,int[]) -> onUpdate

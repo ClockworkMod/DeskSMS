@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -293,7 +294,14 @@ public class SyncService extends Service {
         if (messageCount == 0)
             return;
 
-        sm.sendMultipartTextMessage(number, null, messages, null, null);
+        PendingIntent si = PendingIntent.getBroadcast(this, 2020, new Intent("com.koushikdutta.desktopsms.noop"), 0);
+        PendingIntent di = PendingIntent.getBroadcast(this, 2020, new Intent("com.koushikdutta.desktopsms.noop"), 0);
+        ArrayList<PendingIntent> sis = new ArrayList<PendingIntent>();
+        sis.add(si);
+        ArrayList<PendingIntent> dis = new ArrayList<PendingIntent>();
+        dis.add(di);
+        
+        sm.sendMultipartTextMessage(number, null, messages, sis, dis);
         ContentValues values = new ContentValues();
         values.put("address", number);
         values.put("body", message);
@@ -356,13 +364,7 @@ public class SyncService extends Service {
                     continue;
 //                Log.i(LOGTAG, sms.toString(4));
                 maxOutboxSync = Math.max(maxOutboxSync, date);
-                try {
-                    sendUsingSmsManager(this, number, message, date);
-                }
-                catch (Exception ex) {
-                    Log.e(LOGTAG, "SMS send failed using SMS Manager. Retrying with content provider.");
-                    sendUsingContentProvider(this, number, message, date);
-                }
+                sendUsingSmsManager(this, number, message, date);
             }
             catch (Exception ex) {
                 ex.printStackTrace();
