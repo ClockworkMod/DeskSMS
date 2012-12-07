@@ -294,14 +294,19 @@ public class SyncService extends Service {
         if (messageCount == 0)
             return;
 
-        PendingIntent si = PendingIntent.getBroadcast(this, 2020, new Intent("com.koushikdutta.desktopsms.noop"), 0);
-        PendingIntent di = PendingIntent.getBroadcast(this, 2020, new Intent("com.koushikdutta.desktopsms.noop"), 0);
-        ArrayList<PendingIntent> sis = new ArrayList<PendingIntent>();
-        sis.add(si);
-        ArrayList<PendingIntent> dis = new ArrayList<PendingIntent>();
-        dis.add(di);
-        
-        sm.sendMultipartTextMessage(number, null, messages, sis, dis);
+        try {
+            sm.sendMultipartTextMessage(number, null, messages, null, null);
+        }
+        catch (Exception e) {
+            // some terrible firmware requires delivery intents.
+            PendingIntent si = PendingIntent.getBroadcast(this, 2020, new Intent("com.koushikdutta.desktopsms.noop"), 0);
+            PendingIntent di = PendingIntent.getBroadcast(this, 2020, new Intent("com.koushikdutta.desktopsms.noop"), 0);
+            ArrayList<PendingIntent> sis = new ArrayList<PendingIntent>();
+            sis.add(si);
+            ArrayList<PendingIntent> dis = new ArrayList<PendingIntent>();
+            dis.add(di);
+            sm.sendMultipartTextMessage(number, null, messages, sis, dis);
+        }
         ContentValues values = new ContentValues();
         values.put("address", number);
         values.put("body", message);

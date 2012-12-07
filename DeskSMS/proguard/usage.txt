@@ -574,7 +574,7 @@ com.koushikdutta.desktopsms.SyncService:
     public static final int INCOMING_CALL
     public static final int OUTGOING_CALL
     public static final int MISSED_CALL
-    315:333:void sendUsingContentProvider(android.content.Context,java.lang.String,java.lang.String,long)
+    320:338:void sendUsingContentProvider(android.content.Context,java.lang.String,java.lang.String,long)
 com.koushikdutta.desktopsms.TickleServiceHelper:
     static final java.lang.String AUTH_TOKEN_TYPE
 com.koushikdutta.desktopsms.WakeLock:
