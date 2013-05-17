@@ -372,27 +372,28 @@ com.clockworkmod.billing.ClockworkModBillingClient:
     static final java.lang.String TRANSFER_URL
     public static final long CACHE_DURATION_FOREVER
     private static final java.lang.String LOGTAG
-    241:242:public static void startUnmanagedInAppPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
-    245:246:public static void startUnmanagedInAppPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
-    542:574:public java.util.List getCachedClockworkPurchases(java.lang.String)
-    578:609:public java.util.List getCachedInAppPurchases()
-    766:794:public void updateTrial(android.content.Context,java.lang.String,java.lang.String,int,int,com.clockworkmod.billing.UpdateTrialCallback)
-    797:797:public com.clockworkmod.billing.CheckPurchaseResult checkPurchase(android.content.Context,java.lang.String,java.lang.String,long,com.clockworkmod.billing.CheckPurchaseCallback)
-    993:998:public android.content.Intent getRecoverPurchasesActivityIntent(android.content.Context,java.lang.String,java.lang.String)
-    1009:1012:public void startPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,com.clockworkmod.billing.PurchaseCallback)
-    1016:1017:public void startPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
-    1020:1023:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
-    1026:1029:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
-    1032:1037:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
-    1040:1043:public void startPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
-    1046:1051:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
+    245:246:public static void startUnmanagedInAppPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
+    249:250:public static void startUnmanagedInAppPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
+    560:593:public java.util.List getCachedClockworkPurchases(java.lang.String)
+    597:629:public java.util.List getCachedInAppPurchases()
+    759:787:public void updateTrial(android.content.Context,java.lang.String,java.lang.String,int,int,com.clockworkmod.billing.UpdateTrialCallback)
+    790:790:public com.clockworkmod.billing.CheckPurchaseResult checkPurchase(android.content.Context,java.lang.String,java.lang.String,long,com.clockworkmod.billing.CheckPurchaseCallback)
+    996:1001:public android.content.Intent getRecoverPurchasesActivityIntent(android.content.Context,java.lang.String,java.lang.String)
+    1012:1015:public void startPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,com.clockworkmod.billing.PurchaseCallback)
+    1019:1020:public void startPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
+    1023:1026:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseCallback)
+    1029:1032:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
+    1035:1040:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
+    1043:1046:public void startPurchase(android.content.Context,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
+    1049:1054:public void startPurchase(android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback)
 com.clockworkmod.billing.ClockworkModBillingClient$5
 com.clockworkmod.billing.ClockworkModBillingClient$5$1
 com.clockworkmod.billing.ClockworkModBillingClient$5$2
 com.clockworkmod.billing.ClockworkOrder:
     7:7:public org.json.JSONObject getRawJSONObject()
-    17:17:public java.lang.String getDeveloperPayload()
-    21:21:public java.lang.String getProductId()
+    18:18:public java.lang.String getDeveloperPayload()
+    22:22:public java.lang.String getProductId()
+    26:26:public long getPurchaseTime()
 com.clockworkmod.billing.Consts:
     public static final java.lang.String MARKET_BILLING_SERVICE_ACTION
     public static final java.lang.String ACTION_NOTIFY
@@ -422,33 +423,28 @@ com.clockworkmod.billing.Consts:
 com.clockworkmod.billing.Consts$PurchaseState
 com.clockworkmod.billing.InAppOrder:
     7:7:public org.json.JSONObject getRawJSONObject()
-    17:17:public java.lang.String getDeveloperPayload()
-    21:21:public java.lang.String getProductId()
-com.clockworkmod.billing.Manifest
-com.clockworkmod.billing.Manifest$permission
+    18:18:public java.lang.String getDeveloperPayload()
+    22:22:public java.lang.String getProductId()
+    26:26:public long getPurchaseTime()
 com.clockworkmod.billing.Order:
     public abstract org.json.JSONObject getRawJSONObject()
     public abstract java.lang.String getDeveloperPayload()
     public abstract java.lang.String getProductId()
-com.clockworkmod.billing.R
-com.clockworkmod.billing.R$attr
-com.clockworkmod.billing.R$drawable
-com.clockworkmod.billing.R$id
-com.clockworkmod.billing.R$layout
-com.clockworkmod.billing.R$menu
-com.clockworkmod.billing.R$string
-com.clockworkmod.billing.R$style
-com.clockworkmod.billing.R$xml
+    public abstract long getPurchaseTime()
 com.clockworkmod.billing.ResultDelegate:
     private static final long serialVersionUID
 com.clockworkmod.billing.StreamUtility:
-    25:33:public static int copyStream(java.io.InputStream,java.io.OutputStream)
-    81:81:public static java.lang.String readFile(java.lang.String)
-    85:88:public static java.lang.String readFile(java.io.File)
-    92:93:public static void writeFile(java.io.File,java.lang.String)
-    96:101:public static void writeFile(java.lang.String,java.lang.String)
+    25:25:StreamUtility()
+    27:43:public static void fastChannelCopy(java.nio.channels.ReadableByteChannel,java.nio.channels.WritableByteChannel)
+    56:65:public static void copyStream(java.io.InputStream,java.io.OutputStream)
+    112:112:public static java.lang.String readFile(java.lang.String)
+    116:119:public static java.lang.String readFile(java.io.File)
+    123:124:public static void writeFile(java.io.File,java.lang.String)
+    127:132:public static void writeFile(java.lang.String,java.lang.String)
 com.clockworkmod.billing.ThreadingRunnable:
-    25:26:public void background(java.lang.Runnable)
+    9:9:public java.lang.Thread getThread()
+    27:29:public ThreadingRunnable(android.os.Handler)
+    43:44:public com.clockworkmod.billing.ThreadingRunnable background(java.lang.Runnable)
 com.clockworkmod.billing.UpdateTrialCallback
 com.clockworkmod.billing.WeakReferenceHashTable
 com.google.android.gcm.GCMBaseIntentService:

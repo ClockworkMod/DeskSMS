@@ -12,10 +12,6 @@ public class DesktopSMSApplication extends Application {
     public static int mVersionCode = 0;
     @Override
     public void onCreate() {
-        System.out.println("starting");
-        doStuff();
-    }
-    void doStuff() {
         super.onCreate();
         try {
             PackageInfo pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);

@@ -609,9 +609,9 @@ com.clockworkmod.billing.BillingActivity$1$1 -> com.clockworkmod.billing.e:
     void onFinished(com.clockworkmod.billing.CheckPurchaseResult) -> a
 com.clockworkmod.billing.BillingActivity$2 -> com.clockworkmod.billing.f:
     com.clockworkmod.billing.BillingActivity this$0 -> a
-    java.lang.String val$payerEmail -> b
-    android.app.ProgressDialog val$progress -> c
-    void run() -> a
+    java.lang.String val$payerEmail -> c
+    android.app.ProgressDialog val$progress -> d
+    void run() -> run
     com.clockworkmod.billing.BillingActivity access$0(com.clockworkmod.billing.BillingActivity$2) -> a
 com.clockworkmod.billing.BillingActivity$2$1 -> com.clockworkmod.billing.g:
     com.clockworkmod.billing.BillingActivity$2 this$1 -> a
@@ -690,11 +690,11 @@ com.clockworkmod.billing.BillingService$3 -> com.clockworkmod.billing.s:
     com.clockworkmod.billing.BillingService access$0(com.clockworkmod.billing.BillingService$3) -> a
 com.clockworkmod.billing.BillingService$3$1 -> com.clockworkmod.billing.t:
     com.clockworkmod.billing.BillingService$3 this$1 -> a
-    android.os.IBinder val$service -> b
-    java.lang.String val$signedData -> c
-    java.lang.String val$signature -> d
-    android.content.ServiceConnection val$sc -> e
-    void run() -> a
+    android.os.IBinder val$service -> c
+    java.lang.String val$signedData -> d
+    java.lang.String val$signature -> e
+    android.content.ServiceConnection val$sc -> f
+    void run() -> run
 com.clockworkmod.billing.BillingService$4 -> com.clockworkmod.billing.u:
     com.clockworkmod.billing.BillingService this$0 -> a
     java.lang.String val$notifyId -> b
@@ -743,6 +743,7 @@ com.clockworkmod.billing.ClockworkModBillingClient -> com.clockworkmod.billing.x
     java.lang.String getSafeDeviceId(android.content.Context) -> d
     java.lang.String digest(java.lang.String) -> b
     boolean checkNonce(android.content.Context,long,long) -> a
+    long getTimestampFromNonce(long) -> a
     com.clockworkmod.billing.CheckPurchaseResult[] checkCachedPurchases(android.content.Context,java.lang.String,java.lang.String,long,long,android.content.SharedPreferences) -> a
     com.clockworkmod.billing.CheckPurchaseResult checkPurchase(android.content.Context,java.lang.String,java.lang.String,long,long,com.clockworkmod.billing.CheckPurchaseCallback) -> a
     void refreshMarketPurchases() -> e
@@ -759,24 +760,23 @@ com.clockworkmod.billing.ClockworkModBillingClient -> com.clockworkmod.billing.x
     void access$5(com.clockworkmod.billing.ClockworkModBillingClient,android.content.Context,com.clockworkmod.billing.PurchaseCallback,org.json.JSONObject) -> a
     void access$6(com.clockworkmod.billing.ClockworkModBillingClient,android.content.Context,java.lang.String,com.clockworkmod.billing.PurchaseCallback,org.json.JSONObject) -> a
     void access$7(com.clockworkmod.billing.ClockworkModBillingClient,android.content.Context,java.lang.String,com.clockworkmod.billing.PurchaseCallback,org.json.JSONObject) -> b
-    void access$8(com.clockworkmod.billing.ClockworkModBillingClient,android.content.Context,java.lang.String,java.lang.String,com.clockworkmod.billing.LinkPurchase,boolean,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback) -> a
-    void access$9(com.clockworkmod.billing.ClockworkModBillingClient,android.content.Context,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback) -> a
+    void access$8(com.clockworkmod.billing.ClockworkModBillingClient,android.content.Context,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.clockworkmod.billing.PurchaseType,com.clockworkmod.billing.PurchaseCallback) -> a
 com.clockworkmod.billing.ClockworkModBillingClient$1 -> com.clockworkmod.billing.y:
     com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
-    java.lang.String val$paypalSandboxAppId -> b
-    java.lang.String val$paypalLiveAppId -> c
-    android.content.Context val$context -> d
-    android.app.ProgressDialog val$dlg -> e
-    java.lang.String val$paypalIPNUrl -> f
-    double val$price -> g
-    java.lang.String val$sandboxEmail -> h
-    java.lang.String val$sellerId -> i
-    java.lang.String val$name -> j
-    java.lang.String val$purchaseRequestId -> k
-    java.lang.String val$sellerName -> l
-    java.lang.String val$description -> m
-    com.clockworkmod.billing.PurchaseCallback val$callback -> n
-    void run() -> a
+    java.lang.String val$paypalSandboxAppId -> c
+    java.lang.String val$paypalLiveAppId -> d
+    android.content.Context val$context -> e
+    android.app.ProgressDialog val$dlg -> f
+    java.lang.String val$paypalIPNUrl -> g
+    double val$price -> h
+    java.lang.String val$sandboxEmail -> i
+    java.lang.String val$sellerId -> j
+    java.lang.String val$name -> k
+    java.lang.String val$purchaseRequestId -> l
+    java.lang.String val$sellerName -> m
+    java.lang.String val$description -> n
+    com.clockworkmod.billing.PurchaseCallback val$callback -> o
+    void run() -> run
     com.clockworkmod.billing.ClockworkModBillingClient access$0(com.clockworkmod.billing.ClockworkModBillingClient$1) -> a
 com.clockworkmod.billing.ClockworkModBillingClient$1$1 -> com.clockworkmod.billing.z:
     com.clockworkmod.billing.ClockworkModBillingClient$1 this$1 -> a
@@ -808,23 +808,27 @@ com.clockworkmod.billing.ClockworkModBillingClient$10 -> com.clockworkmod.billin
     void run() -> run
 com.clockworkmod.billing.ClockworkModBillingClient$11 -> com.clockworkmod.billing.ad:
     com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
-    com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState val$state -> b
-    java.lang.Runnable val$reportPurchase -> c
-    void run() -> a
+    android.content.BroadcastReceiver val$receiver -> c
+    android.content.Context val$context -> d
+    com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState val$state -> e
+    java.lang.Runnable val$reportPurchase -> f
+    void run() -> run
 com.clockworkmod.billing.ClockworkModBillingClient$11$1 -> com.clockworkmod.billing.ae:
     com.clockworkmod.billing.ClockworkModBillingClient$11 this$1 -> a
-    com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState val$state -> b
-    java.lang.Runnable val$reportPurchase -> c
+    android.content.BroadcastReceiver val$receiver -> b
+    android.content.Context val$context -> c
+    com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState val$state -> d
+    java.lang.Runnable val$reportPurchase -> e
     void run() -> run
 com.clockworkmod.billing.ClockworkModBillingClient$12 -> com.clockworkmod.billing.af:
     com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
-    java.lang.String val$url -> b
-    android.app.ProgressDialog val$dlg -> c
-    com.clockworkmod.billing.PurchaseType val$type -> d
-    android.content.Context val$context -> e
-    com.clockworkmod.billing.PurchaseCallback val$callback -> f
-    java.lang.String val$buyerId -> g
-    void run() -> a
+    java.lang.String val$url -> c
+    android.app.ProgressDialog val$dlg -> d
+    com.clockworkmod.billing.PurchaseType val$type -> e
+    android.content.Context val$context -> f
+    com.clockworkmod.billing.PurchaseCallback val$callback -> g
+    java.lang.String val$buyerId -> h
+    void run() -> run
     com.clockworkmod.billing.ClockworkModBillingClient access$0(com.clockworkmod.billing.ClockworkModBillingClient$12) -> a
 com.clockworkmod.billing.ClockworkModBillingClient$12$1 -> com.clockworkmod.billing.ag:
     com.clockworkmod.billing.ClockworkModBillingClient$12 this$1 -> a
@@ -911,23 +915,23 @@ com.clockworkmod.billing.ClockworkModBillingClient$3 -> com.clockworkmod.billing
     void onCancel(android.content.DialogInterface) -> onCancel
 com.clockworkmod.billing.ClockworkModBillingClient$4 -> com.clockworkmod.billing.as:
     com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
-    android.content.Context val$context -> b
-    android.widget.EditText val$edit -> c
-    java.lang.String val$sellerId -> d
-    java.lang.String val$productId -> e
-    java.lang.String val$purchaseRequestId -> f
-    com.clockworkmod.billing.PurchaseCallback val$callback -> g
+    android.widget.EditText val$edit -> b
+    java.lang.String val$sellerId -> c
+    java.lang.String val$productId -> d
+    java.lang.String val$purchaseRequestId -> e
+    com.clockworkmod.billing.PurchaseCallback val$callback -> f
+    android.content.Context val$context -> g
     void onClick(android.content.DialogInterface,int) -> onClick
     com.clockworkmod.billing.ClockworkModBillingClient access$0(com.clockworkmod.billing.ClockworkModBillingClient$4) -> a
 com.clockworkmod.billing.ClockworkModBillingClient$4$1 -> com.clockworkmod.billing.at:
     com.clockworkmod.billing.ClockworkModBillingClient$4 this$1 -> a
-    java.lang.String val$sellerId -> b
-    java.lang.String val$productId -> c
-    java.lang.String val$purchaseRequestId -> d
-    java.lang.String val$code -> e
-    com.clockworkmod.billing.PurchaseCallback val$callback -> f
-    android.content.Context val$context -> g
-    void run() -> a
+    java.lang.String val$sellerId -> c
+    java.lang.String val$productId -> d
+    java.lang.String val$purchaseRequestId -> e
+    java.lang.String val$code -> f
+    com.clockworkmod.billing.PurchaseCallback val$callback -> g
+    android.content.Context val$context -> h
+    void run() -> run
     com.clockworkmod.billing.ClockworkModBillingClient$4 access$0(com.clockworkmod.billing.ClockworkModBillingClient$4$1) -> a
 com.clockworkmod.billing.ClockworkModBillingClient$4$1$1 -> com.clockworkmod.billing.au:
     com.clockworkmod.billing.ClockworkModBillingClient$4$1 this$2 -> a
@@ -973,14 +977,14 @@ com.clockworkmod.billing.ClockworkModBillingClient$8 -> com.clockworkmod.billing
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.clockworkmod.billing.ClockworkModBillingClient$9 -> com.clockworkmod.billing.bc:
     com.clockworkmod.billing.ClockworkModBillingClient this$0 -> a
-    com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState val$state -> b
-    java.lang.String val$buyerId -> c
-    android.content.Context val$context -> d
-    java.lang.String val$authToken -> e
-    android.content.SharedPreferences val$orderData -> f
-    java.lang.String val$productId -> g
-    java.lang.Runnable val$reportPurchase -> h
-    void run() -> a
+    com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState val$state -> c
+    java.lang.String val$buyerId -> d
+    android.content.Context val$context -> e
+    java.lang.String val$authToken -> f
+    android.content.SharedPreferences val$orderData -> g
+    java.lang.String val$productId -> h
+    java.lang.Runnable val$reportPurchase -> i
+    void run() -> run
 com.clockworkmod.billing.ClockworkModBillingClient$9$1 -> com.clockworkmod.billing.bd:
     com.clockworkmod.billing.ClockworkModBillingClient$9 this$1 -> a
     java.lang.Runnable val$reportPurchase -> b
@@ -994,7 +998,8 @@ com.clockworkmod.billing.ClockworkModBillingClient$CheckPurchaseState -> com.clo
     com.clockworkmod.billing.ClockworkModBillingClient this$0 -> f
 com.clockworkmod.billing.ClockworkOrder -> com.clockworkmod.billing.bf:
     org.json.JSONObject mOrder -> a
-    long getPurchaseTime() -> a
+    long timestamp -> b
+    long getTimestamp() -> a
 com.clockworkmod.billing.Consts -> com.clockworkmod.billing.bg:
     long BILLING_RESPONSE_INVALID_REQUEST_ID -> a
 com.clockworkmod.billing.Consts$ResponseCode -> com.clockworkmod.billing.bh:
@@ -1011,7 +1016,8 @@ com.clockworkmod.billing.Consts$ResponseCode -> com.clockworkmod.billing.bh:
     com.clockworkmod.billing.Consts$ResponseCode valueOf(java.lang.String) -> valueOf
 com.clockworkmod.billing.InAppOrder -> com.clockworkmod.billing.bi:
     org.json.JSONObject mOrder -> a
-    long getPurchaseTime() -> a
+    long timestamp -> b
+    long getTimestamp() -> a
 com.clockworkmod.billing.LinkPurchase -> com.clockworkmod.billing.bj:
     com.clockworkmod.billing.LinkPurchase REQUIRE_EMAIL -> a
     com.clockworkmod.billing.LinkPurchase PROMPT_EMAIL -> b
@@ -1021,7 +1027,7 @@ com.clockworkmod.billing.LinkPurchase -> com.clockworkmod.billing.bj:
     com.clockworkmod.billing.LinkPurchase[] values() -> values
     com.clockworkmod.billing.LinkPurchase valueOf(java.lang.String) -> valueOf
 com.clockworkmod.billing.Order -> com.clockworkmod.billing.bk:
-    long getPurchaseTime() -> a
+    long getTimestamp() -> a
 com.clockworkmod.billing.PurchaseCallback -> com.clockworkmod.billing.bl:
     void onFinished(com.clockworkmod.billing.PurchaseResult) -> a
 com.clockworkmod.billing.PurchaseResult -> com.clockworkmod.billing.bm:
@@ -1048,7 +1054,6 @@ com.clockworkmod.billing.ResultDelegate -> com.clockworkmod.billing.bo:
     void onPaymentFailed(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String) -> a
     void onPaymentCanceled(java.lang.String) -> a
 com.clockworkmod.billing.StreamUtility -> com.clockworkmod.billing.bp:
-    java.lang.String LOGTAG -> a
     java.lang.String downloadUriAsString(java.lang.String) -> a
     java.lang.String downloadUriAsString(org.apache.http.client.methods.HttpUriRequest) -> a
     org.json.JSONObject downloadUriAsJSONObject(java.lang.String) -> b
@@ -1056,11 +1061,12 @@ com.clockworkmod.billing.StreamUtility -> com.clockworkmod.billing.bp:
     byte[] readToEndAsArray(java.io.InputStream) -> a
     java.lang.String readToEnd(java.io.InputStream) -> b
 com.clockworkmod.billing.ThreadingRunnable -> com.clockworkmod.billing.bq:
+    java.lang.Thread thread -> b
     android.os.Handler mHandler -> a
-    void background(com.clockworkmod.billing.ThreadingRunnable) -> a
-    void run() -> a
-    android.os.Handler getHandler() -> b
-    void foreground(java.lang.Runnable) -> a
+    com.clockworkmod.billing.ThreadingRunnable background(com.clockworkmod.billing.ThreadingRunnable) -> a
+    void run() -> run
+    android.os.Handler getHandler() -> a
+    com.clockworkmod.billing.ThreadingRunnable foreground(java.lang.Runnable) -> a
 com.clockworkmod.billing.ThreadingRunnable$1 -> com.clockworkmod.billing.br:
     com.clockworkmod.billing.ThreadingRunnable val$runnable -> a
     void run() -> run
@@ -1169,18 +1175,18 @@ com.koushikdutta.desktopsms.C2DMReceiver -> com.koushikdutta.desktopsms.C2DMRece
     java.lang.String access$0() -> a
 com.koushikdutta.desktopsms.C2DMReceiver$1 -> com.koushikdutta.desktopsms.m:
     com.koushikdutta.desktopsms.Settings val$settings -> a
-    android.content.Context val$context -> b
-    void run() -> a
+    android.content.Context val$context -> c
+    void run() -> run
 com.koushikdutta.desktopsms.C2DMReceiver$2 -> com.koushikdutta.desktopsms.n:
     com.koushikdutta.desktopsms.C2DMReceiver this$0 -> a
-    android.content.Context val$context -> b
-    java.lang.String val$account -> c
-    org.json.JSONObject val$envelope -> d
-    void run() -> a
+    android.content.Context val$context -> c
+    java.lang.String val$account -> d
+    org.json.JSONObject val$envelope -> e
+    void run() -> run
 com.koushikdutta.desktopsms.C2DMReceiver$3 -> com.koushikdutta.desktopsms.o:
     com.koushikdutta.desktopsms.C2DMReceiver this$0 -> a
-    android.content.Context val$context -> b
-    void run() -> a
+    android.content.Context val$context -> c
+    void run() -> run
 com.koushikdutta.desktopsms.Callback -> com.koushikdutta.desktopsms.p:
     void onCallback(java.lang.Object) -> a
 com.koushikdutta.desktopsms.DateChangedReceiver -> com.koushikdutta.desktopsms.DateChangedReceiver:
@@ -1269,9 +1275,9 @@ com.koushikdutta.desktopsms.MainActivity$11$1 -> com.koushikdutta.desktopsms.z:
     com.koushikdutta.desktopsms.MainActivity$11 access$0(com.koushikdutta.desktopsms.MainActivity$11$1) -> a
 com.koushikdutta.desktopsms.MainActivity$11$1$1 -> com.koushikdutta.desktopsms.aa:
     com.koushikdutta.desktopsms.MainActivity$11$1 this$2 -> a
-    android.app.ProgressDialog val$dlg -> b
-    int val$which -> c
-    void run() -> a
+    android.app.ProgressDialog val$dlg -> c
+    int val$which -> d
+    void run() -> run
     com.koushikdutta.desktopsms.MainActivity$11$1 access$0(com.koushikdutta.desktopsms.MainActivity$11$1$1) -> a
 com.koushikdutta.desktopsms.MainActivity$11$1$1$1 -> com.koushikdutta.desktopsms.ab:
     com.koushikdutta.desktopsms.MainActivity$11$1$1 this$3 -> a
@@ -1297,7 +1303,7 @@ com.koushikdutta.desktopsms.MainActivity$13 -> com.koushikdutta.desktopsms.af:
     void run() -> run
 com.koushikdutta.desktopsms.MainActivity$14 -> com.koushikdutta.desktopsms.ag:
     com.koushikdutta.desktopsms.MainActivity this$0 -> a
-    void run() -> a
+    void run() -> run
     com.koushikdutta.desktopsms.MainActivity access$0(com.koushikdutta.desktopsms.MainActivity$14) -> a
 com.koushikdutta.desktopsms.MainActivity$14$1 -> com.koushikdutta.desktopsms.ah:
     com.koushikdutta.desktopsms.MainActivity$14 this$1 -> a
@@ -1308,8 +1314,8 @@ com.koushikdutta.desktopsms.MainActivity$14$2 -> com.koushikdutta.desktopsms.ai:
     void run() -> run
 com.koushikdutta.desktopsms.MainActivity$15 -> com.koushikdutta.desktopsms.aj:
     com.koushikdutta.desktopsms.MainActivity this$0 -> a
-    android.app.ProgressDialog val$dlg -> b
-    void run() -> a
+    android.app.ProgressDialog val$dlg -> c
+    void run() -> run
     com.koushikdutta.desktopsms.MainActivity access$0(com.koushikdutta.desktopsms.MainActivity$15) -> a
 com.koushikdutta.desktopsms.MainActivity$15$1 -> com.koushikdutta.desktopsms.ak:
     com.koushikdutta.desktopsms.MainActivity$15 this$1 -> a

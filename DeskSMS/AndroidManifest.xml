@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.koushikdutta.desktopsms"
-    android:versionCode="1114"
-    android:versionName="1.1.1.4" >
+    android:versionCode="1115"
+    android:versionName="1.1.1.5" >
 
     <uses-sdk android:minSdkVersion="8" />
 
@@ -36,22 +36,18 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".C2DMReceiver"
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
 
             <!-- Receive the actual message -->
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
-                <category android:name="com.koushikdutta.desktopsms" />
-            </intent-filter>
-            <!-- Receive the registration id -->
-            <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
                 <category android:name="com.koushikdutta.desktopsms" />
             </intent-filter>
         </receiver>
+        <service android:name=".GCMIntentService" />
         <receiver android:name=".DateChangedReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.DATE_CHANGED" />

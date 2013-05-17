@@ -553,7 +553,7 @@ public class SyncService extends Service {
                 }
                 Log.i(LOGTAG, "================Forwarding inbox================");
 
-                gen.writeStringField("registration_id", mRegistrationId);
+                gen.writeStringField("registration_id", "gcm:" + mRegistrationId);
                 gen.writeBooleanField("is_initial_sync", isInitialSync);
                 gen.writeNumberField("version_code", DesktopSMSApplication.mVersionCode);
                 gen.writeNumberField("this_last_sync", lastSync);

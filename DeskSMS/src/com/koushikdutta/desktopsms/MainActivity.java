@@ -248,7 +248,7 @@ public class MainActivity extends ActivityBase {
         addItem(R.string.notifications, new ListItem(this, R.string.gmail, 0) {
             {
                 CheckboxVisible = true;
-                setIsChecked(mSettings.getBoolean("forward_email", true));
+                setIsChecked(mSettings.getBoolean("forward_email", false));
             }
 
             @Override
