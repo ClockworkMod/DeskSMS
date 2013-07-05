@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.koushikdutta.desktopsms"
-    android:versionCode="1200"
-    android:versionName="1.2.0.0" >
+    android:versionCode="1201"
+    android:versionName="1.2.0.1" >
 
     <uses-sdk android:minSdkVersion="8" />
 
@@ -36,7 +36,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:name=".GCMIntentService"
             android:permission="com.google.android.c2dm.permission.SEND" >
 
             <!-- Receive the actual message -->
@@ -47,7 +47,6 @@
                 <category android:name="com.koushikdutta.desktopsms" />
             </intent-filter>
         </receiver>
-        <service android:name=".GCMIntentService" />
         <receiver android:name=".DateChangedReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.DATE_CHANGED" />

@@ -1,9 +1,17 @@
 package com.koushikdutta.desktopsms;
 
 
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.ContentProviderOperation;
 import android.content.ContentUris;
 import android.content.Context;
@@ -12,30 +20,21 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+
 import com.clockworkmod.billing.ClockworkModBillingClient;
 import com.clockworkmod.billing.ThreadingRunnable;
-import com.google.android.gcm.GCMBaseIntentService;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-
-public class GCMIntentService extends GCMBaseIntentService {
+public class GCMIntentService extends BroadcastReceiver {
     public static final String PING = "com.koushikdutta.desktopsms.PING";
     public static final String ACTION_REGISTRATION_RECEIVED = "com.koushikdutta.tabletsms.REGISTRATION_RECEIVED";
 
     private final static String LOGTAG = GCMIntentService.class.getSimpleName();
-
+    
     @Override
-    protected void onError(Context arg0, String error) {
-        Log.i(LOGTAG, error);
-    }
-
-    @Override
-    protected void onMessage(final Context context, Intent intent) {
-        Log.i(LOGTAG, "Tickle received!");
+    public void onReceive(final Context context, Intent intent) {
+    	if (intent == null || !"com.google.android.c2dm.intent.RECEIVE".equals(intent.getAction()))
+    		return;
 
         Settings settings = Settings.getInstance(context);
         try {
@@ -228,40 +227,4 @@ public class GCMIntentService extends GCMBaseIntentService {
             }
         });
     }
-
-    @Override
-    protected void onRegistered(final Context context, String registration) {
-        if (registration != null) {
-            Log.i(LOGTAG, registration);
-            Settings settings = Settings.getInstance(context);
-
-            String oldRegistrationId = settings.getString("registration_id");
-            settings.setString("registration_id", registration);
-
-            // if the registration ids do not match, and we are registered, notify the server.
-            if (oldRegistrationId != null && !oldRegistrationId.equals(registration) && settings.getBoolean("registered", false)) {
-                Log.i(LOGTAG, oldRegistrationId);
-                Log.i(LOGTAG, "Registration change detected!");
-                ThreadingRunnable.background(new ThreadingRunnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            TickleServiceHelper.registerWithServer(context);
-                        }
-                        catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                });
-            }
-
-            Intent i = new Intent(ACTION_REGISTRATION_RECEIVED);
-            context.sendBroadcast(i);
-        }
-    }
-
-    @Override
-    protected void onUnregistered(Context arg0, String arg1) {
-    }
-
 }

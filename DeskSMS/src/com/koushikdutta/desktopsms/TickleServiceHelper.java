@@ -1,14 +1,12 @@
 package com.koushikdutta.desktopsms;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import com.google.android.gcm.GCMRegistrar;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -29,7 +27,6 @@ import android.accounts.AccountManagerFuture;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -38,7 +35,11 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+
+import com.clockworkmod.billing.ThreadingRunnable;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class TickleServiceHelper {
     private static final String LOGTAG = TickleServiceHelper.class.getSimpleName();
@@ -252,21 +253,34 @@ public class TickleServiceHelper {
     }
 
     static void registerForPush(final Context context, final Callback<Void> callback) {
-        if (callback != null) {
-            BroadcastReceiver receiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    context.unregisterReceiver(this);
-                    callback.onCallback(null);
-                }
-            };
-        
-            IntentFilter filter = new IntentFilter(GCMIntentService.ACTION_REGISTRATION_RECEIVED);
-            context.registerReceiver(receiver, filter);
-        }
+    	ThreadingRunnable.background(new ThreadingRunnable() {
+			@Override
+			public void run() {
+				try {
+			    	GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(context);
+			    	String registration = gcm.register("960629859371");
+			        Log.i(LOGTAG, registration);
+			        Settings settings = Settings.getInstance(context);
+			        settings.setString("registration_id", registration);
 
-        GCMRegistrar.unregister(context);
-        GCMRegistrar.register(context, "960629859371");
+			        String oldRegistrationId = settings.getString("registration_id");
+			        if (!TextUtils.equals(registration, oldRegistrationId)) {
+			            Log.i(LOGTAG, oldRegistrationId);
+			            Log.i(LOGTAG, "Registration change detected!");
+			            TickleServiceHelper.registerWithServer(context);
+			        }
+				}
+				catch (Exception e) {
+				}
+				foreground(new Runnable() {
+					@Override
+					public void run() {
+						if (callback != null)
+							callback.onCallback(null);
+					}
+				});
+			}
+		});
     }
     
     static final String AUTH_TOKEN_TYPE = "ah";

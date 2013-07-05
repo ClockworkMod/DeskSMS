@@ -24,10 +24,37 @@ android.support.v4.app.FragmentManagerState
 android.support.v4.app.FragmentManagerState: android.os.Parcelable$Creator CREATOR
 android.support.v4.app.FragmentState
 android.support.v4.app.FragmentState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.FragmentTabHost
+android.support.v4.app.FragmentTabHost: FragmentTabHost(android.content.Context,android.util.AttributeSet)
+android.support.v4.app.FragmentTabHost$SavedState
+android.support.v4.app.FragmentTabHost$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.content.FileProvider
+android.support.v4.content.ModernAsyncTask$Status: android.support.v4.content.ModernAsyncTask$Status[] values()
+android.support.v4.content.ModernAsyncTask$Status: android.support.v4.content.ModernAsyncTask$Status valueOf(java.lang.String)
+android.support.v4.view.PagerTabStrip
+android.support.v4.view.PagerTabStrip: PagerTabStrip(android.content.Context,android.util.AttributeSet)
+android.support.v4.view.PagerTitleStrip
+android.support.v4.view.PagerTitleStrip: PagerTitleStrip(android.content.Context,android.util.AttributeSet)
 android.support.v4.view.ViewPager
 android.support.v4.view.ViewPager: ViewPager(android.content.Context,android.util.AttributeSet)
+android.support.v4.view.ViewPager$LayoutParams
+android.support.v4.view.ViewPager$LayoutParams: ViewPager$LayoutParams(android.content.Context,android.util.AttributeSet)
 android.support.v4.view.ViewPager$SavedState
 android.support.v4.view.ViewPager$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.widget.DrawerLayout
+android.support.v4.widget.DrawerLayout: DrawerLayout(android.content.Context,android.util.AttributeSet)
+android.support.v4.widget.DrawerLayout: DrawerLayout(android.content.Context,android.util.AttributeSet,int)
+android.support.v4.widget.DrawerLayout$LayoutParams
+android.support.v4.widget.DrawerLayout$LayoutParams: DrawerLayout$LayoutParams(android.content.Context,android.util.AttributeSet)
+android.support.v4.widget.DrawerLayout$SavedState
+android.support.v4.widget.DrawerLayout$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.widget.SlidingPaneLayout
+android.support.v4.widget.SlidingPaneLayout: SlidingPaneLayout(android.content.Context,android.util.AttributeSet)
+android.support.v4.widget.SlidingPaneLayout: SlidingPaneLayout(android.content.Context,android.util.AttributeSet,int)
+android.support.v4.widget.SlidingPaneLayout$LayoutParams
+android.support.v4.widget.SlidingPaneLayout$LayoutParams: SlidingPaneLayout$LayoutParams(android.content.Context,android.util.AttributeSet)
+android.support.v4.widget.SlidingPaneLayout$SavedState
+android.support.v4.widget.SlidingPaneLayout$SavedState: android.os.Parcelable$Creator CREATOR
 com.clockworkmod.billing.BillingActivity
 com.clockworkmod.billing.BillingReceiver
 com.clockworkmod.billing.BillingReceiver: BillingReceiver()
@@ -43,8 +70,82 @@ com.clockworkmod.billing.PurchaseResult: com.clockworkmod.billing.PurchaseResult
 com.clockworkmod.billing.PurchaseResult: com.clockworkmod.billing.PurchaseResult valueOf(java.lang.String)
 com.clockworkmod.billing.PurchaseType: com.clockworkmod.billing.PurchaseType[] values()
 com.clockworkmod.billing.PurchaseType: com.clockworkmod.billing.PurchaseType valueOf(java.lang.String)
-com.google.android.gcm.GCMBaseIntentService
-com.google.android.gcm.GCMBroadcastReceiver
+com.google.android.gms.common.SignInButton
+com.google.android.gms.common.SignInButton: SignInButton(android.content.Context,android.util.AttributeSet)
+com.google.android.gms.common.SignInButton: SignInButton(android.content.Context,android.util.AttributeSet,int)
+com.google.android.gms.common.images.ImageManager$ImageReceiver
+com.google.android.gms.games.Game
+com.google.android.gms.games.GameEntity
+com.google.android.gms.games.GameEntity: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.Player
+com.google.android.gms.games.PlayerEntity
+com.google.android.gms.games.PlayerEntity: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.multiplayer.Invitation
+com.google.android.gms.games.multiplayer.InvitationEntity
+com.google.android.gms.games.multiplayer.InvitationEntity: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.multiplayer.Participant
+com.google.android.gms.games.multiplayer.ParticipantEntity
+com.google.android.gms.games.multiplayer.ParticipantEntity: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.multiplayer.realtime.RealTimeMessage
+com.google.android.gms.games.multiplayer.realtime.RealTimeMessage: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.multiplayer.realtime.Room
+com.google.android.gms.games.multiplayer.realtime.RoomEntity
+com.google.android.gms.games.multiplayer.realtime.RoomEntity: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.internal.aa
+com.google.android.gms.internal.aa: aa(android.content.Context,android.util.AttributeSet)
+com.google.android.gms.internal.ae
+com.google.android.gms.internal.ag
+com.google.android.gms.internal.ai
+com.google.android.gms.internal.ak
+com.google.android.gms.internal.ak$a
+com.google.android.gms.internal.an$a
+com.google.android.gms.internal.aq
+com.google.android.gms.internal.aq$a
+com.google.android.gms.internal.aq$b
+com.google.android.gms.internal.at
+com.google.android.gms.internal.bf
+com.google.android.gms.internal.bg
+com.google.android.gms.internal.bw
+com.google.android.gms.internal.bx
+com.google.android.gms.internal.bz
+com.google.android.gms.internal.cf
+com.google.android.gms.internal.dz
+com.google.android.gms.internal.dz: dz(android.content.Context,android.util.AttributeSet)
+com.google.android.gms.internal.eb
+com.google.android.gms.internal.ed
+com.google.android.gms.internal.ef
+com.google.android.gms.internal.eq
+com.google.android.gms.internal.eq$a
+com.google.android.gms.internal.eq$b
+com.google.android.gms.internal.eq$b$a
+com.google.android.gms.internal.eq$b$b
+com.google.android.gms.internal.eq$c
+com.google.android.gms.internal.eq$d
+com.google.android.gms.internal.eq$e
+com.google.android.gms.internal.eq$g
+com.google.android.gms.internal.eq$h
+com.google.android.gms.internal.eq$i
+com.google.android.gms.internal.k
+com.google.android.gms.location.ActivityRecognitionResult
+com.google.android.gms.location.DetectedActivity
+com.google.android.gms.location.LocationRequest
+com.google.android.gms.maps.GoogleMapOptions
+com.google.android.gms.maps.MapView
+com.google.android.gms.maps.MapView: MapView(android.content.Context,android.util.AttributeSet)
+com.google.android.gms.maps.MapView: MapView(android.content.Context,android.util.AttributeSet,int)
+com.google.android.gms.maps.model.CameraPosition
+com.google.android.gms.maps.model.CircleOptions
+com.google.android.gms.maps.model.GroundOverlayOptions
+com.google.android.gms.maps.model.LatLng
+com.google.android.gms.maps.model.LatLngBounds
+com.google.android.gms.maps.model.MarkerOptions
+com.google.android.gms.maps.model.PolygonOptions
+com.google.android.gms.maps.model.PolylineOptions
+com.google.android.gms.maps.model.Tile
+com.google.android.gms.maps.model.TileOverlayOptions
+com.google.android.gms.maps.model.VisibleRegion
+com.google.android.gms.plus.PlusOneButton
+com.google.android.gms.plus.PlusOneButton: PlusOneButton(android.content.Context,android.util.AttributeSet)
 com.koushikdutta.desktopsms.ActivityBase
 com.koushikdutta.desktopsms.ActivityBase: ActivityBase()
 com.koushikdutta.desktopsms.BlackListActivity
@@ -53,12 +154,12 @@ com.koushikdutta.desktopsms.BootReceiver
 com.koushikdutta.desktopsms.BootReceiver: BootReceiver()
 com.koushikdutta.desktopsms.BuyActivity
 com.koushikdutta.desktopsms.BuyActivity: BuyActivity()
-com.koushikdutta.desktopsms.C2DMReceiver
-com.koushikdutta.desktopsms.C2DMReceiver: C2DMReceiver()
 com.koushikdutta.desktopsms.DateChangedReceiver
 com.koushikdutta.desktopsms.DateChangedReceiver: DateChangedReceiver()
 com.koushikdutta.desktopsms.DesktopSMSApplication
 com.koushikdutta.desktopsms.DesktopSMSApplication: DesktopSMSApplication()
+com.koushikdutta.desktopsms.GCMIntentService
+com.koushikdutta.desktopsms.GCMIntentService: GCMIntentService()
 com.koushikdutta.desktopsms.MainActivity
 com.koushikdutta.desktopsms.MainActivity: MainActivity()
 com.koushikdutta.desktopsms.PhoneStateChangedReceiver
