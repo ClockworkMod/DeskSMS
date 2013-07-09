@@ -356,7 +356,7 @@ public class SyncService extends Service {
             return 0;
         }
 
-        Log.i(LOGTAG, "================Sending outbox================");
+//        Log.i(LOGTAG, "================Sending outbox================");
         //Log.i(LOGTAG, outbox.toString(4));
         for (int i = 0; i < outbox.length(); i++) {
             try {
@@ -399,7 +399,7 @@ public class SyncService extends Service {
     }
 
     private void syncOutbox(String outbox) throws ClientProtocolException, OperationCanceledException, AuthenticatorException, IOException, URISyntaxException, JSONException {
-        Log.i(LOGTAG, "================Checking outbox================");
+//        Log.i(LOGTAG, "================Checking outbox================");
         if (outbox == null) {
             retrieveOutbox();
         }
@@ -499,7 +499,7 @@ public class SyncService extends Service {
                         }
 
                         if (event.optBoolean("skip", false)) {
-                            Log.i(LOGTAG, "=========Skipping event.=========");
+//                            Log.i(LOGTAG, "=========Skipping event.=========");
                             logEvent(event);
                             continue;
                         }
@@ -548,10 +548,10 @@ public class SyncService extends Service {
                 gen.writeEndArray();
 
                 if (eventCount == 0) {
-                    Log.i(LOGTAG, "================No new messages================");
+//                    Log.i(LOGTAG, "================No new messages================");
                     return;
                 }
-                Log.i(LOGTAG, "================Forwarding inbox================");
+//                Log.i(LOGTAG, "================Forwarding inbox================");
 
                 gen.writeStringField("registration_id", "gcm:" + mRegistrationId);
                 gen.writeBooleanField("is_initial_sync", isInitialSync);
@@ -589,8 +589,8 @@ public class SyncService extends Service {
                 mSettings.setString("registration_id", null);
                 throw new Exception("not registered");
             }
-            Log.i(LOGTAG, results);
-            Log.i(LOGTAG, "===== Updating last sync to " + latestEvent);
+//            Log.i(LOGTAG, results);
+//            Log.i(LOGTAG, "===== Updating last sync to " + latestEvent);
             mSettings.setLong(lastSyncSetting, latestEvent);
         }
     }
@@ -697,10 +697,10 @@ public class SyncService extends Service {
         
         // no reason? this is just a 15 min repeating wakeup call then.
         if (reason == null) {
-            Log.i(LOGTAG, "No reason for sync");
+//            Log.i(LOGTAG, "No reason for sync");
             return;
         }
-        Log.i(LOGTAG, "============= Sync Reason " + reason + "=============");
+//        Log.i(LOGTAG, "============= Sync Reason " + reason + "=============");
         
         boolean xmpp = mSettings.getBoolean("forward_xmpp", true);
         boolean email = mSettings.getBoolean("forward_email", true);
@@ -717,7 +717,7 @@ public class SyncService extends Service {
 
         synchronized (this) {
             if (mSyncThread != null) {
-                Log.i(LOGTAG, "Sync is already running.");
+//                Log.i(LOGTAG, "Sync is already running.");
                 return;
             }
 
@@ -756,7 +756,7 @@ public class SyncService extends Service {
                             // however, if an outbox message comes in while we are polling,
                             // let's send it
                             if (mPendingOutboxSync) {
-                                Log.i(LOGTAG, "================Outbox ping received================");
+//                                Log.i(LOGTAG, "================Outbox ping received================");
                                 mPendingOutboxSync = false;
                                 syncOutbox(mPendingOutbox);
                                 mPendingOutbox = null;
