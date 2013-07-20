@@ -18,7 +18,7 @@
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Android 4.1.2 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android 4.2.2 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library>
@@ -31,6 +31,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="ClockworkModBilling" />
+    <orderEntry type="module" module-name="google-play-services_lib" />
   </component>
 </module>
 

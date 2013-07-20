@@ -1,0 +1,1036 @@
+android.os.SystemProperties
+android.os.SystemProperties: int PROP_NAME_MAX
+android.os.SystemProperties: int PROP_VALUE_MAX
+android.os.SystemProperties: SystemProperties()
+android.os.SystemProperties: java.lang.String native_get(java.lang.String)
+android.os.SystemProperties: java.lang.String native_get(java.lang.String,java.lang.String)
+android.os.SystemProperties: int native_get_int(java.lang.String,int)
+android.os.SystemProperties: long native_get_long(java.lang.String,long)
+android.os.SystemProperties: boolean native_get_boolean(java.lang.String,boolean)
+android.os.SystemProperties: void native_set(java.lang.String,java.lang.String)
+android.os.SystemProperties: java.lang.String get(java.lang.String)
+android.os.SystemProperties: java.lang.String get(java.lang.String,java.lang.String)
+android.os.SystemProperties: int getInt(java.lang.String,int)
+android.os.SystemProperties: long getLong(java.lang.String,long)
+android.os.SystemProperties: boolean getBoolean(java.lang.String,boolean)
+android.os.SystemProperties: void set(java.lang.String,java.lang.String)
+android.support.v4.app.BackStackState
+android.support.v4.app.BackStackState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.Fragment$SavedState
+android.support.v4.app.Fragment$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.FragmentActivity: FragmentActivity()
+android.support.v4.app.FragmentManagerState
+android.support.v4.app.FragmentManagerState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.FragmentState
+android.support.v4.app.FragmentState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.FragmentTabHost: void setOnTabChangedListener(android.widget.TabHost$OnTabChangeListener)
+android.support.v4.app.FragmentTabHost$SavedState
+android.support.v4.app.FragmentTabHost$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.content.ModernAsyncTask$Status: android.support.v4.content.ModernAsyncTask$Status[] values()
+android.support.v4.content.ModernAsyncTask$Status: android.support.v4.content.ModernAsyncTask$Status valueOf(java.lang.String)
+android.support.v4.view.PagerTabStrip: void setTabIndicatorColor(int)
+android.support.v4.view.PagerTabStrip: void setTabIndicatorColorResource(int)
+android.support.v4.view.PagerTabStrip: int getTabIndicatorColor()
+android.support.v4.view.PagerTabStrip: void setTextSpacing(int)
+android.support.v4.view.PagerTabStrip: void setBackgroundDrawable(android.graphics.drawable.Drawable)
+android.support.v4.view.PagerTabStrip: void setBackgroundColor(int)
+android.support.v4.view.PagerTabStrip: void setBackgroundResource(int)
+android.support.v4.view.PagerTabStrip: void setDrawFullUnderline(boolean)
+android.support.v4.view.PagerTabStrip: boolean getDrawFullUnderline()
+android.support.v4.view.PagerTabStrip: int getMinHeight()
+android.support.v4.view.PagerTitleStrip: void setSingleLineAllCaps(android.widget.TextView)
+android.support.v4.view.PagerTitleStrip: void setTextSpacing(int)
+android.support.v4.view.PagerTitleStrip: int getTextSpacing()
+android.support.v4.view.PagerTitleStrip: void setNonPrimaryAlpha(float)
+android.support.v4.view.PagerTitleStrip: void setTextColor(int)
+android.support.v4.view.PagerTitleStrip: void setGravity(int)
+android.support.v4.view.PagerTitleStrip: int getMinHeight()
+android.support.v4.view.ViewPager: void setScrollState(int)
+android.support.v4.view.ViewPager: void setAdapter(android.support.v4.view.PagerAdapter)
+android.support.v4.view.ViewPager: android.support.v4.view.PagerAdapter getAdapter()
+android.support.v4.view.ViewPager: void setOnAdapterChangeListener(android.support.v4.view.ViewPager$OnAdapterChangeListener)
+android.support.v4.view.ViewPager: int getClientWidth()
+android.support.v4.view.ViewPager: void setCurrentItem(int)
+android.support.v4.view.ViewPager: int getCurrentItem()
+android.support.v4.view.ViewPager: void setOnPageChangeListener(android.support.v4.view.ViewPager$OnPageChangeListener)
+android.support.v4.view.ViewPager: void setChildrenDrawingOrderEnabledCompat(boolean)
+android.support.v4.view.ViewPager: int getOffscreenPageLimit()
+android.support.v4.view.ViewPager: void setOffscreenPageLimit(int)
+android.support.v4.view.ViewPager: void setPageMargin(int)
+android.support.v4.view.ViewPager: int getPageMargin()
+android.support.v4.view.ViewPager: void setPageMarginDrawable(android.graphics.drawable.Drawable)
+android.support.v4.view.ViewPager: void setPageMarginDrawable(int)
+android.support.v4.view.ViewPager: void setScrollingCacheEnabled(boolean)
+android.support.v4.view.ViewPager$SavedState
+android.support.v4.view.ViewPager$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.widget.DrawerLayout: void setScrimColor(int)
+android.support.v4.widget.DrawerLayout: void setDrawerListener(android.support.v4.widget.DrawerLayout$DrawerListener)
+android.support.v4.widget.DrawerLayout: void setDrawerLockMode(int)
+android.support.v4.widget.DrawerLayout$SavedState
+android.support.v4.widget.DrawerLayout$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.widget.SlidingPaneLayout: void setParallaxDistance(int)
+android.support.v4.widget.SlidingPaneLayout: int getParallaxDistance()
+android.support.v4.widget.SlidingPaneLayout: void setSliderFadeColor(int)
+android.support.v4.widget.SlidingPaneLayout: int getSliderFadeColor()
+android.support.v4.widget.SlidingPaneLayout: void setCoveredFadeColor(int)
+android.support.v4.widget.SlidingPaneLayout: int getCoveredFadeColor()
+android.support.v4.widget.SlidingPaneLayout: void setPanelSlideListener(android.support.v4.widget.SlidingPaneLayout$PanelSlideListener)
+android.support.v4.widget.SlidingPaneLayout: void setShadowDrawable(android.graphics.drawable.Drawable)
+android.support.v4.widget.SlidingPaneLayout: void setShadowResource(int)
+android.support.v4.widget.SlidingPaneLayout$SavedState
+android.support.v4.widget.SlidingPaneLayout$SavedState: android.os.Parcelable$Creator CREATOR
+com.clockworkmod.billing.BillingReceiver
+com.clockworkmod.billing.BillingReceiver: BillingReceiver()
+com.clockworkmod.billing.BillingService
+com.clockworkmod.billing.BillingService: BillingService()
+com.clockworkmod.billing.Consts$PurchaseState: com.clockworkmod.billing.Consts$PurchaseState[] values()
+com.clockworkmod.billing.Consts$PurchaseState: com.clockworkmod.billing.Consts$PurchaseState valueOf(java.lang.String)
+com.clockworkmod.billing.Consts$ResponseCode: com.clockworkmod.billing.Consts$ResponseCode[] values()
+com.clockworkmod.billing.Consts$ResponseCode: com.clockworkmod.billing.Consts$ResponseCode valueOf(java.lang.String)
+com.clockworkmod.billing.LinkPurchase: com.clockworkmod.billing.LinkPurchase[] values()
+com.clockworkmod.billing.LinkPurchase: com.clockworkmod.billing.LinkPurchase valueOf(java.lang.String)
+com.clockworkmod.billing.PurchaseResult: com.clockworkmod.billing.PurchaseResult[] values()
+com.clockworkmod.billing.PurchaseResult: com.clockworkmod.billing.PurchaseResult valueOf(java.lang.String)
+com.clockworkmod.billing.PurchaseType: com.clockworkmod.billing.PurchaseType[] values()
+com.clockworkmod.billing.PurchaseType: com.clockworkmod.billing.PurchaseType valueOf(java.lang.String)
+com.clockworkmod.billing.R$attr: int cameraBearing
+com.clockworkmod.billing.R$attr: int cameraTargetLat
+com.clockworkmod.billing.R$attr: int cameraTargetLng
+com.clockworkmod.billing.R$attr: int cameraTilt
+com.clockworkmod.billing.R$attr: int cameraZoom
+com.clockworkmod.billing.R$attr: int mapType
+com.clockworkmod.billing.R$attr: int uiCompass
+com.clockworkmod.billing.R$attr: int uiRotateGestures
+com.clockworkmod.billing.R$attr: int uiScrollGestures
+com.clockworkmod.billing.R$attr: int uiTiltGestures
+com.clockworkmod.billing.R$attr: int uiZoomControls
+com.clockworkmod.billing.R$attr: int uiZoomGestures
+com.clockworkmod.billing.R$attr: int useViewLifecycle
+com.clockworkmod.billing.R$attr: int zOrderOnTop
+com.clockworkmod.billing.R$color: int common_action_bar_splitter
+com.clockworkmod.billing.R$color: int common_signin_btn_dark_text_default
+com.clockworkmod.billing.R$color: int common_signin_btn_dark_text_disabled
+com.clockworkmod.billing.R$color: int common_signin_btn_dark_text_focused
+com.clockworkmod.billing.R$color: int common_signin_btn_dark_text_pressed
+com.clockworkmod.billing.R$color: int common_signin_btn_default_background
+com.clockworkmod.billing.R$color: int common_signin_btn_light_text_default
+com.clockworkmod.billing.R$color: int common_signin_btn_light_text_disabled
+com.clockworkmod.billing.R$color: int common_signin_btn_light_text_focused
+com.clockworkmod.billing.R$color: int common_signin_btn_light_text_pressed
+com.clockworkmod.billing.R$color: int common_signin_btn_text_dark
+com.clockworkmod.billing.R$color: int common_signin_btn_text_light
+com.clockworkmod.billing.R$drawable: int appwidget_bg
+com.clockworkmod.billing.R$drawable: int appwidget_button_center
+com.clockworkmod.billing.R$drawable: int appwidget_button_left
+com.clockworkmod.billing.R$drawable: int appwidget_button_right
+com.clockworkmod.billing.R$drawable: int appwidget_inner_focus_c
+com.clockworkmod.billing.R$drawable: int appwidget_inner_focus_l
+com.clockworkmod.billing.R$drawable: int appwidget_inner_focus_r
+com.clockworkmod.billing.R$drawable: int appwidget_inner_press_c
+com.clockworkmod.billing.R$drawable: int appwidget_inner_press_l
+com.clockworkmod.billing.R$drawable: int appwidget_inner_press_r
+com.clockworkmod.billing.R$drawable: int appwidget_settings_divider
+com.clockworkmod.billing.R$drawable: int appwidget_settings_ind_mid_c
+com.clockworkmod.billing.R$drawable: int appwidget_settings_ind_mid_l
+com.clockworkmod.billing.R$drawable: int appwidget_settings_ind_mid_r
+com.clockworkmod.billing.R$drawable: int appwidget_settings_ind_mid_red_c
+com.clockworkmod.billing.R$drawable: int appwidget_settings_ind_mid_red_l
+com.clockworkmod.billing.R$drawable: int appwidget_settings_ind_mid_red_r
+com.clockworkmod.billing.R$drawable: int appwidget_settings_ind_on_c
+com.clockworkmod.billing.R$drawable: int appwidget_settings_ind_on_l
+com.clockworkmod.billing.R$drawable: int appwidget_settings_ind_on_r
+com.clockworkmod.billing.R$drawable: int chrome
+com.clockworkmod.billing.R$drawable: int common_signin_btn_icon_dark
+com.clockworkmod.billing.R$drawable: int common_signin_btn_icon_disabled_dark
+com.clockworkmod.billing.R$drawable: int common_signin_btn_icon_disabled_focus_dark
+com.clockworkmod.billing.R$drawable: int common_signin_btn_icon_disabled_focus_light
+com.clockworkmod.billing.R$drawable: int common_signin_btn_icon_disabled_light
+com.clockworkmod.billing.R$drawable: int common_signin_btn_icon_focus_dark
+com.clockworkmod.billing.R$drawable: int common_signin_btn_icon_focus_light
+com.clockworkmod.billing.R$drawable: int common_signin_btn_icon_light
+com.clockworkmod.billing.R$drawable: int common_signin_btn_icon_normal_dark
+com.clockworkmod.billing.R$drawable: int common_signin_btn_icon_normal_light
+com.clockworkmod.billing.R$drawable: int common_signin_btn_icon_pressed_dark
+com.clockworkmod.billing.R$drawable: int common_signin_btn_icon_pressed_light
+com.clockworkmod.billing.R$drawable: int common_signin_btn_text_dark
+com.clockworkmod.billing.R$drawable: int common_signin_btn_text_disabled_dark
+com.clockworkmod.billing.R$drawable: int common_signin_btn_text_disabled_focus_dark
+com.clockworkmod.billing.R$drawable: int common_signin_btn_text_disabled_focus_light
+com.clockworkmod.billing.R$drawable: int common_signin_btn_text_disabled_light
+com.clockworkmod.billing.R$drawable: int common_signin_btn_text_focus_dark
+com.clockworkmod.billing.R$drawable: int common_signin_btn_text_focus_light
+com.clockworkmod.billing.R$drawable: int common_signin_btn_text_light
+com.clockworkmod.billing.R$drawable: int common_signin_btn_text_normal_dark
+com.clockworkmod.billing.R$drawable: int common_signin_btn_text_normal_light
+com.clockworkmod.billing.R$drawable: int common_signin_btn_text_pressed_dark
+com.clockworkmod.billing.R$drawable: int common_signin_btn_text_pressed_light
+com.clockworkmod.billing.R$drawable: int ic_launcher_google_talk
+com.clockworkmod.billing.R$drawable: int ic_launcher_mail
+com.clockworkmod.billing.R$drawable: int icon
+com.clockworkmod.billing.R$drawable: int market
+com.clockworkmod.billing.R$drawable: int panel_background
+com.clockworkmod.billing.R$drawable: int paypal
+com.clockworkmod.billing.R$drawable: int twofortyfouram_locale_border
+com.clockworkmod.billing.R$id: int add
+com.clockworkmod.billing.R$id: int checkbox
+com.clockworkmod.billing.R$id: int chkEmail
+com.clockworkmod.billing.R$id: int chkWeb
+com.clockworkmod.billing.R$id: int chkXMPP
+com.clockworkmod.billing.R$id: int current_account
+com.clockworkmod.billing.R$id: int edit
+com.clockworkmod.billing.R$id: int email_ind
+com.clockworkmod.billing.R$id: int forward_email
+com.clockworkmod.billing.R$id: int forward_web
+com.clockworkmod.billing.R$id: int forward_xmpp
+com.clockworkmod.billing.R$id: int forwarded
+com.clockworkmod.billing.R$id: int frame
+com.clockworkmod.billing.R$id: int hybrid
+com.clockworkmod.billing.R$id: int image
+com.clockworkmod.billing.R$id: int list
+com.clockworkmod.billing.R$id: int list_header_title
+com.clockworkmod.billing.R$id: int listview
+com.clockworkmod.billing.R$id: int login
+com.clockworkmod.billing.R$id: int main
+com.clockworkmod.billing.R$id: int none
+com.clockworkmod.billing.R$id: int normal
+com.clockworkmod.billing.R$id: int proxied
+com.clockworkmod.billing.R$id: int root
+com.clockworkmod.billing.R$id: int satellite
+com.clockworkmod.billing.R$id: int send_email
+com.clockworkmod.billing.R$id: int send_xmpp
+com.clockworkmod.billing.R$id: int summary
+com.clockworkmod.billing.R$id: int tableLayout1
+com.clockworkmod.billing.R$id: int tableRow1
+com.clockworkmod.billing.R$id: int tableRow2
+com.clockworkmod.billing.R$id: int tableRow3
+com.clockworkmod.billing.R$id: int terrain
+com.clockworkmod.billing.R$id: int test_message
+com.clockworkmod.billing.R$id: int title
+com.clockworkmod.billing.R$id: int title_container
+com.clockworkmod.billing.R$id: int toggleEmail
+com.clockworkmod.billing.R$id: int toggleWeb
+com.clockworkmod.billing.R$id: int toggleXMPP
+com.clockworkmod.billing.R$id: int twofortyfouram_locale_dialog_primary_message
+com.clockworkmod.billing.R$id: int twofortyfouram_locale_dialog_secondary_message
+com.clockworkmod.billing.R$id: int twofortyfouram_locale_menu_dontsave
+com.clockworkmod.billing.R$id: int twofortyfouram_locale_menu_help
+com.clockworkmod.billing.R$id: int twofortyfouram_locale_menu_save
+com.clockworkmod.billing.R$id: int web_ind
+com.clockworkmod.billing.R$id: int xmpp_ind
+com.clockworkmod.billing.R$layout: int activity_base
+com.clockworkmod.billing.R$layout: int blacklist
+com.clockworkmod.billing.R$layout: int blacklist_item
+com.clockworkmod.billing.R$layout: int buy_title
+com.clockworkmod.billing.R$layout: int frame
+com.clockworkmod.billing.R$layout: int list_header
+com.clockworkmod.billing.R$layout: int list_item
+com.clockworkmod.billing.R$layout: int main
+com.clockworkmod.billing.R$layout: int notification
+com.clockworkmod.billing.R$layout: int plugin
+com.clockworkmod.billing.R$layout: int twofortyfouram_locale_dialog
+com.clockworkmod.billing.R$layout: int widget
+com.clockworkmod.billing.R$menu: int twofortyfouram_locale_help_save_dontsave
+com.clockworkmod.billing.R$string: int account
+com.clockworkmod.billing.R$string: int account_status
+com.clockworkmod.billing.R$string: int accounts
+com.clockworkmod.billing.R$string: int add_desksms_contact_info
+com.clockworkmod.billing.R$string: int add_desksms_contact_info_summary
+com.clockworkmod.billing.R$string: int add_to_blacklist
+com.clockworkmod.billing.R$string: int adjust_hour
+com.clockworkmod.billing.R$string: int adjust_hours
+com.clockworkmod.billing.R$string: int adjust_sms_date
+com.clockworkmod.billing.R$string: int adjust_sms_date_summary
+com.clockworkmod.billing.R$string: int android_market_inapp
+com.clockworkmod.billing.R$string: int app_name
+com.clockworkmod.billing.R$string: int auth_client_needs_enabling_title
+com.clockworkmod.billing.R$string: int auth_client_needs_installation_title
+com.clockworkmod.billing.R$string: int auth_client_needs_update_title
+com.clockworkmod.billing.R$string: int auth_client_play_services_err_notification_msg
+com.clockworkmod.billing.R$string: int auth_client_requested_by_msg
+com.clockworkmod.billing.R$string: int auth_client_using_bad_version_title
+com.clockworkmod.billing.R$string: int authentification_notification
+com.clockworkmod.billing.R$string: int blacklist_remove_number
+com.clockworkmod.billing.R$string: int blacklist_summary
+com.clockworkmod.billing.R$string: int buy_desksms
+com.clockworkmod.billing.R$string: int common_google_play_services_enable_button
+com.clockworkmod.billing.R$string: int common_google_play_services_enable_text
+com.clockworkmod.billing.R$string: int common_google_play_services_enable_title
+com.clockworkmod.billing.R$string: int common_google_play_services_install_button
+com.clockworkmod.billing.R$string: int common_google_play_services_install_text_phone
+com.clockworkmod.billing.R$string: int common_google_play_services_install_text_tablet
+com.clockworkmod.billing.R$string: int common_google_play_services_install_title
+com.clockworkmod.billing.R$string: int common_google_play_services_unknown_issue
+com.clockworkmod.billing.R$string: int common_google_play_services_unsupported_text
+com.clockworkmod.billing.R$string: int common_google_play_services_unsupported_title
+com.clockworkmod.billing.R$string: int common_google_play_services_update_button
+com.clockworkmod.billing.R$string: int common_google_play_services_update_text
+com.clockworkmod.billing.R$string: int common_google_play_services_update_title
+com.clockworkmod.billing.R$string: int common_signin_button_text
+com.clockworkmod.billing.R$string: int common_signin_button_text_long
+com.clockworkmod.billing.R$string: int contacts
+com.clockworkmod.billing.R$string: int current_account
+com.clockworkmod.billing.R$string: int days_left
+com.clockworkmod.billing.R$string: int description
+com.clockworkmod.billing.R$string: int desksms_one_year_license
+com.clockworkmod.billing.R$string: int disable_notifications
+com.clockworkmod.billing.R$string: int disable_notifications_summary
+com.clockworkmod.billing.R$string: int disable_notifications_summary2
+com.clockworkmod.billing.R$string: int disabled
+com.clockworkmod.billing.R$string: int forwarded
+com.clockworkmod.billing.R$string: int gmail
+com.clockworkmod.billing.R$string: int google_talk
+com.clockworkmod.billing.R$string: int gosms
+com.clockworkmod.billing.R$string: int handcent
+com.clockworkmod.billing.R$string: int login_with_google
+com.clockworkmod.billing.R$string: int manage_blacklist
+com.clockworkmod.billing.R$string: int missed_call_at
+com.clockworkmod.billing.R$string: int missed_call_from
+com.clockworkmod.billing.R$string: int mms_received
+com.clockworkmod.billing.R$string: int msg_app_detected
+com.clockworkmod.billing.R$string: int not_logged_in
+com.clockworkmod.billing.R$string: int notifications
+com.clockworkmod.billing.R$string: int number_retrieval_error
+com.clockworkmod.billing.R$string: int payment_options
+com.clockworkmod.billing.R$string: int paypal
+com.clockworkmod.billing.R$string: int permission_request
+com.clockworkmod.billing.R$string: int please_wait_contact_list
+com.clockworkmod.billing.R$string: int plugin_name
+com.clockworkmod.billing.R$string: int proxied
+com.clockworkmod.billing.R$string: int purchase_thanks
+com.clockworkmod.billing.R$string: int push_failed
+com.clockworkmod.billing.R$string: int redeem_code
+com.clockworkmod.billing.R$string: int registering_with_server
+com.clockworkmod.billing.R$string: int remove_desksms_contact_info
+com.clockworkmod.billing.R$string: int requesting_permissions
+com.clockworkmod.billing.R$string: int retrieving_authentication
+com.clockworkmod.billing.R$string: int retrieving_status
+com.clockworkmod.billing.R$string: int send_email
+com.clockworkmod.billing.R$string: int send_xmpp
+com.clockworkmod.billing.R$string: int setting_up_push
+com.clockworkmod.billing.R$string: int signin_complete
+com.clockworkmod.billing.R$string: int signin_failure
+com.clockworkmod.billing.R$string: int signin_success
+com.clockworkmod.billing.R$string: int sms_received
+com.clockworkmod.billing.R$string: int status_error
+com.clockworkmod.billing.R$string: int switch_account
+com.clockworkmod.billing.R$string: int sync_calls
+com.clockworkmod.billing.R$string: int sync_calls_summary
+com.clockworkmod.billing.R$string: int sync_sms
+com.clockworkmod.billing.R$string: int sync_sms_summary
+com.clockworkmod.billing.R$string: int test_message
+com.clockworkmod.billing.R$string: int test_message_content
+com.clockworkmod.billing.R$string: int test_message_info
+com.clockworkmod.billing.R$string: int testing_push
+com.clockworkmod.billing.R$string: int troubleshooting
+com.clockworkmod.billing.R$string: int twofortyfouram_locale_application_not_available
+com.clockworkmod.billing.R$string: int twofortyfouram_locale_breadcrumb_format
+com.clockworkmod.billing.R$string: int twofortyfouram_locale_breadcrumb_separator
+com.clockworkmod.billing.R$string: int twofortyfouram_locale_marketactivity_dialog_button_install
+com.clockworkmod.billing.R$string: int twofortyfouram_locale_marketactivity_dialog_primary_message
+com.clockworkmod.billing.R$string: int twofortyfouram_locale_marketactivity_dialog_secondary_message
+com.clockworkmod.billing.R$string: int twofortyfouram_locale_marketactivity_dialog_title
+com.clockworkmod.billing.R$string: int twofortyfouram_locale_menu_dontsave
+com.clockworkmod.billing.R$string: int twofortyfouram_locale_menu_help
+com.clockworkmod.billing.R$string: int twofortyfouram_locale_menu_save
+com.clockworkmod.billing.R$string: int updating_settings
+com.clockworkmod.billing.R$string: int updating_settings_error
+com.clockworkmod.billing.R$string: int web
+com.clockworkmod.billing.R$string: int widget_name
+com.clockworkmod.billing.R$style: int Dialog
+com.clockworkmod.billing.R$style: int Theme_Locale_Dark
+com.clockworkmod.billing.R$style: int Theme_Locale_Dialog
+com.clockworkmod.billing.R$style: int Theme_Locale_Light
+com.clockworkmod.billing.R$styleable: int[] MapAttrs
+com.clockworkmod.billing.R$styleable: int MapAttrs_cameraBearing
+com.clockworkmod.billing.R$styleable: int MapAttrs_cameraTargetLat
+com.clockworkmod.billing.R$styleable: int MapAttrs_cameraTargetLng
+com.clockworkmod.billing.R$styleable: int MapAttrs_cameraTilt
+com.clockworkmod.billing.R$styleable: int MapAttrs_cameraZoom
+com.clockworkmod.billing.R$styleable: int MapAttrs_mapType
+com.clockworkmod.billing.R$styleable: int MapAttrs_uiCompass
+com.clockworkmod.billing.R$styleable: int MapAttrs_uiRotateGestures
+com.clockworkmod.billing.R$styleable: int MapAttrs_uiScrollGestures
+com.clockworkmod.billing.R$styleable: int MapAttrs_uiTiltGestures
+com.clockworkmod.billing.R$styleable: int MapAttrs_uiZoomControls
+com.clockworkmod.billing.R$styleable: int MapAttrs_uiZoomGestures
+com.clockworkmod.billing.R$styleable: int MapAttrs_useViewLifecycle
+com.clockworkmod.billing.R$styleable: int MapAttrs_zOrderOnTop
+com.clockworkmod.billing.R$xml: int appwidget_info
+com.google.android.gms.R$attr: int cameraBearing
+com.google.android.gms.R$attr: int cameraTargetLat
+com.google.android.gms.R$attr: int cameraTargetLng
+com.google.android.gms.R$attr: int cameraTilt
+com.google.android.gms.R$attr: int cameraZoom
+com.google.android.gms.R$attr: int mapType
+com.google.android.gms.R$attr: int uiCompass
+com.google.android.gms.R$attr: int uiRotateGestures
+com.google.android.gms.R$attr: int uiScrollGestures
+com.google.android.gms.R$attr: int uiTiltGestures
+com.google.android.gms.R$attr: int uiZoomControls
+com.google.android.gms.R$attr: int uiZoomGestures
+com.google.android.gms.R$attr: int useViewLifecycle
+com.google.android.gms.R$attr: int zOrderOnTop
+com.google.android.gms.R$color: int common_action_bar_splitter
+com.google.android.gms.R$color: int common_signin_btn_dark_text_default
+com.google.android.gms.R$color: int common_signin_btn_dark_text_disabled
+com.google.android.gms.R$color: int common_signin_btn_dark_text_focused
+com.google.android.gms.R$color: int common_signin_btn_dark_text_pressed
+com.google.android.gms.R$color: int common_signin_btn_default_background
+com.google.android.gms.R$color: int common_signin_btn_light_text_default
+com.google.android.gms.R$color: int common_signin_btn_light_text_disabled
+com.google.android.gms.R$color: int common_signin_btn_light_text_focused
+com.google.android.gms.R$color: int common_signin_btn_light_text_pressed
+com.google.android.gms.R$color: int common_signin_btn_text_dark
+com.google.android.gms.R$color: int common_signin_btn_text_light
+com.google.android.gms.R$drawable: int appwidget_bg
+com.google.android.gms.R$drawable: int appwidget_button_center
+com.google.android.gms.R$drawable: int appwidget_button_left
+com.google.android.gms.R$drawable: int appwidget_button_right
+com.google.android.gms.R$drawable: int appwidget_inner_focus_c
+com.google.android.gms.R$drawable: int appwidget_inner_focus_l
+com.google.android.gms.R$drawable: int appwidget_inner_focus_r
+com.google.android.gms.R$drawable: int appwidget_inner_press_c
+com.google.android.gms.R$drawable: int appwidget_inner_press_l
+com.google.android.gms.R$drawable: int appwidget_inner_press_r
+com.google.android.gms.R$drawable: int appwidget_settings_divider
+com.google.android.gms.R$drawable: int appwidget_settings_ind_mid_c
+com.google.android.gms.R$drawable: int appwidget_settings_ind_mid_l
+com.google.android.gms.R$drawable: int appwidget_settings_ind_mid_r
+com.google.android.gms.R$drawable: int appwidget_settings_ind_mid_red_c
+com.google.android.gms.R$drawable: int appwidget_settings_ind_mid_red_l
+com.google.android.gms.R$drawable: int appwidget_settings_ind_mid_red_r
+com.google.android.gms.R$drawable: int appwidget_settings_ind_on_c
+com.google.android.gms.R$drawable: int appwidget_settings_ind_on_l
+com.google.android.gms.R$drawable: int appwidget_settings_ind_on_r
+com.google.android.gms.R$drawable: int chrome
+com.google.android.gms.R$drawable: int common_signin_btn_icon_dark
+com.google.android.gms.R$drawable: int common_signin_btn_icon_disabled_dark
+com.google.android.gms.R$drawable: int common_signin_btn_icon_disabled_focus_dark
+com.google.android.gms.R$drawable: int common_signin_btn_icon_disabled_focus_light
+com.google.android.gms.R$drawable: int common_signin_btn_icon_disabled_light
+com.google.android.gms.R$drawable: int common_signin_btn_icon_focus_dark
+com.google.android.gms.R$drawable: int common_signin_btn_icon_focus_light
+com.google.android.gms.R$drawable: int common_signin_btn_icon_light
+com.google.android.gms.R$drawable: int common_signin_btn_icon_normal_dark
+com.google.android.gms.R$drawable: int common_signin_btn_icon_normal_light
+com.google.android.gms.R$drawable: int common_signin_btn_icon_pressed_dark
+com.google.android.gms.R$drawable: int common_signin_btn_icon_pressed_light
+com.google.android.gms.R$drawable: int common_signin_btn_text_dark
+com.google.android.gms.R$drawable: int common_signin_btn_text_disabled_dark
+com.google.android.gms.R$drawable: int common_signin_btn_text_disabled_focus_dark
+com.google.android.gms.R$drawable: int common_signin_btn_text_disabled_focus_light
+com.google.android.gms.R$drawable: int common_signin_btn_text_disabled_light
+com.google.android.gms.R$drawable: int common_signin_btn_text_focus_dark
+com.google.android.gms.R$drawable: int common_signin_btn_text_focus_light
+com.google.android.gms.R$drawable: int common_signin_btn_text_light
+com.google.android.gms.R$drawable: int common_signin_btn_text_normal_dark
+com.google.android.gms.R$drawable: int common_signin_btn_text_normal_light
+com.google.android.gms.R$drawable: int common_signin_btn_text_pressed_dark
+com.google.android.gms.R$drawable: int common_signin_btn_text_pressed_light
+com.google.android.gms.R$drawable: int ic_launcher_google_talk
+com.google.android.gms.R$drawable: int ic_launcher_mail
+com.google.android.gms.R$drawable: int icon
+com.google.android.gms.R$drawable: int market
+com.google.android.gms.R$drawable: int panel_background
+com.google.android.gms.R$drawable: int paypal
+com.google.android.gms.R$drawable: int twofortyfouram_locale_border
+com.google.android.gms.R$id: int add
+com.google.android.gms.R$id: int checkbox
+com.google.android.gms.R$id: int chkEmail
+com.google.android.gms.R$id: int chkWeb
+com.google.android.gms.R$id: int chkXMPP
+com.google.android.gms.R$id: int current_account
+com.google.android.gms.R$id: int edit
+com.google.android.gms.R$id: int email_ind
+com.google.android.gms.R$id: int forward_email
+com.google.android.gms.R$id: int forward_web
+com.google.android.gms.R$id: int forward_xmpp
+com.google.android.gms.R$id: int forwarded
+com.google.android.gms.R$id: int frame
+com.google.android.gms.R$id: int hybrid
+com.google.android.gms.R$id: int image
+com.google.android.gms.R$id: int list
+com.google.android.gms.R$id: int list_header_title
+com.google.android.gms.R$id: int listview
+com.google.android.gms.R$id: int login
+com.google.android.gms.R$id: int main
+com.google.android.gms.R$id: int none
+com.google.android.gms.R$id: int normal
+com.google.android.gms.R$id: int proxied
+com.google.android.gms.R$id: int root
+com.google.android.gms.R$id: int satellite
+com.google.android.gms.R$id: int send_email
+com.google.android.gms.R$id: int send_xmpp
+com.google.android.gms.R$id: int summary
+com.google.android.gms.R$id: int tableLayout1
+com.google.android.gms.R$id: int tableRow1
+com.google.android.gms.R$id: int tableRow2
+com.google.android.gms.R$id: int tableRow3
+com.google.android.gms.R$id: int terrain
+com.google.android.gms.R$id: int test_message
+com.google.android.gms.R$id: int title
+com.google.android.gms.R$id: int title_container
+com.google.android.gms.R$id: int toggleEmail
+com.google.android.gms.R$id: int toggleWeb
+com.google.android.gms.R$id: int toggleXMPP
+com.google.android.gms.R$id: int twofortyfouram_locale_dialog_primary_message
+com.google.android.gms.R$id: int twofortyfouram_locale_dialog_secondary_message
+com.google.android.gms.R$id: int twofortyfouram_locale_menu_dontsave
+com.google.android.gms.R$id: int twofortyfouram_locale_menu_help
+com.google.android.gms.R$id: int twofortyfouram_locale_menu_save
+com.google.android.gms.R$id: int web_ind
+com.google.android.gms.R$id: int xmpp_ind
+com.google.android.gms.R$layout: int activity_base
+com.google.android.gms.R$layout: int blacklist
+com.google.android.gms.R$layout: int blacklist_item
+com.google.android.gms.R$layout: int buy_title
+com.google.android.gms.R$layout: int frame
+com.google.android.gms.R$layout: int list_header
+com.google.android.gms.R$layout: int list_item
+com.google.android.gms.R$layout: int main
+com.google.android.gms.R$layout: int notification
+com.google.android.gms.R$layout: int plugin
+com.google.android.gms.R$layout: int twofortyfouram_locale_dialog
+com.google.android.gms.R$layout: int widget
+com.google.android.gms.R$menu: int twofortyfouram_locale_help_save_dontsave
+com.google.android.gms.R$string: int account
+com.google.android.gms.R$string: int account_status
+com.google.android.gms.R$string: int accounts
+com.google.android.gms.R$string: int add_desksms_contact_info
+com.google.android.gms.R$string: int add_desksms_contact_info_summary
+com.google.android.gms.R$string: int add_to_blacklist
+com.google.android.gms.R$string: int adjust_hour
+com.google.android.gms.R$string: int adjust_hours
+com.google.android.gms.R$string: int adjust_sms_date
+com.google.android.gms.R$string: int adjust_sms_date_summary
+com.google.android.gms.R$string: int android_market_inapp
+com.google.android.gms.R$string: int app_name
+com.google.android.gms.R$string: int auth_client_needs_enabling_title
+com.google.android.gms.R$string: int auth_client_needs_installation_title
+com.google.android.gms.R$string: int auth_client_needs_update_title
+com.google.android.gms.R$string: int auth_client_play_services_err_notification_msg
+com.google.android.gms.R$string: int auth_client_requested_by_msg
+com.google.android.gms.R$string: int auth_client_using_bad_version_title
+com.google.android.gms.R$string: int authentification_notification
+com.google.android.gms.R$string: int blacklist_remove_number
+com.google.android.gms.R$string: int blacklist_summary
+com.google.android.gms.R$string: int buy_desksms
+com.google.android.gms.R$string: int common_google_play_services_enable_button
+com.google.android.gms.R$string: int common_google_play_services_enable_text
+com.google.android.gms.R$string: int common_google_play_services_enable_title
+com.google.android.gms.R$string: int common_google_play_services_install_button
+com.google.android.gms.R$string: int common_google_play_services_install_text_phone
+com.google.android.gms.R$string: int common_google_play_services_install_text_tablet
+com.google.android.gms.R$string: int common_google_play_services_install_title
+com.google.android.gms.R$string: int common_google_play_services_unknown_issue
+com.google.android.gms.R$string: int common_google_play_services_unsupported_text
+com.google.android.gms.R$string: int common_google_play_services_unsupported_title
+com.google.android.gms.R$string: int common_google_play_services_update_button
+com.google.android.gms.R$string: int common_google_play_services_update_text
+com.google.android.gms.R$string: int common_google_play_services_update_title
+com.google.android.gms.R$string: int common_signin_button_text
+com.google.android.gms.R$string: int common_signin_button_text_long
+com.google.android.gms.R$string: int contacts
+com.google.android.gms.R$string: int current_account
+com.google.android.gms.R$string: int days_left
+com.google.android.gms.R$string: int description
+com.google.android.gms.R$string: int desksms_one_year_license
+com.google.android.gms.R$string: int disable_notifications
+com.google.android.gms.R$string: int disable_notifications_summary
+com.google.android.gms.R$string: int disable_notifications_summary2
+com.google.android.gms.R$string: int disabled
+com.google.android.gms.R$string: int forwarded
+com.google.android.gms.R$string: int gmail
+com.google.android.gms.R$string: int google_talk
+com.google.android.gms.R$string: int gosms
+com.google.android.gms.R$string: int handcent
+com.google.android.gms.R$string: int login_with_google
+com.google.android.gms.R$string: int manage_blacklist
+com.google.android.gms.R$string: int missed_call_at
+com.google.android.gms.R$string: int missed_call_from
+com.google.android.gms.R$string: int mms_received
+com.google.android.gms.R$string: int msg_app_detected
+com.google.android.gms.R$string: int not_logged_in
+com.google.android.gms.R$string: int notifications
+com.google.android.gms.R$string: int number_retrieval_error
+com.google.android.gms.R$string: int payment_options
+com.google.android.gms.R$string: int paypal
+com.google.android.gms.R$string: int permission_request
+com.google.android.gms.R$string: int please_wait_contact_list
+com.google.android.gms.R$string: int plugin_name
+com.google.android.gms.R$string: int proxied
+com.google.android.gms.R$string: int purchase_thanks
+com.google.android.gms.R$string: int push_failed
+com.google.android.gms.R$string: int redeem_code
+com.google.android.gms.R$string: int registering_with_server
+com.google.android.gms.R$string: int remove_desksms_contact_info
+com.google.android.gms.R$string: int requesting_permissions
+com.google.android.gms.R$string: int retrieving_authentication
+com.google.android.gms.R$string: int retrieving_status
+com.google.android.gms.R$string: int send_email
+com.google.android.gms.R$string: int send_xmpp
+com.google.android.gms.R$string: int setting_up_push
+com.google.android.gms.R$string: int signin_complete
+com.google.android.gms.R$string: int signin_failure
+com.google.android.gms.R$string: int signin_success
+com.google.android.gms.R$string: int sms_received
+com.google.android.gms.R$string: int status_error
+com.google.android.gms.R$string: int switch_account
+com.google.android.gms.R$string: int sync_calls
+com.google.android.gms.R$string: int sync_calls_summary
+com.google.android.gms.R$string: int sync_sms
+com.google.android.gms.R$string: int sync_sms_summary
+com.google.android.gms.R$string: int test_message
+com.google.android.gms.R$string: int test_message_content
+com.google.android.gms.R$string: int test_message_info
+com.google.android.gms.R$string: int testing_push
+com.google.android.gms.R$string: int troubleshooting
+com.google.android.gms.R$string: int twofortyfouram_locale_application_not_available
+com.google.android.gms.R$string: int twofortyfouram_locale_breadcrumb_format
+com.google.android.gms.R$string: int twofortyfouram_locale_breadcrumb_separator
+com.google.android.gms.R$string: int twofortyfouram_locale_marketactivity_dialog_button_install
+com.google.android.gms.R$string: int twofortyfouram_locale_marketactivity_dialog_primary_message
+com.google.android.gms.R$string: int twofortyfouram_locale_marketactivity_dialog_secondary_message
+com.google.android.gms.R$string: int twofortyfouram_locale_marketactivity_dialog_title
+com.google.android.gms.R$string: int twofortyfouram_locale_menu_dontsave
+com.google.android.gms.R$string: int twofortyfouram_locale_menu_help
+com.google.android.gms.R$string: int twofortyfouram_locale_menu_save
+com.google.android.gms.R$string: int updating_settings
+com.google.android.gms.R$string: int updating_settings_error
+com.google.android.gms.R$string: int web
+com.google.android.gms.R$string: int widget_name
+com.google.android.gms.R$style: int Dialog
+com.google.android.gms.R$style: int Theme_Locale_Dark
+com.google.android.gms.R$style: int Theme_Locale_Dialog
+com.google.android.gms.R$style: int Theme_Locale_Light
+com.google.android.gms.R$styleable: int[] MapAttrs
+com.google.android.gms.R$styleable: int MapAttrs_cameraBearing
+com.google.android.gms.R$styleable: int MapAttrs_cameraTargetLat
+com.google.android.gms.R$styleable: int MapAttrs_cameraTargetLng
+com.google.android.gms.R$styleable: int MapAttrs_cameraTilt
+com.google.android.gms.R$styleable: int MapAttrs_cameraZoom
+com.google.android.gms.R$styleable: int MapAttrs_mapType
+com.google.android.gms.R$styleable: int MapAttrs_uiCompass
+com.google.android.gms.R$styleable: int MapAttrs_uiRotateGestures
+com.google.android.gms.R$styleable: int MapAttrs_uiScrollGestures
+com.google.android.gms.R$styleable: int MapAttrs_uiTiltGestures
+com.google.android.gms.R$styleable: int MapAttrs_uiZoomControls
+com.google.android.gms.R$styleable: int MapAttrs_uiZoomGestures
+com.google.android.gms.R$styleable: int MapAttrs_useViewLifecycle
+com.google.android.gms.R$styleable: int MapAttrs_zOrderOnTop
+com.google.android.gms.R$xml: int appwidget_info
+com.google.android.gms.common.SignInButton: void setSize(int)
+com.google.android.gms.common.SignInButton: void setColorScheme(int)
+com.google.android.gms.common.SignInButton: void setOnClickListener(android.view.View$OnClickListener)
+com.google.android.gms.common.SignInButton: void setEnabled(boolean)
+com.google.android.gms.common.images.ImageManager$b
+com.google.android.gms.games.Game
+com.google.android.gms.games.GameEntity
+com.google.android.gms.games.GameEntity: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.Player
+com.google.android.gms.games.PlayerEntity
+com.google.android.gms.games.PlayerEntity: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.multiplayer.Invitation
+com.google.android.gms.games.multiplayer.InvitationEntity
+com.google.android.gms.games.multiplayer.InvitationEntity: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.multiplayer.Participant
+com.google.android.gms.games.multiplayer.ParticipantEntity
+com.google.android.gms.games.multiplayer.ParticipantEntity: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.multiplayer.realtime.RealTimeMessage
+com.google.android.gms.games.multiplayer.realtime.RealTimeMessage: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.multiplayer.realtime.Room
+com.google.android.gms.games.multiplayer.realtime.RoomEntity
+com.google.android.gms.games.multiplayer.realtime.RoomEntity: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.internal.ae
+com.google.android.gms.internal.ag
+com.google.android.gms.internal.ai
+com.google.android.gms.internal.ak
+com.google.android.gms.internal.ak$a
+com.google.android.gms.internal.an$a
+com.google.android.gms.internal.aq
+com.google.android.gms.internal.aq$a
+com.google.android.gms.internal.aq$b
+com.google.android.gms.internal.at
+com.google.android.gms.internal.bf
+com.google.android.gms.internal.bg
+com.google.android.gms.internal.bw
+com.google.android.gms.internal.bx
+com.google.android.gms.internal.bz
+com.google.android.gms.internal.cf
+com.google.android.gms.internal.dz: void setOnPlusOneClickListener(com.google.android.gms.plus.PlusOneButton$OnPlusOneClickListener)
+com.google.android.gms.internal.dz: void setOnClickListener(android.view.View$OnClickListener)
+com.google.android.gms.internal.dz: void setAnnotation(int)
+com.google.android.gms.internal.dz: void setSize(int)
+com.google.android.gms.internal.dz: void setType(int)
+com.google.android.gms.internal.ea: void setGravity(int)
+com.google.android.gms.internal.ea: void setTextColor(int)
+com.google.android.gms.internal.eb
+com.google.android.gms.internal.ed
+com.google.android.gms.internal.ef
+com.google.android.gms.internal.eq
+com.google.android.gms.internal.eq$a
+com.google.android.gms.internal.eq$b
+com.google.android.gms.internal.eq$b$a
+com.google.android.gms.internal.eq$b$b
+com.google.android.gms.internal.eq$c
+com.google.android.gms.internal.eq$d
+com.google.android.gms.internal.eq$e
+com.google.android.gms.internal.eq$g
+com.google.android.gms.internal.eq$h
+com.google.android.gms.internal.eq$i
+com.google.android.gms.internal.k
+com.google.android.gms.location.ActivityRecognitionResult
+com.google.android.gms.location.DetectedActivity
+com.google.android.gms.location.LocationRequest
+com.google.android.gms.maps.GoogleMapOptions
+com.google.android.gms.maps.MapView: com.google.android.gms.maps.GoogleMap getMap()
+com.google.android.gms.maps.model.CameraPosition
+com.google.android.gms.maps.model.CircleOptions
+com.google.android.gms.maps.model.GroundOverlayOptions
+com.google.android.gms.maps.model.LatLng
+com.google.android.gms.maps.model.LatLngBounds
+com.google.android.gms.maps.model.MarkerOptions
+com.google.android.gms.maps.model.PolygonOptions
+com.google.android.gms.maps.model.PolylineOptions
+com.google.android.gms.maps.model.Tile
+com.google.android.gms.maps.model.TileOverlayOptions
+com.google.android.gms.maps.model.VisibleRegion
+com.google.android.gms.plus.PlusOneButton: void setOnPlusOneClickListener(com.google.android.gms.plus.PlusOneButton$OnPlusOneClickListener)
+com.google.android.gms.plus.PlusOneButton: void setAnnotation(int)
+com.google.android.gms.plus.PlusOneButton: void setSize(int)
+com.koushikdutta.desktopsms.ActivityBase: ActivityBase()
+com.koushikdutta.desktopsms.BlackListActivity
+com.koushikdutta.desktopsms.BlackListActivity: BlackListActivity()
+com.koushikdutta.desktopsms.BootReceiver
+com.koushikdutta.desktopsms.BootReceiver: BootReceiver()
+com.koushikdutta.desktopsms.BuyActivity
+com.koushikdutta.desktopsms.BuyActivity: BuyActivity()
+com.koushikdutta.desktopsms.DateChangedReceiver
+com.koushikdutta.desktopsms.DateChangedReceiver: DateChangedReceiver()
+com.koushikdutta.desktopsms.DesktopSMSApplication
+com.koushikdutta.desktopsms.DesktopSMSApplication: DesktopSMSApplication()
+com.koushikdutta.desktopsms.GCMIntentService
+com.koushikdutta.desktopsms.GCMIntentService: GCMIntentService()
+com.koushikdutta.desktopsms.MainActivity
+com.koushikdutta.desktopsms.MainActivity: MainActivity()
+com.koushikdutta.desktopsms.PhoneStateChangedReceiver
+com.koushikdutta.desktopsms.PhoneStateChangedReceiver: PhoneStateChangedReceiver()
+com.koushikdutta.desktopsms.R$attr: int cameraBearing
+com.koushikdutta.desktopsms.R$attr: int cameraTargetLat
+com.koushikdutta.desktopsms.R$attr: int cameraTargetLng
+com.koushikdutta.desktopsms.R$attr: int cameraTilt
+com.koushikdutta.desktopsms.R$attr: int cameraZoom
+com.koushikdutta.desktopsms.R$attr: int mapType
+com.koushikdutta.desktopsms.R$attr: int uiCompass
+com.koushikdutta.desktopsms.R$attr: int uiRotateGestures
+com.koushikdutta.desktopsms.R$attr: int uiScrollGestures
+com.koushikdutta.desktopsms.R$attr: int uiTiltGestures
+com.koushikdutta.desktopsms.R$attr: int uiZoomControls
+com.koushikdutta.desktopsms.R$attr: int uiZoomGestures
+com.koushikdutta.desktopsms.R$attr: int useViewLifecycle
+com.koushikdutta.desktopsms.R$attr: int zOrderOnTop
+com.koushikdutta.desktopsms.R$color: int common_action_bar_splitter
+com.koushikdutta.desktopsms.R$color: int common_signin_btn_dark_text_default
+com.koushikdutta.desktopsms.R$color: int common_signin_btn_dark_text_disabled
+com.koushikdutta.desktopsms.R$color: int common_signin_btn_dark_text_focused
+com.koushikdutta.desktopsms.R$color: int common_signin_btn_dark_text_pressed
+com.koushikdutta.desktopsms.R$color: int common_signin_btn_default_background
+com.koushikdutta.desktopsms.R$color: int common_signin_btn_light_text_default
+com.koushikdutta.desktopsms.R$color: int common_signin_btn_light_text_disabled
+com.koushikdutta.desktopsms.R$color: int common_signin_btn_light_text_focused
+com.koushikdutta.desktopsms.R$color: int common_signin_btn_light_text_pressed
+com.koushikdutta.desktopsms.R$color: int common_signin_btn_text_dark
+com.koushikdutta.desktopsms.R$color: int common_signin_btn_text_light
+com.koushikdutta.desktopsms.R$drawable: int appwidget_bg
+com.koushikdutta.desktopsms.R$drawable: int appwidget_button_center
+com.koushikdutta.desktopsms.R$drawable: int appwidget_button_left
+com.koushikdutta.desktopsms.R$drawable: int appwidget_button_right
+com.koushikdutta.desktopsms.R$drawable: int appwidget_inner_focus_c
+com.koushikdutta.desktopsms.R$drawable: int appwidget_inner_focus_l
+com.koushikdutta.desktopsms.R$drawable: int appwidget_inner_focus_r
+com.koushikdutta.desktopsms.R$drawable: int appwidget_inner_press_c
+com.koushikdutta.desktopsms.R$drawable: int appwidget_inner_press_l
+com.koushikdutta.desktopsms.R$drawable: int appwidget_inner_press_r
+com.koushikdutta.desktopsms.R$drawable: int appwidget_settings_divider
+com.koushikdutta.desktopsms.R$drawable: int appwidget_settings_ind_mid_c
+com.koushikdutta.desktopsms.R$drawable: int appwidget_settings_ind_mid_l
+com.koushikdutta.desktopsms.R$drawable: int appwidget_settings_ind_mid_r
+com.koushikdutta.desktopsms.R$drawable: int appwidget_settings_ind_mid_red_c
+com.koushikdutta.desktopsms.R$drawable: int appwidget_settings_ind_mid_red_l
+com.koushikdutta.desktopsms.R$drawable: int appwidget_settings_ind_mid_red_r
+com.koushikdutta.desktopsms.R$drawable: int appwidget_settings_ind_on_c
+com.koushikdutta.desktopsms.R$drawable: int appwidget_settings_ind_on_l
+com.koushikdutta.desktopsms.R$drawable: int appwidget_settings_ind_on_r
+com.koushikdutta.desktopsms.R$drawable: int chrome
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_icon_dark
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_icon_disabled_dark
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_icon_disabled_focus_dark
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_icon_disabled_focus_light
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_icon_disabled_light
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_icon_focus_dark
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_icon_focus_light
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_icon_light
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_icon_normal_dark
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_icon_normal_light
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_icon_pressed_dark
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_icon_pressed_light
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_text_dark
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_text_disabled_dark
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_text_disabled_focus_dark
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_text_disabled_focus_light
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_text_disabled_light
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_text_focus_dark
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_text_focus_light
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_text_light
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_text_normal_dark
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_text_normal_light
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_text_pressed_dark
+com.koushikdutta.desktopsms.R$drawable: int common_signin_btn_text_pressed_light
+com.koushikdutta.desktopsms.R$drawable: int ic_launcher_google_talk
+com.koushikdutta.desktopsms.R$drawable: int ic_launcher_mail
+com.koushikdutta.desktopsms.R$drawable: int icon
+com.koushikdutta.desktopsms.R$drawable: int market
+com.koushikdutta.desktopsms.R$drawable: int panel_background
+com.koushikdutta.desktopsms.R$drawable: int paypal
+com.koushikdutta.desktopsms.R$drawable: int twofortyfouram_locale_border
+com.koushikdutta.desktopsms.R$id: int add
+com.koushikdutta.desktopsms.R$id: int checkbox
+com.koushikdutta.desktopsms.R$id: int chkEmail
+com.koushikdutta.desktopsms.R$id: int chkWeb
+com.koushikdutta.desktopsms.R$id: int chkXMPP
+com.koushikdutta.desktopsms.R$id: int current_account
+com.koushikdutta.desktopsms.R$id: int edit
+com.koushikdutta.desktopsms.R$id: int email_ind
+com.koushikdutta.desktopsms.R$id: int forward_email
+com.koushikdutta.desktopsms.R$id: int forward_web
+com.koushikdutta.desktopsms.R$id: int forward_xmpp
+com.koushikdutta.desktopsms.R$id: int forwarded
+com.koushikdutta.desktopsms.R$id: int frame
+com.koushikdutta.desktopsms.R$id: int hybrid
+com.koushikdutta.desktopsms.R$id: int image
+com.koushikdutta.desktopsms.R$id: int list
+com.koushikdutta.desktopsms.R$id: int list_header_title
+com.koushikdutta.desktopsms.R$id: int listview
+com.koushikdutta.desktopsms.R$id: int login
+com.koushikdutta.desktopsms.R$id: int main
+com.koushikdutta.desktopsms.R$id: int none
+com.koushikdutta.desktopsms.R$id: int normal
+com.koushikdutta.desktopsms.R$id: int proxied
+com.koushikdutta.desktopsms.R$id: int root
+com.koushikdutta.desktopsms.R$id: int satellite
+com.koushikdutta.desktopsms.R$id: int send_email
+com.koushikdutta.desktopsms.R$id: int send_xmpp
+com.koushikdutta.desktopsms.R$id: int summary
+com.koushikdutta.desktopsms.R$id: int tableLayout1
+com.koushikdutta.desktopsms.R$id: int tableRow1
+com.koushikdutta.desktopsms.R$id: int tableRow2
+com.koushikdutta.desktopsms.R$id: int tableRow3
+com.koushikdutta.desktopsms.R$id: int terrain
+com.koushikdutta.desktopsms.R$id: int test_message
+com.koushikdutta.desktopsms.R$id: int title
+com.koushikdutta.desktopsms.R$id: int title_container
+com.koushikdutta.desktopsms.R$id: int toggleEmail
+com.koushikdutta.desktopsms.R$id: int toggleWeb
+com.koushikdutta.desktopsms.R$id: int toggleXMPP
+com.koushikdutta.desktopsms.R$id: int twofortyfouram_locale_dialog_primary_message
+com.koushikdutta.desktopsms.R$id: int twofortyfouram_locale_dialog_secondary_message
+com.koushikdutta.desktopsms.R$id: int twofortyfouram_locale_menu_dontsave
+com.koushikdutta.desktopsms.R$id: int twofortyfouram_locale_menu_help
+com.koushikdutta.desktopsms.R$id: int twofortyfouram_locale_menu_save
+com.koushikdutta.desktopsms.R$id: int web_ind
+com.koushikdutta.desktopsms.R$id: int xmpp_ind
+com.koushikdutta.desktopsms.R$layout: int activity_base
+com.koushikdutta.desktopsms.R$layout: int blacklist
+com.koushikdutta.desktopsms.R$layout: int blacklist_item
+com.koushikdutta.desktopsms.R$layout: int buy_title
+com.koushikdutta.desktopsms.R$layout: int frame
+com.koushikdutta.desktopsms.R$layout: int list_header
+com.koushikdutta.desktopsms.R$layout: int list_item
+com.koushikdutta.desktopsms.R$layout: int main
+com.koushikdutta.desktopsms.R$layout: int notification
+com.koushikdutta.desktopsms.R$layout: int plugin
+com.koushikdutta.desktopsms.R$layout: int twofortyfouram_locale_dialog
+com.koushikdutta.desktopsms.R$layout: int widget
+com.koushikdutta.desktopsms.R$menu: int twofortyfouram_locale_help_save_dontsave
+com.koushikdutta.desktopsms.R$string: int account
+com.koushikdutta.desktopsms.R$string: int account_status
+com.koushikdutta.desktopsms.R$string: int accounts
+com.koushikdutta.desktopsms.R$string: int add_desksms_contact_info
+com.koushikdutta.desktopsms.R$string: int add_desksms_contact_info_summary
+com.koushikdutta.desktopsms.R$string: int add_to_blacklist
+com.koushikdutta.desktopsms.R$string: int adjust_hour
+com.koushikdutta.desktopsms.R$string: int adjust_hours
+com.koushikdutta.desktopsms.R$string: int adjust_sms_date
+com.koushikdutta.desktopsms.R$string: int adjust_sms_date_summary
+com.koushikdutta.desktopsms.R$string: int android_market_inapp
+com.koushikdutta.desktopsms.R$string: int app_name
+com.koushikdutta.desktopsms.R$string: int auth_client_needs_enabling_title
+com.koushikdutta.desktopsms.R$string: int auth_client_needs_installation_title
+com.koushikdutta.desktopsms.R$string: int auth_client_needs_update_title
+com.koushikdutta.desktopsms.R$string: int auth_client_play_services_err_notification_msg
+com.koushikdutta.desktopsms.R$string: int auth_client_requested_by_msg
+com.koushikdutta.desktopsms.R$string: int auth_client_using_bad_version_title
+com.koushikdutta.desktopsms.R$string: int authentification_notification
+com.koushikdutta.desktopsms.R$string: int blacklist_remove_number
+com.koushikdutta.desktopsms.R$string: int blacklist_summary
+com.koushikdutta.desktopsms.R$string: int buy_desksms
+com.koushikdutta.desktopsms.R$string: int common_google_play_services_enable_button
+com.koushikdutta.desktopsms.R$string: int common_google_play_services_enable_text
+com.koushikdutta.desktopsms.R$string: int common_google_play_services_enable_title
+com.koushikdutta.desktopsms.R$string: int common_google_play_services_install_button
+com.koushikdutta.desktopsms.R$string: int common_google_play_services_install_text_phone
+com.koushikdutta.desktopsms.R$string: int common_google_play_services_install_text_tablet
+com.koushikdutta.desktopsms.R$string: int common_google_play_services_install_title
+com.koushikdutta.desktopsms.R$string: int common_google_play_services_unknown_issue
+com.koushikdutta.desktopsms.R$string: int common_google_play_services_unsupported_text
+com.koushikdutta.desktopsms.R$string: int common_google_play_services_unsupported_title
+com.koushikdutta.desktopsms.R$string: int common_google_play_services_update_button
+com.koushikdutta.desktopsms.R$string: int common_google_play_services_update_text
+com.koushikdutta.desktopsms.R$string: int common_google_play_services_update_title
+com.koushikdutta.desktopsms.R$string: int common_signin_button_text
+com.koushikdutta.desktopsms.R$string: int common_signin_button_text_long
+com.koushikdutta.desktopsms.R$string: int contacts
+com.koushikdutta.desktopsms.R$string: int current_account
+com.koushikdutta.desktopsms.R$string: int days_left
+com.koushikdutta.desktopsms.R$string: int description
+com.koushikdutta.desktopsms.R$string: int desksms_one_year_license
+com.koushikdutta.desktopsms.R$string: int disable_notifications
+com.koushikdutta.desktopsms.R$string: int disable_notifications_summary
+com.koushikdutta.desktopsms.R$string: int disable_notifications_summary2
+com.koushikdutta.desktopsms.R$string: int disabled
+com.koushikdutta.desktopsms.R$string: int forwarded
+com.koushikdutta.desktopsms.R$string: int gmail
+com.koushikdutta.desktopsms.R$string: int google_talk
+com.koushikdutta.desktopsms.R$string: int gosms
+com.koushikdutta.desktopsms.R$string: int handcent
+com.koushikdutta.desktopsms.R$string: int login_with_google
+com.koushikdutta.desktopsms.R$string: int manage_blacklist
+com.koushikdutta.desktopsms.R$string: int missed_call_at
+com.koushikdutta.desktopsms.R$string: int missed_call_from
+com.koushikdutta.desktopsms.R$string: int mms_received
+com.koushikdutta.desktopsms.R$string: int msg_app_detected
+com.koushikdutta.desktopsms.R$string: int not_logged_in
+com.koushikdutta.desktopsms.R$string: int notifications
+com.koushikdutta.desktopsms.R$string: int number_retrieval_error
+com.koushikdutta.desktopsms.R$string: int payment_options
+com.koushikdutta.desktopsms.R$string: int paypal
+com.koushikdutta.desktopsms.R$string: int permission_request
+com.koushikdutta.desktopsms.R$string: int please_wait_contact_list
+com.koushikdutta.desktopsms.R$string: int plugin_name
+com.koushikdutta.desktopsms.R$string: int proxied
+com.koushikdutta.desktopsms.R$string: int purchase_thanks
+com.koushikdutta.desktopsms.R$string: int push_failed
+com.koushikdutta.desktopsms.R$string: int redeem_code
+com.koushikdutta.desktopsms.R$string: int registering_with_server
+com.koushikdutta.desktopsms.R$string: int remove_desksms_contact_info
+com.koushikdutta.desktopsms.R$string: int requesting_permissions
+com.koushikdutta.desktopsms.R$string: int retrieving_authentication
+com.koushikdutta.desktopsms.R$string: int retrieving_status
+com.koushikdutta.desktopsms.R$string: int send_email
+com.koushikdutta.desktopsms.R$string: int send_xmpp
+com.koushikdutta.desktopsms.R$string: int setting_up_push
+com.koushikdutta.desktopsms.R$string: int signin_complete
+com.koushikdutta.desktopsms.R$string: int signin_failure
+com.koushikdutta.desktopsms.R$string: int signin_success
+com.koushikdutta.desktopsms.R$string: int sms_received
+com.koushikdutta.desktopsms.R$string: int status_error
+com.koushikdutta.desktopsms.R$string: int switch_account
+com.koushikdutta.desktopsms.R$string: int sync_calls
+com.koushikdutta.desktopsms.R$string: int sync_calls_summary
+com.koushikdutta.desktopsms.R$string: int sync_sms
+com.koushikdutta.desktopsms.R$string: int sync_sms_summary
+com.koushikdutta.desktopsms.R$string: int test_message
+com.koushikdutta.desktopsms.R$string: int test_message_content
+com.koushikdutta.desktopsms.R$string: int test_message_info
+com.koushikdutta.desktopsms.R$string: int testing_push
+com.koushikdutta.desktopsms.R$string: int troubleshooting
+com.koushikdutta.desktopsms.R$string: int twofortyfouram_locale_application_not_available
+com.koushikdutta.desktopsms.R$string: int twofortyfouram_locale_breadcrumb_format
+com.koushikdutta.desktopsms.R$string: int twofortyfouram_locale_breadcrumb_separator
+com.koushikdutta.desktopsms.R$string: int twofortyfouram_locale_marketactivity_dialog_button_install
+com.koushikdutta.desktopsms.R$string: int twofortyfouram_locale_marketactivity_dialog_primary_message
+com.koushikdutta.desktopsms.R$string: int twofortyfouram_locale_marketactivity_dialog_secondary_message
+com.koushikdutta.desktopsms.R$string: int twofortyfouram_locale_marketactivity_dialog_title
+com.koushikdutta.desktopsms.R$string: int twofortyfouram_locale_menu_dontsave
+com.koushikdutta.desktopsms.R$string: int twofortyfouram_locale_menu_help
+com.koushikdutta.desktopsms.R$string: int twofortyfouram_locale_menu_save
+com.koushikdutta.desktopsms.R$string: int updating_settings
+com.koushikdutta.desktopsms.R$string: int updating_settings_error
+com.koushikdutta.desktopsms.R$string: int web
+com.koushikdutta.desktopsms.R$string: int widget_name
+com.koushikdutta.desktopsms.R$style: int Dialog
+com.koushikdutta.desktopsms.R$style: int Theme_Locale_Dark
+com.koushikdutta.desktopsms.R$style: int Theme_Locale_Dialog
+com.koushikdutta.desktopsms.R$style: int Theme_Locale_Light
+com.koushikdutta.desktopsms.R$styleable: int[] MapAttrs
+com.koushikdutta.desktopsms.R$styleable: int MapAttrs_cameraBearing
+com.koushikdutta.desktopsms.R$styleable: int MapAttrs_cameraTargetLat
+com.koushikdutta.desktopsms.R$styleable: int MapAttrs_cameraTargetLng
+com.koushikdutta.desktopsms.R$styleable: int MapAttrs_cameraTilt
+com.koushikdutta.desktopsms.R$styleable: int MapAttrs_cameraZoom
+com.koushikdutta.desktopsms.R$styleable: int MapAttrs_mapType
+com.koushikdutta.desktopsms.R$styleable: int MapAttrs_uiCompass
+com.koushikdutta.desktopsms.R$styleable: int MapAttrs_uiRotateGestures
+com.koushikdutta.desktopsms.R$styleable: int MapAttrs_uiScrollGestures
+com.koushikdutta.desktopsms.R$styleable: int MapAttrs_uiTiltGestures
+com.koushikdutta.desktopsms.R$styleable: int MapAttrs_uiZoomControls
+com.koushikdutta.desktopsms.R$styleable: int MapAttrs_uiZoomGestures
+com.koushikdutta.desktopsms.R$styleable: int MapAttrs_useViewLifecycle
+com.koushikdutta.desktopsms.R$styleable: int MapAttrs_zOrderOnTop
+com.koushikdutta.desktopsms.R$xml: int appwidget_info
+com.koushikdutta.desktopsms.SettingsReceiver
+com.koushikdutta.desktopsms.SettingsReceiver: SettingsReceiver()
+com.koushikdutta.desktopsms.SmsReceiver
+com.koushikdutta.desktopsms.SmsReceiver: SmsReceiver()
+com.koushikdutta.desktopsms.SyncService
+com.koushikdutta.desktopsms.SyncService: SyncService()
+com.koushikdutta.desktopsms.WidgetProvider
+com.koushikdutta.desktopsms.WidgetProvider: WidgetProvider()
+com.koushikdutta.desktopsms.plugin.EditActivity
+com.koushikdutta.desktopsms.plugin.EditActivity: EditActivity()
+com.koushikdutta.desktopsms.plugin.Enums: com.koushikdutta.desktopsms.plugin.Enums[] values()
+com.koushikdutta.desktopsms.plugin.Enums: com.koushikdutta.desktopsms.plugin.Enums valueOf(java.lang.String)
+com.koushikdutta.desktopsms.plugin.FireReceiver
+com.koushikdutta.desktopsms.plugin.FireReceiver: FireReceiver()
+com.paypal.android.MEP.CheckoutButton: void setActive(boolean)
+com.paypal.android.MEP.PayPalActivity
+com.paypal.android.MEP.PayPalActivity: PayPalActivity()
+com.paypal.android.MEP.a.a$a: com.paypal.android.MEP.a.a$a[] values()
+com.paypal.android.MEP.a.a$a: com.paypal.android.MEP.a.a$a valueOf(java.lang.String)
+com.paypal.android.MEP.a.d$a: com.paypal.android.MEP.a.d$a[] values()
+com.paypal.android.MEP.a.d$a: com.paypal.android.MEP.a.d$a valueOf(java.lang.String)
+com.paypal.android.MEP.a.e$a: com.paypal.android.MEP.a.e$a[] values()
+com.paypal.android.MEP.a.e$a: com.paypal.android.MEP.a.e$a valueOf(java.lang.String)
+com.paypal.android.MEP.a.g$a: com.paypal.android.MEP.a.g$a[] values()
+com.paypal.android.MEP.a.g$a: com.paypal.android.MEP.a.g$a valueOf(java.lang.String)
+com.paypal.android.MEP.b.a$a: com.paypal.android.MEP.b.a$a[] values()
+com.paypal.android.MEP.b.a$a: com.paypal.android.MEP.b.a$a valueOf(java.lang.String)
+com.paypal.android.a.o$a: com.paypal.android.a.o$a[] values()
+com.paypal.android.a.o$a: com.paypal.android.a.o$a valueOf(java.lang.String)
+com.paypal.android.b.i$a: com.paypal.android.b.i$a[] values()
+com.paypal.android.b.i$a: com.paypal.android.b.i$a valueOf(java.lang.String)
+com.paypal.android.b.k: void setBackgroundDrawable(android.graphics.drawable.Drawable)
+org.codehaus.jackson.JsonEncoding: org.codehaus.jackson.JsonEncoding[] values()
+org.codehaus.jackson.JsonEncoding: org.codehaus.jackson.JsonEncoding valueOf(java.lang.String)
+org.codehaus.jackson.JsonGenerator$Feature: org.codehaus.jackson.JsonGenerator$Feature[] values()
+org.codehaus.jackson.JsonGenerator$Feature: org.codehaus.jackson.JsonGenerator$Feature valueOf(java.lang.String)
+org.codehaus.jackson.JsonParser$Feature: org.codehaus.jackson.JsonParser$Feature[] values()
+org.codehaus.jackson.JsonParser$Feature: org.codehaus.jackson.JsonParser$Feature valueOf(java.lang.String)
+org.codehaus.jackson.JsonParser$NumberType: org.codehaus.jackson.JsonParser$NumberType[] values()
+org.codehaus.jackson.JsonParser$NumberType: org.codehaus.jackson.JsonParser$NumberType valueOf(java.lang.String)
+org.codehaus.jackson.JsonToken: org.codehaus.jackson.JsonToken[] values()
+org.codehaus.jackson.JsonToken: org.codehaus.jackson.JsonToken valueOf(java.lang.String)
+org.codehaus.jackson.annotate.JsonAutoDetect$Visibility: org.codehaus.jackson.annotate.JsonAutoDetect$Visibility[] values()
+org.codehaus.jackson.annotate.JsonAutoDetect$Visibility: org.codehaus.jackson.annotate.JsonAutoDetect$Visibility valueOf(java.lang.String)
+org.codehaus.jackson.annotate.JsonMethod: org.codehaus.jackson.annotate.JsonMethod[] values()
+org.codehaus.jackson.annotate.JsonMethod: org.codehaus.jackson.annotate.JsonMethod valueOf(java.lang.String)
+org.codehaus.jackson.annotate.JsonTypeInfo$As: org.codehaus.jackson.annotate.JsonTypeInfo$As[] values()
+org.codehaus.jackson.annotate.JsonTypeInfo$As: org.codehaus.jackson.annotate.JsonTypeInfo$As valueOf(java.lang.String)
+org.codehaus.jackson.annotate.JsonTypeInfo$Id: org.codehaus.jackson.annotate.JsonTypeInfo$Id[] values()
+org.codehaus.jackson.annotate.JsonTypeInfo$Id: org.codehaus.jackson.annotate.JsonTypeInfo$Id valueOf(java.lang.String)
+org.codehaus.jackson.format.MatchStrength: org.codehaus.jackson.format.MatchStrength[] values()
+org.codehaus.jackson.format.MatchStrength: org.codehaus.jackson.format.MatchStrength valueOf(java.lang.String)
+org.codehaus.jackson.util.BufferRecycler$ByteBufferType: org.codehaus.jackson.util.BufferRecycler$ByteBufferType[] values()
+org.codehaus.jackson.util.BufferRecycler$ByteBufferType: org.codehaus.jackson.util.BufferRecycler$ByteBufferType valueOf(java.lang.String)
+org.codehaus.jackson.util.BufferRecycler$CharBufferType: org.codehaus.jackson.util.BufferRecycler$CharBufferType[] values()
+org.codehaus.jackson.util.BufferRecycler$CharBufferType: org.codehaus.jackson.util.BufferRecycler$CharBufferType valueOf(java.lang.String)

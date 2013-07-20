@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.koushikdutta.desktopsms"
-    android:versionCode="1201"
-    android:versionName="1.2.0.1" >
+    android:versionCode="1202"
+    android:versionName="1.2.0.2" >
 
     <uses-sdk android:minSdkVersion="8" />
 

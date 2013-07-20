@@ -50,7 +50,7 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                client.startPurchase(BuyActivity.this, "desksms.subscription1", mBuyerId, mSettings.getString("account"), data.toString(), PurchaseType.PAYPAL, BuyActivity.this);
+                client.startPurchase(BuyActivity.this, "desksms.subscription2", mBuyerId, mSettings.getString("account"), data.toString(), PurchaseType.PAYPAL, BuyActivity.this);
             }
         });
 
@@ -58,7 +58,7 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                client.startPurchase(BuyActivity.this, "desksms.subscription1", mBuyerId, mSettings.getString("account"), data.toString(), PurchaseType.MARKET_INAPP, BuyActivity.this);
+                client.startPurchase(BuyActivity.this, "desksms.subscription2", mBuyerId, mSettings.getString("account"), data.toString(), PurchaseType.MARKET_INAPP, BuyActivity.this);
             }
         });
 
@@ -66,7 +66,7 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                client.startPurchase(BuyActivity.this, "desksms.subscription1", mBuyerId, mSettings.getString("account"), data.toString(), PurchaseType.REDEEM, BuyActivity.this);
+                client.startPurchase(BuyActivity.this, "desksms.subscription2", mBuyerId, mSettings.getString("account"), data.toString(), PurchaseType.REDEEM, BuyActivity.this);
             }
         });
 
