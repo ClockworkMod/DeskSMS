@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
@@ -46,13 +47,22 @@ public class BuyActivity extends ActivityBase implements PurchaseCallback {
 
         ListItem status = addItem(R.string.account_status, new ListItem(this, R.string.account_status, 0));
 
-        ListItem paypal = addItem(R.string.payment_options, new ListItem(this, R.string.paypal, 0, R.drawable.paypal) {
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                client.startPurchase(BuyActivity.this, "desksms.subscription2", mBuyerId, mSettings.getString("account"), data.toString(), PurchaseType.PAYPAL, BuyActivity.this);
-            }
-        });
+        boolean showPaypal = true;
+        try {
+            String installer = getPackageManager().getInstallerPackageName(getPackageName());
+            showPaypal = !TextUtils.equals("com.android.vending", installer);
+        }
+        catch (Exception e) {
+        }
+        if (showPaypal) {
+            ListItem paypal = addItem(R.string.payment_options, new ListItem(this, R.string.paypal, 0, R.drawable.paypal) {
+                @Override
+                public void onClick(View view) {
+                    super.onClick(view);
+                    client.startPurchase(BuyActivity.this, "desksms.subscription2", mBuyerId, mSettings.getString("account"), data.toString(), PurchaseType.PAYPAL, BuyActivity.this);
+                }
+            });
+        }
 
         ListItem market = addItem(R.string.payment_options, new ListItem(this, R.string.android_market_inapp, 0, R.drawable.market) {
             @Override
